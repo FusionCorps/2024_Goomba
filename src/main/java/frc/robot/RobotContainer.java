@@ -4,65 +4,109 @@
 
 package frc.robot;
 
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.LaunchNote;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.Shooter;
+import com.ctre.phoenix6.Utils;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.*;
+import frc.robot.commands.LaunchNote;
+import frc.robot.commands.swerve.manual.PointWheels;
+import frc.robot.commands.swerve.manual.RunSwerveFC;
+import frc.robot.commands.swerve.manual.SwerveBrake;
+import frc.robot.commands.swerve.vision.AimAtTarget;
+import frc.robot.commands.swerve.vision.RotateToAngle;
+import frc.robot.commands.swerve.vision.StrafeToAprilTag;
+import frc.robot.subsystems.*;
 
-/**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
- * subsystems, commands, and trigger mappings) should be declared here.
- */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final Shooter m_Shooter = new Shooter();
+    public static CommandXboxController robotController = new CommandXboxController(0); // joystick
+    public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
+    Shooter shooter = new Shooter();
+    private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
+    
+    private SendableChooser<Command> autoChooser;
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+    
+    /**
+     * Configures the bindings for the robot's subsystems and commands.
+     */
+    private void configureBindings() {
+        drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+        robotController.a().whileTrue(new PointWheels(drivetrain));
+        robotController.b().whileTrue(new SwerveBrake(drivetrain));
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
-  }
+        // reset odometry to current position, and zero gyro yaw
+        robotController.leftBumper().onTrue(drivetrain.runOnce(() -> {
+            drivetrain.seedFieldRelative(); 
+            drivetrain.resetGyro();
+        }));
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+        // robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
+        robotController.y().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
+        // rotate to angle, strafe to april tag, and rumble controller 
+        // robotController.x().whileTrue(
+        //     new RotateToAngle(drivetrain, 180, 2.0, 0.75)
+        // .andThen(Commands.print("rotation finished"))
+        // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
+        // .andThen(Commands.print("strafe finished"))
+        // .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
+        // .andThen(new WaitCommand(0.25))
+        // .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
+        // );
+        robotController.x().whileTrue(
+            drivetrain.rotateToAngleCommand(180, 2.0, 0.75)
+            .andThen(Commands.print("rotation finished"))
+            .andThen(drivetrain.strafeToAprilTagCommand(2.0))
+            .andThen(Commands.print("strafe finished"))
+            .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
+            .andThen(new WaitCommand(0.25))
+            .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
+        );
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
+        robotController.rightBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative(
+            new Pose2d(2, 0, new Rotation2d()))
+        ));
+        
+        if (Utils.isSimulation())
+            drivetrain.seedFieldRelative(new Pose2d(2, 0, new Rotation2d())); // in simulation, init robot position to (2, 0)
+        else if (RobotBase.isReal())
+            drivetrain.seedFieldRelative(); // in real life, set current heading to forward
+        
+        drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
 
-    m_driverController.leftBumper().whileTrue(new LaunchNote(m_Shooter,.72));
-  }
+        robotController.leftBumper().whileTrue(new LaunchNote(shooter,.72));
+    }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
-  }
+    public RobotContainer() {
+        configureAuto();
+        configureBindings();
+    }
+
+    // method that configures and initializes everything necessary for auton
+    public void configureAuto() {
+        autoChooser = AutoBuilder.buildAutoChooser("DoNothingAuto");
+        SmartDashboard.putData("Auto Chooser", autoChooser);
+
+        NamedCommands.registerCommand("getAutoStartingPos",
+                new InstantCommand(() -> System.out.println("Starting Pose: "
+                        + PathPlannerAuto.getStaringPoseFromAutoFile(autoChooser.getSelected().getName()))));
+        // testing the single path autons
+        autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
+    }
+
+    public Command getAutonomousCommand() {
+        return autoChooser.getSelected();
+    }
 }
