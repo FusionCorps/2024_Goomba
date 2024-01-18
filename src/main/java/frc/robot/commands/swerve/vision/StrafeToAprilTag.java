@@ -17,8 +17,10 @@ public class StrafeToAprilTag extends Command {
             PIDConstants.strKP, 
             PIDConstants.strKI,  
             PIDConstants.strKD);
+    double toleranceDeg;
         
     public StrafeToAprilTag(CommandSwerveDrivetrain drivetrain, double toleranceDeg) {
+        this.toleranceDeg = toleranceDeg;
         strPID.setTolerance(toleranceDeg); // strafe to within tolerance degrees of target
         strPID.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
         mDrivetrain = drivetrain;
@@ -33,10 +35,10 @@ public class StrafeToAprilTag extends Command {
             System.out.println("Strafe error: " + strPID.getPositionError());
             double tx = mDrivetrain.getTX();
             // normalize tx to be between -1 and 1, then scale by max angular rate
-            // set strafe velocity to velY * scaling factor, negate for correct direction
+            // set strafe velocity to velY * scaling factor
             SwerveRequest req = new SwerveRequest.FieldCentric().withVelocityY(
                     strPID.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) 
-                    * (0.2*DrivetrainConstants.MaxSpeed))
+                    * DrivetrainConstants.MaxAngularRate)
                     .withVelocityX(0.0);
             mDrivetrain.setControl(req);
         }
@@ -44,7 +46,7 @@ public class StrafeToAprilTag extends Command {
 
     @Override
     public boolean isFinished() {
-        return Math.abs(tx) <= 2.0;
+        return Math.abs(tx) <= toleranceDeg;
     }
 
     @Override

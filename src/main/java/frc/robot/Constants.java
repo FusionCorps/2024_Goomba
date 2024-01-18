@@ -139,10 +139,10 @@ public class Constants {
             kInvertRightSide);
 
         public static final CommandSwerveDrivetrain DriveTrain = new CommandSwerveDrivetrain(
-            DrivetrainConstants, 200, FrontLeft, FrontRight, BackLeft, BackRight);
+            DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
 
         public static final double MaxSpeed = 6.6; // 6.6 meters per second max speed
-        public static final double MaxAngularRate = 2 * Math.PI; // 1/2 rotation per second max rotation rate
+        public static final double MaxAngularRate = 2 * Math.PI; // 1 rotation per second max rotation rate
 
         public static final double FULL_LENGTH = 0.81; // in meters, includes bumpers
         public static final double FULL_WIDTH = 0.81; // in meters, includes bumpers
@@ -179,8 +179,8 @@ public class Constants {
 
     public static final String LIMELIGHT_NAME = "limelight";
     public static final int INTAKE_MOTOR_ID = 25;
-    public static final int topShooterMotorID = 1;
-    public static final int bottomShooterMotorID = 7;
+    public static final int topShooterMotorID = 99; // TODO: change this id
+    public static final int bottomShooterMotorID = 98; // TODO: change this id
 
     
     public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
@@ -192,4 +192,5 @@ public class Constants {
 
 
     public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
+    public static int allianceLocation = -1; // -1 by default, set in Robot.java
 }

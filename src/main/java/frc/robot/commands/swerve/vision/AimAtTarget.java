@@ -40,7 +40,8 @@ public class AimAtTarget extends Command {
             double tx = mDrivetrain.getTX();
             // get pid output of normalized tx (-1 to 1) and scale by max angular rate
             SwerveRequest req = new SwerveRequest.FieldCentric().withRotationalRate(
-                    pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * DrivetrainConstants.MaxAngularRate);
+                    pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) 
+                    * DrivetrainConstants.MaxAngularRate);
             mDrivetrain.setControl(req);
         }
     }

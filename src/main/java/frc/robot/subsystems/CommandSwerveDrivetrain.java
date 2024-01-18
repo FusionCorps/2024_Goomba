@@ -299,13 +299,12 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 // set strafe velocity to velY * scaling factor, negate for correct direction
                 SwerveRequest req = new SwerveRequest.FieldCentric().withVelocityY(
                         strPID.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) 
-                        * (0.2*DrivetrainConstants.MaxSpeed))
+                        * DrivetrainConstants.MaxSpeed)
                         .withVelocityX(0.0);
                 setControl(req);
             }
         })
-        // .until(strPID::atSetpoint)
-        .until(() -> Math.abs(getTX()) <= 2.0)
+        .until(() -> Math.abs(getTX()) <= toleranceDeg)
         .andThen(runOnce(() -> {
             // stop strafing
             setControl(new SwerveRequest.SwerveDriveBrake());

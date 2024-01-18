@@ -38,37 +38,40 @@ public class Telemetry {
 
     /* Mechanisms to represent the swerve module states */
     Mechanism2d[] m_moduleMechanisms = new Mechanism2d[] {
-            new Mechanism2d(1, 1), new Mechanism2d(1, 1), new Mechanism2d(1, 1), new Mechanism2d(1, 1),
+            new Mechanism2d(1, 1), 
+            new Mechanism2d(1, 1), 
+            new Mechanism2d(1, 1), 
+            new Mechanism2d(1, 1),
     };
     /* A direction and length changing ligament for speed representation */
     MechanismLigament2d[] m_moduleSpeeds = new MechanismLigament2d[] {
-            m_moduleMechanisms[0]
-                    .getRoot("RootSpeed", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Speed", 0.5, 0)),
-            m_moduleMechanisms[1]
-                    .getRoot("RootSpeed", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Speed", 0.5, 0)),
-            m_moduleMechanisms[2]
-                    .getRoot("RootSpeed", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Speed", 0.5, 0)),
-            m_moduleMechanisms[3]
-                    .getRoot("RootSpeed", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[0]
+                .getRoot("RootSpeed", 0.5, 0.5)
+                .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[1]
+                .getRoot("RootSpeed", 0.5, 0.5)
+                .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[2]
+                .getRoot("RootSpeed", 0.5, 0.5)
+                .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[3]
+                .getRoot("RootSpeed", 0.5, 0.5)
+                .append(new MechanismLigament2d("Speed", 0.5, 0)),
     };
     /* A direction changing and length constant ligament for module direction */
     MechanismLigament2d[] m_moduleDirections = new MechanismLigament2d[] {
-            m_moduleMechanisms[0]
-                    .getRoot("RootDirection", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-            m_moduleMechanisms[1]
-                    .getRoot("RootDirection", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-            m_moduleMechanisms[2]
-                    .getRoot("RootDirection", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-            m_moduleMechanisms[3]
-                    .getRoot("RootDirection", 0.5, 0.5)
-                    .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[0]
+                .getRoot("RootDirection", 0.5, 0.5)
+                .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[1]
+                .getRoot("RootDirection", 0.5, 0.5)
+                .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[2]
+                .getRoot("RootDirection", 0.5, 0.5)
+                .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[3]
+                .getRoot("RootDirection", 0.5, 0.5)
+                .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
     };
 
     /**
@@ -83,19 +86,21 @@ public class Telemetry {
         PathPlannerLogging.setLogActivePathCallback((poses) -> {
             field2d.getObject("autoTrajectory").setPoses(poses);
         });
-        for (int i = 0; i < 4; i++)
-		Shuffleboard.getTab("Module Mechanisms").add("Module " + i, m_moduleMechanisms[i]);
+        
+        for (int i = 0; i < 4; i++) {
+            Shuffleboard.getTab("Module Mechanisms").add("Module " + i, m_moduleMechanisms[i]);
+        }
 
         HttpCamera limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
         Shuffleboard.getTab("Limelight").add("LL", limelightFeed)
-		.withPosition(0, 0).withSize(15, 8)
-		.withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
+        .withPosition(0, 0).withSize(15, 8)
+        .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
     }
 
     /* Accept the swerve drive state and telemeterize it to smartdashboard */
     /**
      * Telemeterize the swerve drive state to smartdashboard
-     * 
+     *
      * @param state
      */
     public void telemeterize(SwerveDriveState state) {
@@ -126,5 +131,5 @@ public class Telemetry {
 
         moduleStates.set(state.ModuleStates);
         desiredStates.set(state.ModuleTargets);
-	}
+    }
 }

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.launcher;
 
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -7,21 +7,15 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class LaunchNote extends Command {
-
     Shooter mShooter;
-
 
     double launchPower = 0;
 
     public LaunchNote(Shooter shooter, double power) {
-
-        
-
         mShooter = shooter;
         launchPower = power;
 
         addRequirements(mShooter);
-
     }
 
     

@@ -4,13 +4,20 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.allianceColor;
+import static frc.robot.Constants.allianceLocation;
+
+import java.sql.Driver;
+
 import com.ctre.phoenix6.Utils;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -20,8 +27,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.*;
-import frc.robot.commands.LaunchNote;
+
+import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.commands.launcher.LaunchNote;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
@@ -48,7 +56,7 @@ public class RobotContainer {
         robotController.b().whileTrue(new SwerveBrake(drivetrain));
 
         // reset odometry to current position, and zero gyro yaw
-        robotController.leftBumper().onTrue(drivetrain.runOnce(() -> {
+        robotController.rightBumper().onTrue(drivetrain.runOnce(() -> {
             drivetrain.seedFieldRelative(); 
             drivetrain.resetGyro();
         }));
@@ -75,23 +83,57 @@ public class RobotContainer {
             .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
         );
 
-        robotController.rightBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative(
-            new Pose2d(2, 0, new Rotation2d()))
-        ));
-        
-        if (Utils.isSimulation())
-            drivetrain.seedFieldRelative(new Pose2d(2, 0, new Rotation2d())); // in simulation, init robot position to (2, 0)
-        else if (RobotBase.isReal())
-            drivetrain.seedFieldRelative(); // in real life, set current heading to forward
-        
-        drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
-
         robotController.leftBumper().whileTrue(new LaunchNote(shooter,.72));
     }
 
     public RobotContainer() {
+        // get alliance color and location
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            Constants.allianceColor = alliance.get();
+        } else System.err.println("Alliance not found");
+        var location = DriverStation.getLocation();
+        if (location.isPresent()) {
+            Constants.allianceLocation = location.getAsInt();
+        }
+
         configureAuto();
         configureBindings();
+
+        if (Utils.isSimulation()) {
+            if (allianceColor.equals(DriverStation.Alliance.Blue)) {
+                switch (allianceLocation) {
+                    case 1:
+                        drivetrain.seedFieldRelative(new Pose2d(2, 2, new Rotation2d(0)));
+                        break;
+                    case 2:
+                        drivetrain.seedFieldRelative(new Pose2d(2, 4, new Rotation2d(0)));
+                        break;
+                    case 3:
+                        drivetrain.seedFieldRelative(new Pose2d(2, 7, new Rotation2d(0)));
+                        break;
+                }
+            } else if (allianceColor.equals(DriverStation.Alliance.Red)) {
+                switch (allianceLocation) {
+                    case 1:
+                        drivetrain.seedFieldRelative(new Pose2d(16, 2, new Rotation2d(Math.PI)));
+                        break;
+                    case 2:
+                        drivetrain.seedFieldRelative(new Pose2d(16, 4, new Rotation2d(Math.PI)));
+                        break;
+                    case 3:
+                        drivetrain.seedFieldRelative(new Pose2d(16, 7, new Rotation2d(Math.PI)));
+                        break;
+                }
+            }
+            else {
+                drivetrain.seedFieldRelative(new Pose2d()); // in simulation, set current heading to forward
+            }
+        }
+        
+        drivetrain.seedFieldRelative(); // set current heading to forward
+        
+        drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
     }
 
     // method that configures and initializes everything necessary for auton
