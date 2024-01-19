@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.commands.RunIntake;
 import frc.robot.commands.launcher.LaunchNote;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
@@ -42,6 +43,7 @@ public class RobotContainer {
     public static CommandXboxController robotController = new CommandXboxController(0); // joystick
     public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
     Shooter shooter = new Shooter();
+    Intake c_Intake = new Intake();
     private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
     
     private SendableChooser<Command> autoChooser;
@@ -54,6 +56,7 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
         robotController.a().whileTrue(new PointWheels(drivetrain));
         robotController.b().whileTrue(new SwerveBrake(drivetrain));
+        robotController.x().whileTrue(new RunIntake(c_Intake));
 
         // reset odometry to current position, and zero gyro yaw
         robotController.rightBumper().onTrue(drivetrain.runOnce(() -> {
