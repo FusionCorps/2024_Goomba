@@ -41,8 +41,8 @@ import org.photonvision.PhotonUtils;
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
     NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
-    // calculate current distance to target
-    double distToTargetMeters;
+    // current distance to target
+    double distToTargetMeters = 0.0;
     public CommandSwerveDrivetrain(
         SwerveDrivetrainConstants driveTrainConstants,
         double OdometryUpdateFrequency,
@@ -59,12 +59,14 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     @Override
     public void periodic() {
         // calculate distance to target using PhotonUtils and limelight measurements
-        distToTargetMeters = PhotonUtils.calculateDistanceToTargetMeters(
-            Constants.camHeightMeters,
-            Constants.targetHeightMeters,
-            Constants.cameraPitchRadians,
-            Units.degreesToRadians(getTY()));
-
+        // distToTargetMeters = PhotonUtils.calculateDistanceToTargetMeters(
+        //     Constants.camHeightMeters,
+        //     Constants.targetHeightMeters,
+        //     Constants.cameraPitchRadians,
+        //     Units.degreesToRadians(getTY()));
+        if (hasTarget()) {
+            distToTargetMeters = LimelightHelpers.getTargetPose_RobotSpace(Constants.LIMELIGHT_NAME)[2];
+        }
         // updates the odometry from aprilTag data
         updateOdometryFromAprilTags(1.0);
 
@@ -131,7 +133,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         if (RobotBase.isReal() && hasTarget() && distToTargetMeters < maxDist) {
                 Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
                 System.out.println(pose);
-                double timestamp = Timer.getFPGATimestamp();
+                // double timestamp = Timer.getFPGATimestamp();
+                double timestamp = Timer.getFPGATimestamp()
+                - LimelightHelpers.getLatency_Capture(Constants.LIMELIGHT_NAME) / 1000.0
+                - LimelightHelpers.getLatency_Pipeline(Constants.LIMELIGHT_NAME) / 1000.0;
                 addVisionMeasurement(pose, timestamp);
         }
     }
@@ -266,7 +271,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         rotReq.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
         rotReq.HeadingController.setTolerance(Units.degreesToRadians(toleranceDeg));
         return run(() -> {
-            // System.out.println("Error: " + rotReq.HeadingController.getPositionError()*180/Math.PI);
+            System.out.println("Error: " + rotReq.HeadingController.getPositionError()*180/Math.PI);
             setControl(rotReq);
         })
         .until(rotReq.HeadingController::atSetpoint)
@@ -293,7 +298,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         return run(() -> {
             // if target detected, strafe toward it
             if (hasTarget()) {
-                System.out.println("Strafe error: " + strPID.getPositionError());
+                // System.out.println("Strafe error: " + strPID.getPositionError());
                 double tx = getTX();
                 // normalize tx to be between -1 and 1, then scale by max angular rate
                 // set strafe velocity to velY * scaling factor, negate for correct direction

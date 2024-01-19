@@ -4,17 +4,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
     
-    public CANSparkFlex TopMotor;
+    public CANSparkFlex topMotor;
 
     public Intake() {
-
+        topMotor = new CANSparkFlex(50, CANSparkFlex.MotorType.kBrushless);
     }
 
     public void backward(){
-      TopMotor.set(-.25);
+      topMotor.set(-.25);
     }
     
     public void forward(){
-      TopMotor.set(0.25);
+      topMotor.set(0.25);
     }
 }

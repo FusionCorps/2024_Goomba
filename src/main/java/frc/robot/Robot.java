@@ -7,13 +7,9 @@ package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.Constants.PIDConstants;
 
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
@@ -26,10 +22,10 @@ public class Robot extends TimedRobot {
         limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
         limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
         limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
-        limelightTable.getEntry("camerapose_robotspace_set").setDoubleArray(new double[5]);
-        LimelightHelpers.setCameraPose_RobotSpace(
-            Constants.LIMELIGHT_NAME, 
-            0, 0, 0, 0, 0, 0);
+        // limelightTable.getEntry("camerapose_robotspace_set").setDoubleArray(new double[5]);
+        // LimelightHelpers.setCameraPose_RobotSpace(
+        //     Constants.LIMELIGHT_NAME, 
+        //     0, 0, 0, 0, 0, 0);
 
         
 

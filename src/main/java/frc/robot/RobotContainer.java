@@ -7,18 +7,14 @@ package frc.robot;
 import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.allianceLocation;
 
-import java.sql.Driver;
-
 import com.ctre.phoenix6.Utils;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import edu.wpi.first.hal.DriverStationJNI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,16 +30,13 @@ import frc.robot.commands.launcher.LaunchNote;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
-import frc.robot.commands.swerve.vision.AimAtTarget;
-import frc.robot.commands.swerve.vision.RotateToAngle;
-import frc.robot.commands.swerve.vision.StrafeToAprilTag;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
     public static CommandXboxController robotController = new CommandXboxController(0); // joystick
     public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
-    Shooter shooter = new Shooter();
-    Intake c_Intake = new Intake();
+    // Intake intake = new Intake();
+    // Shooter shooter = new Shooter();
     private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
     
     private SendableChooser<Command> autoChooser;
@@ -56,10 +49,9 @@ public class RobotContainer {
         drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
         robotController.a().whileTrue(new PointWheels(drivetrain));
         robotController.b().whileTrue(new SwerveBrake(drivetrain));
-        robotController.x().whileTrue(new RunIntake(c_Intake));
 
         // reset odometry to current position, and zero gyro yaw
-        robotController.rightBumper().onTrue(drivetrain.runOnce(() -> {
+        robotController.leftBumper().onTrue(drivetrain.runOnce(() -> {
             drivetrain.seedFieldRelative(); 
             drivetrain.resetGyro();
         }));
@@ -86,7 +78,9 @@ public class RobotContainer {
             .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
         );
 
-        robotController.leftBumper().whileTrue(new LaunchNote(shooter,.72));
+        // robotController.leftBumper().whileTrue(new LaunchNote(shooter,.72));
+        // robotController.leftStick().whileTrue(new RunIntake(intake));
+
     }
 
     public RobotContainer() {
@@ -103,36 +97,36 @@ public class RobotContainer {
         configureAuto();
         configureBindings();
 
-        if (Utils.isSimulation()) {
-            if (allianceColor.equals(DriverStation.Alliance.Blue)) {
-                switch (allianceLocation) {
-                    case 1:
-                        drivetrain.seedFieldRelative(new Pose2d(2, 2, new Rotation2d(0)));
-                        break;
-                    case 2:
-                        drivetrain.seedFieldRelative(new Pose2d(2, 4, new Rotation2d(0)));
-                        break;
-                    case 3:
-                        drivetrain.seedFieldRelative(new Pose2d(2, 7, new Rotation2d(0)));
-                        break;
-                }
-            } else if (allianceColor.equals(DriverStation.Alliance.Red)) {
-                switch (allianceLocation) {
-                    case 1:
-                        drivetrain.seedFieldRelative(new Pose2d(16, 2, new Rotation2d(Math.PI)));
-                        break;
-                    case 2:
-                        drivetrain.seedFieldRelative(new Pose2d(16, 4, new Rotation2d(Math.PI)));
-                        break;
-                    case 3:
-                        drivetrain.seedFieldRelative(new Pose2d(16, 7, new Rotation2d(Math.PI)));
-                        break;
-                }
-            }
-            else {
-                drivetrain.seedFieldRelative(new Pose2d()); // in simulation, set current heading to forward
-            }
-        }
+        // if (Utils.isSimulation()) {
+        //     if (allianceColor.equals(DriverStation.Alliance.Blue)) {
+        //         switch (allianceLocation) {
+        //             case 1:
+        //                 drivetrain.seedFieldRelative(new Pose2d(2, 2, new Rotation2d(0)));
+        //                 break;
+        //             case 2:
+        //                 drivetrain.seedFieldRelative(new Pose2d(2, 4, new Rotation2d(0)));
+        //                 break;
+        //             case 3:
+        //                 drivetrain.seedFieldRelative(new Pose2d(2, 7, new Rotation2d(0)));
+        //                 break;
+        //         }
+        //     } else if (allianceColor.equals(DriverStation.Alliance.Red)) {
+        //         switch (allianceLocation) {
+        //             case 1:
+        //                 drivetrain.seedFieldRelative(new Pose2d(16, 2, new Rotation2d(Math.PI)));
+        //                 break;
+        //             case 2:
+        //                 drivetrain.seedFieldRelative(new Pose2d(16, 4, new Rotation2d(Math.PI)));
+        //                 break;
+        //             case 3:
+        //                 drivetrain.seedFieldRelative(new Pose2d(16, 7, new Rotation2d(Math.PI)));
+        //                 break;
+        //         }
+        //     }
+        //     else {
+        //         drivetrain.seedFieldRelative(new Pose2d()); // in simulation, set current heading to forward
+        //     }
+        // }
         
         drivetrain.seedFieldRelative(); // set current heading to forward
         

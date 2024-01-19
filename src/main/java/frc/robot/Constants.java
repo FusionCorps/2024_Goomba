@@ -12,17 +12,17 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class Constants {
     public class PIDConstants {
         // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-        public static final double toTargetRotKP = 0.25;
+        public static final double toTargetRotKP = 0.3;
         public static final double toTargetRotKI = 0;
         public static final double toTargetRotKD = 0.05;
 
-        public static final double toAngleRotKP = 5;
+        public static final double toAngleRotKP = 4.25;
         public static final double toAngleRotKI = 0.0;
-        public static final double toAngleRotKD = 0.1;
+        public static final double toAngleRotKD = 0.0;
 
-        public static final double strKP = 0.85;
+        public static final double strKP = 0.25;
         public static final double strKI = 0;
-        public static final double strKD = 0.01;
+        public static final double strKD = 0.0;
 
 
     }
@@ -179,8 +179,9 @@ public class Constants {
 
     public static final String LIMELIGHT_NAME = "limelight";
     public static final int INTAKE_MOTOR_ID = 25;
-    public static final int topShooterMotorID = 99; // TODO: change this id
-    public static final int bottomShooterMotorID = 98; // TODO: change this id
+    public static final int topShooterMotorID = -1; // TODO: change this id
+    public static final int bottomShooterMotorID = -1; // TODO: change this id
+    public static final int intakeTopMotorID = -1; // TODO: change this id
 
     
     public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
