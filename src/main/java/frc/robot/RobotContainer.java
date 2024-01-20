@@ -90,7 +90,7 @@ public class RobotContainer {
             Constants.allianceLocation = location.getAsInt();
         }
 
-        configureAuto();
+        // configureAuto();
         configureBindings();
 
         // if (Utils.isSimulation()) {
