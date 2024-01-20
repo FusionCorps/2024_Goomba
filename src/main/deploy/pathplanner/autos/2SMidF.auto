@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2SMid1"
+                  "pathName": "2SMid1F"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2SMid2"
+            "pathName": "2SMid2F"
           }
         },
         {
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2SMid3"
+            "pathName": "2SMid3F"
           }
         }
       ]

@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2STop1"
+                  "pathName": "2STop1F"
                 }
               },
               {
@@ -45,7 +45,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2STop2"
+            "pathName": "2STop2F"
           }
         }
       ]
