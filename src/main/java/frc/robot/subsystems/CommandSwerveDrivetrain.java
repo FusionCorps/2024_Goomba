@@ -68,7 +68,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             distToTargetMeters = LimelightHelpers.getTargetPose_RobotSpace(Constants.LIMELIGHT_NAME)[2];
         }
         // updates the odometry from aprilTag data
-        updateOdometryFromAprilTags(1.0);
+        // updateOdometryFromAprilTags(1.0);
 
         SmartDashboard.putNumber("distanceToTarget", distToTargetMeters);
     }
@@ -185,7 +185,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     }
 
     /**
-     * Sets the swerve drivetrain to field-relative mode.
+     * Zeroes the gyro yaw.
      */
     public void resetGyro() {
         m_pigeon2.reset();

@@ -3,12 +3,12 @@ package frc.robot.commands.launcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class LaunchNote extends Command {
+public class ShootSpeaker extends Command {
     Shooter mShooter;
 
     double launchPower = 0;
 
-    public LaunchNote(Shooter shooter, double power) {
+    public ShootSpeaker(Shooter shooter, double power) {
         mShooter = shooter;
         launchPower = power;
 

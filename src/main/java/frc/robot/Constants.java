@@ -139,9 +139,9 @@ public class Constants {
             kInvertRightSide);
 
         public static final CommandSwerveDrivetrain DriveTrain = new CommandSwerveDrivetrain(
-            DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
+            RobotContainer.m_Camera,DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
 
-        public static final double MaxSpeed = 6.6; // 6.6 meters per second max speed
+        public static final double MaxSpeed = 5; // 6.6 meters per second max speed
         public static final double MaxAngularRate = 2 * Math.PI; // 1 rotation per second max rotation rate
 
         public static final double FULL_LENGTH = 0.81; // in meters, includes bumpers
@@ -155,33 +155,13 @@ public class Constants {
         
 
 }
-    public class ArmConstants {
-        public static final int BASE_ID = 20;
-        public static final int WRIST_ID = 21;
-
-        public static final int BASE_FOLLOWER_ID = 22;
-
-        public static final double BASE_kP = 0.2;
-        public static final double BASE_kI = 0;
-        public static final double BASE_kD = 0;
-
-        public static final double WRIST_kP = 0.4;
-        public static final double WRIST_kI = 0;
-        public static final double WRIST_kD = 0;
-
-        public static final double WRIST_STOW_POS = 0;
-        public static final double BASE_STOW_POS = 0;
-
-        public static final double BASE_ERROR_THRESHOLD = 3.90625;
-        public static final double WRIST_ERROR_THRESHOLD = 3.90625;
-        public static final double BASE_SAFETY_THRESHOLD = 12.1429;
-    }
+    
 
     public static final String LIMELIGHT_NAME = "limelight";
-    public static final int INTAKE_MOTOR_ID = 25;
-    public static final int topShooterMotorID = -1; // TODO: change this id
-    public static final int bottomShooterMotorID = -1; // TODO: change this id
-    public static final int intakeTopMotorID = -1; // TODO: change this id
+    public static final int INTAKE_MOTOR_ID = 25; // TODO: change this id
+    public static final int TOP_SHOOTER_MOTOR_ID = -1; // TODO: change this id
+    public static final int BOTTOM_SHOOTER_MOTOR_ID = -1; // TODO: change this id
+    
 
     
     public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
@@ -189,7 +169,15 @@ public class Constants {
 
     public static final  double camHeightMeters = Units.inchesToMeters(54); //dont change
     public static final  double cameraPitchRadians = Units.degreesToRadians(1.0); //dont change
-    public static final double targetHeightMeters = 1.5; 
+    // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
+    public static final double sourceTargetHeightMeters = Units.inchesToMeters(53.375);
+    // 51 7/8 to bottom of target, 5 1/4 to center of target
+    public static final double speakerTargetHeightMeters = Units.inchesToMeters(57.125);
+    // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
+    public static final double ampTargetHeightMeters = Units.inchesToMeters(53.375); // identical height to source
+    // 47.5 inches to bottom of target, 4.5 to center of target
+    public static final double trapTargetHeightMeters = Units.inchesToMeters(52); 
+
 
 
     public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java

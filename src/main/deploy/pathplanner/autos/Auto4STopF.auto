@@ -2,30 +2,36 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7713800042984719,
-      "y": 4.223051523026124
+      "x": 0.7812469471092803,
+      "y": 6.689787225728298
     },
-    "rotation": 120.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Shoot"
+            "pathName": "4STop1T"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "1 piece Middle path"
+            "pathName": "4STop2T"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4STop3T"
           }
         }
       ]
     }
   },
-  "folder": "1 piece Mobility autons",
+  "folder": "4 Piece",
   "choreoAuto": false
 }
