@@ -137,9 +137,13 @@ public class RobotContainer {
         NamedCommands.registerCommand("getAutoStartingPos",
                 new InstantCommand(() -> System.out.println("Starting Pose: "
                         + PathPlannerAuto.getStaringPoseFromAutoFile(autoChooser.getSelected().getName()))));
-        NamedCommands.registerCommand("ShootSpeaker", new ShootSpeaker(shooter, 0.25));
-        NamedCommands.registerCommand("ShootAmp", new ShootSpeaker(shooter, 0.25));
-        NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
+
+        NamedCommands.registerCommand("ShootSpeaker", Commands.print(null));
+        NamedCommands.registerCommand("ShootAmp", Commands.print(null));
+        NamedCommands.registerCommand("RunIntake", Commands.print(null));
+        // NamedCommands.registerCommand("ShootSpeaker", new ShootSpeaker(shooter, 0.25));
+        // NamedCommands.registerCommand("ShootAmp", new ShootSpeaker(shooter, 0.25));
+        // NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
         NamedCommands.registerCommand("AimAtTarget", Commands.print("AimAtTarget"));
         
         // testing the single path autons
