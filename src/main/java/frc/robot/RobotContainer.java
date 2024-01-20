@@ -73,7 +73,7 @@ public class RobotContainer {
             .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
         );
 
-        // robotController.leftBumper().whileTrue(new LaunchNote(shooter,.72));
+        // robotController.leftBumper().whileTrue(new ShootSpeaker(shooter,.72));
         // robotController.leftStick().whileTrue(new RunIntake(intake));
 
     }

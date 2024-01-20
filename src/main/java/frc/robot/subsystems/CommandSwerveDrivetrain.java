@@ -39,15 +39,20 @@ import org.photonvision.PhotonUtils;
  * and executing various commands related to the drivetrain.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
-    NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    
 
     // current distance to target
     double distToTargetMeters = 0.0;
+    Cameras mCamera;
     public CommandSwerveDrivetrain(
+        Cameras camera,
         SwerveDrivetrainConstants driveTrainConstants,
         double OdometryUpdateFrequency,
-        SwerveModuleConstants... modules) {
+        SwerveModuleConstants... modules
+        ) {
+        
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
+        mCamera = camera;
         configPathPlanner();
 
         // vision measurement std filter
@@ -64,13 +69,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         //     Constants.targetHeightMeters,
         //     Constants.cameraPitchRadians,
         //     Units.degreesToRadians(getTY()));
-        if (hasTarget()) {
-            distToTargetMeters = LimelightHelpers.getTargetPose_RobotSpace(Constants.LIMELIGHT_NAME)[2];
-        }
+        
         // updates the odometry from aprilTag data
         // updateOdometryFromAprilTags(1.0);
 
-        SmartDashboard.putNumber("distanceToTarget", distToTargetMeters);
+        
     }
 
     @Override
@@ -117,11 +120,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      * Gets the scalar distance to the april tag if detected.
      * @return the distance to the april tag in meters, or 0 if no target detected
      */
-    public double getDistanceToAprilTag() {
-        if (hasTarget())
-            return distToTargetMeters;
-        else return 0.0;
-    }
+    
 
     /**
      * Updates the odometry from the latest april tag data.
@@ -130,7 +129,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      * @param maxDist the maximum distance to the target in meters required for odometry to be updated
      */
     private void updateOdometryFromAprilTags(double maxDist) {
-        if (RobotBase.isReal() && hasTarget() && distToTargetMeters < maxDist) {
+        if (RobotBase.isReal() && mCamera.hasTarget() && distToTargetMeters < maxDist) {
                 Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
                 System.out.println(pose);
                 // double timestamp = Timer.getFPGATimestamp();
@@ -191,34 +190,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         m_pigeon2.reset();
     }
 
-    /**
-    * Gets the tx value from the limelight.
-    * tx is the horizontal offset from the crosshair to the target, in degrees.
-    * tx > 0 means the target is to the right of the crosshair.
-    * @return tx (degrees)
-    */
-    public double getTX() {
-        return limelightTable.getEntry("tx").getDouble(0.0);
-    }
-
-    /**
-    * Returns the ty value from the limelight.
-    * ty is the vertical offset from the crosshair to the target, in degrees.
-    * ty > 0 means the target is above the crosshair.
-    * @return ty (degrees)
-    */
-    public double getTY() {
-        return limelightTable.getEntry("ty").getDouble(0.0);
-    }
-
-    /**
-     * Returns the tv value from the limelight.
-     * tv is 1 if the limelight has a valid target, 0 otherwise.
-     * @return tv (0 or 1)
-     */
-    public boolean hasTarget() {
-        return limelightTable.getEntry("tv").getDouble(0) == 1;
-    }
+    
 
 
     /**
@@ -236,8 +208,8 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
         return run(() -> {
                 // if target detected, rotate to target
-                if (hasTarget()) {
-                    double tx = getTX();
+                if (mCamera.hasTarget()) {
+                    double tx = mCamera.getTX();
                     // get pid output of normalized tx (-1 to 1) and scale by max angular rate
                     SwerveRequest req = new SwerveRequest.FieldCentric().withRotationalRate(
                             pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * DrivetrainConstants.MaxAngularRate);
@@ -297,9 +269,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         strPID.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
         return run(() -> {
             // if target detected, strafe toward it
-            if (hasTarget()) {
+            if (mCamera.hasTarget()) {
                 // System.out.println("Strafe error: " + strPID.getPositionError());
-                double tx = getTX();
+                double tx = mCamera.getTX();
                 // normalize tx to be between -1 and 1, then scale by max angular rate
                 // set strafe velocity to velY * scaling factor, negate for correct direction
                 SwerveRequest req = new SwerveRequest.FieldCentric().withVelocityY(
@@ -309,7 +281,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 setControl(req);
             }
         })
-        .until(() -> Math.abs(getTX()) <= toleranceDeg)
+        .until(() -> Math.abs(mCamera.getTX()) <= toleranceDeg)
         .andThen(runOnce(() -> {
             // stop strafing
             setControl(new SwerveRequest.SwerveDriveBrake());
