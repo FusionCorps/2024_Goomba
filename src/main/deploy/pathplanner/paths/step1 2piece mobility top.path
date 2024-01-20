@@ -3,53 +3,47 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.498094996189994,
-        "y": 7.015396338484985
+        "x": 0.7509152340242001,
+        "y": 6.7241388044029655
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.540521403061187,
-        "y": 6.972969931613792
+        "x": 1.413970478293546,
+        "y": 6.7241388044029655
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Top start insta-note"
     },
     {
       "anchor": {
-        "x": 1.7876751138117675,
-        "y": 7.627146792755124
+        "x": 2.481650091505311,
+        "y": 6.7241388044029655
       },
       "prevControl": {
-        "x": 1.7876751138117675,
-        "y": 7.687146792755124
+        "x": 2.421650091505311,
+        "y": 6.7241388044029655
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": 0,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0,
+    "rotation": 32.005383208083494,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Top 2 speaker + 1 amp ",
+  "folder": "2 Piece",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

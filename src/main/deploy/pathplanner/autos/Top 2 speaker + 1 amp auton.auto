@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootAmp"
           }
         },
         {
@@ -24,13 +24,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Top 2 speaker + 1 amp  (Part 1)"
+                  "pathName": null
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RunIntake"
                 }
               }
             ]
@@ -39,13 +39,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top 2 speaker + 1 amp (Part 2)"
+            "pathName": null
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Amp Shoot"
+            "name": "ShootAmp"
           }
         },
         {
@@ -55,13 +55,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": " Top 2 speaker + 1 amp (Part 3)"
+                  "pathName": null
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RunIntake"
                 }
               }
             ]
@@ -70,13 +70,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top 2 speaker + 1 amp (Part 4)"
+            "pathName": null
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSpeaker"
           }
         }
       ]

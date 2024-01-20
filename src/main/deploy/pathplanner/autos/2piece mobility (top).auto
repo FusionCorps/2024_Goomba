@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7158327706968803,
-      "y": 4.3385312981452175
+      "x": 0.7336934388833163,
+      "y": 6.737082927847566
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "step1 2piece mobility middle"
+                  "pathName": "step1 2piece mobility top"
                 }
               },
               {
@@ -37,12 +37,6 @@
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "step2 2piece mobility middle"
-          }
-        },
-        {
           "type": "named",
           "data": {
             "name": "LaunchNote"
@@ -51,12 +45,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "step3 2piece mobility middle"
+            "pathName": "step2 2piece mobility top"
           }
         }
       ]
     }
   },
-  "folder": "2piece mobility autons",
+  "folder": null,
   "choreoAuto": false
 }

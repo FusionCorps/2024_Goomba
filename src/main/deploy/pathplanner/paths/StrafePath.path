@@ -11,7 +11,8 @@
         "x": 2.0,
         "y": 5.0600000000000005
       },
-      "isLocked": false
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -23,7 +24,8 @@
         "y": 2.9400000000000004
       },
       "nextControl": null,
-      "isLocked": false
+      "isLocked": false,
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -37,9 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0
+    "rotation": 0,
+    "rotateFast": false
   },
   "reversed": false,
-  "folder": "BasicPaths",
-  "previewStartingState": null
+  "folder": "Basic",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
 }

@@ -26,5 +26,6 @@
       ]
     }
   },
-  "folder": "BasicAutos"
+  "folder": null,
+  "choreoAuto": false
 }

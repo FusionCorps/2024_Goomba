@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.446567628177991,
-        "y": 4.186507290393498
+        "x": 0.7275269251393202,
+        "y": 4.315142989260338
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5057118137086154,
-        "y": 4.176409502619978
+        "x": 1.8384715971711145,
+        "y": 4.268366371490578
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Middle start insta-note"
     },
     {
       "anchor": {
-        "x": 2.119131303789673,
-        "y": 3.5784112593866215
+        "x": 2.446567628177991,
+        "y": 4.186507290393498
       },
       "prevControl": {
-        "x": 2.142519612674553,
-        "y": 3.566717104944182
+        "x": 1.9671072960379539,
+        "y": 4.268366371490578
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.18444331578874,
+    "rotation": -8.652541791114755,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2piece mobility autons (middle)",
+  "folder": "2 Piece",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
