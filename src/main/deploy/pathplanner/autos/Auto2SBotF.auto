@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.9497158595456792,
-      "y": 2.140030262966509
+      "x": 0.5645260933888472,
+      "y": 2.1547939244237972
     },
-    "rotation": -30.0
+    "rotation": -0.2840834556667851
   },
   "command": {
     "type": "sequential",
@@ -15,6 +15,12 @@
           "type": "path",
           "data": {
             "pathName": "2SBot1F"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
           }
         },
         {
@@ -40,6 +46,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
           }
         },
         {

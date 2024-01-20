@@ -20,6 +20,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootSpeaker"
           }
         },
@@ -40,6 +46,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
           }
         },
         {
@@ -70,6 +82,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootSpeaker"
           }
         },
@@ -90,6 +108,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
           }
         },
         {
