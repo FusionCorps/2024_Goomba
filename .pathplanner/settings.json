@@ -9,7 +9,9 @@
     "Mobility",
     "4 Piece"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "2 Piece"
+  ],
   "defaultMaxVel": 5.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
