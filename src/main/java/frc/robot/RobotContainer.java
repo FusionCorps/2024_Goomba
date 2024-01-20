@@ -36,6 +36,7 @@ import frc.robot.subsystems.*;
 
 public class RobotContainer {
     public static CommandXboxController robotController = new CommandXboxController(0); // joystick
+    public static Cameras mCameras = new Cameras();
     public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
     Intake intake = new Intake();
     Shooter shooter = new Shooter();
