@@ -20,7 +20,7 @@
         {
           "type": "named",
           "data": {
-            "name": "LaunchNote"
+            "name": "ShootSpeaker"
           }
         },
         {
@@ -45,7 +45,7 @@
         {
           "type": "named",
           "data": {
-            "name": "LaunchNote"
+            "name": "ShootSpeaker"
           }
         }
       ]

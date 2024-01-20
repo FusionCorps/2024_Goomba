@@ -77,7 +77,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Top Start 4 piece Auton",
+  "folder": null,
   "previewStartingState": {
     "rotation": 54.351211115495936,
     "velocity": 0

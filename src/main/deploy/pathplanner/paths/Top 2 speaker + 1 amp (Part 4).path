@@ -54,7 +54,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Top 2 speaker + 1 amp ",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
