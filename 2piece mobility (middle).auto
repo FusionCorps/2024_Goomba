@@ -1,0 +1,62 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7158327706968803,
+      "y": 4.3385312981452175
+    },
+    "rotation": -60.0
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "LaunchNote"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "step1 2piece mobility middle"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "step2 2piece mobility middle"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "LaunchNote"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "step3 2piece mobility middle"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "2piece mobility autons",
+  "choreoAuto": false
+}
