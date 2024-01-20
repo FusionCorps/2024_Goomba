@@ -1,0 +1,55 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 2.498094996189994,
+        "y": 7.015396338484985
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.540521403061187,
+        "y": 6.972969931613792
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7876751138117675,
+        "y": 7.627146792755124
+      },
+      "prevControl": {
+        "x": 1.7876751138117675,
+        "y": 7.687146792755124
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.0,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Top 2 speaker + 1 amp ",
+  "previewStartingState": null,
+  "useDefaultConstraints": false
+}
