@@ -141,7 +141,7 @@ public class Constants {
         public static final CommandSwerveDrivetrain DriveTrain = new CommandSwerveDrivetrain(
             RobotContainer.m_Camera,DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
 
-        public static final double MaxSpeed = 6.6; // 6.6 meters per second max speed
+        public static final double MaxSpeed = 5; // 6.6 meters per second max speed
         public static final double MaxAngularRate = 2 * Math.PI; // 1 rotation per second max rotation rate
 
         public static final double FULL_LENGTH = 0.81; // in meters, includes bumpers
@@ -169,7 +169,15 @@ public class Constants {
 
     public static final  double camHeightMeters = Units.inchesToMeters(54); //dont change
     public static final  double cameraPitchRadians = Units.degreesToRadians(1.0); //dont change
-    public static final double targetHeightMeters = 1.5; 
+    // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
+    public static final double sourceTargetHeightMeters = Units.inchesToMeters(53.375);
+    // 51 7/8 to bottom of target, 5 1/4 to center of target
+    public static final double speakerTargetHeightMeters = Units.inchesToMeters(57.125);
+    // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
+    public static final double ampTargetHeightMeters = Units.inchesToMeters(53.375); // identical height to source
+    // 47.5 inches to bottom of target, 4.5 to center of target
+    public static final double trapTargetHeightMeters = Units.inchesToMeters(52); 
+
 
 
     public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
