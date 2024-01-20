@@ -14,18 +14,18 @@
         {
           "type": "path",
           "data": {
-            "pathName": "1 piece Bottom path"
+            "pathName": "1SBotF"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSpeaker"
           }
         }
       ]
     }
   },
-  "folder": "1 piece Mobility autons",
+  "folder": "1 Piece",
   "choreoAuto": false
 }

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7121783474373444,
-      "y": 6.867392196326109
+      "x": 0.7713800042984719,
+      "y": 4.223051523026124
     },
-    "rotation": 60.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
@@ -14,18 +14,18 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSpeaker"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "1 piece Top path"
+            "pathName": "1SMidF"
           }
         }
       ]
     }
   },
-  "folder": "1 piece Mobility autons",
+  "folder": "1 Piece",
   "choreoAuto": false
 }

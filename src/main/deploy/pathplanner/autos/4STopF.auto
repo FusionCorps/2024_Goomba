@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7417791758660457,
-      "y": 7.015396338484985
+      "x": 0.7509152340242001,
+      "y": 6.7241388044029655
     },
-    "rotation": 60.0
+    "rotation": 59.01406185966485
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSpeaker"
           }
         },
         {
@@ -24,28 +24,22 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Top 2 speaker + 1 amp  (Part 1)"
+                  "pathName": "4STop1F"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RunIntake"
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
-          "data": {
-            "pathName": "Top 2 speaker + 1 amp (Part 2)"
-          }
-        },
-        {
           "type": "named",
           "data": {
-            "name": "Amp Shoot"
+            "name": "ShootSpeaker"
           }
         },
         {
@@ -55,33 +49,52 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": " Top 2 speaker + 1 amp (Part 3)"
+                  "pathName": "4STop2F"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "Intake"
+                  "name": "RunIntake"
                 }
               }
             ]
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Top 2 speaker + 1 amp (Part 4)"
+            "name": "ShootSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "4STop3F"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunIntake"
+                }
+              }
+            ]
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "Shoot"
+            "name": "ShootSpeaker"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "4 Piece",
   "choreoAuto": false
 }

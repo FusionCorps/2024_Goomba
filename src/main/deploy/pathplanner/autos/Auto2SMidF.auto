@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.867594050821078,
-      "y": 6.710014137705975
+      "x": 0.7158327706968803,
+      "y": 4.3385312981452175
     },
-    "rotation": 60.0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": " Top Start Path Part 1(4 ring)"
+                  "pathName": "2SMid1F"
                 }
               },
               {
@@ -37,9 +37,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "AimTarget"
+            "pathName": "2SMid2F"
           }
         },
         {
@@ -51,18 +51,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Top Start Path Part 2(4 ring)"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Top Start Path Part 3(4 ring)"
+            "pathName": "2SMid3F"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "2 Piece",
   "choreoAuto": false
 }

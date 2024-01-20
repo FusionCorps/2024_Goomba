@@ -36,8 +36,8 @@ public class AimAtTarget extends Command {
     @Override
     public void execute() {
         // if target detected, rotate to target
-        if (mDrivetrain.hasTarget()) {
-            double tx = mDrivetrain.getTX();
+        if (mDrivetrain.mCamera.hasTarget()) {
+            double tx = mDrivetrain.mCamera.getTX();
             // get pid output of normalized tx (-1 to 1) and scale by max angular rate
             SwerveRequest req = new SwerveRequest.FieldCentric().withRotationalRate(
                     pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) 

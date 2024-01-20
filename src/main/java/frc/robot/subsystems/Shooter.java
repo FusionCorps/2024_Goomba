@@ -10,8 +10,8 @@ public class Shooter extends SubsystemBase {
     CANSparkFlex bottomMotor, topMotor;
 
     public Shooter() {
-        bottomMotor = new CANSparkFlex(Constants.bottomShooterMotorID, MotorType.kBrushless);
-        topMotor = new CANSparkFlex(Constants.topShooterMotorID, MotorType.kBrushless);
+        bottomMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
+        topMotor = new CANSparkFlex(Constants.TOP_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     }
 
     public void shoot(double power) {
