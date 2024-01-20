@@ -5,14 +5,16 @@
   "pathFolders": [
     "1 Piece",
     "2 Piece",
-    "Old",
+    "4 Piece",
     "Mobility",
-    "4 Piece"
+    "3 Piece",
+    "Old"
   ],
   "autoFolders": [
     "1 Piece",
     "2 Piece",
     "4 Piece",
+    "3 Piece",
     "Old"
   ],
   "defaultMaxVel": 5.0,
