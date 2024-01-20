@@ -14,12 +14,24 @@
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "4STop1T"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4STop2T"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "4STop3T"
           }
         }
       ]
     }
   },
-  "folder": null,
+  "folder": "4 Piece",
   "choreoAuto": false
 }
