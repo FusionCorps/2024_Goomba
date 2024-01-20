@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "step1 2piece mobility middle"
+                  "pathName": "2SMid1"
                 }
               },
               {
@@ -39,7 +39,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "step2 2piece mobility middle"
+            "pathName": "2SMid2"
           }
         },
         {
@@ -51,7 +51,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "step3 2piece mobility middle"
+            "pathName": "2SMid3"
           }
         }
       ]

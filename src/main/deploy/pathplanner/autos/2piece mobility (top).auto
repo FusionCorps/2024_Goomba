@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "step1 2piece mobility top"
+                  "pathName": "2STop1"
                 }
               },
               {
@@ -45,7 +45,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "step2 2piece mobility top"
+            "pathName": "2STop2"
           }
         }
       ]

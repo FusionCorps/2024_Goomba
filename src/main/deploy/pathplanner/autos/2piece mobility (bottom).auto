@@ -14,7 +14,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "step1 2piece mobility bottom"
+            "pathName": "2SBot1"
           }
         },
         {
@@ -30,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "step2 2piece mobility bottom"
+                  "pathName": "2SBot2"
                 }
               },
               {
