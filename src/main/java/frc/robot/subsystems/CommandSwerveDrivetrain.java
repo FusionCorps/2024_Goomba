@@ -43,7 +43,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     // current distance to target
     double distToTargetMeters = 0.0;
-    Cameras mCamera;
+    public Cameras mCamera;
     public CommandSwerveDrivetrain(
         Cameras camera,
         SwerveDrivetrainConstants driveTrainConstants,

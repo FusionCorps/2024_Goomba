@@ -31,9 +31,9 @@ public class StrafeToAprilTag extends Command {
     @Override
     public void execute() {
          // if target detected, strafe toward it
-        if (mDrivetrain.hasTarget()) {
+        if (mDrivetrain.mCamera.hasTarget()) {
             System.out.println("Strafe error: " + strPID.getPositionError());
-            double tx = mDrivetrain.getTX();
+            double tx = mDrivetrain.mCamera.getTX();
             // normalize tx to be between -1 and 1, then scale by max angular rate
             // set strafe velocity to velY * scaling factor
             SwerveRequest req = new SwerveRequest.FieldCentric().withVelocityY(
