@@ -74,7 +74,7 @@ public class RobotContainer {
             .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
         );
 
-        // robotController.leftBumper().whileTrue(new ShootSpeaker(shooter,.72));
+        robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));
 
     }
@@ -90,7 +90,7 @@ public class RobotContainer {
             Constants.allianceLocation = location.getAsInt();
         }
 
-        configureAuto();
+        //configureAuto();
         configureBindings();
 
         // if (Utils.isSimulation()) {
