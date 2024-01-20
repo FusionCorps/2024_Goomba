@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7336934388833163,
-      "y": 6.737082927847566
+      "x": 0.7509152340242001,
+      "y": 6.7241388044029655
     },
     "rotation": 60.0
   },
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2STop1F"
+                  "pathName": "3STop1F"
                 }
               },
               {
@@ -39,18 +39,49 @@
         {
           "type": "named",
           "data": {
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootSpeaker"
           }
         },
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "2STop2F"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3STop2F"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
           }
         }
       ]
     }
   },
-  "folder": "2 Piece",
+  "folder": "3 Piece",
   "choreoAuto": false
 }

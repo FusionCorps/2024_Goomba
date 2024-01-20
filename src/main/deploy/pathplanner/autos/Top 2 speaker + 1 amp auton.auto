@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7158327706968803,
-      "y": 4.3385312981452175
+      "x": 0.7417791758660457,
+      "y": 7.015396338484985
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootSpeaker"
+            "name": "ShootAmp"
           }
         },
         {
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2SMid1F"
+                  "pathName": null
                 }
               },
               {
@@ -39,7 +39,38 @@
         {
           "type": "path",
           "data": {
-            "pathName": "2SMid2F"
+            "pathName": null
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootAmp"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": null
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": null
           }
         },
         {
@@ -47,16 +78,10 @@
           "data": {
             "name": "ShootSpeaker"
           }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2SMid3F"
-          }
         }
       ]
     }
   },
-  "folder": "2 Piece",
+  "folder": null,
   "choreoAuto": false
 }

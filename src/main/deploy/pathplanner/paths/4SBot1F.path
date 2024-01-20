@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.0846847346901356,
-        "y": 2.7494318171534218
+        "x": 1.2069872572793579,
+        "y": 2.865067838397785
       },
       "isLocked": false,
       "linkedName": "Bot"
@@ -20,8 +20,8 @@
         "y": 3.8473768115627407
       },
       "prevControl": {
-        "x": 1.2504306243766896,
-        "y": 3.002925530791679
+        "x": 1.3707054194735169,
+        "y": 3.028786000591945
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,18 +32,18 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 5.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -42.18444331578879,
+    "rotation": -46.59114027119459,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2 Piece",
+  "folder": "4 Piece",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }

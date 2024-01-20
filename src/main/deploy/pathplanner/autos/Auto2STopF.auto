@@ -39,6 +39,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "ShootSpeaker"
           }
         },

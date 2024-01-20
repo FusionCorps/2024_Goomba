@@ -2,38 +2,25 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7509152340242001,
-      "y": 6.7241388044029655
+      "x": 0.5645260933888472,
+      "y": 2.1547939244237972
     },
-    "rotation": 59.01406185966485
+    "rotation": -0.2840834556667851
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "ShootSpeaker"
+            "pathName": "4SBot1F"
           }
         },
         {
-          "type": "parallel",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "4STop1F"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "RunIntake"
-                }
-              }
-            ]
+            "name": "AimAtTarget"
           }
         },
         {
@@ -49,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4STop2F"
+                  "pathName": "4SBot2F"
                 }
               },
               {
@@ -59,6 +46,12 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
           }
         },
         {
@@ -74,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4STop3F"
+                  "pathName": "4SBot3F"
                 }
               },
               {
@@ -84,6 +77,43 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "4SBot4F"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "RunIntake"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
           }
         },
         {

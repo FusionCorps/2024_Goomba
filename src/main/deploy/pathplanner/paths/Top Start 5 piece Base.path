@@ -151,7 +151,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Top Start 5 piece",
+  "folder": null,
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
