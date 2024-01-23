@@ -30,16 +30,14 @@ import frc.robot.commands.launcher.ShootSpeaker;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
-import frc.robot.commands.swerve.vision.RotateToAngle;
-import frc.robot.commands.swerve.vision.StrafeToAprilTag;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
     public static CommandXboxController robotController = new CommandXboxController(0); // joystick
     public static Cameras mCameras = new Cameras();
     public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
-    Intake intake = new Intake();
-    Shooter shooter = new Shooter();
+    // Intake intake = new Intake();
+    // Shooter shooter = new Shooter();
     private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
     
     private SendableChooser<Command> autoChooser;
@@ -74,7 +72,7 @@ public class RobotContainer {
             .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
         );
 
-        robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
+        // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));
 
     }
@@ -87,10 +85,10 @@ public class RobotContainer {
         } else System.err.println("Alliance not found");
         var location = DriverStation.getLocation();
         if (location.isPresent()) {
-            Constants.allianceLocation = location.getAsInt();
+            allianceLocation = location.getAsInt();
         }
 
-        //configureAuto();
+        configureAuto();
         configureBindings();
 
         // if (Utils.isSimulation()) {
@@ -123,9 +121,10 @@ public class RobotContainer {
         //         drivetrain.seedFieldRelative(new Pose2d()); // in simulation, set current heading to forward
         //     }
         // }
-        
-        drivetrain.seedFieldRelative(); // set current heading to forward
-        
+        if (Utils.isSimulation())
+            drivetrain.seedFieldRelative(new Pose2d()); // set current heading to forward
+        else drivetrain.seedFieldRelative(); // set current heading to forward
+
         drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
     }
 

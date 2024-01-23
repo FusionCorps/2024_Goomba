@@ -16,8 +16,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
@@ -26,11 +24,7 @@ import frc.robot.Constants.DrivetrainConstants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import java.util.function.DoubleSupplier;
-
-import org.photonvision.PhotonUtils;
 
 /**
  * This class represents a command-based swerve drivetrain subsystem.
@@ -39,18 +33,16 @@ import org.photonvision.PhotonUtils;
  * and executing various commands related to the drivetrain.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
-    
-
     // current distance to target
     double distToTargetMeters = 0.0;
     public Cameras mCamera;
+
     public CommandSwerveDrivetrain(
         Cameras camera,
         SwerveDrivetrainConstants driveTrainConstants,
         double OdometryUpdateFrequency,
         SwerveModuleConstants... modules
         ) {
-        
         super(driveTrainConstants, OdometryUpdateFrequency, modules);
         mCamera = camera;
         configPathPlanner();
@@ -62,18 +54,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     }
 
     @Override
-    public void periodic() {
-        // calculate distance to target using PhotonUtils and limelight measurements
-        // distToTargetMeters = PhotonUtils.calculateDistanceToTargetMeters(
-        //     Constants.camHeightMeters,
-        //     Constants.targetHeightMeters,
-        //     Constants.cameraPitchRadians,
-        //     Units.degreesToRadians(getTY()));
-        
+    public void periodic() {        
         // updates the odometry from aprilTag data
-        // updateOdometryFromAprilTags(1.0);
-
-        
+        updateOdometryFromAprilTags(1.0);
     }
 
     @Override
@@ -114,24 +97,18 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             return Constants.allianceColor == DriverStation.Alliance.Red;
         }
         return false;
-    }
-
-    /**
-     * Gets the scalar distance to the april tag if detected.
-     * @return the distance to the april tag in meters, or 0 if no target detected
-     */
-    
+    }    
 
     /**
      * Updates the odometry from the latest april tag data.
      * If the robot is real and the limelight detects a target,
      * the robot's position and orientation will be updated.
-     * @param maxDist the maximum distance to the target in meters required for odometry to be updated
+     * @param maxDist the maximum distance to the target in meters required for odometry to be updated, recommended <= 1.0
      */
     private void updateOdometryFromAprilTags(double maxDist) {
         if (RobotBase.isReal() && mCamera.hasTarget() && distToTargetMeters < maxDist) {
                 Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
-                System.out.println(pose);
+                System.out.println("Pose update: " + pose);
                 // double timestamp = Timer.getFPGATimestamp();
                 double timestamp = Timer.getFPGATimestamp()
                 - LimelightHelpers.getLatency_Capture(Constants.LIMELIGHT_NAME) / 1000.0

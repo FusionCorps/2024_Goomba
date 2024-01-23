@@ -2,19 +2,31 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7417791758660457,
-      "y": 7.015396338484985
+      "x": 0.5645260933888472,
+      "y": 2.1547939244237972
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "3SBot1F"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": "ShootAmp"
+            "name": "AimAtTarget"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "ShootSpeaker"
           }
         },
         {
@@ -24,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": null
+                  "pathName": "3SBot2F"
                 }
               },
               {
@@ -37,15 +49,15 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": null
+            "name": "AimAtTarget"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "ShootAmp"
+            "name": "ShootSpeaker"
           }
         },
         {
@@ -55,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": null
+                  "pathName": "3SBot3F"
                 }
               },
               {
@@ -68,9 +80,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": null
+            "name": "AimAtTarget"
           }
         },
         {
@@ -82,6 +94,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "3 Piece",
   "choreoAuto": false
 }
