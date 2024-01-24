@@ -6,6 +6,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.Unit;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -161,6 +162,17 @@ public class Constants {
     public static final int INTAKE_MOTOR_ID = 25; // TODO: change this id
     public static final int TOP_SHOOTER_MOTOR_ID = -1; // TODO: change this id
     public static final int BOTTOM_SHOOTER_MOTOR_ID = -1; // TODO: change this id
+    public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
+
+
+
+    public static final double PIVOT_kP = 0.2;
+    public static final double PIVOT_kD = 0;
+    public static final double PIVOT_kI = 0;
+
+    public static final double PIVOT_START_POS = Units.degreesToRotations(30);
+    public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
+    public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
     
 
     
