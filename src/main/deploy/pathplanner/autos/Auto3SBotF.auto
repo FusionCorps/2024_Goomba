@@ -2,15 +2,27 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7509152340242001,
-      "y": 6.7241388044029655
+      "x": 0.5645260933888472,
+      "y": 2.1547939244237972
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3SBot1F"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
+          }
+        },
         {
           "type": "named",
           "data": {
@@ -24,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3STop1F"
+                  "pathName": "3SBot2F"
                 }
               },
               {
@@ -55,7 +67,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3STop2F"
+                  "pathName": "3SBot3F"
                 }
               },
               {

@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.util.Units;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,20 +12,66 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 
-public class Cameras extends SubsystemBase {
 
+public class Cameras extends SubsystemBase {
+    
     NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
     double distToTargetMeters = 0.0;
+    Pose3d targetPose = new Pose3d();
 
-    public Cameras(){
+    JSONParser parser = new JSONParser();
+    String jsonString;
+
+    public Cameras() {
         
     }
 
     @Override
-    public void periodic(){
+    public void periodic() {
         if (hasTarget()) {
-            distToTargetMeters = LimelightHelpers.getTargetPose_RobotSpace(Constants.LIMELIGHT_NAME)[2];
+            try {
+                var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
+                targetPose = fid[0].getTargetPose_RobotSpace();
+
+                // acc to limelight docs, works, but key doesn't appear in networktables???
+                // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
+                // // this works the same way
+                // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME, "targetpose_robotspace");
+                // targetPose = new Pose3d(
+                //     targetPoseArray[0],
+                //     targetPoseArray[1],
+                //     targetPoseArray[2],
+                //     new Rotation3d(
+                //         targetPoseArray[3],
+                //         targetPoseArray[4],
+                //         targetPoseArray[5]
+                //     )
+                // );
+
+                // manually parse json to get rid of delay??
+                // jsonString = limelightTable.getEntry("json").getString("");
+                // JSONObject json = (JSONObject) parser.parse(jsonString);
+                // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
+                //     (JSONObject) json.get("Results"))
+                //         .get("Fiducial")).get(0)).get("t6t_rs");
+                
+                // targetPose = new Pose3d(
+                //     (double) targetPoseJSON.get(0),
+                //     (double) targetPoseJSON.get(1),
+                //     (double) targetPoseJSON.get(2),
+                //     new Rotation3d(
+                //         (double) targetPoseJSON.get(3),
+                //         (double) targetPoseJSON.get(4),
+                //         (double) targetPoseJSON.get(5)
+                //     )
+                // );
+
+            } catch (Exception e) {
+                System.out.println("couldn't get latest target results");
+            }
+            distToTargetMeters = targetPose.getZ();
         }
+
 
         SmartDashboard.putNumber("distanceToTarget", distToTargetMeters);
     }

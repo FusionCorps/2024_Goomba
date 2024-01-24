@@ -4,26 +4,28 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class ShootSpeaker extends Command {
-    // Shooter mShooter;
+    Shooter mShooter;
 
-    // double launchPower = 0;
+    double lRpm = 0;
+    double rRpm = 0;
 
-    // public ShootSpeaker(Shooter shooter, double power) {
-    //     mShooter = shooter;
-    //     launchPower = power;
+    public ShootSpeaker(Shooter shooter, double leftRpm, double rightRpm) {
+        mShooter = shooter;
+        lRpm = leftRpm;
+        rRpm = rightRpm;
 
-    //     addRequirements(mShooter);
-    // }
+        addRequirements(mShooter);
+    }
 
     
-    // @Override
-    // public void execute() {
-    //     mShooter.shoot(launchPower);
-    // }
+    @Override
+    public void execute() {
+        mShooter.shoot(lRpm,rRpm);
+    }
 
-    // @Override
-    // public void end(boolean interrupted) {
-    //     mShooter.shoot(0);
-    // }
+    @Override
+    public void end(boolean interrupted) {
+        mShooter.shoot(0,0);
+    }
     
 }

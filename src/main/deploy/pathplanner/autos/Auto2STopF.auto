@@ -37,21 +37,28 @@
           }
         },
         {
-          "type": "named",
+          "type": "sequential",
           "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2STop2F"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "AimAtTarget"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "ShootSpeaker"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2STop2F"
+                }
+              }
+            ]
           }
         }
       ]
