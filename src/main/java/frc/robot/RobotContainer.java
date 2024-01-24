@@ -30,6 +30,7 @@ import frc.robot.commands.launcher.ShootSpeaker;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
+import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -57,8 +58,8 @@ public class RobotContainer {
             drivetrain.resetGyro();
         }));
 
-        robotController.y().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
-        // robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
+        robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
+        robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
 
         robotController.x().whileTrue(
             drivetrain.rotateToAngleCommand(180, 2.0, 0.75)
@@ -71,6 +72,12 @@ public class RobotContainer {
             .andThen(new WaitCommand(0.1))
             .andThen(Commands.runOnce(() -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
         );
+
+        robotController.rightBumper().toggleOnTrue(drivetrain.runSwerveFCwAim(
+            robotController::getLeftY,
+            robotController::getLeftX,
+            2.0));
+            
 
         // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));
@@ -137,9 +144,9 @@ public class RobotContainer {
                 new InstantCommand(() -> System.out.println("Starting Pose: "
                         + PathPlannerAuto.getStaringPoseFromAutoFile(autoChooser.getSelected().getName()))));
 
-        NamedCommands.registerCommand("ShootSpeaker", Commands.print(null));
-        NamedCommands.registerCommand("ShootAmp", Commands.print(null));
-        NamedCommands.registerCommand("RunIntake", Commands.print(null));
+        NamedCommands.registerCommand("ShootSpeaker", Commands.print("ShootSpeaker"));
+        NamedCommands.registerCommand("ShootAmp", Commands.print("ShootAmp"));
+        NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
         // NamedCommands.registerCommand("ShootSpeaker", new ShootSpeaker(shooter, 0.25));
         // NamedCommands.registerCommand("ShootAmp", new ShootSpeaker(shooter, 0.25));
         // NamedCommands.registerCommand("RunIntake", new RunIntake(intake));

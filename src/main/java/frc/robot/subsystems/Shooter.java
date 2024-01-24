@@ -74,7 +74,7 @@ public class Shooter extends SubsystemBase {
         // leftMotor.set(leftRpm);
     }   
     
-    public void setShooterAngle(double angleOfShooter){
+    public void setShooterAngle(double angleOfShooter) {
 
     
 

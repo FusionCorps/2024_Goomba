@@ -24,6 +24,9 @@ import frc.robot.Constants.DrivetrainConstants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
+
+import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
+
 import java.util.function.DoubleSupplier;
 
 /**
@@ -34,7 +37,6 @@ import java.util.function.DoubleSupplier;
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
     // current distance to target
-    double distToTargetMeters = 0.0;
     public Cameras mCamera;
 
     public CommandSwerveDrivetrain(
@@ -54,7 +56,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     }
 
     @Override
-    public void periodic() {        
+    public void periodic() { 
         // updates the odometry from aprilTag data
         updateOdometryFromAprilTags(1.0);
     }
@@ -106,9 +108,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      * @param maxDist the maximum distance to the target in meters required for odometry to be updated, recommended <= 1.0
      */
     private void updateOdometryFromAprilTags(double maxDist) {
-        if (RobotBase.isReal() && mCamera.hasTarget() && distToTargetMeters < maxDist) {
+        if (RobotBase.isReal() && mCamera.hasTarget() && mCamera.distToTargetMeters < maxDist) {
                 Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
-                System.out.println("Pose update: " + pose);
+                // System.out.println("Pose update: " + pose);
                 // double timestamp = Timer.getFPGATimestamp();
                 double timestamp = Timer.getFPGATimestamp()
                 - LimelightHelpers.getLatency_Capture(Constants.LIMELIGHT_NAME) / 1000.0
@@ -167,9 +169,6 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         m_pigeon2.reset();
     }
 
-    
-
-
     /**
      * Rotates to a target in place using the limelight.
      * @param toleranceDeg the tolerance in degrees
@@ -189,7 +188,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                     double tx = mCamera.getTX();
                     // get pid output of normalized tx (-1 to 1) and scale by max angular rate
                     SwerveRequest req = new SwerveRequest.FieldCentric().withRotationalRate(
-                            pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * DrivetrainConstants.MaxAngularRate);
+                            pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate);
                     setControl(req);
                 }
             })
@@ -300,7 +299,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 .withDeadband(deadband)
                 .withVelocityX(-x.getAsDouble() * DrivetrainConstants.MaxSpeed)
                 .withVelocityY(-y.getAsDouble() * DrivetrainConstants.MaxSpeed)
-                .withRotationalRate(-rot.getAsDouble() * DrivetrainConstants.MaxAngularRate)));
+                .withRotationalRate(-rot.getAsDouble() * MaxAngularRate)));
     }
 
     /**
@@ -316,6 +315,36 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 .withDeadband(deadband)
                 .withVelocityX(-x.getAsDouble() * DrivetrainConstants.MaxSpeed)
                 .withVelocityY(-y.getAsDouble() * DrivetrainConstants.MaxSpeed)
-                .withRotationalRate(-rot.getAsDouble() * DrivetrainConstants.MaxAngularRate)));
+                .withRotationalRate(-rot.getAsDouble() * MaxAngularRate)));
+    }
+
+    public Command runSwerveFCwAim(DoubleSupplier x, DoubleSupplier y, double toleranceDeg) {
+        PIDController pid = new PIDController(
+            Constants.PIDConstants.toTargetRotKP, 
+            Constants.PIDConstants.toTargetRotKI,  
+            Constants.PIDConstants.toTargetRotKD);
+        double deadband = 0.05;
+        double movementDamp = 0.3; // percentage
+        pid.setTolerance(toleranceDeg);
+        pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
+        return run(() -> {
+            if (mCamera.hasTarget()) {
+                double tx = mCamera.getTX();
+                // get pid output of normalized tx (-1 to 1) and scale by max angular rate
+                setControl(new SwerveRequest.FieldCentric()
+                    .withDeadband(deadband)
+                    .withVelocityX(movementDamp * -x.getAsDouble() * DrivetrainConstants.MaxSpeed)
+                    .withVelocityY(movementDamp * -y.getAsDouble() * DrivetrainConstants.MaxSpeed)
+                    .withRotationalRate(
+                        pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate
+                    ));
+            }})
+            .until(() -> !mCamera.hasTarget())
+            .finallyDo(() -> {
+                // stop rotating
+                setControl(new SwerveRequest.SwerveDriveBrake());
+                pid.close();
+            }
+        );
     }
 }

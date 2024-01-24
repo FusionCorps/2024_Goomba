@@ -356,8 +356,6 @@ public class LimelightHelpers {
         }
     }
 
-    public static final char[] LimelightTarget_Fiducial = null;
-
     private static ObjectMapper mapper;
 
     /** Print JSON Parse time to the console in milliseconds */

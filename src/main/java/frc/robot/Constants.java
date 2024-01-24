@@ -6,7 +6,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.Unit;
 import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -15,7 +14,7 @@ public class Constants {
         // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
         public static final double toTargetRotKP = 0.3;
         public static final double toTargetRotKI = 0;
-        public static final double toTargetRotKD = 0.05;
+        public static final double toTargetRotKD = 0.04;
 
         public static final double toAngleRotKP = 4.25;
         public static final double toAngleRotKI = 0.0;

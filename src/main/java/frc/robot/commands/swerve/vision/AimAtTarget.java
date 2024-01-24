@@ -19,18 +19,18 @@ public class AimAtTarget extends Command {
         PIDConstants.toTargetRotKI,  
         PIDConstants.toTargetRotKD);
     Timer timer = new Timer();
-    private double runTime;
+    private double runTime = 0.0;
         
     double tx = 0.0;
 
     public AimAtTarget(CommandSwerveDrivetrain drivetrain, double toleranceDeg, double runTime) {
-        timer.restart();
         pid.setTolerance(toleranceDeg);
         pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
         this.runTime = runTime;
         mDrivetrain = drivetrain;
-
         addRequirements(mDrivetrain);
+
+        timer.start();
     }
 
     @Override
@@ -42,6 +42,7 @@ public class AimAtTarget extends Command {
             SwerveRequest req = new SwerveRequest.FieldCentric().withRotationalRate(
                     pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) 
                     * DrivetrainConstants.MaxAngularRate);
+            
             mDrivetrain.setControl(req);
         }
     }
@@ -56,5 +57,7 @@ public class AimAtTarget extends Command {
         // stop rotating
         mDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
         pid.close();
+        timer.stop();
+        timer.reset();
     }
 }

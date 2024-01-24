@@ -35,6 +35,8 @@ public class RotateToAngle extends Command {
         rotReq.HeadingController.setTolerance(Units.degreesToRadians(toleranceDeg));
         
         this.runTime = runTime;
+
+        timer.start();
     }
 
     @Override
@@ -59,5 +61,7 @@ public class RotateToAngle extends Command {
         // stop rotating
         mDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
         rotReq.HeadingController.reset();
+        timer.stop();
+        timer.reset();
     }
 }
