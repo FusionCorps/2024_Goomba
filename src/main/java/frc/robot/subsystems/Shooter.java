@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -17,9 +16,7 @@ public class Shooter extends SubsystemBase {
     private SparkPIDController leftController, rightController;
 
     private TalonFX pivotMotor;
-    private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
-    private MotionMagicConfigs motionMagic = new MotionMagicConfigs();
-    
+    private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();    
 
     public Shooter() {
         leftMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
