@@ -284,8 +284,6 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         return run(() -> setControl(new SwerveRequest.SwerveDriveBrake()));
     }
 
-    
-
     /**
      * Runs the swerve drive command with field-centric control.
      * @param x the x-axis (forward) value for velocity control
