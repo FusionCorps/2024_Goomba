@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class SwerveBrake extends Command {
-    CommandSwerveDrivetrain mDrivetrain;
+    private CommandSwerveDrivetrain mDrivetrain;
 
     public SwerveBrake(CommandSwerveDrivetrain drivetrain) {
         mDrivetrain = drivetrain;

@@ -12,10 +12,9 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 // rotates to a desired angle in place
 public class RotateToAngle extends Command {
-    CommandSwerveDrivetrain mDrivetrain;
-    Timer timer = new Timer();
-    double runTime; // how long in seconds to aim
-    double desiredHeading = 0; // target angle to aim to, relative to forward in odometry
+    private CommandSwerveDrivetrain mDrivetrain;
+    private Timer timer = new Timer();
+    private double runTime; // how long in seconds to aim
 
     SwerveRequest.FieldCentricFacingAngle rotReq; 
 

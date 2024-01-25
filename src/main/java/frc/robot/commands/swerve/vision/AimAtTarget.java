@@ -14,15 +14,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 // aims at a target in place
 public class AimAtTarget extends Command {
     private CommandSwerveDrivetrain mDrivetrain;
-    PIDController pid = new PIDController(
+    private PIDController pid = new PIDController(
         PIDConstants.toTargetRotKP, 
         PIDConstants.toTargetRotKI,  
         PIDConstants.toTargetRotKD);
-    Timer timer = new Timer();
+    private Timer timer = new Timer();
     private double runTime = 0.0;
         
-    double tx = 0.0;
-
     public AimAtTarget(CommandSwerveDrivetrain drivetrain, double toleranceDeg, double runTime) {
         pid.setTolerance(toleranceDeg);
         pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
@@ -36,11 +34,10 @@ public class AimAtTarget extends Command {
     @Override
     public void execute() {
         // if target detected, rotate to target
-        if (mDrivetrain.mCamera.hasTarget()) {
-            double tx = mDrivetrain.mCamera.getTX();
+        if (mDrivetrain.getCamera().hasTarget()) {
             // get pid output of normalized tx (-1 to 1) and scale by max angular rate
             SwerveRequest req = new SwerveRequest.FieldCentric().withRotationalRate(
-                    pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) 
+                    pid.calculate(mDrivetrain.getCamera().getTX() / Constants.LIMELIGHT_TX_RANGE_DEG) 
                     * DrivetrainConstants.MaxAngularRate);
             
             mDrivetrain.setControl(req);

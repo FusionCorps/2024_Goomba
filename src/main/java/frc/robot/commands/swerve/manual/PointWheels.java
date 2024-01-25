@@ -8,8 +8,8 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class PointWheels extends Command {
-    CommandSwerveDrivetrain mDrivetrain;
-    CommandXboxController controller = RobotContainer.robotController;
+    private CommandSwerveDrivetrain mDrivetrain;
+    private CommandXboxController controller = RobotContainer.robotController;
 
     public PointWheels(CommandSwerveDrivetrain drivetrain) {
         mDrivetrain = drivetrain;

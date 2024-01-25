@@ -36,13 +36,13 @@ import frc.robot.subsystems.*;
 
 public class RobotContainer {
     public static CommandXboxController robotController = new CommandXboxController(0); // joystick
-    public static Cameras mCameras = new Cameras();
     public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
     // Intake intake = new Intake();
     // Shooter shooter = new Shooter();
     private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
     
     private SendableChooser<Command> autoChooser;
+    private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
     
     /**
@@ -98,9 +98,16 @@ public class RobotContainer {
         var location = DriverStation.getLocation();
         if (location.isPresent()) {
             allianceLocation = location.getAsInt();
-        }
+        } else System.err.println("Location not found");
 
         configureAuto();
+
+        // set up pipeline chooser
+        pipeLineChooser.setDefaultOption("AprilTag", 0);
+        pipeLineChooser.addOption("Note", 1);
+        pipeLineChooser.onChange((num) -> {drivetrain.getCamera().setPipeline(num); System.out.println("pipeline set to " + num);});
+        SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
+
         configureBindings();
 
         // if (Utils.isSimulation()) {

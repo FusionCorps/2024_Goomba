@@ -4,9 +4,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
 public class AimShooterAngle extends Command {
-
-    Shooter mShooter;
-    double shooterAngle;
+    private Shooter mShooter;
+    private double shooterAngle;
 
     public AimShooterAngle(Shooter shooter, double angle){
         shooterAngle = angle;

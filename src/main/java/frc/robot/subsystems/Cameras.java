@@ -14,33 +14,33 @@ import frc.robot.LimelightHelpers;
 
 
 public class Cameras extends SubsystemBase {
-    
-    NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-    double distToTargetMeters = 0.0;
-    Pose3d targetPose = new Pose3d();
+    private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    public double distToTargetMeters = 0.0;
+    private Pose3d targetPose = new Pose3d();
 
-    JSONParser parser = new JSONParser();
-    String jsonString;
+    private JSONParser parser = new JSONParser();
+    private String jsonString;
 
     public Cameras() {
         limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
         limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
         limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
         limelightTable.getEntry("camerapose_robotspace_set").setDoubleArray(new double[] {
-            0.12,
-            0.0,
-            1.3716,
-            0, 1, 0
+            0.12, // forward
+            0.0, // right
+            1.3716, // up
+            0, 1, 0 // roll, pitch, yaw
         });
     }
 
     @Override
     public void periodic() {
-        if (hasTarget()) {
-            System.out.println("got target");
+        // when seeing apriltag, calculate distance to apriltag
+        if (hasTarget() && limelightTable.getEntry("getpipe").getDouble(0.0) == 0) {
+            System.out.println("got apriltag");
             try {
-                // var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
-                // targetPose = fid[0].getTargetPose_RobotSpace();
+                var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
+                targetPose = fid[0].getTargetPose_RobotSpace();
 
                 // acc to limelight docs, works, but key doesn't appear in networktables???
                 // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
@@ -74,26 +74,19 @@ public class Cameras extends SubsystemBase {
                 //         (double) targetPoseJSON.get(5)
                 //     )
                 // );
-                // distToTargetMeters = targetPose.getZ();
+                distToTargetMeters = targetPose.getZ();
             } catch (Exception e) {
-                System.err.println("couldn't get latest target results");
+                System.err.println("couldn't get latest apritag pose results");
             }
         }
 
-
         SmartDashboard.putNumber("distanceToTarget", distToTargetMeters);
-    }
-
-    public double getDistanceToAprilTag() {
-        if (hasTarget())
-            return distToTargetMeters;
-        else return 0.0;
     }
 
     /**
     * Gets the tx value from the limelight.
     * tx is the horizontal offset from the crosshair to the target, in degrees.
-    * tx > 0 means the target is to the right of the crosshair.
+    * tx > 0 means the target is to the left of the crosshair.
     * @return tx (degrees)
     */
     public double getTX() {
@@ -119,6 +112,7 @@ public class Cameras extends SubsystemBase {
         return limelightTable.getEntry("tv").getDouble(0) == 1;
     }
 
-
-    
+    public void setPipeline(int pipeline) {
+        limelightTable.getEntry("pipeline").setNumber(pipeline);
+    }
 }

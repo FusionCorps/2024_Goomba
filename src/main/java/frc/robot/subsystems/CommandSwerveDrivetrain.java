@@ -36,8 +36,7 @@ import java.util.function.DoubleSupplier;
  * and executing various commands related to the drivetrain.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
-    // current distance to target
-    public Cameras mCamera;
+    private Cameras mCamera;
 
     public CommandSwerveDrivetrain(
         Cameras camera,
@@ -167,6 +166,14 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      */
     public void resetGyro() {
         m_pigeon2.reset();
+    }
+
+    /**
+     * 
+     * @return the drivetrain camera
+     */
+    public Cameras getCamera() {
+        return mCamera;
     }
 
     /**
@@ -316,6 +323,14 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 .withRotationalRate(-rot.getAsDouble() * MaxAngularRate)));
     }
 
+    /**
+     * Runs the swerve drive command with field-centric control.
+     * However, rotation is automatically controlled to aim at a target in vision.
+     * @param x the x-axis (forward) value for velocity control
+     * @param y the y-axis (strafe) value for velocity control
+     * @param toleranceDeg the tolerance in degrees for aiming
+     * @return the command to be executed
+     */
     public Command runSwerveFCwAim(DoubleSupplier x, DoubleSupplier y, double toleranceDeg) {
         PIDController pid = new PIDController(
             Constants.PIDConstants.toTargetRotKP, 

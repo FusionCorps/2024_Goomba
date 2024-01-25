@@ -7,6 +7,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackTy
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class Constants {
@@ -139,7 +140,7 @@ public class Constants {
             kInvertRightSide);
 
         public static final CommandSwerveDrivetrain DriveTrain = new CommandSwerveDrivetrain(
-            RobotContainer.mCameras,DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
+            new Cameras(), DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
 
         public static final double MaxSpeed = 5; // 6.6 meters per second max speed
         public static final double MaxAngularRate = 2 * Math.PI; // 1 rotation per second max rotation rate
@@ -152,18 +153,11 @@ public class Constants {
         public static final double DRIVEBASE_RADIUS = Units.inchesToMeters(Math.sqrt(
             Math.pow(FL_BL_DISTANCE / 2, 2)
                 + Math.pow(FR_BR_DISTANCE / 2, 2))); // in METERS, distance from center of robot to module
-        
-
 }
-    
-
-    public static final String LIMELIGHT_NAME = "limelight";
     public static final int INTAKE_MOTOR_ID = 25; // TODO: change this id
     public static final int TOP_SHOOTER_MOTOR_ID = -1; // TODO: change this id
     public static final int BOTTOM_SHOOTER_MOTOR_ID = -1; // TODO: change this id
     public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
-
-
 
     public static final double PIVOT_kP = 0.2;
     public static final double PIVOT_kD = 0;
@@ -173,8 +167,7 @@ public class Constants {
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
     public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
     
-
-    
+    public static final String LIMELIGHT_NAME = "limelight";
     public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
     public static final double LIMELIGHT_TY_RANGE_DEG = 24.85; // range is thus -24.85 to 24.85
 
@@ -188,8 +181,6 @@ public class Constants {
     public static final double ampTargetHeightMeters = Units.inchesToMeters(53.375); // identical height to source
     // 47.5 inches to bottom of target, 4.5 to center of target
     public static final double trapTargetHeightMeters = Units.inchesToMeters(52); 
-
-
 
     public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
     public static int allianceLocation = -1; // -1 by default, set in Robot.java

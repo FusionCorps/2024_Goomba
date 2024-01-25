@@ -13,12 +13,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
-    CANSparkFlex leftMotor, rightMotor;
-    SparkPIDController leftController, rightController;
+    private CANSparkFlex leftMotor, rightMotor;
+    private SparkPIDController leftController, rightController;
 
-    TalonFX pivotMotor;
-    TalonFXConfiguration pivotPID = new TalonFXConfiguration();
-    MotionMagicConfigs motionMagic = new MotionMagicConfigs();
+    private TalonFX pivotMotor;
+    private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
+    private MotionMagicConfigs motionMagic = new MotionMagicConfigs();
     
 
     public Shooter() {
@@ -27,19 +27,18 @@ public class Shooter extends SubsystemBase {
 
         pivotMotor = new TalonFX(Constants.SHOOTER_PIVOT_MOTOR_ID);
 
-        pivotMotor.setNeutralMode(NeutralModeValue.Brake);
+        pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-        pivotPID.Slot0.kV = 0;
-        pivotPID.Slot0.kP = Constants.PIVOT_kP;
-        pivotPID.Slot0.kI = Constants.PIVOT_kI;
-        pivotPID.Slot0.kD = Constants.PIVOT_kD;
+        pivotConfigs.Slot0.kV = 0;
+        pivotConfigs.Slot0.kP = Constants.PIVOT_kP;
+        pivotConfigs.Slot0.kI = Constants.PIVOT_kI;
+        pivotConfigs.Slot0.kD = Constants.PIVOT_kD;
 
-        pivotMotor.getConfigurator().apply(pivotPID);
+        pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 0.5;
+        pivotConfigs.MotionMagic.MotionMagicAcceleration = 1;
+        pivotConfigs.MotionMagic.MotionMagicJerk = 2;
 
-        motionMagic.MotionMagicCruiseVelocity = 0.5;
-        motionMagic.MotionMagicAcceleration = 1;
-        motionMagic.MotionMagicJerk = 2;
-        pivotMotor.getConfigurator().apply(motionMagic);
+        pivotMotor.getConfigurator().apply(pivotConfigs);
 
 
         // Set PID for left motor
@@ -75,10 +74,6 @@ public class Shooter extends SubsystemBase {
     }   
     
     public void setShooterAngle(double angleOfShooter) {
-
-    
-
         pivotMotor.set(angleOfShooter);
-
     }
 }

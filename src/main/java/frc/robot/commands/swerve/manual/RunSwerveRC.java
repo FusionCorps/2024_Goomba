@@ -10,12 +10,12 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class RunSwerveRC extends Command {
-    CommandSwerveDrivetrain mDrivetrain;
-    CommandXboxController controller = RobotContainer.robotController;
+    private CommandSwerveDrivetrain mDrivetrain;
+    private CommandXboxController controller = RobotContainer.robotController;
     private boolean presetInputs = false;
 
-    double velX = 0, velY = 0, rot = 0;
-    double deadband = 0.05;
+    private double velX = 0, velY = 0, rot = 0;
+    private double deadband = 0.05;
 
     SwerveRequest request = new SwerveRequest.RobotCentric()
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
