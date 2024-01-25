@@ -32,11 +32,14 @@ import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.commands.swerve.vision.DriveToNote;
+import frc.robot.commands.tarsarm.SetBasePercent;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
     public static CommandXboxController robotController = new CommandXboxController(0); // joystick
     public static CommandSwerveDrivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain; // drivetrain
+
+    public TarsArm tarsArm = new TarsArm();
     // Intake intake = new Intake();
     // Shooter shooter = new Shooter();
     private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
@@ -83,6 +86,7 @@ public class RobotContainer {
         robotController.a().whileTrue(
             new AimAtTarget(drivetrain, 3.0, 0.25)
             .andThen(new DriveToNote(drivetrain)));
+        //robotController.povUp().whileTrue(new SetBasePercent(tarsArm, .05));
 
         // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));
