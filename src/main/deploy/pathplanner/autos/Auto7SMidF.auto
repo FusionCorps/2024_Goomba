@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.8093860062363999,
-      "y": 6.291455090032687
+      "x": 0.7158327706968803,
+      "y": 4.315142989260338
     },
     "rotation": -60.0
   },
@@ -185,7 +185,7 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
