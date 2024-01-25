@@ -37,9 +37,10 @@ public class Cameras extends SubsystemBase {
     @Override
     public void periodic() {
         if (hasTarget()) {
+            System.out.println("got target");
             try {
-                var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
-                targetPose = fid[0].getTargetPose_RobotSpace();
+                // var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
+                // targetPose = fid[0].getTargetPose_RobotSpace();
 
                 // acc to limelight docs, works, but key doesn't appear in networktables???
                 // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
@@ -73,11 +74,10 @@ public class Cameras extends SubsystemBase {
                 //         (double) targetPoseJSON.get(5)
                 //     )
                 // );
-
+                // distToTargetMeters = targetPose.getZ();
             } catch (Exception e) {
                 System.err.println("couldn't get latest target results");
             }
-            distToTargetMeters = targetPose.getZ();
         }
 
 

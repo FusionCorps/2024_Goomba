@@ -50,7 +50,7 @@ public class RobotContainer {
      */
     private void configureBindings() {
         drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-        robotController.a().whileTrue(new PointWheels(drivetrain));
+        // robotController.a().whileTrue(new PointWheels(drivetrain));
         robotController.b().whileTrue(new SwerveBrake(drivetrain));
 
         // reset odometry to current position, and zero gyro yaw
@@ -80,7 +80,9 @@ public class RobotContainer {
             robotController::getLeftX,
             2.0));
             
-        robotController.leftTrigger().whileTrue(new DriveToNote(drivetrain));
+        robotController.a().whileTrue(
+            new AimAtTarget(drivetrain, 3.0, 0.25)
+            .andThen(new DriveToNote(drivetrain)));
 
         // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));

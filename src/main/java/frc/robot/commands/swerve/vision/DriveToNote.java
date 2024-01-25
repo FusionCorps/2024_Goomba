@@ -12,8 +12,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 // drive forward to note
 public class DriveToNote extends Command{
     CommandSwerveDrivetrain mDrivetrain;
-    double minTolerance = 18.0;
-    double maxTolerance = 21.0;
+    double tolerance = 18.0;
 
     public DriveToNote(CommandSwerveDrivetrain drivetrain) {
         mDrivetrain = drivetrain;
@@ -22,11 +21,13 @@ public class DriveToNote extends Command{
 
     @Override
     public void execute() {
+        System.out.println("running DriveToNote");
         if (mDrivetrain.mCamera.hasTarget()) {
             double ty = mDrivetrain.mCamera.getTY();
-            if (ty > minTolerance && ty < maxTolerance) {
-                mDrivetrain.setControl(new SwerveRequest.FieldCentric()
-                    .withVelocityX(0.01*MaxSpeed));
+            if (ty < tolerance) {
+                SwerveRequest req = new SwerveRequest.RobotCentric()
+                    .withVelocityX(-0.1*MaxSpeed);
+                mDrivetrain.setControl(req);
             }
             else mDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
         }
