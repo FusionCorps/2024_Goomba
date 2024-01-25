@@ -31,6 +31,7 @@ import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
 import frc.robot.commands.swerve.vision.AimAtTarget;
+import frc.robot.commands.swerve.vision.DriveToNote;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -79,6 +80,7 @@ public class RobotContainer {
             robotController::getLeftX,
             2.0));
             
+        robotController.leftTrigger().whileTrue(new DriveToNote(drivetrain));
 
         // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));

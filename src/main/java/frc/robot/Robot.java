@@ -17,23 +17,6 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        // Set up limelight
-        NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-        limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
-        limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
-        limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
-        limelightTable.getEntry("camerapose_robotspace_set").setDoubleArray(new double[] {
-            0.12,
-            0.0,
-            1.3716,
-            0, 1, 0
-        });
-        // LimelightHelpers.setCameraPose_RobotSpace(
-        //     Constants.LIMELIGHT_NAME, 
-        //     0, 0, 0, 0, 0, 0);
-
-        
-
         m_robotContainer = new RobotContainer();
     }
 
