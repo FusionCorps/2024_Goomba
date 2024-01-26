@@ -36,49 +36,47 @@ public class Cameras extends SubsystemBase {
     @Override
     public void periodic() {
         // when seeing apriltag, calculate distance to apriltag
-        if (hasTarget() && limelightTable.getEntry("getpipe").getDouble(0.0) == 0) {
-            System.out.println("got apriltag");
-            try {
-                var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
-                targetPose = fid[0].getTargetPose_RobotSpace();
+        try {
+            var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
+            targetPose = fid[0].getTargetPose_RobotSpace();
 
-                // acc to limelight docs, works, but key doesn't appear in networktables???
-                // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
-                // // this works the same way
-                // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME, "targetpose_robotspace");
-                // targetPose = new Pose3d(
-                //     targetPoseArray[0],
-                //     targetPoseArray[1],
-                //     targetPoseArray[2],
-                //     new Rotation3d(
-                //         targetPoseArray[3],
-                //         targetPoseArray[4],
-                //         targetPoseArray[5]
-                //     )
-                // );
+            // acc to limelight docs, works, but key doesn't appear in networktables???
+            // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
+            // // this works the same way
+            // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME, "targetpose_robotspace");
+            // targetPose = new Pose3d(
+            //     targetPoseArray[0],
+            //     targetPoseArray[1],
+            //     targetPoseArray[2],
+            //     new Rotation3d(
+            //         targetPoseArray[3],
+            //         targetPoseArray[4],
+            //         targetPoseArray[5]
+            //     )
+            // );
 
-                // manually parse json to get rid of delay??
-                // jsonString = limelightTable.getEntry("json").getString("");
-                // JSONObject json = (JSONObject) parser.parse(jsonString);
-                // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
-                //     (JSONObject) json.get("Results"))
-                //         .get("Fiducial")).get(0)).get("t6t_rs");
-                
-                // targetPose = new Pose3d(
-                //     (double) targetPoseJSON.get(0),
-                //     (double) targetPoseJSON.get(1),
-                //     (double) targetPoseJSON.get(2),
-                //     new Rotation3d(
-                //         (double) targetPoseJSON.get(3),
-                //         (double) targetPoseJSON.get(4),
-                //         (double) targetPoseJSON.get(5)
-                //     )
-                // );
-                distToTargetMeters = targetPose.getZ();
-            } catch (Exception e) {
-                System.err.println("couldn't get latest apritag pose results");
-            }
+            // manually parse json to get rid of delay??
+            // jsonString = limelightTable.getEntry("json").getString("");
+            // JSONObject json = (JSONObject) parser.parse(jsonString);
+            // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
+            //     (JSONObject) json.get("Results"))
+            //         .get("Fiducial")).get(0)).get("t6t_rs");
+            
+            // targetPose = new Pose3d(
+            //     (double) targetPoseJSON.get(0),
+            //     (double) targetPoseJSON.get(1),
+            //     (double) targetPoseJSON.get(2),
+            //     new Rotation3d(
+            //         (double) targetPoseJSON.get(3),
+            //         (double) targetPoseJSON.get(4),
+            //         (double) targetPoseJSON.get(5)
+            //     )
+            // );
+            distToTargetMeters = targetPose.getZ();
+        } catch (Exception e) {
+            System.err.println("couldn't get latest apritag pose results");
         }
+    }
 
         SmartDashboard.putNumber("distanceToTarget", distToTargetMeters);
     }
@@ -115,4 +113,14 @@ public class Cameras extends SubsystemBase {
     public void setPipeline(int pipeline) {
         limelightTable.getEntry("pipeline").setNumber(pipeline);
     }
+
+    public int getPipeline() {
+        return (int) limelightTable.getEntry("getpipe").getDouble(0);
+    }
+
+    public Pose3d getPrimaryAprilTagPose() {
+        if (hasTarget() && getPipeline() == 0) {
+            return targetPose;
+        }
+        
 }

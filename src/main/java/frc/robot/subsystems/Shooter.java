@@ -8,6 +8,7 @@ import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -71,6 +72,15 @@ public class Shooter extends SubsystemBase {
     }   
     
     public void setShooterAngle(double angleOfShooter) {
-        pivotMotor.set(angleOfShooter);
+        pivotMotor.setPosition(angleOfShooter);
+    }
+
+    public Command aimShooterAngleCommand(double angle) {
+        return run(() -> setShooterAngle(angle));
+    }
+
+    public Command shootSpeakerCommand(double leftRPM, double rightRPM){
+        return run(() -> shoot(leftRPM, rightRPM))
+        .finallyDo(() -> shoot(0, 0));
     }
 }
