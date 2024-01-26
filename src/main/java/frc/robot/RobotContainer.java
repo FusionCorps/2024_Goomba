@@ -81,7 +81,8 @@ public class RobotContainer {
             2.0));
             
         robotController.a().whileTrue(
-            new AimAtTarget(drivetrain, 3.0, 0.25)
+            //new AimAtTarget(drivetrain, 3.0, 0.25)
+            drivetrain.aimAtTargetCommand(2, 0.25)
             .andThen(new DriveToNote(drivetrain)));
 
         // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));

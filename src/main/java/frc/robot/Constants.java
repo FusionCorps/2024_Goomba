@@ -13,7 +13,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class Constants {
     public class PIDConstants {
         // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-        public static final double toTargetRotKP = 0.3;
+        public static final double toTargetRotKP = 0.8;
         public static final double toTargetRotKI = 0;
         public static final double toTargetRotKD = 0.04;
 

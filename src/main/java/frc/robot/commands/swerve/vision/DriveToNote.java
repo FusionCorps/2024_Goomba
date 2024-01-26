@@ -10,10 +10,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 // drive forward to note
 public class DriveToNote extends Command{
     private CommandSwerveDrivetrain mDrivetrain;
-    private double tolerance = 18.0; // in degrees
+    private double tolerance = -18.3; // in degrees
+    private boolean isDone;
 
     public DriveToNote(CommandSwerveDrivetrain drivetrain) {
         mDrivetrain = drivetrain;
+
+        isDone = false;
         addRequirements(mDrivetrain);
     }
 
@@ -22,12 +25,24 @@ public class DriveToNote extends Command{
         System.out.println("running DriveToNote");
         if (mDrivetrain.getCamera().hasTarget()) {
             double ty = mDrivetrain.getCamera().getTY();
-            if (ty < tolerance) {
+            if (ty > tolerance) {
                 SwerveRequest req = new SwerveRequest.RobotCentric()
-                    .withVelocityX(-0.1*MaxSpeed);
+                    .withVelocityX(-0.3*MaxSpeed);
                 mDrivetrain.setControl(req);
             }
-            else mDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
+            else isDone = true;
         }
+    }
+
+    @Override
+    public boolean isFinished(){
+
+        return isDone;
+    }
+
+    @Override
+    public void end(boolean isFinished){
+        mDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
+        isDone = false;
     }
 }

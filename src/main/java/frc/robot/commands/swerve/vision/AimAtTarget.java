@@ -28,6 +28,7 @@ public class AimAtTarget extends Command {
         mDrivetrain = drivetrain;
         addRequirements(mDrivetrain);
 
+        
         timer.start();
     }
 
@@ -56,5 +57,6 @@ public class AimAtTarget extends Command {
         pid.close();
         timer.stop();
         timer.reset();
+        
     }
 }
