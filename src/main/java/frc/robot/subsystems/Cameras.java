@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.limelightTab;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,86 +16,45 @@ import frc.robot.LimelightHelpers;
 
 
 public class Cameras extends SubsystemBase {
-    
-    NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-    double distToTargetMeters = 0.0;
-    Pose3d targetPose = new Pose3d();
+    private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
+    public double distToAprilTag = 0.0; // in meters
+    private Pose3d aprilTagTargetPose = new Pose3d();
 
-    JSONParser parser = new JSONParser();
-    String jsonString;
+    private JSONParser parser = new JSONParser();
+    private String jsonString;
 
     public Cameras() {
         limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
         limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
         limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
         limelightTable.getEntry("camerapose_robotspace_set").setDoubleArray(new double[] {
-            0.12,
-            0.0,
-            1.3716,
-            0, 1, 0
+            0.12, // forward
+            0.0, // right
+            1.3716, // up
+            0, 1, 0 // roll, pitch, yaw
         });
+
+        limelightTab.addDouble("tx", this::getTX);
+        limelightTab.addDouble("ty", this::getTY);
+        limelightTab.addBoolean("hasTarget", this::hasTarget);
+        limelightTab.addDouble("Distance to AprilTag", () -> distToAprilTag);
+        limelightTab.addInteger("Pipeline", this::getPipeline);
     }
 
     @Override
     public void periodic() {
-        if (hasTarget()) {
-            try {
-                var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
-                targetPose = fid[0].getTargetPose_RobotSpace();
-
-                // acc to limelight docs, works, but key doesn't appear in networktables???
-                // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
-                // // this works the same way
-                // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME, "targetpose_robotspace");
-                // targetPose = new Pose3d(
-                //     targetPoseArray[0],
-                //     targetPoseArray[1],
-                //     targetPoseArray[2],
-                //     new Rotation3d(
-                //         targetPoseArray[3],
-                //         targetPoseArray[4],
-                //         targetPoseArray[5]
-                //     )
-                // );
-
-                // manually parse json to get rid of delay??
-                // jsonString = limelightTable.getEntry("json").getString("");
-                // JSONObject json = (JSONObject) parser.parse(jsonString);
-                // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
-                //     (JSONObject) json.get("Results"))
-                //         .get("Fiducial")).get(0)).get("t6t_rs");
-                
-                // targetPose = new Pose3d(
-                //     (double) targetPoseJSON.get(0),
-                //     (double) targetPoseJSON.get(1),
-                //     (double) targetPoseJSON.get(2),
-                //     new Rotation3d(
-                //         (double) targetPoseJSON.get(3),
-                //         (double) targetPoseJSON.get(4),
-                //         (double) targetPoseJSON.get(5)
-                //     )
-                // );
-
-            } catch (Exception e) {
-                System.err.println("couldn't get latest target results");
-            }
-            distToTargetMeters = targetPose.getZ();
+        try {
+            getPrimaryAprilTagPose(); // update apriltag pose
+            distToAprilTag = aprilTagTargetPose.getZ(); // update distToTarget
+        } catch (Exception e) {
+            System.err.println("couldn't get latest apritag pose results");
         }
-
-
-        SmartDashboard.putNumber("distanceToTarget", distToTargetMeters);
-    }
-
-    public double getDistanceToAprilTag() {
-        if (hasTarget())
-            return distToTargetMeters;
-        else return 0.0;
     }
 
     /**
     * Gets the tx value from the limelight.
     * tx is the horizontal offset from the crosshair to the target, in degrees.
-    * tx > 0 means the target is to the right of the crosshair.
+    * tx > 0 means the target is to the left of the crosshair.
     * @return tx (degrees)
     */
     public double getTX() {
@@ -119,6 +80,64 @@ public class Cameras extends SubsystemBase {
         return limelightTable.getEntry("tv").getDouble(0) == 1;
     }
 
+    /**
+     * Sets the Limelight pipeline.
+     * @param pipeline integer (0-9)
+     */
+    public void setPipeline(int pipeline) {
+        limelightTable.getEntry("pipeline").setNumber(pipeline);
+    }
 
-    
+    /**
+     * Returns the current Limelight pipeline.
+     * @return pipeline integer (0-9)
+     */
+    public int getPipeline() {
+        return (int) limelightTable.getEntry("getpipe").getDouble(0);
+    }
+
+    public Pose3d getPrimaryAprilTagPose() {
+        // get latest apriltag pose results, if on correct pipeline and target seen
+        if (hasTarget() && getPipeline() == 0) {
+            var fid = LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME).targetingResults.targets_Fiducials;
+            aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
+            return aprilTagTargetPose;
+        }
+        else return null;
+
+        // TODO: check if this alternative logic works
+        // acc to limelight docs, works, but key doesn't appear in networktables???
+            // double[] targetPoseArray = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
+            // // this works the same way
+            // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME, "targetpose_robotspace");
+            // targetPose = new Pose3d(
+            //     targetPoseArray[0],
+            //     targetPoseArray[1],
+            //     targetPoseArray[2],
+            //     new Rotation3d(
+            //         targetPoseArray[3],
+            //         targetPoseArray[4],
+            //         targetPoseArray[5]
+            //     )
+            // );
+
+            // TODO: check if this alternative logic works
+            // manually parse json to get rid of delay??
+            // jsonString = limelightTable.getEntry("json").getString("");
+            // JSONObject json = (JSONObject) parser.parse(jsonString);
+            // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
+            //     (JSONObject) json.get("Results"))
+            //         .get("Fiducial")).get(0)).get("t6t_rs");
+            
+            // targetPose = new Pose3d(
+            //     (double) targetPoseJSON.get(0),
+            //     (double) targetPoseJSON.get(1),
+            //     (double) targetPoseJSON.get(2),
+            //     new Rotation3d(
+            //         (double) targetPoseJSON.get(3),
+            //         (double) targetPoseJSON.get(4),
+            //         (double) targetPoseJSON.get(5)
+            //     )
+            // );
+    }
 }

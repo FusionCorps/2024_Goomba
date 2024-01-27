@@ -12,12 +12,12 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 // horizontally strafes to align with a target
 public class StrafeToAprilTag extends Command {
     private final CommandSwerveDrivetrain mDrivetrain;
-    double tx;
-    PIDController strPID = new PIDController(
+    private double tx;
+    private PIDController strPID = new PIDController(
             PIDConstants.strKP, 
             PIDConstants.strKI,  
             PIDConstants.strKD);
-    double toleranceDeg;
+    private double toleranceDeg;
         
     public StrafeToAprilTag(CommandSwerveDrivetrain drivetrain, double toleranceDeg) {
         this.toleranceDeg = toleranceDeg;
@@ -31,9 +31,9 @@ public class StrafeToAprilTag extends Command {
     @Override
     public void execute() {
          // if target detected, strafe toward it
-        if (mDrivetrain.mCamera.hasTarget()) {
+        if (mDrivetrain.getCamera().hasTarget()) {
             System.out.println("Strafe error: " + strPID.getPositionError());
-            double tx = mDrivetrain.mCamera.getTX();
+            double tx = mDrivetrain.getCamera().getTX();
             // normalize tx to be between -1 and 1, then scale by max angular rate
             // set strafe velocity to velY * scaling factor
             SwerveRequest req = new SwerveRequest.FieldCentric().withVelocityY(

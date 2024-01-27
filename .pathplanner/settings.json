@@ -7,9 +7,10 @@
     "2 Piece",
     "3 Piece",
     "4 Piece",
+    "5 Piece",
     "7 Piece theoretical",
     "Mobility",
-    "5 Piece",
+    "6 Piece",
     "Old"
   ],
   "autoFolders": [
@@ -18,11 +19,14 @@
     "3 Piece",
     "4 Piece",
     "5 Piece",
+    "6 Piece",
     "7 Piece theoretical",
+    "New Folder",
+    "findme",
     "Old"
   ],
   "defaultMaxVel": 5.0,
-  "defaultMaxAccel": 5.0,
+  "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
   "maxModuleSpeed": 4.5

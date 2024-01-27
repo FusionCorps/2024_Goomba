@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.limelightTab;
+
 import java.util.Map;
 
 import com.ctre.phoenix6.Utils;
@@ -24,27 +26,27 @@ import edu.wpi.first.wpilibj.util.Color8Bit;
 public class Telemetry {
     private final double MaxSpeed;
 
-    Field2d field2d = new Field2d(); // for visualizing robot position and trajectories
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("Drivetrain");
+    private Field2d field2d = new Field2d(); // for visualizing robot position and trajectories
+    private NetworkTable table = NetworkTableInstance.getDefault().getTable("Drivetrain");
 
-    StructArrayPublisher<SwerveModuleState> moduleStates = table
+    private StructArrayPublisher<SwerveModuleState> moduleStates = table
             .getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
-    StructArrayPublisher<SwerveModuleState> desiredStates = table
+    private StructArrayPublisher<SwerveModuleState> desiredStates = table
             .getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
 
     /* Keep a reference of the last pose to calculate the speeds */
-    Pose2d m_lastPose = new Pose2d();
-    double lastTime = Utils.getCurrentTimeSeconds();
+    private Pose2d m_lastPose = new Pose2d();
+    private double lastTime = Utils.getCurrentTimeSeconds();
 
     /* Mechanisms to represent the swerve module states */
-    Mechanism2d[] m_moduleMechanisms = new Mechanism2d[] {
+    private Mechanism2d[] m_moduleMechanisms = new Mechanism2d[] {
             new Mechanism2d(1, 1), 
             new Mechanism2d(1, 1), 
             new Mechanism2d(1, 1), 
             new Mechanism2d(1, 1),
     };
     /* A direction and length changing ligament for speed representation */
-    MechanismLigament2d[] m_moduleSpeeds = new MechanismLigament2d[] {
+    private MechanismLigament2d[] m_moduleSpeeds = new MechanismLigament2d[] {
         m_moduleMechanisms[0]
                 .getRoot("RootSpeed", 0.5, 0.5)
                 .append(new MechanismLigament2d("Speed", 0.5, 0)),
@@ -59,7 +61,7 @@ public class Telemetry {
                 .append(new MechanismLigament2d("Speed", 0.5, 0)),
     };
     /* A direction changing and length constant ligament for module direction */
-    MechanismLigament2d[] m_moduleDirections = new MechanismLigament2d[] {
+    private MechanismLigament2d[] m_moduleDirections = new MechanismLigament2d[] {
         m_moduleMechanisms[0]
                 .getRoot("RootDirection", 0.5, 0.5)
                 .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
@@ -92,7 +94,7 @@ public class Telemetry {
         }
 
         HttpCamera limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-        Shuffleboard.getTab("Limelight").add("LL", limelightFeed)
+        limelightTab.add("LL", limelightFeed)
         .withPosition(0, 0).withSize(15, 8)
         .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
     }

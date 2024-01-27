@@ -1,16 +1,17 @@
 package frc.robot.subsystems;
 import com.revrobotics.CANSparkFlex;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class Intake extends SubsystemBase {
-    public CANSparkFlex topMotor;
+    private CANSparkFlex topMotor;
 
     public Intake() {
-        topMotor = new CANSparkFlex(50, CANSparkFlex.MotorType.kBrushless);
+        topMotor = new CANSparkFlex(Constants.INTAKE_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
     }
 
     public void backward(){
-        topMotor.set(-.25);
+        topMotor.set(-0.25);
     }
     
     public void forward(){

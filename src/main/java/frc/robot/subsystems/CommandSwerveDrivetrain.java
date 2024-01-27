@@ -36,8 +36,7 @@ import java.util.function.DoubleSupplier;
  * and executing various commands related to the drivetrain.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
-    // current distance to target
-    public Cameras mCamera;
+    private Cameras mCamera;
 
     public CommandSwerveDrivetrain(
         Cameras camera,
@@ -108,7 +107,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      * @param maxDist the maximum distance to the target in meters required for odometry to be updated, recommended <= 1.0
      */
     private void updateOdometryFromAprilTags(double maxDist) {
-        if (RobotBase.isReal() && mCamera.hasTarget() && mCamera.distToTargetMeters < maxDist) {
+        if (RobotBase.isReal() && mCamera.hasTarget() && mCamera.distToAprilTag < maxDist && mCamera.getPipeline() == 0) {
                 Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
                 // System.out.println("Pose update: " + pose);
                 // double timestamp = Timer.getFPGATimestamp();
@@ -151,7 +150,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     /**
      * @return The current pose of the robot.
      */
-    private Pose2d getPose() {
+    public Pose2d getPose() {
         return getState().Pose;
     }
 
@@ -162,11 +161,22 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         return m_kinematics.toChassisSpeeds(getState().ModuleStates);
     }
 
+    public ChassisSpeeds getFieldRelativeSpeeds() {
+        return ChassisSpeeds.fromRobotRelativeSpeeds(getRobotRelativeSpeeds(), new Rotation2d(m_yawGetter.getValue() % 360.0));
+    }
     /**
      * Zeroes the gyro yaw.
      */
     public void resetGyro() {
         m_pigeon2.reset();
+    }
+
+    /**
+     * 
+     * @return the drivetrain camera
+     */
+    public Cameras getCamera() {
+        return mCamera;
     }
 
     /**
@@ -316,6 +326,14 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 .withRotationalRate(-rot.getAsDouble() * MaxAngularRate)));
     }
 
+    /**
+     * Runs the swerve drive command with field-centric control.
+     * However, rotation is automatically controlled to aim at a target in vision.
+     * @param x the x-axis (forward) value for velocity control
+     * @param y the y-axis (strafe) value for velocity control
+     * @param toleranceDeg the tolerance in degrees for aiming
+     * @return the command to be executed
+     */
     public Command runSwerveFCwAim(DoubleSupplier x, DoubleSupplier y, double toleranceDeg) {
         PIDController pid = new PIDController(
             Constants.PIDConstants.toTargetRotKP, 

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7824422299675968,
-      "y": 6.6493351038958615
+      "x": 0.7336934388833163,
+      "y": 4.32889264828411
     },
     "rotation": -60.0
   },
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid1F"
+                  "pathName": "6SMid1F"
                 }
               },
               {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid2F"
+                  "pathName": "6SMid2F"
                 }
               },
               {
@@ -86,7 +86,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid3F"
+                  "pathName": "6SMid3F"
                 }
               },
               {
@@ -117,7 +117,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid4F"
+                  "pathName": "6SMid4F"
                 }
               },
               {
@@ -132,7 +132,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "7SMid5F"
+            "pathName": "6SMid5F"
           }
         },
         {
@@ -154,7 +154,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid6F"
+                  "pathName": "6SMid6F"
                 }
               },
               {
@@ -169,44 +169,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "7SMid7F"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
-          }
-        },
-        {
-          "type": "sequential",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "7SMid8F"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "RunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "7SMid9F"
+            "pathName": "6SMid7F"
           }
         },
         {
@@ -224,6 +187,6 @@
       ]
     }
   },
-  "folder": "7 Piece theoretical",
+  "folder": "6 Piece",
   "choreoAuto": false
 }

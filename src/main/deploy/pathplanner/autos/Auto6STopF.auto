@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7824422299675968,
-      "y": 6.6493351038958615
+      "x": 0.7044441642327478,
+      "y": 6.756582444281278
     },
-    "rotation": -60.0
+    "rotation": 60.0
   },
   "command": {
     "type": "sequential",
@@ -24,7 +24,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid1F"
+                  "pathName": "6STop1F"
                 }
               },
               {
@@ -55,7 +55,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid2F"
+                  "pathName": "6STop2F"
                 }
               },
               {
@@ -86,38 +86,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid3F"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "RunIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "7SMid4F"
+                  "pathName": null
                 }
               },
               {
@@ -132,7 +101,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "7SMid5F"
+            "pathName": null
           }
         },
         {
@@ -154,7 +123,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid6F"
+                  "pathName": null
                 }
               },
               {
@@ -169,7 +138,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "7SMid7F"
+            "pathName": null
           }
         },
         {
@@ -185,13 +154,13 @@
           }
         },
         {
-          "type": "sequential",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "7SMid8F"
+                  "pathName": "6STop7F"
                 }
               },
               {
@@ -206,7 +175,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "7SMid9F"
+            "pathName": "6STop8F"
           }
         },
         {
@@ -224,6 +193,6 @@
       ]
     }
   },
-  "folder": "7 Piece theoretical",
+  "folder": "6 Piece",
   "choreoAuto": false
 }
