@@ -7,9 +7,10 @@
     "2 Piece",
     "3 Piece",
     "4 Piece",
+    "5 Piece",
     "7 Piece theoretical",
     "Mobility",
-    "5 Piece",
+    "6 Piece",
     "Old"
   ],
   "autoFolders": [
@@ -19,6 +20,7 @@
     "4 Piece",
     "5 Piece",
     "7 Piece theoretical",
+    "6 Piece",
     "Old"
   ],
   "defaultMaxVel": 5.0,
