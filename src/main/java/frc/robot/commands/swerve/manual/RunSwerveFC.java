@@ -7,6 +7,12 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
+/**
+ * Field-centric Movement, open-loop movement <p>
+ * Drive forward with negative Y (left joystick)
+ * Drive left with negative X (left joystick)
+ * Rotate counterclockwise with negative X (right joystick)
+ */
 public class RunSwerveFC extends Command {
     private CommandSwerveDrivetrain mDrivetrain;
     private CommandXboxController controller = RobotContainer.robotController;
@@ -33,12 +39,6 @@ public class RunSwerveFC extends Command {
     }
 
     @Override
-    /*
-     * Robot-centric Movement, open-loop movement
-     * Drive forward with negative Y (left joystick)
-     * Drive left with negative X (left joystick)
-     * Rotate counterclockwise with negative X (right joystick)
-     */
     public void execute() {
         // depending on presetInputs, use either controller input or preset values
         velX = (presetInputs ? velX : -controller.getLeftY()) * DrivetrainConstants.MaxSpeed;

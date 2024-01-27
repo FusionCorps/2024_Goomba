@@ -7,6 +7,8 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackTy
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -183,5 +185,7 @@ public class Constants {
     public static final double trapTargetHeightMeters = Units.inchesToMeters(52); 
 
     public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
-    public static int allianceLocation = -1; // -1 by default, set in Robot.java
+    public static int allianceLocation = -1; // -1 by default, set in Robot.java\
+
+    public static ShuffleboardTab limelightTab = Shuffleboard.getTab("Limelight");
 }

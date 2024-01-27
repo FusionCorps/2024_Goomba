@@ -58,7 +58,6 @@ public class RobotContainer {
             drivetrain.resetGyro();
         }));
 
-        robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
         robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
 
         robotController.x().whileTrue(
@@ -86,7 +85,6 @@ public class RobotContainer {
 
         // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
         // robotController.leftStick().whileTrue(new RunIntake(intake));
-
     }
 
     public RobotContainer() {
@@ -105,41 +103,14 @@ public class RobotContainer {
         // set up pipeline chooser
         pipeLineChooser.setDefaultOption("AprilTag", 0);
         pipeLineChooser.addOption("Note", 1);
-        pipeLineChooser.onChange((num) -> {drivetrain.getCamera().setPipeline(num); System.out.println("pipeline set to " + num);});
+        pipeLineChooser.onChange((num) -> {
+            drivetrain.getCamera().setPipeline(num); 
+            System.out.println("pipeline set to " + num);
+        });
         SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
 
         configureBindings();
 
-        // if (Utils.isSimulation()) {
-        //     if (allianceColor.equals(DriverStation.Alliance.Blue)) {
-        //         switch (allianceLocation) {
-        //             case 1:
-        //                 drivetrain.seedFieldRelative(new Pose2d(2, 2, new Rotation2d(0)));
-        //                 break;
-        //             case 2:
-        //                 drivetrain.seedFieldRelative(new Pose2d(2, 4, new Rotation2d(0)));
-        //                 break;
-        //             case 3:
-        //                 drivetrain.seedFieldRelative(new Pose2d(2, 7, new Rotation2d(0)));
-        //                 break;
-        //         }
-        //     } else if (allianceColor.equals(DriverStation.Alliance.Red)) {
-        //         switch (allianceLocation) {
-        //             case 1:
-        //                 drivetrain.seedFieldRelative(new Pose2d(16, 2, new Rotation2d(Math.PI)));
-        //                 break;
-        //             case 2:
-        //                 drivetrain.seedFieldRelative(new Pose2d(16, 4, new Rotation2d(Math.PI)));
-        //                 break;
-        //             case 3:
-        //                 drivetrain.seedFieldRelative(new Pose2d(16, 7, new Rotation2d(Math.PI)));
-        //                 break;
-        //         }
-        //     }
-        //     else {
-        //         drivetrain.seedFieldRelative(new Pose2d()); // in simulation, set current heading to forward
-        //     }
-        // }
         if (Utils.isSimulation())
             drivetrain.seedFieldRelative(new Pose2d()); // set current heading to forward
         else drivetrain.seedFieldRelative(); // set current heading to forward
@@ -150,6 +121,7 @@ public class RobotContainer {
     // method that configures and initializes everything necessary for auton
     public void configureAuto() {
         autoChooser = AutoBuilder.buildAutoChooser("DoNothingAuto");
+        autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
         SmartDashboard.putData("Auto Chooser", autoChooser);
 
         NamedCommands.registerCommand("getAutoStartingPos",
@@ -165,7 +137,6 @@ public class RobotContainer {
         NamedCommands.registerCommand("AimAtTarget", Commands.print("AimAtTarget"));
         
         // testing the single path autons
-        autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
     }
 
     public Command getAutonomousCommand() {

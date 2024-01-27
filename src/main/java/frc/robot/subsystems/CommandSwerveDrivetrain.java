@@ -10,7 +10,6 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
-import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -108,7 +107,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      * @param maxDist the maximum distance to the target in meters required for odometry to be updated, recommended <= 1.0
      */
     private void updateOdometryFromAprilTags(double maxDist) {
-        if (RobotBase.isReal() && mCamera.hasTarget() && mCamera.distToTargetMeters < maxDist && mCamera.getPipeline() == 0) {
+        if (RobotBase.isReal() && mCamera.hasTarget() && mCamera.distToAprilTag < maxDist && mCamera.getPipeline() == 0) {
                 Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
                 // System.out.println("Pose update: " + pose);
                 // double timestamp = Timer.getFPGATimestamp();

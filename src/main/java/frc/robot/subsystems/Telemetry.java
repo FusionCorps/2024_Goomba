@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.limelightTab;
+
 import java.util.Map;
 
 import com.ctre.phoenix6.Utils;
@@ -92,7 +94,7 @@ public class Telemetry {
         }
 
         HttpCamera limelightFeed = new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg");
-        Shuffleboard.getTab("Limelight").add("LL", limelightFeed)
+        limelightTab.add("LL", limelightFeed)
         .withPosition(0, 0).withSize(15, 8)
         .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
     }

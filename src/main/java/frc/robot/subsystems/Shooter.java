@@ -22,6 +22,7 @@ public class Shooter extends SubsystemBase {
     public Shooter() {
         leftMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
         rightMotor = new CANSparkFlex(Constants.TOP_SHOOTER_MOTOR_ID, MotorType.kBrushless);
+        // rightMotor.setInverted(true);
 
         pivotMotor = new TalonFX(Constants.SHOOTER_PIVOT_MOTOR_ID);
 
@@ -60,15 +61,14 @@ public class Shooter extends SubsystemBase {
 
 
     public void shoot(double leftRpm, double rightRpm) {
-        
         //set rpm for both motors
         leftController.setReference(leftRpm, ControlType.kVelocity);
         rightController.setReference(-rightRpm, ControlType.kVelocity);
+        // rightController.setReference(rightRpm, ControlType.kVelocity); // TODO: check if this is correct based on setInverted
+
 
         // leftMotor.setSmartCurrentLimit(20, 5000);
         // rightMotor.setSmartCurrentLimit(20,3000);
-        // rightMotor.set(-rightRpm);
-        // leftMotor.set(leftRpm);
     }   
     
     public void setShooterAngle(double angleOfShooter) {
@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase {
         return run(() -> setShooterAngle(angle));
     }
 
-    public Command shootSpeakerCommand(double leftRPM, double rightRPM){
+    public Command shootSpeakerCommand(double leftRPM, double rightRPM) {
         return run(() -> shoot(leftRPM, rightRPM))
         .finallyDo(() -> shoot(0, 0));
     }
