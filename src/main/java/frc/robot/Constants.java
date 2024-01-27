@@ -11,6 +11,13 @@ import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class Constants {
+
+    public class TarsArmConstants {
+        public static final double ARM_POS_1 = 25;//25;
+        public static final double ARM_POS_2 = -25;//-25;
+
+    }
+
     public class PIDConstants {
         // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
         public static final double toTargetRotKP = 0.3;
@@ -155,8 +162,8 @@ public class Constants {
                 + Math.pow(FR_BR_DISTANCE / 2, 2))); // in METERS, distance from center of robot to module
 }
     public static final int INTAKE_MOTOR_ID = 25; // TODO: change this id
-    public static final int TOP_SHOOTER_MOTOR_ID = -1; // TODO: change this id
-    public static final int BOTTOM_SHOOTER_MOTOR_ID = -1; // TODO: change this id
+    public static final int TOP_SHOOTER_MOTOR_ID = 3; // TODO: change this id
+    public static final int BOTTOM_SHOOTER_MOTOR_ID = 2; // TODO: change this id
     public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
 
     public static final double PIVOT_kP = 0.2;

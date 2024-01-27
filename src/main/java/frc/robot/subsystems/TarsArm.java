@@ -23,7 +23,7 @@ public class TarsArm extends SubsystemBase {
     PositionDutyCycle stabilizingDutyCycle = new PositionDutyCycle(0);
 
     // PID constants
-    double kP = .05;
+    double kP = 8;
     double kI = 0;
     double kD = 0;
 
@@ -56,9 +56,9 @@ public class TarsArm extends SubsystemBase {
 
         // configure motion magic of base motors
         MotionMagicConfigs motionMagicConfigs = new TalonFXConfiguration().MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = 1;
-        motionMagicConfigs.MotionMagicAcceleration = 1;
-        motionMagicConfigs.MotionMagicJerk = 1;
+        motionMagicConfigs.MotionMagicCruiseVelocity = 100;
+        motionMagicConfigs.MotionMagicAcceleration = 40;
+        motionMagicConfigs.MotionMagicJerk = 20;
 
         baseMotorMain.getConfigurator().apply(motionMagicConfigs);
         baseMotorFollower.getConfigurator().apply(motionMagicConfigs);
@@ -66,7 +66,7 @@ public class TarsArm extends SubsystemBase {
 
     @Override
     public void periodic() {
-        System.out.println(baseMotorMain.getPosition().getValue());
+        //System.out.println(baseMotorMain.getPosition().getValue());
     }
 
     // keeps the wrist position at 0
