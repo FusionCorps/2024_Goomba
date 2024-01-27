@@ -19,8 +19,10 @@
     "3 Piece",
     "4 Piece",
     "5 Piece",
-    "7 Piece theoretical",
     "6 Piece",
+    "7 Piece theoretical",
+    "New Folder",
+    "findme",
     "Old"
   ],
   "defaultMaxVel": 5.0,
