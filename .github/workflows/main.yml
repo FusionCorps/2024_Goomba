@@ -50,4 +50,14 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: 17
-      - run: ./gradlew spotlessCheck
+
+      # Declares the repository safe and not under dubious ownership.
+      - name: Add repository to git safe directories
+        run: git config --global --add safe.directory $GITHUB_WORKSPACE
+      
+      # Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        
+      - name: check code format with spotless
+        run: ./gradlew spotlessCheck
