@@ -78,13 +78,13 @@ public class Shooter extends SubsystemBase {
         System.out.println(rightMotor.getEncoder().getVelocity() +" "+leftMotor.getEncoder().getVelocity());
     }   
     
-    public void setShooterAngle(double angleOfShooter) {
-        pivotMotor.setPosition(angleOfShooter);
-    }
+    // public void setShooterAngle(double angleOfShooter) {
+    //     pivotMotor.setPosition(angleOfShooter);
+    // }
 
-    public Command aimShooterAngleCommand(double angle) {
-        return run(() -> setShooterAngle(angle));
-    }
+    // public Command aimShooterAngleCommand(double angle) {
+    //     return run(() -> setShooterAngle(angle));
+    // }
 
     public Command shootSpeakerCommand(double leftRPM, double rightRPM) {
         return run(() -> shoot(leftRPM, rightRPM))
