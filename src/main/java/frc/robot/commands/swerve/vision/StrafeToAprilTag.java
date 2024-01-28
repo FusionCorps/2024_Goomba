@@ -5,8 +5,8 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 // horizontally strafes to align with a target
@@ -14,9 +14,9 @@ public class StrafeToAprilTag extends Command {
     private final CommandSwerveDrivetrain mDrivetrain;
     private double tx;
     private PIDController strPID = new PIDController(
-            PIDConstants.strKP, 
-            PIDConstants.strKI,  
-            PIDConstants.strKD);
+            AimingPIDS.strKP, 
+            AimingPIDS.strKI,  
+            AimingPIDS.strKD);
     private double toleranceDeg;
         
     public StrafeToAprilTag(CommandSwerveDrivetrain drivetrain, double toleranceDeg) {

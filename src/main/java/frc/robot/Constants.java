@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
+import com.pathplanner.lib.util.PIDConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -20,7 +21,8 @@ public class Constants {
 
     }
 
-    public class PIDConstants {
+    public class AimingPIDS {
+
         // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
         public static final double toTargetRotKP = 0.8;
         public static final double toTargetRotKI = 0;
@@ -32,10 +34,9 @@ public class Constants {
 
         public static final double strKP = 0.25;
         public static final double strKI = 0;
-        public static final double strKD = 0.0;
-
-
+        public static final double strKD = 0.0;        
     }
+
     public class DrivetrainConstants {
         static class CustomSlotGains extends Slot0Configs {
             public CustomSlotGains(double kP, double kI, double kD, double kV, double kS) {
@@ -52,6 +53,10 @@ public class Constants {
         // private static final CustomSlotGains driveGains = new CustomSlotGains(0.14, 0, 0, 0, 0);
         private static final CustomSlotGains steerGains = new CustomSlotGains(100, 0, 0, 0, 0);
         private static final CustomSlotGains driveGains = new CustomSlotGains(5, 0, 0, 0, 0);
+
+        // pathplanner pids
+        public static final PIDConstants AUTO_TRANS_PID = new PIDConstants(10, 0, 0.2);
+        public static final PIDConstants AUTO_ROT_PID = new PIDConstants(8, 0, 0.15);
 
         private static final double kCoupleRatio = 0.0;
 
@@ -151,7 +156,7 @@ public class Constants {
         public static final CommandSwerveDrivetrain DriveTrain = new CommandSwerveDrivetrain(
             new Cameras(), DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
 
-        public static final double MaxSpeed = 5; // 6.6 meters per second max speed
+        public static final double MaxSpeed = 5; // 5 meters per second max speed
         public static final double MaxAngularRate = 2 * Math.PI; // 1 rotation per second max rotation rate
 
         public static final double FULL_LENGTH = 0.81; // in meters, includes bumpers

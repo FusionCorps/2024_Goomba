@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -76,12 +77,11 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             this::getRobotRelativeSpeeds,
             this::driveRobotRelative,
             new HolonomicPathFollowerConfig(
-                new PIDConstants(8, 0, 0.25), // translational
-                new PIDConstants(8, 0, 0.25), // rotational
+                DrivetrainConstants.AUTO_TRANS_PID,
+                DrivetrainConstants.AUTO_ROT_PID,
                 DrivetrainConstants.MaxSpeed,
                 DrivetrainConstants.DRIVEBASE_RADIUS,
-                // new ReplanningConfig()),
-                new ReplanningConfig(false, false)),
+                new ReplanningConfig()),
             this::isAllianceRed,
             this);
     }
@@ -187,9 +187,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      */
     public Command aimAtTargetCommand(double toleranceDeg, double runTime) {
         PIDController pid = new PIDController(
-            Constants.PIDConstants.toTargetRotKP, 
-            Constants.PIDConstants.toTargetRotKI,  
-            Constants.PIDConstants.toTargetRotKD);
+            AimingPIDS.toTargetRotKP, 
+            AimingPIDS.toTargetRotKI,  
+            AimingPIDS.toTargetRotKD);
         pid.setTolerance(toleranceDeg);
         pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
         return run(() -> {
@@ -223,9 +223,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
                 .withTargetDirection(Rotation2d.fromDegrees(desiredHeadingDeg));
         // setup PID controller - notice that this controller uses radians units, and uses a continuous input range
         rotReq.HeadingController.setPID(
-            Constants.PIDConstants.toAngleRotKP, 
-            Constants.PIDConstants.toAngleRotKI,  
-            Constants.PIDConstants.toAngleRotKD);
+            AimingPIDS.toAngleRotKP, 
+            AimingPIDS.toAngleRotKI,  
+            AimingPIDS.toAngleRotKD);
         rotReq.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
         rotReq.HeadingController.setTolerance(Units.degreesToRadians(toleranceDeg));
         return run(() -> {
@@ -248,9 +248,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      */
     public Command strafeToAprilTagCommand(double toleranceDeg) {
         PIDController strPID = new PIDController(
-            Constants.PIDConstants.strKP, 
-            Constants.PIDConstants.strKI,  
-            Constants.PIDConstants.strKD);
+            AimingPIDS.strKP, 
+            AimingPIDS.strKI,  
+            AimingPIDS.strKD);
         strPID.setTolerance(toleranceDeg); // strafe to within tolerance degrees of target
         strPID.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
         return run(() -> {
@@ -336,9 +336,9 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
      */
     public Command runSwerveFCwAim(DoubleSupplier x, DoubleSupplier y, double toleranceDeg) {
         PIDController pid = new PIDController(
-            Constants.PIDConstants.toTargetRotKP, 
-            Constants.PIDConstants.toTargetRotKI,  
-            Constants.PIDConstants.toTargetRotKD);
+            AimingPIDS.toTargetRotKP, 
+            AimingPIDS.toTargetRotKI,  
+            AimingPIDS.toTargetRotKD);
         double deadband = 0.05;
         double movementDamp = 0.3; // percentage
         pid.setTolerance(toleranceDeg);

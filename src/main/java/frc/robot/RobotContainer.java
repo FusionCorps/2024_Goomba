@@ -114,7 +114,7 @@ public class RobotContainer {
 
         configureAuto();
 
-        // set up pipeline chooser
+        // set up pipeline chooser 
         pipeLineChooser.setDefaultOption("AprilTag", 0);
         pipeLineChooser.addOption("Note", 1);
         // pipeLineChooser.onChange((num) -> {drivetrain.getCamera().setPipeline(num); System.out.println("pipeline set to " + num);});
@@ -161,24 +161,23 @@ public class RobotContainer {
 
     // method that configures and initializes everything necessary for auton
     public void configureAuto() {
-        autoChooser = AutoBuilder.buildAutoChooser("DoNothingAuto");
-        autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
-        SmartDashboard.putData("Auto Chooser", autoChooser);
-
+        NamedCommands.registerCommand("ShootSpeaker", Commands.print("ShootSpeaker"));
+        NamedCommands.registerCommand("ShootAmp", Commands.print("ShootAmp"));
+        NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
+        NamedCommands.registerCommand("AimAtTarget", Commands.print("AimAtTarget"));
         NamedCommands.registerCommand("getAutoStartingPos",
                 new InstantCommand(() -> System.out.println("Starting Pose: "
                         + PathPlannerAuto.getStaringPoseFromAutoFile(autoChooser.getSelected().getName()))));
 
-        NamedCommands.registerCommand("ShootSpeaker", Commands.print("ShootSpeaker"));
-        NamedCommands.registerCommand("ShootAmp", Commands.print("ShootAmp"));
-        NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
-        // NamedCommands.registerCommand("ShootSpeaker", new ShootSpeaker(shooter, 0.25));
-        // NamedCommands.registerCommand("ShootAmp", new ShootSpeaker(shooter, 0.25));
-        // NamedCommands.registerCommand("RunIntake", new RunIntake(intake));
-        NamedCommands.registerCommand("AimAtTarget", Commands.print("AimAtTarget"));
+        // testing the single path autons
+        // autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
+
+        System.out.println(AutoBuilder.getAllAutoNames());
+        // if this throws an error, make sure all autos are complete
+        // verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local 
+        autoChooser = AutoBuilder.buildAutoChooser(); 
         
-        //testing the single path autons
-        autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
+        SmartDashboard.putData("Auto Chooser", autoChooser);
     }
 
     public Command getAutonomousCommand() {

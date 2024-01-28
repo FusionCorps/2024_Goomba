@@ -6,8 +6,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.Constants.PIDConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 
@@ -15,9 +15,9 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 public class AimAtTarget extends Command {
     private CommandSwerveDrivetrain mDrivetrain;
     private PIDController pid = new PIDController(
-        PIDConstants.toTargetRotKP, 
-        PIDConstants.toTargetRotKI,  
-        PIDConstants.toTargetRotKD);
+        AimingPIDS.toTargetRotKP, 
+        AimingPIDS.toTargetRotKI,  
+        AimingPIDS.toTargetRotKD);
     private Timer timer = new Timer();
     private double runTime = 0.0;
         

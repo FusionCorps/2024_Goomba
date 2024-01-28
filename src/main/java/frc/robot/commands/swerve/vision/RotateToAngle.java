@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.PIDConstants;
+import frc.robot.Constants.AimingPIDS;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 
@@ -27,9 +27,9 @@ public class RotateToAngle extends Command {
                 .withTargetDirection(Rotation2d.fromDegrees(desiredHeadingDeg));
         // setup PID controller - notice that this controller uses radians units, and uses a continuous input range
         rotReq.HeadingController.setPID(
-            PIDConstants.toAngleRotKP, 
-            PIDConstants.toAngleRotKI,  
-            PIDConstants.toAngleRotKD);
+            AimingPIDS.toAngleRotKP, 
+            AimingPIDS.toAngleRotKI,  
+            AimingPIDS.toAngleRotKD);
         rotReq.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
         rotReq.HeadingController.setTolerance(Units.degreesToRadians(toleranceDeg));
         
