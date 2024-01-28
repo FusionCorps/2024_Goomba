@@ -57,10 +57,10 @@ public class RobotContainer {
     private void configureBindings() {
         // drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
         // robotController.a().whileTrue(new PointWheels(drivetrain));
-        // robotController.b().whileTrue(new SwerveBrake(drivetrain));
+        // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
         // reset odometry to current position, and zero gyro yaw
-        // robotController.leftBumper().onTrue(drivetrain.runOnce(() -> {
+        // robotController.b().onTrue(drivetrain.runOnce(() -> {
         //     drivetrain.seedFieldRelative(); 
         //     drivetrain.resetGyro();
         // }));

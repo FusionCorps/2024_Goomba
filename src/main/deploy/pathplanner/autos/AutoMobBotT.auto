@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 2,
-      "y": 5.0
+      "x": 1.02,
+      "y": 2.29
     },
-    "rotation": 180.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
@@ -14,18 +14,12 @@
         {
           "type": "path",
           "data": {
-            "pathName": "GetOne"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ScoreOne"
+            "pathName": "MobBotT"
           }
         }
       ]
     }
   },
-  "folder": "Old",
+  "folder": "Mobility",
   "choreoAuto": false
 }
