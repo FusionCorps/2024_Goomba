@@ -46,16 +46,16 @@
 //             // Translation2d robotToGoal = target.minus(mDrivetrain.getPose().getTranslation());
 //             // double dist = robotToGoal.getDistance(new Translation2d())*39.37;
 
-
 //             // get estimated translation of target
 //             Pose3d targetPose = mDrivetrain.getCamera().getPrimaryAprilTagPose();
 
 //             Translation2d movingGoalLocation = targetPose.getTranslation().toTranslation2d();
 
-//             Translation2d toMovingGoal = movingGoalLocation.minus(mDrivetrain.getPose().getTranslation());
+//             Translation2d toMovingGoal =
+// movingGoalLocation.minus(mDrivetrain.getPose().getTranslation());
 
 //             double newDist = toMovingGoal.getDistance(new Translation2d())*39.37;
-            
+
 //             mShooter.shoot(5000, 3000);
 //             // m_turret.aimAtGoal(m_drive.getPose(), movingGoalLocation, false);
 //         }

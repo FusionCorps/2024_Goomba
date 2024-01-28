@@ -1,20 +1,18 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkFlex;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Index extends SubsystemBase{
+public class Index extends SubsystemBase {
 
-    CANSparkFlex indexMotor;
+  CANSparkFlex indexMotor;
 
-    public Index(){
+  public Index() {
 
-        indexMotor = new CANSparkFlex(1, CANSparkFlex.MotorType.kBrushless);
-    }
+    indexMotor = new CANSparkFlex(1, CANSparkFlex.MotorType.kBrushless);
+  }
 
-    public void indexIn(double pct){
-        indexMotor.set(pct);
-    }
-    
+  public void indexIn(double pct) {
+    indexMotor.set(pct);
+  }
 }

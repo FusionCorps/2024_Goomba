@@ -7,21 +7,20 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-/**
- * Point wheels in certain direction, according to controller input
- */
+/** Point wheels in certain direction, according to controller input */
 public class PointWheels extends Command {
-    private CommandSwerveDrivetrain mDrivetrain;
-    private CommandXboxController controller = RobotContainer.robotController;
+  private CommandSwerveDrivetrain mDrivetrain;
+  private CommandXboxController controller = RobotContainer.robotController;
 
-    public PointWheels(CommandSwerveDrivetrain drivetrain) {
-        mDrivetrain = drivetrain;
-        addRequirements(mDrivetrain);
-    }
+  public PointWheels(CommandSwerveDrivetrain drivetrain) {
+    mDrivetrain = drivetrain;
+    addRequirements(mDrivetrain);
+  }
 
-    @Override
-    public void execute() {
-        mDrivetrain.setControl(new SwerveRequest.PointWheelsAt()
-                .withModuleDirection(new Rotation2d(-controller.getLeftY(), -controller.getLeftX())));
-    }
+  @Override
+  public void execute() {
+    mDrivetrain.setControl(
+        new SwerveRequest.PointWheelsAt()
+            .withModuleDirection(new Rotation2d(-controller.getLeftY(), -controller.getLeftX())));
+  }
 }
