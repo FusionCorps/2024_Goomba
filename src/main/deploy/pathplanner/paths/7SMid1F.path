@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.6396709716496354,
-        "y": 4.455472842569617
+        "x": 1.6504024472516012,
+        "y": 4.315142989260338
       },
       "isLocked": false,
       "linkedName": "Mid"
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "7 Piece theoretical",
+  "folder": "7 Piece",
   "previewStartingState": null,
   "useDefaultConstraints": false
 }
