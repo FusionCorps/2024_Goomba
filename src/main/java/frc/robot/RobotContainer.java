@@ -174,8 +174,8 @@ public class RobotContainer {
 
         System.out.println(AutoBuilder.getAllAutoNames());
         // if this throws an error, make sure all autos are complete
-        // verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local 
-        autoChooser = AutoBuilder.buildAutoChooser(); 
+        // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local 
+        autoChooser = AutoBuilder.buildAutoChooser();
         
         SmartDashboard.putData("Auto Chooser", autoChooser);
     }

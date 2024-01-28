@@ -47,9 +47,9 @@
             ],
             "content": {
               "_type": "List Layout",
-              "_title": "List Layout",
-              "_glyph": 149,
-              "_showGlyph": false,
+              "_title": "Drivetrain Stats",
+              "_glyph": 82,
+              "_showGlyph": true,
               "Layout/Label position": "BOTTOM",
               "_children": [
                 {
