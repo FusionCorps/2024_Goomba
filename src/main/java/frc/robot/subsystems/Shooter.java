@@ -42,6 +42,7 @@ public class Shooter extends SubsystemBase {
     leftController.setFF(0);
     leftController.setIZone(0);
     leftController.setOutputRange(-1, 1);
+    leftMotor.setInverted(true);
 
     // Set PID for right motor
     rightController = rightMotor.getPIDController();
@@ -51,6 +52,9 @@ public class Shooter extends SubsystemBase {
     rightController.setFF(0);
     rightController.setIZone(0);
     rightController.setOutputRange(-1, 1);
+
+    leftMotor.burnFlash();
+    rightMotor.burnFlash();
   }
 
   public void periodic() {}
@@ -65,7 +69,7 @@ public class Shooter extends SubsystemBase {
     leftMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.set(rightRpm);
-    leftMotor.set(-leftRpm);
+    leftMotor.set(leftRpm);
     System.out.println(
         rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
