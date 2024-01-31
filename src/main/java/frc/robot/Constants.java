@@ -54,7 +54,7 @@ public class Constants {
     private static final CustomSlotGains driveGains = new CustomSlotGains(5, 0, 0, 0, 0);
 
     // pathplanner pids
-    public static final PIDConstants AUTO_TRANS_PID = new PIDConstants(10, 0, 0.2);
+    public static final PIDConstants AUTO_TRANS_PID = new PIDConstants(11.8, 0.8, 0.05);
     public static final PIDConstants AUTO_ROT_PID = new PIDConstants(8, 0, 0.15);
 
     private static final double kCoupleRatio = 0.0;

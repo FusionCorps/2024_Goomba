@@ -5,19 +5,29 @@
 package frc.robot;
 
 import static frc.robot.Constants.allianceLocation;
+import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.launcher.ShootSpeaker;
+import frc.robot.commands.swerve.manual.PointWheels;
+import frc.robot.commands.swerve.manual.RunSwerveFC;
+import frc.robot.commands.swerve.manual.SwerveBrake;
+import frc.robot.commands.swerve.vision.AimAtTarget;
+import frc.robot.commands.swerve.vision.DriveToNote;
+import frc.robot.commands.tarsarm.SetBasePos;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -27,51 +37,53 @@ public class RobotContainer {
 
   // public TarsArm tarsArm = new TarsArm();
   // Intake intake = new Intake();
-  Shooter shooter = new Shooter();
-  Index index = new Index();
-  // private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
+  // Shooter shooter = new Shooter();
+  // Index index = new Index();
+  private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
 
   private SendableChooser<Command> autoChooser;
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
-    // drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-    // robotController.a().whileTrue(new PointWheels(drivetrain));
-    // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
+    drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+    robotController.a().whileTrue(new PointWheels(drivetrain));
+    robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
     // reset odometry to current position, and zero gyro yaw
-    // robotController.b().onTrue(drivetrain.runOnce(() -> {
-    //     drivetrain.seedFieldRelative();
-    //     drivetrain.resetGyro();
-    // }));
+    robotController.b().onTrue(drivetrain.runOnce(() -> {
+        drivetrain.seedFieldRelative();
+        drivetrain.resetGyro();
+    }));
 
-    // robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
-    // robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
+    robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
+    robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
 
-    // robotController.x().whileTrue(
-    //     drivetrain.rotateToAngleCommand(180, 2.0, 0.75)
-    //     // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
-    //     .andThen(Commands.print("rotation finished"))
-    //     .andThen(drivetrain.strafeToAprilTagCommand(2.0))
-    //     // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
-    //     .andThen(Commands.print("strafe finished"))
-    //     .andThen(Commands.runOnce(() ->
-    // robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
-    //     .andThen(new WaitCommand(0.1))
-    //     .andThen(Commands.runOnce(() ->
-    // robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
-    // );
+    robotController.x().whileTrue(
+        drivetrain.rotateToAngleCommand(180, 2.0, 0.75)
+        // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
+        .andThen(Commands.print("rotation finished"))
+        .andThen(drivetrain.strafeToAprilTagCommand(2.0))
+        // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
+        .andThen(Commands.print("strafe finished"))
+        .andThen(Commands.runOnce(() ->
+    robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
+        .andThen(new WaitCommand(0.1))
+        .andThen(Commands.runOnce(() ->
+    robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
+    );
 
     // TODO: run with AimShooterAngle
-    // robotController.rightBumper().toggleOnTrue(drivetrain.runSwerveFCwAim(
-    //     robotController::getLeftY,
-    //     robotController::getLeftX,
-    //     2.0));
+    robotController.rightBumper().toggleOnTrue(drivetrain.runSwerveFCwAim(
+        robotController::getLeftY,
+        robotController::getLeftX,
+        2.0));
 
-    // robotController.a().whileTrue(
-    //     new AimAtTarget(drivetrain, 3.0, 0.25)
-    //     .andThen(new DriveToNote(drivetrain)));
+    robotController.a().whileTrue(
+        new AimAtTarget(drivetrain, 3.0, 0.25)
+        .andThen(new DriveToNote(drivetrain)));
+    robotController.povUp().whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01*MaxSpeed, () -> 0, () -> 0));
+    robotController.povDown().whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01*MaxSpeed, () -> 0, () -> 0));
     // robotController.povLeft().onTrue(new SetBasePos(tarsArm,
     // Constants.TarsArmConstants.ARM_POS_1));
     // robotController.povRight().onTrue(new SetBasePos(tarsArm,
@@ -81,8 +93,8 @@ public class RobotContainer {
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
     // robotController.leftStick().whileTrue(new RunIntake(intake));
 
-    robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
-    robotController.leftBumper().whileTrue(new RunIndex(index, 0.18));
+    // robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
+    // robotController.leftBumper().whileTrue(new RunIndex(index, 0.18));
   }
 
   public RobotContainer() {
@@ -142,7 +154,7 @@ public class RobotContainer {
     //     drivetrain.seedFieldRelative(new Pose2d()); // set current heading to forward
     // else drivetrain.seedFieldRelative(); // set current heading to forward
 
-    // drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
+    drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
   }
 
   // method that configures and initializes everything necessary for auton
