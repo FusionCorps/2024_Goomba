@@ -4,8 +4,8 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.allianceLocation;
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
+import static frc.robot.Constants.allianceLocation;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -20,14 +20,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.commands.RunIndex;
-import frc.robot.commands.launcher.ShootSpeaker;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.commands.swerve.vision.DriveToNote;
-import frc.robot.commands.tarsarm.SetBasePos;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -51,39 +48,51 @@ public class RobotContainer {
     robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
     // reset odometry to current position, and zero gyro yaw
-    robotController.b().onTrue(drivetrain.runOnce(() -> {
-        drivetrain.seedFieldRelative();
-        drivetrain.resetGyro();
-    }));
+    robotController
+        .b()
+        .onTrue(
+            drivetrain.runOnce(
+                () -> {
+                  drivetrain.seedFieldRelative();
+                  drivetrain.resetGyro();
+                }));
 
     robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
     robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
 
-    robotController.x().whileTrue(
-        drivetrain.rotateToAngleCommand(180, 2.0, 0.75)
-        // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
-        .andThen(Commands.print("rotation finished"))
-        .andThen(drivetrain.strafeToAprilTagCommand(2.0))
-        // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
-        .andThen(Commands.print("strafe finished"))
-        .andThen(Commands.runOnce(() ->
-    robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
-        .andThen(new WaitCommand(0.1))
-        .andThen(Commands.runOnce(() ->
-    robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0)))
-    );
+    robotController
+        .x()
+        .whileTrue(
+            drivetrain
+                .rotateToAngleCommand(180, 2.0, 0.75)
+                // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
+                .andThen(Commands.print("rotation finished"))
+                .andThen(drivetrain.strafeToAprilTagCommand(2.0))
+                // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
+                .andThen(Commands.print("strafe finished"))
+                .andThen(
+                    Commands.runOnce(
+                        () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
+                .andThen(new WaitCommand(0.1))
+                .andThen(
+                    Commands.runOnce(
+                        () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
 
     // TODO: run with AimShooterAngle
-    robotController.rightBumper().toggleOnTrue(drivetrain.runSwerveFCwAim(
-        robotController::getLeftY,
-        robotController::getLeftX,
-        2.0));
+    robotController
+        .rightBumper()
+        .toggleOnTrue(
+            drivetrain.runSwerveFCwAim(robotController::getLeftY, robotController::getLeftX, 2.0));
 
-    robotController.a().whileTrue(
-        new AimAtTarget(drivetrain, 3.0, 0.25)
-        .andThen(new DriveToNote(drivetrain)));
-    robotController.povUp().whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01*MaxSpeed, () -> 0, () -> 0));
-    robotController.povDown().whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01*MaxSpeed, () -> 0, () -> 0));
+    robotController
+        .a()
+        .whileTrue(new AimAtTarget(drivetrain, 3.0, 0.25).andThen(new DriveToNote(drivetrain)));
+    robotController
+        .povUp()
+        .whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01 * MaxSpeed, () -> 0, () -> 0));
+    robotController
+        .povDown()
+        .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
     // robotController.povLeft().onTrue(new SetBasePos(tarsArm,
     // Constants.TarsArmConstants.ARM_POS_1));
     // robotController.povRight().onTrue(new SetBasePos(tarsArm,
