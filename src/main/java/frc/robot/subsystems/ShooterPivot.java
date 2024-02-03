@@ -5,9 +5,11 @@ import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -15,7 +17,12 @@ public class ShooterPivot extends SubsystemBase {
 
     TalonFX pivotMotor;
 
+    DutyCycleEncoder shaftEncoder;
+
     public ShooterPivot() {
+
+        shaftEncoder = new DutyCycleEncoder(0);
+        shaftEncoder.reset();
 
         pivotMotor = new TalonFX(Constants.PIVOT_ID);
 
@@ -48,6 +55,23 @@ public class ShooterPivot extends SubsystemBase {
 
         pivotMotor.getConfigurator().apply(motionMagicConfigs);
 
+    }
+
+    // periodically updates the pivot motor to be the encoder sensor value
+    @Override 
+    public void periodic() {
+        pivotMotor.setPosition(shaftEncoder.getDistance());
+    }
+
+    // sets the position of the pivot
+    public void setPosition(double pos) {
+        MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
+        pivotMotor.setControl(positionReq.withPosition(pos));
+    }
+
+    // sets the percent of the pivot
+    public void setPct(double pct) {
+        pivotMotor.set(pct);
     }
     
 }

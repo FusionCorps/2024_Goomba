@@ -15,6 +15,9 @@ public class Shooter extends SubsystemBase {
     private CANSparkFlex leftMotor, rightMotor;
     private SparkPIDController leftController, rightController;
 
+    private TalonFX pivotMotor;
+
+
     // private TalonFX pivotMotor;
     // private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();    
 
