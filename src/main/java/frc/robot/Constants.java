@@ -18,6 +18,9 @@ public class Constants {
 
     }
 
+    // the id of the shooter pivot
+    public static final int PIVOT_ID = -1;
+
     public class PIDConstants {
         // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
         public static final double toTargetRotKP = 0.3;
@@ -32,6 +35,12 @@ public class Constants {
         public static final double strKI = 0;
         public static final double strKD = 0.0;
 
+        // shooter pivot PID constants
+        public static final double pivotKP = .1;
+        public static final double pivotKI = 0;
+        public static final double pivotKD = 0;
+        
+
 
     }
     public class DrivetrainConstants {
@@ -43,7 +52,7 @@ public class Constants {
                 this.kV = kV;
                 this.kS = kS;
             }
-    }
+        }
 
         // Note: gains should be really small for swerve
         // private static final CustomSlotGains steerGains = new CustomSlotGains(0.3, 0, 0.0002, 0, 0);
