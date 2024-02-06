@@ -184,8 +184,8 @@ public class Constants {
   public static final int BOTTOM_SHOOTER_MOTOR_ID = 2; // TODO: change this id
   public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
 
-  public static final double PIVOT_kP = 0.2;
-  public static final double PIVOT_kD = 0;
+  public static final double PIVOT_kP = 2;
+  public static final double PIVOT_kD = 0.3;
   public static final double PIVOT_kI = 0;
 
   public static final double PIVOT_START_POS = Units.degreesToRotations(30);
@@ -196,7 +196,7 @@ public class Constants {
   public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
   public static final double LIMELIGHT_TY_RANGE_DEG = 24.85; // range is thus -24.85 to 24.85
 
-  public static final double camHeightMeters = Units.inchesToMeters(54); // dont change
+  public static final double camHeightMeters = Units.inchesToMeters(78); // dont change
   public static final double cameraPitchRadians = Units.degreesToRadians(1.0); // dont change
   // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
   public static final double sourceTargetHeightMeters = Units.inchesToMeters(53.375);

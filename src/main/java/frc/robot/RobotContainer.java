@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.commands.launcher.AimShooterAngle;
+import frc.robot.commands.launcher.ShootSpeaker;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.SwerveBrake;
@@ -34,8 +36,8 @@ public class RobotContainer {
 
   // public TarsArm tarsArm = new TarsArm();
   // Intake intake = new Intake();
-  // Shooter shooter = new Shooter();
-  // Index index = new Index();
+  Shooter shooter = new Shooter();
+  Index index = new Index();
   private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
 
   private SendableChooser<Command> autoChooser;
@@ -43,56 +45,56 @@ public class RobotContainer {
 
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
-    drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-    robotController.a().whileTrue(new PointWheels(drivetrain));
-    robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
+    // drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+    // robotController.a().whileTrue(new PointWheels(drivetrain));
+    // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
-    // reset odometry to current position, and zero gyro yaw
-    robotController
-        .b()
-        .onTrue(
-            drivetrain.runOnce(
-                () -> {
-                  drivetrain.seedFieldRelative();
-                  drivetrain.resetGyro();
-                }));
+    // // reset odometry to current position, and zero gyro yaw
+    // robotController
+    //     .b()
+    //     .onTrue(
+    //         drivetrain.runOnce(
+    //             () -> {
+    //               drivetrain.seedFieldRelative();
+    //               drivetrain.resetGyro();
+    //             }));
 
-    robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
-    robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
+    // robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
+    // robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
 
-    robotController
-        .x()
-        .whileTrue(
-            drivetrain
-                .rotateToAngleCommand(180, 2.0, 0.75)
-                // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
-                .andThen(Commands.print("rotation finished"))
-                .andThen(drivetrain.strafeToAprilTagCommand(2.0))
-                // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
-                .andThen(Commands.print("strafe finished"))
-                .andThen(
-                    Commands.runOnce(
-                        () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
-                .andThen(new WaitCommand(0.1))
-                .andThen(
-                    Commands.runOnce(
-                        () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
+    // robotController
+    //     .x()
+    //     .whileTrue(
+    //         drivetrain
+    //             .rotateToAngleCommand(180, 2.0, 0.75)
+    //             // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
+    //             .andThen(Commands.print("rotation finished"))
+    //             .andThen(drivetrain.strafeToAprilTagCommand(2.0))
+    //             // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
+    //             .andThen(Commands.print("strafe finished"))
+    //             .andThen(
+    //                 Commands.runOnce(
+    //                     () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
+    //             .andThen(new WaitCommand(0.1))
+    //             .andThen(
+    //                 Commands.runOnce(
+    //                     () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
 
-    // TODO: run with AimShooterAngle
-    robotController
-        .rightBumper()
-        .toggleOnTrue(
-            drivetrain.runSwerveFCwAim(robotController::getLeftY, robotController::getLeftX, 2.0));
+    // // TODO: run with AimShooterAngle
+    // robotController
+    //     .rightBumper()
+    //     .toggleOnTrue(
+    //         drivetrain.runSwerveFCwAim(robotController::getLeftY, robotController::getLeftX, 2.0));
 
-    robotController
-        .a()
-        .whileTrue(new AimAtTarget(drivetrain, 3.0, 0.25).andThen(new DriveToNote(drivetrain)));
-    robotController
-        .povUp()
-        .whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01 * MaxSpeed, () -> 0, () -> 0));
-    robotController
-        .povDown()
-        .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
+    // robotController
+    //     .a()
+    //     .whileTrue(new AimAtTarget(drivetrain, 3.0, 0.25).andThen(new DriveToNote(drivetrain)));
+    // robotController
+    //     .povUp()
+    //     .whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01 * MaxSpeed, () -> 0, () -> 0));
+    // robotController
+    //     .povDown()
+    //     .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
     // robotController.povLeft().onTrue(new SetBasePos(tarsArm,
     // Constants.TarsArmConstants.ARM_POS_1));
     // robotController.povRight().onTrue(new SetBasePos(tarsArm,
@@ -102,8 +104,11 @@ public class RobotContainer {
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
     // robotController.leftStick().whileTrue(new RunIntake(intake));
 
-    // robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
+    robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
     // robotController.leftBumper().whileTrue(new RunIndex(index, 0.18));
+
+    robotController.rightBumper().whileTrue(new AimShooterAngle(shooter, .2));
+    robotController.leftBumper().whileTrue(new AimShooterAngle(shooter, -.4));
   }
 
   public RobotContainer() {
@@ -117,7 +122,7 @@ public class RobotContainer {
       allianceLocation = location.getAsInt();
     } else System.err.println("Location not found");
 
-    configureAuto();
+    //configureAuto();
 
     // set up pipeline chooser
     pipeLineChooser.setDefaultOption("AprilTag", 0);

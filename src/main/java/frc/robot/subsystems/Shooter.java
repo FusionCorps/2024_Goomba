@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
@@ -11,28 +15,37 @@ public class Shooter extends SubsystemBase {
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
 
-  // private TalonFX pivotMotor;
-  // private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
+  private TalonFX pivotMotor;
+  private TalonFX rPivotMotor;
+  private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
+  private TalonFXConfiguration rPivotConfigs = new TalonFXConfiguration();
 
   public Shooter() {
     leftMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     rightMotor = new CANSparkFlex(Constants.TOP_SHOOTER_MOTOR_ID, MotorType.kBrushless);
-    // rightMotor.setInverted(true);
+    rightMotor.setInverted(true);
 
-    // pivotMotor = new TalonFX(Constants.SHOOTER_PIVOT_MOTOR_ID);
+    pivotMotor = new TalonFX(1);
+    rPivotMotor = new TalonFX(2);
 
-    // pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+    pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-    // pivotConfigs.Slot0.kV = 0;
-    // pivotConfigs.Slot0.kP = Constants.PIVOT_kP;
-    // pivotConfigs.Slot0.kI = Constants.PIVOT_kI;
-    // pivotConfigs.Slot0.kD = Constants.PIVOT_kD;
+    pivotConfigs.Slot0.kV = 0;
+    pivotConfigs.Slot0.kP = Constants.PIVOT_kP;
+    pivotConfigs.Slot0.kI = Constants.PIVOT_kI;
+    pivotConfigs.Slot0.kD = Constants.PIVOT_kD;
 
-    // pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 0.5;
-    // pivotConfigs.MotionMagic.MotionMagicAcceleration = 1;
-    // pivotConfigs.MotionMagic.MotionMagicJerk = 2;
+    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 40;
+    pivotConfigs.MotionMagic.MotionMagicAcceleration = 15;
+    pivotConfigs.MotionMagic.MotionMagicJerk = 10;
 
-    // pivotMotor.getConfigurator().apply(pivotConfigs);
+    pivotMotor.getConfigurator().apply(pivotConfigs);
+
+  
+    pivotMotor.setControl(new Follower(rPivotMotor.getDeviceID(), true));
+    
+
+  
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();
@@ -44,7 +57,7 @@ public class Shooter extends SubsystemBase {
     leftController.setOutputRange(-1, 1);
     leftMotor.setInverted(true);
 
-    // Set PID for right motor
+    // // Set PID for right motor
     rightController = rightMotor.getPIDController();
     rightController.setP(0);
     rightController.setI(0);
@@ -70,8 +83,8 @@ public class Shooter extends SubsystemBase {
     rightMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.set(rightRpm);
     leftMotor.set(leftRpm);
-    System.out.println(
-        rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
+    // System.out.println(
+    //     rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
   // public void setShooterAngle(double angleOfShooter) {
@@ -82,11 +95,16 @@ public class Shooter extends SubsystemBase {
   //     return run(() -> setShooterAngle(angle));
   // }
 
-  public Command shootSpeakerCommand(double leftRPM, double rightRPM) {
-    return run(() -> shoot(leftRPM, rightRPM)).finallyDo(() -> shoot(0, 0));
+  // public Command shootSpeakerCommand(double leftRPM, double rightRPM) {
+  //   return run(() -> shoot(leftRPM, rightRPM)).finallyDo(() -> shoot(0, 0));
+  // }
+
+  public void setShooterAngle(double pct) {
+      pivotMotor.set(pct);
+      System.out.println(pivotMotor.getPosition());
   }
 
-  // public void setShooterAngle(double angleOfShooter) {
-  //     pivotMotor.set(angleOfShooter);
-  // }
+  public void resetShooterAngle(){
+    pivotMotor.setPosition(0);
+  }
 }
