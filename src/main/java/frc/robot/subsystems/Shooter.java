@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkFlex;
@@ -106,5 +107,10 @@ public class Shooter extends SubsystemBase {
 
   public void resetShooterAngle(){
     pivotMotor.setPosition(0);
+  }
+  
+  public void setAngle(double pos){
+    MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
+    pivotMotor.setControl(positionReq.withPosition(pos));
   }
 }

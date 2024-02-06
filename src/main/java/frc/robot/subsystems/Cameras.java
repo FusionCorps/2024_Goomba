@@ -60,7 +60,15 @@ public class Cameras extends SubsystemBase {
    * @return tx (degrees)
    */
   public double getTX() {
+    if(hasTarget()){
     return limelightTable.getEntry("tx").getDouble(0.0);
+    } else{
+      return 0.0;
+    }
+  }
+
+  public double getID(){
+    return LimelightHelpers.getFiducialID(Constants.LIMELIGHT_NAME);
   }
 
   /**
