@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.launcher.AimShooterAngle;
+import frc.robot.commands.launcher.ResetShooterAngle;
+import frc.robot.commands.launcher.SetShooterAngle;
 import frc.robot.commands.launcher.ShootSpeaker;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
@@ -107,6 +109,8 @@ public class RobotContainer {
     robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
     // robotController.leftBumper().whileTrue(new RunIndex(index, 0.18));
 
+    robotController.y().onTrue(new ResetShooterAngle(shooter));
+    robotController.b().onTrue(new SetShooterAngle(shooter, 0));
     robotController.rightBumper().whileTrue(new AimShooterAngle(shooter, .2));
     robotController.leftBumper().whileTrue(new AimShooterAngle(shooter, -.4));
   }
