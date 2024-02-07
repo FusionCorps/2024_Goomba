@@ -36,6 +36,14 @@ public class Constants {
     public static final double strKD = 0.0;
   }
 
+  public class CobraConstants {
+    public static final double cbrKP = 0.1;
+    public static final double cbrKI = 0;
+    public static final double cbrKD = 0.1;
+    public static final int cbrMotorID = -1;
+
+  }
+
   public class DrivetrainConstants {
     static class CustomSlotGains extends Slot0Configs {
       public CustomSlotGains(double kP, double kI, double kD, double kV, double kS) {
