@@ -34,7 +34,7 @@ import java.util.function.DoubleSupplier;
  * the drivetrain.
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
-  private Cameras mCamera;
+  public Cameras mCamera;
 
   public CommandSwerveDrivetrain(
       Cameras camera,
