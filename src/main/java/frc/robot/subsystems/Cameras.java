@@ -43,7 +43,7 @@ public class Cameras extends SubsystemBase {
 
   @Override
   public void periodic() {
-    
+
     try {
       getPrimaryAprilTagPose(); // update apriltag pose
       distToAprilTag = aprilTagTargetPose.getZ(); // update distToTarget
@@ -60,14 +60,14 @@ public class Cameras extends SubsystemBase {
    * @return tx (degrees)
    */
   public double getTX() {
-    if(hasTarget()){
-    return limelightTable.getEntry("tx").getDouble(0.0);
-    } else{
+    if (hasTarget()) {
+      return limelightTable.getEntry("tx").getDouble(0.0);
+    } else {
       return 0.0;
     }
   }
 
-  public double getID(){
+  public double getID() {
     return LimelightHelpers.getFiducialID(Constants.LIMELIGHT_NAME);
   }
 
