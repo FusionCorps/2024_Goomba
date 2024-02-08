@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
 
+import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
@@ -35,6 +37,7 @@ import java.util.function.DoubleSupplier;
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
   public Cameras mCamera;
+  public Orchestra m_orchestra;
 
   public CommandSwerveDrivetrain(
       Cameras camera,
@@ -50,6 +53,38 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     // VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(5)); // state filter, doesn't seem to be a
     // way to use this in the constructor
+
+    m_orchestra = new Orchestra();
+
+    // Add a single device to the orchestra
+    AudioConfigs a = new AudioConfigs();
+    a.AllowMusicDurDisable = true;
+    this.getModule(0).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(1).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(2).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(3).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(0).getSteerMotor().getConfigurator().apply(a);
+    this.getModule(1).getSteerMotor().getConfigurator().apply(a);
+    this.getModule(2).getSteerMotor().getConfigurator().apply(a);
+    this.getModule(3).getSteerMotor().getConfigurator().apply(a);
+
+    m_orchestra.addInstrument(this.getModule(0).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(0).getSteerMotor());
+    m_orchestra.addInstrument(this.getModule(1).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(1).getSteerMotor());
+    m_orchestra.addInstrument(this.getModule(2).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(2).getSteerMotor());
+    m_orchestra.addInstrument(this.getModule(3).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(3).getSteerMotor());
+
+    // Attempt to load the chrp
+    // var status = m_orchestra.loadMusic("troll.chrp");
+    // var status = m_orchestra.loadMusic("output.chrp");
+    var status = m_orchestra.loadMusic("zeldaRevolution.chrp");
+
+    if (!status.isOK()) {
+      System.err.println("failed to play orchestra");
+    }
   }
 
   @Override
@@ -386,5 +421,10 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               setControl(new SwerveRequest.SwerveDriveBrake());
               pid.close();
             });
+  }
+
+  public Command playOrchestra() {
+    System.out.println("playing orchestra");
+    return run(() -> m_orchestra.play()).finallyDo(() -> m_orchestra.close());
   }
 }

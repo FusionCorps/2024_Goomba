@@ -23,7 +23,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    // RobotContainer.drivetrai n.m_orchestra.play();
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -48,6 +50,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    RobotContainer.drivetrain.m_orchestra.stop();
   }
 
   @Override

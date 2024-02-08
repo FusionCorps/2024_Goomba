@@ -47,7 +47,7 @@ public class Cameras extends SubsystemBase {
     try {
       getPrimaryAprilTagPose(); // update apriltag pose
       distToAprilTag = aprilTagTargetPose.getZ(); // update distToTarget
-      System.out.println(distToAprilTag);
+      // System.out.println(distToAprilTag);
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");
     }
@@ -119,42 +119,5 @@ public class Cameras extends SubsystemBase {
       aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
       return aprilTagTargetPose;
     } else return null;
-
-    // TODO: check if this alternative logic works
-    // acc to limelight docs, works, but key doesn't appear in networktables???
-    // double[] targetPoseArray =
-    // limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
-    // // this works the same way
-    // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME,
-    // "targetpose_robotspace");
-    // targetPose = new Pose3d(
-    //     targetPoseArray[0],
-    //     targetPoseArray[1],
-    //     targetPoseArray[2],
-    //     new Rotation3d(
-    //         targetPoseArray[3],
-    //         targetPoseArray[4],
-    //         targetPoseArray[5]
-    //     )
-    // );
-
-    // TODO: check if this alternative logic works
-    // manually parse json to get rid of delay??
-    // jsonString = limelightTable.getEntry("json").getString("");
-    // JSONObject json = (JSONObject) parser.parse(jsonString);
-    // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
-    //     (JSONObject) json.get("Results"))
-    //         .get("Fiducial")).get(0)).get("t6t_rs");
-
-    // targetPose = new Pose3d(
-    //     (double) targetPoseJSON.get(0),
-    //     (double) targetPoseJSON.get(1),
-    //     (double) targetPoseJSON.get(2),
-    //     new Rotation3d(
-    //         (double) targetPoseJSON.get(3),
-    //         (double) targetPoseJSON.get(4),
-    //         (double) targetPoseJSON.get(5)
-    //     )
-    // );
   }
 }
