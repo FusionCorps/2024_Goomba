@@ -26,6 +26,10 @@ public class Cobra extends SubsystemBase {
     cobraMotor.getConfigurator().apply(cobraConfigs);
   }
 
+  public void setCobraPct(double pct) {
+    cobraMotor.set(pct);
+  }
+
   public void setCobraPos(double pos) {
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     cobraMotor.setControl(positionReq.withPosition(pos));
