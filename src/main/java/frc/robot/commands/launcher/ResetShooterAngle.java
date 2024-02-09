@@ -6,16 +6,16 @@ import frc.robot.subsystems.Shooter;
 
 public class ResetShooterAngle extends Command {
 
-  Shooter mShooter;
+  Pivot mPivot;
 
-  public ResetShooterAngle(Shooter shooter) {
-    mShooter = shooter;
+  public ResetShooterAngle(Pivot pivot) {
+    mPivot = pivot;
 
-    addRequirements(mShooter);
+    addRequirements(mPivot);
   }
 
   @Override
   public void execute() {
-    mShooter.resetShooterAngle();
+    mPivot.resetShooterAngle();
   }
 }

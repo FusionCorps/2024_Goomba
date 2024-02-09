@@ -23,23 +23,7 @@ public class Shooter extends SubsystemBase {
     rightMotor.setInverted(false);
     leftMotor.setInverted(true);
 
-    pivotMotor = new TalonFX(1);
-    rPivotMotor = new TalonFX(2);
-
-    pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-
-    pivotConfigs.Slot0.kV = 0;
-    pivotConfigs.Slot0.kP = Constants.PIVOT_kP;
-    pivotConfigs.Slot0.kI = Constants.PIVOT_kI;
-    pivotConfigs.Slot0.kD = Constants.PIVOT_kD;
-
-    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 40;
-    pivotConfigs.MotionMagic.MotionMagicAcceleration = 15;
-    pivotConfigs.MotionMagic.MotionMagicJerk = 10;
-
-    pivotMotor.getConfigurator().apply(pivotConfigs);
-
-    pivotMotor.setControl(new Follower(rPivotMotor.getDeviceID(), true));
+    
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();
@@ -93,17 +77,5 @@ public class Shooter extends SubsystemBase {
   //   return run(() -> shoot(leftRPM, rightRPM)).finallyDo(() -> shoot(0, 0));
   // }
 
-  public void setShooterAngle(double pct) {
-    pivotMotor.set(pct);
-    System.out.println(pivotMotor.getPosition());
-  }
-
-  public void resetShooterAngle() {
-    pivotMotor.setPosition(0);
-  }
-
-  public void setAngle(double pos) {
-    MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
-    pivotMotor.setControl(positionReq.withPosition(pos));
-  }
+  
 }
