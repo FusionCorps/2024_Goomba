@@ -187,9 +187,9 @@ public class Constants {
                         2))); // in METERS, distance from center of robot to module
   }
 
-  public static final int INTAKE_MOTOR_ID = 25; // TODO: change this id
-  public static final int TOP_SHOOTER_MOTOR_ID = 3; // TODO: change this id
-  public static final int BOTTOM_SHOOTER_MOTOR_ID = 2; // TODO: change this id
+  public static final int INTAKE_MOTOR_ID = 4; // TODO: change this id
+  public static final int TOP_SHOOTER_MOTOR_ID = 2; // TODO: change this id
+  public static final int BOTTOM_SHOOTER_MOTOR_ID = 3; // TODO: change this id
   public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
 
   public static final double PIVOT_kP = 2;

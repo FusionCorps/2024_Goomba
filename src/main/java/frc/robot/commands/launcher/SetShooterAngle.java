@@ -1,23 +1,24 @@
 package frc.robot.commands.launcher;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 
 public class SetShooterAngle extends Command{
 
-    Shooter mShooter;
+    Pivot mPivot;
     double angle;
 
-    public SetShooterAngle(Shooter shooter, double ang){
-        mShooter = shooter;
+    public SetShooterAngle(Pivot pivot, double ang){
+        mPivot = pivot;
         angle = ang;
 
-        addRequirements(mShooter);
+        addRequirements(mPivot);
     }
 
     @Override
     public void execute(){
-        mShooter.setAngle(angle);
+        mPivot.setAngle(angle);
     }
     
 }

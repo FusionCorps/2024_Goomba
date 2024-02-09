@@ -20,9 +20,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.commands.RunIndex;
 import frc.robot.commands.launcher.AimShooterAngle;
 import frc.robot.commands.launcher.ResetShooterAngle;
 import frc.robot.commands.launcher.SetShooterAngle;
+import frc.robot.commands.launcher.ShootAmp;
 import frc.robot.commands.launcher.ShootSpeaker;
 import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
@@ -40,6 +42,7 @@ public class RobotContainer {
   // Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Index index = new Index();
+  Pivot pivot = new Pivot();
   private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
 
   private SendableChooser<Command> autoChooser;
@@ -107,12 +110,14 @@ public class RobotContainer {
     // robotController.leftStick().whileTrue(new RunIntake(intake));
 
     robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
-    // robotController.leftBumper().whileTrue(new RunIndex(index, 0.18));
+    robotController.a().whileTrue(new ShootSpeaker(shooter, 0.2, 0.2));
+    //robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
+    robotController.povDown().whileTrue(new RunIndex(index, 0.18));
 
-    robotController.y().onTrue(new ResetShooterAngle(shooter));
-    robotController.b().onTrue(new SetShooterAngle(shooter, 0));
-    robotController.rightBumper().whileTrue(new AimShooterAngle(shooter, .2));
-    robotController.leftBumper().whileTrue(new AimShooterAngle(shooter, -.4));
+    robotController.y().onTrue(new ResetShooterAngle(pivot));
+    robotController.b().onTrue(new SetShooterAngle(pivot, 0));
+    robotController.rightBumper().whileTrue(new AimShooterAngle(pivot, .08));
+    robotController.leftBumper().whileTrue(new AimShooterAngle(pivot, -.08));
   }
 
   public RobotContainer() {

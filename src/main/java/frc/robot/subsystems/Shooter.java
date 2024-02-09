@@ -16,34 +16,14 @@ public class Shooter extends SubsystemBase {
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
 
-  private TalonFX pivotMotor;
-  private TalonFX rPivotMotor;
-  private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
-  private TalonFXConfiguration rPivotConfigs = new TalonFXConfiguration();
+  
 
   public Shooter() {
     leftMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     rightMotor = new CANSparkFlex(Constants.TOP_SHOOTER_MOTOR_ID, MotorType.kBrushless);
-    rightMotor.setInverted(true);
+    rightMotor.setInverted(false);
+    leftMotor.setInverted(true);
 
-    pivotMotor = new TalonFX(1);
-    rPivotMotor = new TalonFX(2);
-
-    pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-
-    pivotConfigs.Slot0.kV = 0;
-    pivotConfigs.Slot0.kP = Constants.PIVOT_kP;
-    pivotConfigs.Slot0.kI = Constants.PIVOT_kI;
-    pivotConfigs.Slot0.kD = Constants.PIVOT_kD;
-
-    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 40;
-    pivotConfigs.MotionMagic.MotionMagicAcceleration = 15;
-    pivotConfigs.MotionMagic.MotionMagicJerk = 10;
-
-    pivotMotor.getConfigurator().apply(pivotConfigs);
-
-  
-    pivotMotor.setControl(new Follower(rPivotMotor.getDeviceID(), true));
     
 
   
@@ -84,8 +64,8 @@ public class Shooter extends SubsystemBase {
     rightMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.set(rightRpm);
     leftMotor.set(leftRpm);
-    // System.out.println(
-    //     rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
+    System.out.println(
+        rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
   // public void setShooterAngle(double angleOfShooter) {
@@ -100,17 +80,5 @@ public class Shooter extends SubsystemBase {
   //   return run(() -> shoot(leftRPM, rightRPM)).finallyDo(() -> shoot(0, 0));
   // }
 
-  public void setShooterAngle(double pct) {
-      pivotMotor.set(pct);
-      System.out.println(pivotMotor.getPosition());
-  }
-
-  public void resetShooterAngle(){
-    pivotMotor.setPosition(0);
-  }
   
-  public void setAngle(double pos){
-    MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
-    pivotMotor.setControl(positionReq.withPosition(pos));
-  }
 }

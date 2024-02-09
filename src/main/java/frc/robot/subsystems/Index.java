@@ -9,7 +9,7 @@ public class Index extends SubsystemBase {
 
   public Index() {
 
-    indexMotor = new CANSparkFlex(1, CANSparkFlex.MotorType.kBrushless);
+    indexMotor = new CANSparkFlex(4, CANSparkFlex.MotorType.kBrushless);
   }
 
   public void indexIn(double pct) {

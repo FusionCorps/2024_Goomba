@@ -47,7 +47,7 @@ public class Cameras extends SubsystemBase {
     try {
       getPrimaryAprilTagPose(); // update apriltag pose
       distToAprilTag = aprilTagTargetPose.getZ(); // update distToTarget
-      System.out.println(distToAprilTag);
+      //System.out.println(distToAprilTag);
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");
     }
