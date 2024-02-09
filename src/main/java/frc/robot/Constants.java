@@ -43,6 +43,11 @@ public class Constants {
     public static final int cbrMotorID = -1;
   }
 
+  public class StageAlignment {
+        public static final double toleranceDeg = 1.5;
+        public static final double runTime = 2;
+    }
+
   public class DrivetrainConstants {
     static class CustomSlotGains extends Slot0Configs {
       public CustomSlotGains(double kP, double kI, double kD, double kV, double kS) {
@@ -53,6 +58,8 @@ public class Constants {
         this.kS = kS;
       }
     }
+
+    
 
     // Note: gains should be really small for swerve
     // private static final CustomSlotGains steerGains = new CustomSlotGains(0.3, 0, 0.0002, 0, 0);

@@ -20,6 +20,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
@@ -247,6 +249,22 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
               setControl(new SwerveRequest.SwerveDriveBrake());
               rotReq.HeadingController.reset();
             });
+  }
+
+  // method that rotates the robot a certain angle to face the stage
+  public Command rotateInStageCommand() {
+    return new InstantCommand(() -> {
+      double angle = 60;
+      
+      int id = (int)mCamera.getID();
+
+      if (id == 14 || id == 13) {
+        angle = 180;
+      } else if (id == 15 || id == 12) {
+        angle = -60;
+      }
+      CommandScheduler.getInstance().schedule(rotateToAngleCommand(angle, Constants.StageAlignment.toleranceDeg, Constants.StageAlignment.runTime));
+    });
   }
 
   /**
