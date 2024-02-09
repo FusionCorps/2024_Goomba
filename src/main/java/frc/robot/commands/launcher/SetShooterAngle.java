@@ -4,21 +4,20 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 
-public class SetShooterAngle extends Command{
+public class SetShooterAngle extends Command {
 
-    Pivot mPivot;
-    double angle;
+  Shooter mShooter;
+  double angle;
 
-    public SetShooterAngle(Pivot pivot, double ang){
-        mPivot = pivot;
-        angle = ang;
+  public SetShooterAngle(Shooter shooter, double ang) {
+    mShooter = shooter;
+    angle = ang;
 
-        addRequirements(mPivot);
-    }
+    addRequirements(mShooter);
+  }
 
-    @Override
-    public void execute(){
-        mPivot.setAngle(angle);
-    }
-    
+  @Override
+  public void execute() {
+    mShooter.setAngle(angle);
+  }
 }

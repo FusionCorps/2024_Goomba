@@ -4,20 +4,17 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 import static frc.robot.Constants.allianceLocation;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.RunIndex;
@@ -26,11 +23,6 @@ import frc.robot.commands.launcher.ResetShooterAngle;
 import frc.robot.commands.launcher.SetShooterAngle;
 import frc.robot.commands.launcher.ShootAmp;
 import frc.robot.commands.launcher.ShootSpeaker;
-import frc.robot.commands.swerve.manual.PointWheels;
-import frc.robot.commands.swerve.manual.RunSwerveFC;
-import frc.robot.commands.swerve.manual.SwerveBrake;
-import frc.robot.commands.swerve.vision.AimAtTarget;
-import frc.robot.commands.swerve.vision.DriveToNote;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -89,7 +81,8 @@ public class RobotContainer {
     // robotController
     //     .rightBumper()
     //     .toggleOnTrue(
-    //         drivetrain.runSwerveFCwAim(robotController::getLeftY, robotController::getLeftX, 2.0));
+    //         drivetrain.runSwerveFCwAim(robotController::getLeftY, robotController::getLeftX,
+    // 2.0));
 
     // robotController
     //     .a()
@@ -131,7 +124,7 @@ public class RobotContainer {
       allianceLocation = location.getAsInt();
     } else System.err.println("Location not found");
 
-    //configureAuto();
+    // configureAuto();
 
     // set up pipeline chooser
     pipeLineChooser.setDefaultOption("AprilTag", 0);

@@ -41,7 +41,6 @@ public class Constants {
     public static final double cbrKI = 0;
     public static final double cbrKD = 0.1;
     public static final int cbrMotorID = -1;
-
   }
 
   public class DrivetrainConstants {
@@ -220,4 +219,6 @@ public class Constants {
   public static int allianceLocation = -1; // -1 by default, set in Robot.java\
 
   public static ShuffleboardTab limelightTab = Shuffleboard.getTab("Limelight");
+
+  public static double shooterSpeed = 28.06308713961776; // in ft/s
 }

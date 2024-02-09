@@ -1,23 +1,18 @@
-package frc.robot.commands;
+package frc.robot.commands.cobra;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Cobra;
 
-public class CornOnTheCobra extends Command{
-
+public class SetCobraPos extends Command{
     Cobra mCobra;
     double pos;
-
-    public CornOnTheCobra(Cobra cobra, double position){
+    public SetCobraPos(Cobra cobra, double position){
         mCobra = cobra;
         pos = position;
-
         addRequirements(mCobra);
     }
-
     @Override
-    public void execute(){
+    public void execute() {
         mCobra.setCobraPos(pos);
     }
-    
 }

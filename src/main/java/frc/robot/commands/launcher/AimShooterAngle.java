@@ -8,21 +8,20 @@ public class AimShooterAngle extends Command {
   private Pivot mPivot;
   private double pct;
 
-  public AimShooterAngle(Pivot pivot, double angle){
-      pct = angle;
-      mPivot = pivot;
+  public AimShooterAngle(Shooter shooter, double angle) {
+    pct = angle;
+    mShooter = shooter;
 
-      addRequirements(mPivot);
+    addRequirements(mShooter);
   }
 
   @Override
-  public void execute(){
-      mPivot.setShooterAngle(pct);
+  public void execute() {
+    mShooter.setShooterAngle(pct);
   }
 
   @Override
-  public void end(boolean isInterrupted){
-    mPivot.setShooterAngle(0);
+  public void end(boolean isInterrupted) {
+    mShooter.setShooterAngle(0);
   }
-
 }
