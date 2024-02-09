@@ -3,19 +3,18 @@ package frc.robot.commands.launcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
-public class ResetShooterAngle extends Command{
+public class ResetShooterAngle extends Command {
 
-    Shooter mShooter;
+  Shooter mShooter;
 
-    public ResetShooterAngle(Shooter shooter){
-        mShooter = shooter;
+  public ResetShooterAngle(Shooter shooter) {
+    mShooter = shooter;
 
-        addRequirements(mShooter);
-    }
+    addRequirements(mShooter);
+  }
 
-    @Override
-    public void execute(){
-        mShooter.resetShooterAngle();
-    }
-    
+  @Override
+  public void execute() {
+    mShooter.resetShooterAngle();
+  }
 }

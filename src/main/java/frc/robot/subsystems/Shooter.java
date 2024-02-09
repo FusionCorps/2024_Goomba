@@ -8,7 +8,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -42,11 +41,7 @@ public class Shooter extends SubsystemBase {
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
 
-  
     pivotMotor.setControl(new Follower(rPivotMotor.getDeviceID(), true));
-    
-
-  
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();
@@ -101,15 +96,15 @@ public class Shooter extends SubsystemBase {
   // }
 
   public void setShooterAngle(double pct) {
-      pivotMotor.set(pct);
-      System.out.println(pivotMotor.getPosition());
+    pivotMotor.set(pct);
+    System.out.println(pivotMotor.getPosition());
   }
 
-  public void resetShooterAngle(){
+  public void resetShooterAngle() {
     pivotMotor.setPosition(0);
   }
-  
-  public void setAngle(double pos){
+
+  public void setAngle(double pos) {
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(pos));
   }
