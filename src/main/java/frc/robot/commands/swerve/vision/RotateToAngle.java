@@ -17,10 +17,7 @@ public class RotateToAngle extends Command {
   SwerveRequest.FieldCentricFacingAngle rotReq;
 
   public RotateToAngle(
-      Drivetrain drivetrain,
-      double desiredHeadingDeg,
-      double toleranceDeg,
-      double runTime) {
+      Drivetrain drivetrain, double desiredHeadingDeg, double toleranceDeg, double runTime) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
 

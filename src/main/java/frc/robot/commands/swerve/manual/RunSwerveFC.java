@@ -28,8 +28,7 @@ public class RunSwerveFC extends Command {
   }
 
   // constructor using preset inputs
-  public RunSwerveFC(
-      Drivetrain drivetrain, double fwd, double strafe, double rotation) {
+  public RunSwerveFC(Drivetrain drivetrain, double fwd, double strafe, double rotation) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
     this.velX = fwd;

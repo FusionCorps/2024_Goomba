@@ -3,12 +3,12 @@ package frc.robot.commands.launcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
-public class SetShooterAngle extends Command {
+public class SetPivotAnglePos extends Command {
 
   Pivot mPivot;
   double angle;
 
-  public SetShooterAngle(Pivot pivot, double ang) {
+  public SetPivotAnglePos(Pivot pivot, double ang) {
     mPivot = pivot;
     angle = ang;
 

@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
+import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
+import static frc.robot.Constants.LimelightConstants.LIMELIGHT_TX_RANGE_DEG;
 
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
@@ -117,13 +119,13 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         && mCamera.hasTarget()
         && mCamera.getDistToAprilTagHorizontal() < maxDist
         && mCamera.getPipeline() == 0) {
-      Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(Constants.LIMELIGHT_NAME);
+      Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(LIMELIGHT_NAME);
       // System.out.println("Pose update: " + pose);
       // double timestamp = Timer.getFPGATimestamp();
       double timestamp =
           Timer.getFPGATimestamp()
-              - LimelightHelpers.getLatency_Capture(Constants.LIMELIGHT_NAME) / 1000.0
-              - LimelightHelpers.getLatency_Pipeline(Constants.LIMELIGHT_NAME) / 1000.0;
+              - LimelightHelpers.getLatency_Capture(LIMELIGHT_NAME) / 1000.0
+              - LimelightHelpers.getLatency_Pipeline(LIMELIGHT_NAME) / 1000.0;
       addVisionMeasurement(pose, timestamp);
     }
   }
@@ -246,7 +248,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
             SwerveRequest req =
                 new SwerveRequest.FieldCentric()
                     .withRotationalRate(
-                        pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate);
+                        pid.calculate(tx / LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate);
             setControl(req);
           }
         })
@@ -336,7 +338,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
             SwerveRequest req =
                 new SwerveRequest.FieldCentric()
                     .withVelocityY(
-                        strPID.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG)
+                        strPID.calculate(tx / LIMELIGHT_TX_RANGE_DEG)
                             * DrivetrainConstants.MaxSpeed)
                     .withVelocityX(0.0);
             setControl(req);
@@ -443,7 +445,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
                     .withVelocityX(movementDamp * -x.getAsDouble() * DrivetrainConstants.MaxSpeed)
                     .withVelocityY(movementDamp * -y.getAsDouble() * DrivetrainConstants.MaxSpeed)
                     .withRotationalRate(
-                        pid.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate));
+                        pid.calculate(tx / LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate));
           }
         })
         .until(() -> !mCamera.hasTarget())

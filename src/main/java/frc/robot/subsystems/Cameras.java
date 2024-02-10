@@ -1,12 +1,12 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.limelightTab;
+import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
+import static frc.robot.Constants.LimelightConstants.limelightTab;
 
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
 
 public class Cameras extends SubsystemBase {
@@ -75,7 +75,7 @@ public class Cameras extends SubsystemBase {
   }
 
   public double getID() {
-    return LimelightHelpers.getFiducialID(Constants.LIMELIGHT_NAME);
+    return LimelightHelpers.getFiducialID(LIMELIGHT_NAME);
   }
 
   /**
@@ -120,9 +120,7 @@ public class Cameras extends SubsystemBase {
     // get latest apriltag pose results, if on correct pipeline and target seen
     if (hasTarget() && getPipeline() == 0) {
       var fid =
-          LimelightHelpers.getLatestResults(Constants.LIMELIGHT_NAME)
-              .targetingResults
-              .targets_Fiducials;
+          LimelightHelpers.getLatestResults(LIMELIGHT_NAME).targetingResults.targets_Fiducials;
       aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
       return aprilTagTargetPose;
     } else return null;

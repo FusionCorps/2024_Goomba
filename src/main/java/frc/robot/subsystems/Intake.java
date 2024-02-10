@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.INTAKE_MOTOR_ID;
+import static frc.robot.Constants.IntakeConstants.INTAKE_MOTOR_ID;
 
 import com.revrobotics.CANSparkFlex;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;

@@ -15,6 +15,6 @@ public class ResetPivotAngle extends Command {
 
   @Override
   public void execute() {
-    mPivot.resetShooterAngle();
+    mPivot.resetPivotAngle();
   }
 }

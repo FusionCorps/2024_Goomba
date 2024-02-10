@@ -49,6 +49,9 @@ public class Constants {
   }
 
   public class DrivetrainConstants {
+    // TODO: tune gains, slip current, theoretical free speed, couple ratio, and test
+    // torquecurrentfoc mode
+
     // Both sets of gains need to be tuned to your individual robot.
 
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
@@ -203,6 +206,7 @@ public class Constants {
     public static final double MaxSpeed = 5; // 5 meters per second max speed
     public static final double MaxAngularRate =
         2 * Math.PI; // 1 rotation per second max rotation rate
+    public static final double AimingDamper = 0.2;
 
     public static final double FULL_LENGTH = 0.81; // in meters, includes bumpers
     public static final double FULL_WIDTH = 0.81; // in meters, includes bumpers
@@ -218,45 +222,56 @@ public class Constants {
                         2))); // in METERS, distance from center of robot to module
   }
 
-  public static final int INTAKE_MOTOR_ID = 6;
-  public static final int SHOOTER_MOTOR_TOP_ID = 2;
-  public static final int SHOOTER_MOTOR_BOTTOM_ID = 3;
-  public static final int PIVOT_MOTOR_ID = 1;
-  public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
+  public static class IntakeConstants {
+    public static final int INTAKE_MOTOR_ID = 6;
+  }
+
+  public static class PivotConstants {
+    public static final int PIVOT_MOTOR_ID = 1;
+    public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
+
+    public static final double PIVOT_GEAR_RATIO =
+        (1 / 4) * (1 / 5)
+            * (9 / 66); // multiply ratios of two gearboxes and then small gear turning big gear
+
+    public static final double PIVOT_kP = 2;
+    public static final double PIVOT_kD = 0.3;
+    public static final double PIVOT_kI = 0;
+
+    public static final double PIVOT_START_POS = Units.degreesToRotations(30);
+    public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
+    public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
+  }
+
+  public static class ShooterConstants {
+    public static final int SHOOTER_MOTOR_TOP_ID = 2;
+    public static final int SHOOTER_MOTOR_BOTTOM_ID = 3;
+
+    public static final double ShooterSpeed = 28.06308713961776; // in ft/s
+  }
+
+  public static class LimelightConstants {
+    public static final String LIMELIGHT_NAME = "limelight";
+    public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
+    public static final double LIMELIGHT_TY_RANGE_DEG = 24.85; // range is thus -24.85 to 24.85
+
+    public static final double camHeightMeters = Units.inchesToMeters(78); // dont change
+    public static final double cameraPitchRadians = Units.degreesToRadians(1.0); // dont change
+    // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
+    public static final double sourceTargetHeightMeters = Units.inchesToMeters(53.375);
+    // 51 7/8 to bottom of target, 5 1/4 to center of target
+    public static final double speakerTargetHeightMeters = Units.inchesToMeters(57.125);
+    // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
+    public static final double ampTargetHeightMeters =
+        Units.inchesToMeters(53.375); // identical height to source
+    // 47.5 inches to bottom of target, 4.5 to center of target
+    public static final double trapTargetHeightMeters = Units.inchesToMeters(52);
+
+    public static final ShuffleboardTab limelightTab = Shuffleboard.getTab("Limelight");
+  }
+
   public static final int INDEX_MOTOR_ID = 4;
-
-  public static final double PIVOT_GEAR_RATIO =
-      (1 / 4) * (1 / 5)
-          * (9 / 66); // multiply ratios of two gearboxes and then small gear turning big gear
-
-  public static final double PIVOT_kP = 2;
-  public static final double PIVOT_kD = 0.3;
-  public static final double PIVOT_kI = 0;
-
-  public static final double PIVOT_START_POS = Units.degreesToRotations(30);
-  public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
-  public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
-
-  public static final String LIMELIGHT_NAME = "limelight";
-  public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
-  public static final double LIMELIGHT_TY_RANGE_DEG = 24.85; // range is thus -24.85 to 24.85
-
-  public static final double camHeightMeters = Units.inchesToMeters(78); // dont change
-  public static final double cameraPitchRadians = Units.degreesToRadians(1.0); // dont change
-  // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
-  public static final double sourceTargetHeightMeters = Units.inchesToMeters(53.375);
-  // 51 7/8 to bottom of target, 5 1/4 to center of target
-  public static final double speakerTargetHeightMeters = Units.inchesToMeters(57.125);
-  // 48 1/8 to bottom (white boundary edge) of target, 5 1/4 to center of target
-  public static final double ampTargetHeightMeters =
-      Units.inchesToMeters(53.375); // identical height to source
-  // 47.5 inches to bottom of target, 4.5 to center of target
-  public static final double trapTargetHeightMeters = Units.inchesToMeters(52);
 
   public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
   public static int allianceLocation = -1; // -1 by default, set in Robot.java\
-
-  public static ShuffleboardTab limelightTab = Shuffleboard.getTab("Limelight");
-
-  public static double shooterSpeed = 28.06308713961776; // in ft/s
 }

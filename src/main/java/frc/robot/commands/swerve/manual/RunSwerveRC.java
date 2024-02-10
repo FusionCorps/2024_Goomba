@@ -32,8 +32,7 @@ public class RunSwerveRC extends Command {
     addRequirements(mDrivetrain);
   }
 
-  public RunSwerveRC(
-      Drivetrain drivetrain, double fwd, double strafe, double rotation) {
+  public RunSwerveRC(Drivetrain drivetrain, double fwd, double strafe, double rotation) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
     this.velX = fwd;

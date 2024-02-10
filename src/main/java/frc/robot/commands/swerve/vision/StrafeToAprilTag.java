@@ -1,11 +1,12 @@
 package frc.robot.commands.swerve.vision;
 
+import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
+import static frc.robot.Constants.LimelightConstants.LIMELIGHT_TX_RANGE_DEG;
+
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.subsystems.Drivetrain;
 
 // horizontally strafes to align with a target
@@ -35,9 +36,7 @@ public class StrafeToAprilTag extends Command {
       // set strafe velocity to velY * scaling factor
       SwerveRequest req =
           new SwerveRequest.FieldCentric()
-              .withVelocityY(
-                  strPID.calculate(tx / Constants.LIMELIGHT_TX_RANGE_DEG)
-                      * DrivetrainConstants.MaxAngularRate)
+              .withVelocityY(strPID.calculate(tx / LIMELIGHT_TX_RANGE_DEG) * MaxAngularRate)
               .withVelocityX(0.0);
       mDrivetrain.setControl(req);
     }

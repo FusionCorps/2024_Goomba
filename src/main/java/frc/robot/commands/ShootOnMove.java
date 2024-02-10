@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import static frc.robot.Constants.shooterSpeed;
+import static frc.robot.Constants.ShooterConstants.ShooterSpeed;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -14,7 +14,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Shooter;
 
 public class ShootOnMove extends Command {
-  CommandXboxController mRobotController = RobotContainer.robotController;
+  CommandXboxController controller = RobotContainer.robotController;
   private static final double LENGTH_SPEAKER_EDGE = 0;
   private static final double h_s = 0;
   Drivetrain mDrivetrain;
@@ -39,7 +39,7 @@ public class ShootOnMove extends Command {
     req =
         new SwerveRequest.FieldCentricFacingAngle()
             .withTargetDirection(
-                Rotation2d.fromDegrees(mDrivetrain.getPigeon2().getAngle() % 360.0));
+                Rotation2d.fromDegrees(mDrivetrain.getPigeon2().getYaw().getValue() % 360.0));
 
     addRequirements(drivetrain, mShooter);
 
@@ -70,15 +70,14 @@ public class ShootOnMove extends Command {
     }
 
     mDrivetrain.setControl(
-        req.withVelocityX(-mRobotController.getLeftY())
-            .withVelocityY(-mRobotController.getLeftX()));
+        req.withVelocityX(-controller.getLeftY()).withVelocityY(-controller.getLeftX()));
   }
 
   private void calcTargetTXSimple() {
     goalTX =
         Math.atan(
             (robotVel.getY() * Math.sin(Units.degreesToRadians(14)))
-                / shooterSpeed
+                / ShooterSpeed
                 * Math.cos(45 - currTX));
   }
 

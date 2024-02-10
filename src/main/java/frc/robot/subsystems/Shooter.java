@@ -1,18 +1,20 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_BOTTOM_ID;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_TOP_ID;
+
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 
 public class Shooter extends SubsystemBase {
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
 
   public Shooter() {
-    leftMotor = new CANSparkFlex(Constants.SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
-    rightMotor = new CANSparkFlex(Constants.SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
+    leftMotor = new CANSparkFlex(SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
+    rightMotor = new CANSparkFlex(SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
     rightMotor.setInverted(false);
     leftMotor.setInverted(true);
 
@@ -41,6 +43,12 @@ public class Shooter extends SubsystemBase {
 
   public void periodic() {}
 
+  /**
+   * Runs the shooter motors using duty cycle percentages.
+   *
+   * @param leftPct the percentage to set the left shooter to
+   * @param rightPct the percentage to set the right shooter to
+   */
   public void shoot(double leftPct, double rightPct) {
     // leftController.setReference(leftRpm, ControlType.kVelocity);
     // rightController.setReference(-rightRpm, ControlType.kVelocity);
