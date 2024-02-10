@@ -9,10 +9,8 @@ import static frc.robot.Constants.allianceLocation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -26,8 +24,8 @@ import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.AimShooterAngle;
 import frc.robot.commands.launcher.ResetShooterAngle;
 import frc.robot.commands.launcher.SetShooterAngle;
-import frc.robot.commands.launcher.ShootAmp;
 import frc.robot.commands.launcher.ShootSpeaker;
+import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -51,8 +49,8 @@ public class RobotContainer {
 
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
-    // drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-    // robotController.a().whileTrue(new PointWheels(drivetrain));
+    drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+
     // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
     // // reset odometry to current position, and zero gyro yaw
@@ -113,14 +111,12 @@ public class RobotContainer {
 
     robotController.rightBumper().toggleOnTrue(new ShootSpeaker(shooter, 0.82, 0.67));
     robotController.leftBumper().whileTrue(new ShootSpeaker(shooter, 0.2, 0.2));
-    //robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
+    // robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
     robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
     robotController.povDown().whileTrue(new RunIntake(intake, -0.75));
     robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.75));
     indexTrigger.whileFalse(new RunIndex(index, 0.24));
     indexTrigger.onTrue(new RunIndex(index, 0));
-
-    
 
     robotController.y().onTrue(new ResetShooterAngle(pivot));
     robotController.b().onTrue(new SetShooterAngle(pivot, 0));

@@ -1,10 +1,5 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
-import com.ctre.phoenix6.controls.MotionMagicVoltage;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
@@ -15,15 +10,11 @@ public class Shooter extends SubsystemBase {
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
 
-  
-
   public Shooter() {
     leftMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     rightMotor = new CANSparkFlex(Constants.TOP_SHOOTER_MOTOR_ID, MotorType.kBrushless);
     rightMotor.setInverted(false);
     leftMotor.setInverted(true);
-
-    
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();
@@ -77,5 +68,4 @@ public class Shooter extends SubsystemBase {
   //   return run(() -> shoot(leftRPM, rightRPM)).finallyDo(() -> shoot(0, 0));
   // }
 
-  
 }

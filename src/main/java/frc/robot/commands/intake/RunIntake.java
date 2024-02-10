@@ -8,18 +8,18 @@ public class RunIntake extends Command {
   double speed;
 
   public RunIntake(Intake intake, double pct) {
-      m_intake = intake;
-      speed = pct;
-      addRequirements(intake);
+    m_intake = intake;
+    speed = pct;
+    addRequirements(intake);
   }
 
   @Override
   public void execute() {
-      m_intake.runIntake(speed);
+    m_intake.runIntake(speed);
   }
 
   @Override
-  public void end(boolean isInterrupted){
+  public void end(boolean isInterrupted) {
     m_intake.runIntake(0);
   }
 }

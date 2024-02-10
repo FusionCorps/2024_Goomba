@@ -253,18 +253,24 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
   // method that rotates the robot a certain angle to face the stage
   public Command rotateInStageCommand() {
-    return new InstantCommand(() -> {
-      double angle = 60;
-      
-      int id = (int)mCamera.getID();
+    return new InstantCommand(
+        () -> {
+          double angle = 60;
 
-      if (id == 14 || id == 13) {
-        angle = 180;
-      } else if (id == 15 || id == 12) {
-        angle = -60;
-      }
-      CommandScheduler.getInstance().schedule(rotateToAngleCommand(angle, Constants.StageAlignment.toleranceDeg, Constants.StageAlignment.runTime));
-    });
+          int id = (int) mCamera.getID();
+
+          if (id == 14 || id == 13) {
+            angle = 180;
+          } else if (id == 15 || id == 12) {
+            angle = -60;
+          }
+          CommandScheduler.getInstance()
+              .schedule(
+                  rotateToAngleCommand(
+                      angle,
+                      Constants.StageAlignment.toleranceDeg,
+                      Constants.StageAlignment.runTime));
+        });
   }
 
   /**

@@ -16,7 +16,7 @@ public class ShootOnMove extends Command {
 
   /**
    * Procedure: Givens: shooter velocity, robot velocity 1. Get the robot's distance to an apriltag
-   * 2. Based on distance, find 
+   * 2. Based on distance, find
    */
   @Override
   public void execute() {}

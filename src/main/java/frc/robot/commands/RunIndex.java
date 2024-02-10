@@ -20,6 +20,4 @@ public class RunIndex extends Command {
 
     mIndex.indexIn(pct);
   }
-
-  
 }
