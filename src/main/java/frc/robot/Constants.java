@@ -105,30 +105,30 @@ public class Constants {
                 kCoupleRatio) // Every 1 rotation of the azimuth results in couple ratio drive turns
             .withSteerMotorInverted(kSteerMotorReversed);
 
-    private static final int kFrontLeftDriveMotorId = 8;
-    private static final int kFrontLeftSteerMotorId = 0;
+    private static final int kFrontLeftDriveMotorId = 10;
+    private static final int kFrontLeftSteerMotorId = 11;
     private static final int kFrontLeftEncoderId = 12;
     private static final double kFrontLeftEncoderOffset = -0.217041;
 
     private static final double kFrontLeftXPosInches = 9.75;
     private static final double kFrontLeftYPosInches = 9.75;
-    private static final int kFrontRightDriveMotorId = 4;
-    private static final int kFrontRightSteerMotorId = 3;
-    private static final int kFrontRightEncoderId = 13;
+    private static final int kFrontRightDriveMotorId = 13;
+    private static final int kFrontRightSteerMotorId = 14;
+    private static final int kFrontRightEncoderId = 15;
     private static final double kFrontRightEncoderOffset = -0.046142578125;
 
     private static final double kFrontRightXPosInches = 9.75;
     private static final double kFrontRightYPosInches = -9.75;
-    private static final int kBackLeftDriveMotorId = 9;
-    private static final int kBackLeftSteerMotorId = 1;
-    private static final int kBackLeftEncoderId = 2;
+    private static final int kBackLeftDriveMotorId = 16;
+    private static final int kBackLeftSteerMotorId = 17;
+    private static final int kBackLeftEncoderId = 18;
     private static final double kBackLeftEncoderOffset = -0.864013671875;
 
     private static final double kBackLeftXPosInches = -9.75;
     private static final double kBackLeftYPosInches = 9.75;
-    private static final int kBackRightDriveMotorId = 5;
-    private static final int kBackRightSteerMotorId = 7;
-    private static final int kBackRightEncoderId = 11;
+    private static final int kBackRightDriveMotorId = 19;
+    private static final int kBackRightSteerMotorId = 20;
+    private static final int kBackRightEncoderId = 21;
     private static final double kBackRightEncoderOffset = -0.8466796875;
 
     private static final double kBackRightXPosInches = -9.75;
@@ -197,6 +197,8 @@ public class Constants {
   public static final int TOP_SHOOTER_MOTOR_ID = 2; // TODO: change this id
   public static final int BOTTOM_SHOOTER_MOTOR_ID = 3; // TODO: change this id
   public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
+
+  public static final double PIVOT_GEAR_RATIO = (1/4)*(1/5)*(9/66);
 
   public static final double PIVOT_kP = 2;
   public static final double PIVOT_kD = 0.3;

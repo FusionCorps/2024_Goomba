@@ -9,13 +9,17 @@ import static frc.robot.Constants.allianceLocation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.event.EventLoop;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
@@ -36,10 +40,14 @@ public class RobotContainer {
   Shooter shooter = new Shooter();
   Index index = new Index();
   Pivot pivot = new Pivot();
+
+  DigitalInput beam_break = new DigitalInput(1);
   private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
 
   private SendableChooser<Command> autoChooser;
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
+
+  private Trigger indexTrigger = new Trigger(beam_break::get);
 
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
@@ -103,17 +111,21 @@ public class RobotContainer {
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
     // robotController.leftStick().whileTrue(new RunIntake(intake));
 
-    robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
-    robotController.a().whileTrue(new ShootSpeaker(shooter, 0.2, 0.2));
+    robotController.rightBumper().toggleOnTrue(new ShootSpeaker(shooter, 0.82, 0.67));
+    robotController.leftBumper().whileTrue(new ShootSpeaker(shooter, 0.2, 0.2));
     //robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
-    robotController.povDown().whileTrue(new RunIndex(index, 0.24));
-    robotController.leftTrigger().whileTrue(new RunIntake(intake, -0.75));
+    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
+    robotController.povDown().whileTrue(new RunIntake(intake, -0.75));
     robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.75));
+    indexTrigger.whileFalse(new RunIndex(index, 0.24));
+    indexTrigger.onTrue(new RunIndex(index, 0));
+
+    
 
     robotController.y().onTrue(new ResetShooterAngle(pivot));
     robotController.b().onTrue(new SetShooterAngle(pivot, 0));
-    robotController.rightBumper().whileTrue(new AimShooterAngle(pivot, .08));
-    robotController.leftBumper().whileTrue(new AimShooterAngle(pivot, -.08));
+    robotController.povRight().whileTrue(new AimShooterAngle(pivot, .08));
+    robotController.povLeft().whileTrue(new AimShooterAngle(pivot, -.08));
   }
 
   public RobotContainer() {

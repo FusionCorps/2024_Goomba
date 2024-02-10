@@ -21,8 +21,5 @@ public class RunIndex extends Command {
     mIndex.indexIn(pct);
   }
 
-  @Override
-  public void end(boolean interrupted) {
-    mIndex.indexIn(0);
-  }
+  
 }
