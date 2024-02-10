@@ -23,6 +23,8 @@ public class Pivot extends SubsystemBase {
     pivotEncoder = new DutyCycleEncoder(0);
     pivotMotor = new TalonFX(PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PIVOT_FOLLOWER_MOTOR_ID);
+    
+    pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -39,7 +41,12 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), true));
 
-    pivotMotor.setPosition(pivotEncoder.get() * Constants.PIVOT_GEAR_RATIO);
+    
+  }
+
+  @Override
+  public void periodic(){
+    //pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
   }
 
   /**
@@ -48,8 +55,9 @@ public class Pivot extends SubsystemBase {
    * @param pct the percentage to set the shooter to
    */
   public void setShooterAngle(double pct) {
+    pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
-    System.out.println(pivotMotor.getPosition());
+    System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getDistance());
   }
 
   /** Zeroes the shooter angle to the current angle. */
@@ -63,6 +71,7 @@ public class Pivot extends SubsystemBase {
    * @param pos the position to set the shooter to, in rotations
    */
   public void setAngle(double pos) {
+    pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(pos));
   }

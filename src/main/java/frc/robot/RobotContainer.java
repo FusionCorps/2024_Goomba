@@ -24,6 +24,7 @@ import frc.robot.commands.launcher.AimShooterAngle;
 import frc.robot.commands.launcher.ResetPivotAngle;
 import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
+import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -110,10 +111,10 @@ public class RobotContainer {
     robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
 
     // run outtake
-    robotController.povDown().whileTrue(new RunIntake(intake, -0.75));
+    robotController.povDown().whileTrue(new RunIntake(intake, -0.85));
 
     // run intake
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.75));
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.85));
 
     // while the beam break is not broken, run the index
     new Trigger(index::beamBroken)
@@ -125,8 +126,18 @@ public class RobotContainer {
     // robotController.b().onTrue(new SetShooterAngle(pivot, 0));
 
     // move shooter up or down
+    
+    // robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
+    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
+    
+    
+    
+
+    
     robotController.povRight().whileTrue(new AimShooterAngle(pivot, .08));
     robotController.povLeft().whileTrue(new AimShooterAngle(pivot, -.08));
+
+    
   }
 
   public RobotContainer() {
