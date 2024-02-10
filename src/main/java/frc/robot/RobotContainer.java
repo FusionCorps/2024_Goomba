@@ -10,19 +10,14 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.commands.swerve.manual.PointWheels;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
-import frc.robot.commands.swerve.manual.SwerveBrake;
 import frc.robot.commands.swerve.vision.AimAtTarget;
+import frc.robot.commands.swerve.vision.DriveToNote;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -38,10 +33,10 @@ public class RobotContainer {
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-    robotController.a().whileTrue(new PointWheels(drivetrain));
-    robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
+    // robotController.a().whileTrue(new PointWheels(drivetrain));
+    // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
-    // reset odometry to current position, and zero gyro yaw
+    // // reset odometry to current position, and zero gyro yaw
     robotController
         .b()
         .onTrue(
@@ -51,26 +46,25 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
     robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
-
-    robotController
-        .x()
-        .whileTrue(
-            drivetrain
-                .rotateToAngleCommand(180, 2.0, 0.75)
-                // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
-                .andThen(Commands.print("rotation finished"))
-                .andThen(drivetrain.strafeToAprilTagCommand(2.0))
-                // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
-                .andThen(Commands.print("strafe finished"))
-                .andThen(
-                    Commands.runOnce(
-                        () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
-                .andThen(new WaitCommand(0.1))
-                .andThen(
-                    Commands.runOnce(
-                        () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
+    robotController.a().whileTrue(new DriveToNote(drivetrain));
+    // robotController
+    //     .x()
+    //     .whileTrue(
+    //         drivetrain
+    //             .rotateToAngleCommand(180, 2.0, 0.75)
+    //             // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
+    //             .andThen(Commands.print("rotation finished"))
+    //             .andThen(drivetrain.strafeToAprilTagCommand(2.0))
+    //             // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
+    //             .andThen(Commands.print("strafe finished"))
+    //             .andThen(
+    //                 Commands.runOnce(
+    //                     () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
+    //             .andThen(new WaitCommand(0.1))
+    //             .andThen(
+    //                 Commands.runOnce(
+    //                     () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
 
     // // TODO: run with AimShooterAngle
     // robotController
@@ -106,43 +100,34 @@ public class RobotContainer {
     // set up pipeline chooser
     pipeLineChooser.setDefaultOption("AprilTag", 0);
     pipeLineChooser.addOption("Note", 1);
-    // pipeLineChooser.onChange((num) -> {drivetrain.getCamera().setPipeline(num);
-    // System.out.println("pipeline set to " + num);});
-    SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
+    // pipeLineChooser.onChange((num) -> drivetrain.getCamera().setPipeline(num));
+    // SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
 
     configureBindings();
 
-    // if (Utils.isSimulation())
-    //     drivetrain.seedFieldRelative(new Pose2d()); // set current heading to forward
-    // else drivetrain.seedFieldRelative(); // set current heading to forward
-
-    drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
+    // drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
   }
 
   // method that configures and initializes everything necessary for auton
   public void configureAuto() {
+    NamedCommands.registerCommand("Run Flywheel", Commands.print("Run Flywheel"));
     NamedCommands.registerCommand("ShootSpeaker", Commands.print("ShootSpeaker"));
     NamedCommands.registerCommand("ShootAmp", Commands.print("ShootAmp"));
     NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
     NamedCommands.registerCommand("AimAtTarget", Commands.print("AimAtTarget"));
     NamedCommands.registerCommand(
         "getAutoStartingPos",
-        new InstantCommand(
-            () ->
-                System.out.println(
-                    "Starting Pose: "
-                        + PathPlannerAuto.getStaringPoseFromAutoFile(
-                            autoChooser.getSelected().getName()))));
+        Commands.print(
+            "Starting Pose: "
+                + PathPlannerAuto.getStaringPoseFromAutoFile(autoChooser.getSelected().getName())));
 
     // testing the single path autons
     // autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
 
-    System.out.println(AutoBuilder.getAllAutoNames());
-    // if this throws an error, make sure all autos are complete
-    // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
+    // verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    // SmartDashboard.putData("Auto Chooser", autoChooser);
   }
 
   public Command getAutonomousCommand() {

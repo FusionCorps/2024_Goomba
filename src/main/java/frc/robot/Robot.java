@@ -23,9 +23,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {
-    // RobotContainer.drivetrai n.m_orchestra.play();
-  }
+  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}
@@ -41,16 +39,13 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-    // System.out.println(RobotContainer.drivetrain.getPose());
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.drivetrain.m_orchestra.stop();
   }
 
   @Override

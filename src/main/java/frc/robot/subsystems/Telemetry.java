@@ -97,8 +97,8 @@ public class Telemetry {
     limelightTab
         .add("LL", limelightFeed)
         .withPosition(0, 0)
-        .withSize(15, 8)
-        .withProperties(Map.of("Show Crosshair", true, "Show Controls", true));
+        .withSize(4, 4)
+        .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
   }
 
   /* Accept the swerve drive state and telemeterize it to smartdashboard */

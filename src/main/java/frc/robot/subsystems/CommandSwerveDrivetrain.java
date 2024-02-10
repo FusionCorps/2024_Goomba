@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
 
 import com.ctre.phoenix6.Orchestra;
+import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.configs.AudioConfigs;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
@@ -37,7 +39,7 @@ import java.util.function.DoubleSupplier;
  */
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
   public Cameras mCamera;
-  public Orchestra m_orchestra;
+  public Orchestra m_orchestra = new Orchestra();
 
   public CommandSwerveDrivetrain(
       Cameras camera,
@@ -51,40 +53,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     // vision measurement std filter
     setVisionMeasurementStdDevs(VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
-    // VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(5)); // state filter, doesn't seem to be a
-    // way to use this in the constructor
-
-    m_orchestra = new Orchestra();
-
-    // Add a single device to the orchestra
-    AudioConfigs a = new AudioConfigs();
-    a.AllowMusicDurDisable = true;
-    this.getModule(0).getDriveMotor().getConfigurator().apply(a);
-    this.getModule(1).getDriveMotor().getConfigurator().apply(a);
-    this.getModule(2).getDriveMotor().getConfigurator().apply(a);
-    this.getModule(3).getDriveMotor().getConfigurator().apply(a);
-    this.getModule(0).getSteerMotor().getConfigurator().apply(a);
-    this.getModule(1).getSteerMotor().getConfigurator().apply(a);
-    this.getModule(2).getSteerMotor().getConfigurator().apply(a);
-    this.getModule(3).getSteerMotor().getConfigurator().apply(a);
-
-    m_orchestra.addInstrument(this.getModule(0).getDriveMotor());
-    m_orchestra.addInstrument(this.getModule(0).getSteerMotor());
-    m_orchestra.addInstrument(this.getModule(1).getDriveMotor());
-    m_orchestra.addInstrument(this.getModule(1).getSteerMotor());
-    m_orchestra.addInstrument(this.getModule(2).getDriveMotor());
-    m_orchestra.addInstrument(this.getModule(2).getSteerMotor());
-    m_orchestra.addInstrument(this.getModule(3).getDriveMotor());
-    m_orchestra.addInstrument(this.getModule(3).getSteerMotor());
-
-    // Attempt to load the chrp
-    // var status = m_orchestra.loadMusic("troll.chrp");
-    // var status = m_orchestra.loadMusic("output.chrp");
-    var status = m_orchestra.loadMusic("zeldaRevolution.chrp");
-
-    if (!status.isOK()) {
-      System.err.println("failed to play orchestra");
-    }
+    // configOrchestra();
   }
 
   @Override
@@ -423,8 +392,95 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
             });
   }
 
+  private SwerveRequest.SysIdSwerveTranslation sysIDTransReq =
+      new SwerveRequest.SysIdSwerveTranslation();
+  private SwerveRequest.SysIdSwerveRotation sysIDRotReq = new SwerveRequest.SysIdSwerveRotation();
+  private SwerveRequest.SysIdSwerveSteerGains sysIDSteerGains =
+      new SwerveRequest.SysIdSwerveSteerGains();
+
+  private SysIdRoutine steerRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              null, null, null, state -> SignalLogger.writeString("state", state.toString())),
+          new SysIdRoutine.Mechanism(volts -> sysIDSteerGains.withVolts(volts), null, this));
+
+  private SysIdRoutine transRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              null, null, null, state -> SignalLogger.writeString("state", state.toString())),
+          new SysIdRoutine.Mechanism(volts -> sysIDTransReq.withVolts(volts), null, this));
+
+  private SysIdRoutine rotRoutine =
+      new SysIdRoutine(
+          new SysIdRoutine.Config(
+              null, null, null, state -> SignalLogger.writeString("state", state.toString())),
+          new SysIdRoutine.Mechanism(volts -> sysIDRotReq.withVolts(volts), null, this));
+
+  public enum SysIdMode {
+    TRANSLATION,
+    ROTATION,
+    STEER_GAINS
+  }
+
+  public Command sysIDQuasistatic(SysIdMode mode, SysIdRoutine.Direction direction) {
+    switch (mode) {
+      case TRANSLATION:
+        return transRoutine.quasistatic(direction);
+      case ROTATION:
+        return rotRoutine.quasistatic(direction);
+      case STEER_GAINS:
+        return steerRoutine.quasistatic(direction);
+      default:
+        return null;
+    }
+  }
+
+  public Command sysIDDynamic(SysIdMode mode, SysIdRoutine.Direction direction) {
+    switch (mode) {
+      case TRANSLATION:
+        return transRoutine.dynamic(direction);
+      case ROTATION:
+        return rotRoutine.dynamic(direction);
+      case STEER_GAINS:
+        return steerRoutine.dynamic(direction);
+      default:
+        return null;
+    }
+  }
+
   public Command playOrchestra() {
     System.out.println("playing orchestra");
     return run(() -> m_orchestra.play()).finallyDo(() -> m_orchestra.close());
+  }
+
+  private void configOrchestra() {
+    AudioConfigs a = new AudioConfigs();
+    a.AllowMusicDurDisable = true;
+    this.getModule(0).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(1).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(2).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(3).getDriveMotor().getConfigurator().apply(a);
+    this.getModule(0).getSteerMotor().getConfigurator().apply(a);
+    this.getModule(1).getSteerMotor().getConfigurator().apply(a);
+    this.getModule(2).getSteerMotor().getConfigurator().apply(a);
+    this.getModule(3).getSteerMotor().getConfigurator().apply(a);
+
+    m_orchestra.addInstrument(this.getModule(0).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(0).getSteerMotor());
+    m_orchestra.addInstrument(this.getModule(1).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(1).getSteerMotor());
+    m_orchestra.addInstrument(this.getModule(2).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(2).getSteerMotor());
+    m_orchestra.addInstrument(this.getModule(3).getDriveMotor());
+    m_orchestra.addInstrument(this.getModule(3).getSteerMotor());
+
+    // Attempt to load the chrp
+    // var status = m_orchestra.loadMusic("troll.chrp");
+    // var status = m_orchestra.loadMusic("output.chrp");
+    var status = m_orchestra.loadMusic("zeldaRevolution.chrp");
+
+    if (!status.isOK()) {
+      System.err.println("failed to setup orchestra");
+    }
   }
 }

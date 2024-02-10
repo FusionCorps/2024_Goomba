@@ -52,5 +52,7 @@ public class RunSwerveFC extends Command {
             .withVelocityY(velY)
             .withRotationalRate(rot);
     mDrivetrain.setControl(request);
+
+    // System.out.println(velX + ", " + velY + ", " + rot);
   }
 }
