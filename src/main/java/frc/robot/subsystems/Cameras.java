@@ -12,7 +12,7 @@ import org.json.simple.parser.JSONParser;
 
 public class Cameras extends SubsystemBase {
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-  public double distToAprilTag = 0.0; // in meters
+  private double distToAprilTag = 0.0; // in meters
   private Pose3d aprilTagTargetPose = new Pose3d();
 
   private JSONParser parser = new JSONParser();
@@ -43,7 +43,6 @@ public class Cameras extends SubsystemBase {
 
   @Override
   public void periodic() {
-
     try {
       getPrimaryAprilTagPose(); // update apriltag pose
       distToAprilTag = aprilTagTargetPose.getZ(); // update distToTarget
@@ -51,6 +50,10 @@ public class Cameras extends SubsystemBase {
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");
     }
+  }
+
+  public double getDistToAprilTag() {
+    return distToAprilTag;
   }
 
   /**

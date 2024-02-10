@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
 
+import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
@@ -14,6 +15,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -38,6 +40,12 @@ import java.util.function.DoubleSupplier;
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
   public Cameras mCamera;
 
+  /* Keep a reference of the last pose to calculate the speeds */
+  private Pose2d m_lastPose = new Pose2d();
+  private double lastTime = Utils.getCurrentTimeSeconds();
+
+  private Translation2d vel = new Translation2d();
+
   public CommandSwerveDrivetrain(
       Cameras camera,
       SwerveDrivetrainConstants driveTrainConstants,
@@ -58,6 +66,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   public void periodic() {
     // updates the odometry from aprilTag data
     updateOdometryFromAprilTags(1.0);
+    updateVelocity();
   }
 
   @Override
@@ -108,7 +117,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private void updateOdometryFromAprilTags(double maxDist) {
     if (RobotBase.isReal()
         && mCamera.hasTarget()
-        && mCamera.distToAprilTag < maxDist
+        && mCamera.getDistToAprilTag() < maxDist
         && mCamera.getPipeline() == 0) {
       Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
       // System.out.println("Pose update: " + pose);
@@ -180,6 +189,25 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
    */
   public Cameras getCamera() {
     return mCamera;
+  }
+
+  public Translation2d getVelocity() {
+    return vel;
+  }
+
+  private void updateVelocity() {
+    // update velocity measurement
+    Pose2d pose = getState().Pose;
+
+    /* Telemeterize the robot's general speeds */
+    double currentTime = Utils.getCurrentTimeSeconds();
+    double diffTime = currentTime - lastTime;
+    lastTime = currentTime;
+    Translation2d distanceDiff = pose.minus(m_lastPose).getTranslation();
+    m_lastPose = pose;
+
+    // divide displacement by time to get velocity
+    vel = distanceDiff.div(diffTime);
   }
 
   /**
