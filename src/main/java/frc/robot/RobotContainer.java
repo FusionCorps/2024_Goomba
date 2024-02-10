@@ -11,6 +11,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -100,12 +101,12 @@ public class RobotContainer {
     // set up pipeline chooser
     pipeLineChooser.setDefaultOption("AprilTag", 0);
     pipeLineChooser.addOption("Note", 1);
-    // pipeLineChooser.onChange((num) -> drivetrain.getCamera().setPipeline(num));
-    // SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
+    pipeLineChooser.onChange((num) -> drivetrain.getCamera().setPipeline(num));
+    SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
 
     configureBindings();
 
-    // drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
+    drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
   }
 
   // method that configures and initializes everything necessary for auton
