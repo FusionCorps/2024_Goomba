@@ -11,8 +11,8 @@ public class Shooter extends SubsystemBase {
   private SparkPIDController leftController, rightController;
 
   public Shooter() {
-    leftMotor = new CANSparkFlex(Constants.BOTTOM_SHOOTER_MOTOR_ID, MotorType.kBrushless);
-    rightMotor = new CANSparkFlex(Constants.TOP_SHOOTER_MOTOR_ID, MotorType.kBrushless);
+    leftMotor = new CANSparkFlex(Constants.SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
+    rightMotor = new CANSparkFlex(Constants.SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
     rightMotor.setInverted(false);
     leftMotor.setInverted(true);
 

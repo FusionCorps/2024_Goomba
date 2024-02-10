@@ -8,15 +8,11 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
-import org.json.simple.parser.JSONParser;
 
 public class Cameras extends SubsystemBase {
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
   private double distToAprilTag = 0.0; // in meters
   private Pose3d aprilTagTargetPose = new Pose3d();
-
-  private JSONParser parser = new JSONParser();
-  private String jsonString;
 
   public Cameras() {
     limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
@@ -122,42 +118,5 @@ public class Cameras extends SubsystemBase {
       aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
       return aprilTagTargetPose;
     } else return null;
-
-    // TODO: check if this alternative logic works
-    // acc to limelight docs, works, but key doesn't appear in networktables???
-    // double[] targetPoseArray =
-    // limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
-    // // this works the same way
-    // targetPoseArray = LimelightHelpers.getLimelightNTDoubleArray(Constants.LIMELIGHT_NAME,
-    // "targetpose_robotspace");
-    // targetPose = new Pose3d(
-    //     targetPoseArray[0],
-    //     targetPoseArray[1],
-    //     targetPoseArray[2],
-    //     new Rotation3d(
-    //         targetPoseArray[3],
-    //         targetPoseArray[4],
-    //         targetPoseArray[5]
-    //     )
-    // );
-
-    // TODO: check if this alternative logic works
-    // manually parse json to get rid of delay??
-    // jsonString = limelightTable.getEntry("json").getString("");
-    // JSONObject json = (JSONObject) parser.parse(jsonString);
-    // JSONArray targetPoseJSON = (JSONArray) ((JSONObject) ((JSONArray)(
-    //     (JSONObject) json.get("Results"))
-    //         .get("Fiducial")).get(0)).get("t6t_rs");
-
-    // targetPose = new Pose3d(
-    //     (double) targetPoseJSON.get(0),
-    //     (double) targetPoseJSON.get(1),
-    //     (double) targetPoseJSON.get(2),
-    //     new Rotation3d(
-    //         (double) targetPoseJSON.get(3),
-    //         (double) targetPoseJSON.get(4),
-    //         (double) targetPoseJSON.get(5)
-    //     )
-    // );
   }
 }

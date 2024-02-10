@@ -15,7 +15,6 @@ import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class Constants {
-
   public class TarsArmConstants {
     public static final double ARM_POS_1 = 25; // 25;
     public static final double ARM_POS_2 = -25; // -25;
@@ -219,12 +218,16 @@ public class Constants {
                         2))); // in METERS, distance from center of robot to module
   }
 
-  public static final int INTAKE_MOTOR_ID = 6; // TODO: change this id
-  public static final int TOP_SHOOTER_MOTOR_ID = 2; // TODO: change this id
-  public static final int BOTTOM_SHOOTER_MOTOR_ID = 3; // TODO: change this id
-  public static final int SHOOTER_PIVOT_MOTOR_ID = -1; // TODO: change this id
+  public static final int INTAKE_MOTOR_ID = 6;
+  public static final int SHOOTER_MOTOR_TOP_ID = 2;
+  public static final int SHOOTER_MOTOR_BOTTOM_ID = 3;
+  public static final int PIVOT_MOTOR_ID = 1;
+  public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
+  public static final int INDEX_MOTOR_ID = 4;
 
-  public static final double PIVOT_GEAR_RATIO = (1 / 4) * (1 / 5) * (9 / 66);
+  public static final double PIVOT_GEAR_RATIO =
+      (1 / 4) * (1 / 5)
+          * (9 / 66); // multiply ratios of two gearboxes and then small gear turning big gear
 
   public static final double PIVOT_kP = 2;
   public static final double PIVOT_kD = 0.3;

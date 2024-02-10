@@ -9,7 +9,6 @@ import static frc.robot.Constants.allianceLocation;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,9 +21,8 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.AimShooterAngle;
-import frc.robot.commands.launcher.ResetShooterAngle;
-import frc.robot.commands.launcher.SetShooterAngle;
-import frc.robot.commands.launcher.ShootSpeaker;
+import frc.robot.commands.launcher.ResetPivotAngle;
+import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.subsystems.*;
 
@@ -39,21 +37,15 @@ public class RobotContainer {
   Index index = new Index();
   Pivot pivot = new Pivot();
 
-  DigitalInput beam_break = new DigitalInput(1);
   private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
 
   private SendableChooser<Command> autoChooser;
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
-  private Trigger indexTrigger = new Trigger(beam_break::get);
-
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-
-    // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
-
-    // // reset odometry to current position, and zero gyro yaw
+    // reset odometry to current position, and zero gyro yaw
     robotController
         .b()
         .onTrue(
@@ -109,17 +101,30 @@ public class RobotContainer {
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
     // robotController.leftStick().whileTrue(new RunIntake(intake));
 
-    robotController.rightBumper().toggleOnTrue(new ShootSpeaker(shooter, 0.82, 0.67));
-    robotController.leftBumper().whileTrue(new ShootSpeaker(shooter, 0.2, 0.2));
-    // robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
-    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
-    robotController.povDown().whileTrue(new RunIntake(intake, -0.75));
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.75));
-    indexTrigger.whileFalse(new RunIndex(index, 0.24));
-    indexTrigger.onTrue(new RunIndex(index, 0));
+    // aim at speaker and shoot at speaker (TODO: add aiming at target)
+    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67));
+    // aim at amp and shoot at amp (TODO: add aiming at amp)
+    robotController.leftBumper().whileTrue(new Shoot(shooter, 0.2, 0.2));
 
-    robotController.y().onTrue(new ResetShooterAngle(pivot));
-    //robotController.b().onTrue(new SetShooterAngle(pivot, 0));
+    // run index
+    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
+
+    // run outtake
+    robotController.povDown().whileTrue(new RunIntake(intake, -0.75));
+
+    // run intake
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.75));
+
+    // while the beam break is not broken, run the index
+    new Trigger(index::beamBroken)
+        .whileFalse(new RunIndex(index, 0.24))
+        .onTrue(new RunIndex(index, 0));
+
+    // reset pivot angle to current angle
+    robotController.y().onTrue(new ResetPivotAngle(pivot));
+    // robotController.b().onTrue(new SetShooterAngle(pivot, 0));
+
+    // move shooter up or down
     robotController.povRight().whileTrue(new AimShooterAngle(pivot, .08));
     robotController.povLeft().whileTrue(new AimShooterAngle(pivot, -.08));
   }

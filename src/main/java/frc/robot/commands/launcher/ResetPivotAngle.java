@@ -3,11 +3,11 @@ package frc.robot.commands.launcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
-public class ResetShooterAngle extends Command {
+public class ResetPivotAngle extends Command {
 
   Pivot mPivot;
 
-  public ResetShooterAngle(Pivot pivot) {
+  public ResetPivotAngle(Pivot pivot) {
     mPivot = pivot;
 
     addRequirements(mPivot);

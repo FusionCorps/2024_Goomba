@@ -11,7 +11,6 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.ReplanningConfig;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,7 +18,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotBase;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -40,6 +41,10 @@ import java.util.function.DoubleSupplier;
 public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
   public Cameras mCamera;
 
+  private static final double kSimLoopPeriod = 0.005; // 5 ms
+  private Notifier m_simNotifier = null;
+  private double m_lastSimTime;
+
   /* Keep a reference of the last pose to calculate the speeds */
   private Pose2d m_lastPose = new Pose2d();
   private double lastTime = Utils.getCurrentTimeSeconds();
@@ -56,23 +61,16 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     configPathPlanner();
 
     // vision measurement std filter
-    setVisionMeasurementStdDevs(VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
+    // setVisionMeasurementStdDevs(VecBuilder.fill(0.5, 0.5, Units.degreesToRadians(30)));
 
-    // VecBuilder.fill(0.01, 0.01, Units.degreesToRadians(5)); // state filter, doesn't seem to be a
-    // way to use this in the constructor
+    if (Utils.isSimulation()) startSimThread();
   }
 
   @Override
   public void periodic() {
     // updates the odometry from aprilTag data
     updateOdometryFromAprilTags(1.0);
-    updateVelocity();
-  }
-
-  @Override
-  public void simulationPeriodic() {
-    /* Assume */
-    updateSimState(0.02, 12);
+    updateVelocityMeasurement();
   }
 
   /** Configures the PathPlanner's AutoBuilder. */
@@ -119,7 +117,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
         && mCamera.hasTarget()
         && mCamera.getDistToAprilTag() < maxDist
         && mCamera.getPipeline() == 0) {
-      Pose2d pose = LimelightHelpers.getBotPose2d(Constants.LIMELIGHT_NAME);
+      Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(Constants.LIMELIGHT_NAME);
       // System.out.println("Pose update: " + pose);
       // double timestamp = Timer.getFPGATimestamp();
       double timestamp =
@@ -195,7 +193,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
     return vel;
   }
 
-  private void updateVelocity() {
+  private void updateVelocityMeasurement() {
     // update velocity measurement
     Pose2d pose = getState().Pose;
 
@@ -208,6 +206,23 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
     // divide displacement by time to get velocity
     vel = distanceDiff.div(diffTime);
+  }
+
+  private void startSimThread() {
+    m_lastSimTime = Utils.getCurrentTimeSeconds();
+
+    /* Run simulation at a faster rate so PID gains behave more reasonably */
+    m_simNotifier =
+        new Notifier(
+            () -> {
+              final double currentTime = Utils.getCurrentTimeSeconds();
+              double deltaTime = currentTime - m_lastSimTime;
+              m_lastSimTime = currentTime;
+
+              /* use the measured time delta, get battery voltage from WPILib */
+              updateSimState(deltaTime, RobotController.getBatteryVoltage());
+            });
+    m_simNotifier.startPeriodic(kSimLoopPeriod);
   }
 
   /**

@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 
 public class RunIndex extends Command {
-
   Index mIndex;
   double pct;
 
@@ -17,7 +16,6 @@ public class RunIndex extends Command {
 
   @Override
   public void execute() {
-
-    mIndex.indexIn(pct);
+    mIndex.runIndex(pct);
   }
 }

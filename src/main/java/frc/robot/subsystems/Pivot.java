@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.PIVOT_FOLLOWER_MOTOR_ID;
+import static frc.robot.Constants.PIVOT_MOTOR_ID;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -11,17 +14,15 @@ import frc.robot.Constants;
 
 public class Pivot extends SubsystemBase {
 
-  private TalonFX pivotMotor;
-  private TalonFX rPivotMotor;
+  private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
 
-  private DutyCycleEncoder pivotEncoder;
+  private DutyCycleEncoder pivotEncoder; // through bore encoder
 
   public Pivot() {
-
     pivotEncoder = new DutyCycleEncoder(0);
-    pivotMotor = new TalonFX(1);
-    rPivotMotor = new TalonFX(5);
+    pivotMotor = new TalonFX(PIVOT_MOTOR_ID);
+    pivotFollowerMotor = new TalonFX(PIVOT_FOLLOWER_MOTOR_ID);
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -36,20 +37,31 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
 
-    pivotMotor.setControl(new Follower(rPivotMotor.getDeviceID(), true));
+    pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), true));
 
     pivotMotor.setPosition(pivotEncoder.get() * Constants.PIVOT_GEAR_RATIO);
   }
 
+  /**
+   * Sets the shooter angle using a duty cycle percentage.
+   *
+   * @param pct the percentage to set the shooter to
+   */
   public void setShooterAngle(double pct) {
     pivotMotor.set(pct);
     System.out.println(pivotMotor.getPosition());
   }
 
+  /** Zeroes the shooter angle to the current angle. */
   public void resetShooterAngle() {
     pivotMotor.setPosition(0);
   }
 
+  /**
+   * Sets the shooter angle using Motion Magic.
+   *
+   * @param pos the position to set the shooter to, in rotations
+   */
   public void setAngle(double pos) {
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(pos));

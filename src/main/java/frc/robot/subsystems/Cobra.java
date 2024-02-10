@@ -26,10 +26,20 @@ public class Cobra extends SubsystemBase {
     cobraMotor.getConfigurator().apply(cobraConfigs);
   }
 
+  /**
+   * Sets the cobra angle using a duty cycle percentage.
+   *
+   * @param pct the percentage to set the cobra to
+   */
   public void setCobraPct(double pct) {
     cobraMotor.set(pct);
   }
 
+  /**
+   * Sets the cobra angle using Motion Magic.
+   *
+   * @param pos the position to set the cobra to, in rotations
+   */
   public void setCobraPos(double pos) {
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     cobraMotor.setControl(positionReq.withPosition(pos));
