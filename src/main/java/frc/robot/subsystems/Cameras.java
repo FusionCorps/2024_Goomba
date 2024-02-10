@@ -11,7 +11,9 @@ import frc.robot.LimelightHelpers;
 
 public class Cameras extends SubsystemBase {
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-  private double distToAprilTag = 0.0; // in meters
+  private double distToAprilTagHorizontal = 0.0; // in meters
+  private double distToAprilTagVertical = 0.0; // in meters
+
   private Pose3d aprilTagTargetPose = new Pose3d();
 
   public Cameras() {
@@ -33,23 +35,29 @@ public class Cameras extends SubsystemBase {
     limelightTab.addDouble("tx", this::getTX);
     limelightTab.addDouble("ty", this::getTY);
     limelightTab.addBoolean("hasTarget", this::hasTarget);
-    limelightTab.addDouble("Distance to AprilTag", () -> distToAprilTag);
+    limelightTab.addDouble("Horizontal Distance to AprilTag", () -> distToAprilTagHorizontal);
     limelightTab.addInteger("Pipeline", this::getPipeline);
   }
 
   @Override
   public void periodic() {
+    // update apriltag pose and distances to apriltag
     try {
-      getPrimaryAprilTagPose(); // update apriltag pose
-      distToAprilTag = aprilTagTargetPose.getZ(); // update distToTarget
+      getPrimaryAprilTagPose();
+      distToAprilTagHorizontal = aprilTagTargetPose.getZ();
+      distToAprilTagVertical = aprilTagTargetPose.getY();
       // System.out.println(distToAprilTag);
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");
     }
   }
 
-  public double getDistToAprilTag() {
-    return distToAprilTag;
+  public double getDistToAprilTagHorizontal() {
+    return distToAprilTagHorizontal;
+  }
+
+  public double getDistToAprilTagVertical() {
+    return distToAprilTagVertical;
   }
 
   /**

@@ -41,7 +41,7 @@ public class Shooter extends SubsystemBase {
 
   public void periodic() {}
 
-  public void shoot(double leftRpm, double rightRpm) {
+  public void shoot(double leftPct, double rightPct) {
     // leftController.setReference(leftRpm, ControlType.kVelocity);
     // rightController.setReference(-rightRpm, ControlType.kVelocity);
 
@@ -50,8 +50,8 @@ public class Shooter extends SubsystemBase {
 
     leftMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.setSmartCurrentLimit(60, 5500);
-    rightMotor.set(rightRpm);
-    leftMotor.set(leftRpm);
+    rightMotor.set(rightPct);
+    leftMotor.set(leftPct);
     System.out.println(
         rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }

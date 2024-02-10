@@ -7,9 +7,9 @@ public class RunIndex extends Command {
   Index mIndex;
   double pct;
 
-  public RunIndex(Index index, double pwr) {
+  public RunIndex(Index index, double pct) {
     mIndex = index;
-    pct = pwr;
+    this.pct = pct;
 
     addRequirements(mIndex);
   }

@@ -6,18 +6,18 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AimingPIDS;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 // rotates to a desired angle in place
 public class RotateToAngle extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
   private Timer timer = new Timer();
   private double runTime; // how long in seconds to aim
 
   SwerveRequest.FieldCentricFacingAngle rotReq;
 
   public RotateToAngle(
-      CommandSwerveDrivetrain drivetrain,
+      Drivetrain drivetrain,
       double desiredHeadingDeg,
       double toleranceDeg,
       double runTime) {

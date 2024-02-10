@@ -1,13 +1,13 @@
 package frc.robot.commands.swerve.manual;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 public class RotateInStage extends SequentialCommandGroup {
 
-  CommandSwerveDrivetrain mDrivetrain;
+  Drivetrain mDrivetrain;
 
-  public RotateInStage(CommandSwerveDrivetrain drivetrain) {
+  public RotateInStage(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
 
     addRequirements(mDrivetrain);

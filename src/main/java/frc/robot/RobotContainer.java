@@ -24,15 +24,12 @@ import frc.robot.commands.launcher.AimShooterAngle;
 import frc.robot.commands.launcher.ResetPivotAngle;
 import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
-import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
-  public static CommandXboxController robotController = new CommandXboxController(0); // joystick
-  public static CommandSwerveDrivetrain drivetrain =
-      Constants.DrivetrainConstants.DriveTrain; // drivetrain
+  public static CommandXboxController robotController = new CommandXboxController(0);
+  public static Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
 
-  // public TarsArm tarsArm = new TarsArm();
   Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Index index = new Index();
@@ -55,6 +52,34 @@ public class RobotContainer {
                   drivetrain.seedFieldRelative();
                   drivetrain.resetGyro();
                 }));
+
+    // aim at speaker and shoot at speaker (TODO: add aiming at target)
+    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67));
+
+    // aim at amp and shoot at amp (TODO: add aiming at amp)
+    robotController.leftBumper().whileTrue(new Shoot(shooter, 0.2, 0.2));
+
+    // run index
+    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
+
+    // run intake
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.85));
+
+    // run outtake
+    robotController.povDown().whileTrue(new RunIntake(intake, -0.85));
+
+    // while the beam break sensor is not broken, run the index
+    new Trigger(index::beamBroken)
+        .whileFalse(new RunIndex(index, 0.24))
+        .onTrue(new RunIndex(index, 0));
+
+    // zero the pivot angle at current angle
+    robotController.y().onTrue(new ResetPivotAngle(pivot));
+    // robotController.b().onTrue(new SetShooterAngle(pivot, 0));
+
+    // move shooter up or down
+    robotController.povRight().whileTrue(new AimShooterAngle(pivot, .08));
+    robotController.povLeft().whileTrue(new AimShooterAngle(pivot, -.08));
 
     // robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
     // robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
@@ -101,43 +126,6 @@ public class RobotContainer {
 
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
     // robotController.leftStick().whileTrue(new RunIntake(intake));
-
-    // aim at speaker and shoot at speaker (TODO: add aiming at target)
-    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67));
-    // aim at amp and shoot at amp (TODO: add aiming at amp)
-    robotController.leftBumper().whileTrue(new Shoot(shooter, 0.2, 0.2));
-
-    // run index
-    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
-
-    // run outtake
-    robotController.povDown().whileTrue(new RunIntake(intake, -0.85));
-
-    // run intake
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.85));
-
-    // while the beam break is not broken, run the index
-    new Trigger(index::beamBroken)
-        .whileFalse(new RunIndex(index, 0.24))
-        .onTrue(new RunIndex(index, 0));
-
-    // reset pivot angle to current angle
-    robotController.y().onTrue(new ResetPivotAngle(pivot));
-    // robotController.b().onTrue(new SetShooterAngle(pivot, 0));
-
-    // move shooter up or down
-    
-    // robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
-    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
-    
-    
-    
-
-    
-    robotController.povRight().whileTrue(new AimShooterAngle(pivot, .08));
-    robotController.povLeft().whileTrue(new AimShooterAngle(pivot, -.08));
-
-    
   }
 
   public RobotContainer() {

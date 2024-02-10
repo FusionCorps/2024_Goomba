@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * Robot-centric Movement, open-loop.
@@ -15,7 +15,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
  * Rotate counterclockwise with negative X (right joystick).
  */
 public class RunSwerveRC extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
   private CommandXboxController controller = RobotContainer.robotController;
   private boolean presetInputs = false;
 
@@ -27,13 +27,13 @@ public class RunSwerveRC extends Command {
           .withDriveRequestType(DriveRequestType.OpenLoopVoltage)
           .withDeadband(deadband);
 
-  public RunSwerveRC(CommandSwerveDrivetrain drivetrain) {
+  public RunSwerveRC(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
   }
 
   public RunSwerveRC(
-      CommandSwerveDrivetrain drivetrain, double fwd, double strafe, double rotation) {
+      Drivetrain drivetrain, double fwd, double strafe, double rotation) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
     this.velX = fwd;

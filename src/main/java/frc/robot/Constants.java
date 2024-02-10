@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.Cameras;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 public class Constants {
   public class TarsArmConstants {
@@ -196,8 +196,8 @@ public class Constants {
             Units.inchesToMeters(kBackRightYPosInches),
             kInvertRightSide);
 
-    public static final CommandSwerveDrivetrain DriveTrain =
-        new CommandSwerveDrivetrain(
+    public static final Drivetrain DriveTrain =
+        new Drivetrain(
             new Cameras(), DrivetrainConstants, 250, FrontLeft, FrontRight, BackLeft, BackRight);
 
     public static final double MaxSpeed = 5; // 5 meters per second max speed

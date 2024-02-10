@@ -5,18 +5,18 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * This command allows the driver to strafe the robot, It locks the robot's angle and disables
  * forward/backward movement.
  */
 public class StrafeOnly extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
   private CommandXboxController controller = RobotContainer.robotController;
   private Rotation2d targetDirection;
 
-  public StrafeOnly(CommandSwerveDrivetrain drivetrain) {
+  public StrafeOnly(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
   }

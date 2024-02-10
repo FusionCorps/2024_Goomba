@@ -6,17 +6,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 // horizontally strafes to align with a target
 public class StrafeToAprilTag extends Command {
-  private final CommandSwerveDrivetrain mDrivetrain;
+  private final Drivetrain mDrivetrain;
   private double tx;
   private PIDController strPID =
       new PIDController(AimingPIDS.strKP, AimingPIDS.strKI, AimingPIDS.strKD);
   private double toleranceDeg;
 
-  public StrafeToAprilTag(CommandSwerveDrivetrain drivetrain, double toleranceDeg) {
+  public StrafeToAprilTag(Drivetrain drivetrain, double toleranceDeg) {
     this.toleranceDeg = toleranceDeg;
     strPID.setTolerance(toleranceDeg); // strafe to within tolerance degrees of target
     strPID.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)

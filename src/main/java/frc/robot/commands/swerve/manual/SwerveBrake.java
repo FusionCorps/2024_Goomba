@@ -2,13 +2,13 @@ package frc.robot.commands.swerve.manual;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 /** Lock wheels in X shape */
 public class SwerveBrake extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
 
-  public SwerveBrake(CommandSwerveDrivetrain drivetrain) {
+  public SwerveBrake(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
   }

@@ -23,7 +23,7 @@ public class Pivot extends SubsystemBase {
     pivotEncoder = new DutyCycleEncoder(0);
     pivotMotor = new TalonFX(PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PIVOT_FOLLOWER_MOTOR_ID);
-    
+
     pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -40,13 +40,11 @@ public class Pivot extends SubsystemBase {
     pivotMotor.getConfigurator().apply(pivotConfigs);
 
     pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), true));
-
-    
   }
 
   @Override
-  public void periodic(){
-    //pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
+  public void periodic() {
+    // pivotMotor.setPosition(pivotEncoder.getDistance() / Constants.PIVOT_GEAR_RATIO);
   }
 
   /**

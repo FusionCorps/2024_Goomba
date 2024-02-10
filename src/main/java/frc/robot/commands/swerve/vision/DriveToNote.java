@@ -4,15 +4,15 @@ import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 // drive forward to note
 public class DriveToNote extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
   private double tolerance = -18.3; // in degrees
   private boolean isDone;
 
-  public DriveToNote(CommandSwerveDrivetrain drivetrain) {
+  public DriveToNote(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
 
     isDone = false;

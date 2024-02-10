@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.RobotContainer;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 /**
  * Field-centric Movement, open-loop movement
@@ -14,7 +14,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
  * Rotate counterclockwise with negative X (right joystick)
  */
 public class RunSwerveFC extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
   private CommandXboxController controller = RobotContainer.robotController;
 
   private boolean presetInputs = false;
@@ -22,14 +22,14 @@ public class RunSwerveFC extends Command {
   private double velX = 0, velY = 0, rot = 0;
   private double deadband = 0.05;
 
-  public RunSwerveFC(CommandSwerveDrivetrain drivetrain) {
+  public RunSwerveFC(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
   }
 
   // constructor using preset inputs
   public RunSwerveFC(
-      CommandSwerveDrivetrain drivetrain, double fwd, double strafe, double rotation) {
+      Drivetrain drivetrain, double fwd, double strafe, double rotation) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
     this.velX = fwd;

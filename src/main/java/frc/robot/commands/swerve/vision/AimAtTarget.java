@@ -7,18 +7,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Drivetrain;
 
 // aims at a target in place
 public class AimAtTarget extends Command {
-  private CommandSwerveDrivetrain mDrivetrain;
+  private Drivetrain mDrivetrain;
   private PIDController pid =
       new PIDController(
           AimingPIDS.toTargetRotKP, AimingPIDS.toTargetRotKI, AimingPIDS.toTargetRotKD);
   private Timer timer = new Timer();
   private double runTime = 0.0;
 
-  public AimAtTarget(CommandSwerveDrivetrain drivetrain, double toleranceDeg, double runTime) {
+  public AimAtTarget(Drivetrain drivetrain, double toleranceDeg, double runTime) {
     pid.setTolerance(toleranceDeg);
     pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
     this.runTime = runTime;

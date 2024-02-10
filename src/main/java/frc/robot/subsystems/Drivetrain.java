@@ -38,7 +38,7 @@ import java.util.function.DoubleSupplier;
  * controlling the swerve drivetrain, updating odometry, and executing various commands related to
  * the drivetrain.
  */
-public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsystem {
+public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   public Cameras mCamera;
 
   private static final double kSimLoopPeriod = 0.005; // 5 ms
@@ -51,7 +51,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
 
   private Translation2d vel = new Translation2d();
 
-  public CommandSwerveDrivetrain(
+  public Drivetrain(
       Cameras camera,
       SwerveDrivetrainConstants driveTrainConstants,
       double OdometryUpdateFrequency,
@@ -115,7 +115,7 @@ public class CommandSwerveDrivetrain extends SwerveDrivetrain implements Subsyst
   private void updateOdometryFromAprilTags(double maxDist) {
     if (RobotBase.isReal()
         && mCamera.hasTarget()
-        && mCamera.getDistToAprilTag() < maxDist
+        && mCamera.getDistToAprilTagHorizontal() < maxDist
         && mCamera.getPipeline() == 0) {
       Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(Constants.LIMELIGHT_NAME);
       // System.out.println("Pose update: " + pose);
