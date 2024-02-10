@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.commands.RunIndex;
+import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.AimShooterAngle;
 import frc.robot.commands.launcher.ResetShooterAngle;
 import frc.robot.commands.launcher.SetShooterAngle;
@@ -31,7 +32,7 @@ public class RobotContainer {
       Constants.DrivetrainConstants.DriveTrain; // drivetrain
 
   // public TarsArm tarsArm = new TarsArm();
-  // Intake intake = new Intake();
+  Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Index index = new Index();
   Pivot pivot = new Pivot();
@@ -105,7 +106,9 @@ public class RobotContainer {
     robotController.x().whileTrue(new ShootSpeaker(shooter, 0.82, 0.67));
     robotController.a().whileTrue(new ShootSpeaker(shooter, 0.2, 0.2));
     //robotController.a().whileTrue(new ShootAmp(shooter, 0.17, 0.17));
-    robotController.povDown().whileTrue(new RunIndex(index, 0.18));
+    robotController.povDown().whileTrue(new RunIndex(index, 0.24));
+    robotController.leftTrigger().whileTrue(new RunIntake(intake, -0.75));
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.75));
 
     robotController.y().onTrue(new ResetShooterAngle(pivot));
     robotController.b().onTrue(new SetShooterAngle(pivot, 0));
