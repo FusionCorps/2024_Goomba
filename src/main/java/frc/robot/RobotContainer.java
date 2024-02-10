@@ -54,14 +54,14 @@ public class RobotContainer {
     // robotController.leftBumper().toggleOnTrue(new SwerveBrake(drivetrain));
 
     // // reset odometry to current position, and zero gyro yaw
-    // robotController
-    //     .b()
-    //     .onTrue(
-    //         drivetrain.runOnce(
-    //             () -> {
-    //               drivetrain.seedFieldRelative();
-    //               drivetrain.resetGyro();
-    //             }));
+    robotController
+        .b()
+        .onTrue(
+            drivetrain.runOnce(
+                () -> {
+                  drivetrain.seedFieldRelative();
+                  drivetrain.resetGyro();
+                }));
 
     // robotController.leftStick().whileTrue(drivetrain.aimAtTargetCommand(2.0, 0.5));
     // robotController.y().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5));
@@ -119,7 +119,7 @@ public class RobotContainer {
     indexTrigger.onTrue(new RunIndex(index, 0));
 
     robotController.y().onTrue(new ResetShooterAngle(pivot));
-    robotController.b().onTrue(new SetShooterAngle(pivot, 0));
+    //robotController.b().onTrue(new SetShooterAngle(pivot, 0));
     robotController.povRight().whileTrue(new AimShooterAngle(pivot, .08));
     robotController.povLeft().whileTrue(new AimShooterAngle(pivot, -.08));
   }

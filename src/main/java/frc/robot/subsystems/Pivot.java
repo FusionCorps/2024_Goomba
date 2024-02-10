@@ -15,9 +15,11 @@ public class Pivot extends SubsystemBase {
   private TalonFX rPivotMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
 
-  private DutyCycleEncoder pivotEncoder = new DutyCycleEncoder(0);
+  private DutyCycleEncoder pivotEncoder;
 
   public Pivot() {
+
+    pivotEncoder = new DutyCycleEncoder(0);
     pivotMotor = new TalonFX(1);
     rPivotMotor = new TalonFX(5);
 

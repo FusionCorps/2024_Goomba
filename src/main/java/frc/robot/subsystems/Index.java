@@ -16,12 +16,10 @@ public class Index extends SubsystemBase {
     indexMotor = new CANSparkFlex(4, CANSparkFlex.MotorType.kBrushless);
     indexMotor.setIdleMode(IdleMode.kBrake);
 
-    beam_break = new DigitalInput(0);
+    
   }
 
-  public boolean getBeamBreak() {
-    return beam_break.get();
-  }
+  
 
   public void indexIn(double pct) {
 

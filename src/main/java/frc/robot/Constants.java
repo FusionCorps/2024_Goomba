@@ -92,7 +92,7 @@ public class Constants {
     private static final boolean kInvertLeftSide = false;
     private static final boolean kInvertRightSide = true;
 
-    private static final String kCANbusName = "";
+    private static final String kCANbusName = "canivore";
     private static final int kPigeonId = 0;
 
     // These are only used for simulation
