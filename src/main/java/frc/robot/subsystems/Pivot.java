@@ -7,12 +7,16 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
 
 public class Pivot extends SubsystemBase {
 
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
+
+  // the target position of the pivot
+  private double targetPos;
 
   private DutyCycleEncoder pivotEncoder; // through bore encoder
 
@@ -21,7 +25,11 @@ public class Pivot extends SubsystemBase {
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
 
-    pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
+    // sets the position of the motor according to the through bore encoder once the 
+    // encoder is ready
+    new Trigger(pivotEncoder::isConnected).onTrue(runOnce(() -> {
+      pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+    }));
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -49,8 +57,8 @@ public class Pivot extends SubsystemBase {
    *
    * @param pct the percentage to set the shooter to
    */
-  public void setPivotAngle(double pct) {
-    pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
+  public void setPivotPct(double pct) {
+    // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
     System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getDistance());
   }
@@ -66,8 +74,14 @@ public class Pivot extends SubsystemBase {
    * @param pos the position to set the shooter to, in rotations
    */
   public void setAngle(double pos) {
-    pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
+    targetPos = pos;
+    //pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(pos));
+  }
+
+  // whether the pivot has reached the setpoint
+  public boolean reachedAngle() {
+    return Math.abs(targetPos - pivotMotor.getPosition().getValue()) < PivotConstants.PIVOT_ERROR_THRESHOLD;
   }
 }

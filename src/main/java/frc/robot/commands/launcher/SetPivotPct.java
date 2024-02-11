@@ -3,11 +3,11 @@ package frc.robot.commands.launcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
-public class SetPivotAngle extends Command {
+public class SetPivotPct extends Command {
   private Pivot mPivot;
   private double pct;
 
-  public SetPivotAngle(Pivot pivot, double pct) {
+  public SetPivotPct(Pivot pivot, double pct) {
     this.pct = pct;
     mPivot = pivot;
 
@@ -16,11 +16,11 @@ public class SetPivotAngle extends Command {
 
   @Override
   public void execute() {
-    mPivot.setPivotAngle(pct);
+    mPivot.setPivotPct(pct);
   }
 
   @Override
   public void end(boolean isInterrupted) {
-    mPivot.setPivotAngle(0);
+    mPivot.setPivotPct(0);
   }
 }

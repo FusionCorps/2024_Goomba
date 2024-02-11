@@ -227,16 +227,22 @@ public class Constants {
   }
 
   public static class PivotConstants {
+
+    public static final double PIVOT_GEAR_RATIO = 4 * 5 * 66/9; // multiply ratios of two gearboxes and then small gear turning big gear
+
+    // error threshold of the pivot (1 deg)
+    public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
+
     public static final int PIVOT_MOTOR_ID = 1;
     public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
 
-    public static final double PIVOT_GEAR_RATIO =
-        (1 / 4) * (1 / 5)
-            * (9 / 66); // multiply ratios of two gearboxes and then small gear turning big gear
-
+    
     public static final double PIVOT_kP = 2;
     public static final double PIVOT_kD = 0.3;
     public static final double PIVOT_kI = 0;
+
+    // intake position of the pivot !!!!(UNTUNED)!!!!
+    public static final double PIVOT_INTAKE_POS = 30 / 360 * PIVOT_GEAR_RATIO;
 
     public static final double PIVOT_START_POS = Units.degreesToRotations(30);
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
@@ -248,6 +254,10 @@ public class Constants {
     public static final int SHOOTER_MOTOR_BOTTOM_ID = 3;
 
     public static final double ShooterSpeed = 28.06308713961776; // in ft/s
+
+    // the speeds of the shooter motors when at the amp !!!!(UNTUNED)!!!!
+    public static final double AMP_RIGHT_SPEED = .1;
+    public static final double AMP_LEFT_SPEED = .2;
   }
 
   public static class LimelightConstants {
@@ -270,7 +280,10 @@ public class Constants {
     public static final ShuffleboardTab limelightTab = Shuffleboard.getTab("Limelight");
   }
 
-  public static final int INDEX_MOTOR_ID = 4;
+  public static class IndexConstants {
+    public static final int INDEX_MOTOR_ID = 4;
+    public static final double INDEX_PCT = .24;
+  }
 
   public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
   public static int allianceLocation = -1; // -1 by default, set in Robot.java\

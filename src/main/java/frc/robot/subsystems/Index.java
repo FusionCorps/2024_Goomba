@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.INDEX_MOTOR_ID;
+import static frc.robot.Constants.IndexConstants.INDEX_MOTOR_ID;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;

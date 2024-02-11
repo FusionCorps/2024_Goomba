@@ -19,10 +19,11 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.Constants.IndexConstants;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.ResetPivotAngle;
-import frc.robot.commands.launcher.SetPivotAngle;
+import frc.robot.commands.launcher.SetPivotPct;
 import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
@@ -67,7 +68,7 @@ public class RobotContainer {
     robotController.leftBumper().whileTrue(new Shoot(shooter, 0.2, 0.2));
 
     // run index
-    robotController.leftTrigger().whileTrue(new RunIndex(index, 0.24));
+    robotController.leftTrigger().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
 
     // run intake
     robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.85));
@@ -77,15 +78,15 @@ public class RobotContainer {
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
-        .whileFalse(new RunIndex(index, 0.24))
+        .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
         .onTrue(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
     robotController.y().onTrue(new ResetPivotAngle(pivot));
 
     // move shooter up or down
-    robotController.povRight().whileTrue(new SetPivotAngle(pivot, .08));
-    robotController.povLeft().whileTrue(new SetPivotAngle(pivot, -.08));
+    robotController.povRight().whileTrue(new SetPivotPct(pivot, .08));
+    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.08));
 
     // robotController.leftStick().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5)); // rotate in
     // place to aim at target
