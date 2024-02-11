@@ -14,6 +14,8 @@ public class Cameras extends SubsystemBase {
   private double distToAprilTagHorizontal = 0.0; // in meters
   private double distToAprilTagVertical = 0.0; // in meters
 
+  // apriltag pose relative to robot space
+  // horizontal, vertical, forward distances
   private Pose3d aprilTagTargetPose = new Pose3d();
 
   public Cameras() {
@@ -44,20 +46,10 @@ public class Cameras extends SubsystemBase {
     // update apriltag pose and distances to apriltag
     try {
       getPrimaryAprilTagPose();
-      distToAprilTagHorizontal = aprilTagTargetPose.getZ();
-      distToAprilTagVertical = aprilTagTargetPose.getY();
       // System.out.println(distToAprilTag);
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");
     }
-  }
-
-  public double getDistToAprilTagHorizontal() {
-    return distToAprilTagHorizontal;
-  }
-
-  public double getDistToAprilTagVertical() {
-    return distToAprilTagVertical;
   }
 
   /**

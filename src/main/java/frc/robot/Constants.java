@@ -7,6 +7,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.pathplanner.lib.util.PIDConstants;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -122,7 +123,7 @@ public class Constants {
             .withDriveInertia(kDriveInertia)
             .withSteerFrictionVoltage(kSteerFrictionVoltage)
             .withDriveFrictionVoltage(kDriveFrictionVoltage)
-            .withFeedbackSource(SteerFeedbackType.RemoteCANcoder)
+            .withFeedbackSource(SteerFeedbackType.FusedCANcoder)
             .withCouplingGearRatio(kCoupleRatio)
             .withSteerMotorInverted(kSteerMotorReversed);
 
@@ -247,6 +248,12 @@ public class Constants {
     public static final double PIVOT_START_POS = Units.degreesToRotations(30);
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
     public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
+    public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
+        new InterpolatingDoubleTreeMap(); // maps Z distances to april tag with pivot angles
+
+    { // TODO: fill in map with measured data values
+      PIVOT_ANGLES_MAP.put(0.0, 0.0);
+    }
   }
 
   public static class ShooterConstants {

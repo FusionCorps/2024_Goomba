@@ -25,11 +25,15 @@ public class Pivot extends SubsystemBase {
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
 
-    // sets the position of the motor according to the through bore encoder once the 
+    // sets the position of the motor according to the through bore encoder once the
     // encoder is ready
-    new Trigger(pivotEncoder::isConnected).onTrue(runOnce(() -> {
-      pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-    }));
+    new Trigger(pivotEncoder::isConnected)
+        .onTrue(
+            runOnce(
+                () -> {
+                  pivotMotor.setPosition(
+                      pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+                }));
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -75,13 +79,18 @@ public class Pivot extends SubsystemBase {
    */
   public void setAngle(double pos) {
     targetPos = pos;
-    //pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
+    // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(pos));
   }
 
   // whether the pivot has reached the setpoint
   public boolean reachedAngle() {
-    return Math.abs(targetPos - pivotMotor.getPosition().getValue()) < PivotConstants.PIVOT_ERROR_THRESHOLD;
+    return Math.abs(targetPos - pivotMotor.getPosition().getValue())
+        < PivotConstants.PIVOT_ERROR_THRESHOLD;
+  }
+
+  public double getPivotAngle() {
+    return pivotMotor.getPosition().getValue();
   }
 }

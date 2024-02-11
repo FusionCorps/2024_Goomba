@@ -7,7 +7,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrain.SwerveDriveState;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -112,16 +111,6 @@ public class Telemetry {
     Pose2d pose = state.Pose;
     field2d.setRobotPose(pose);
 
-    /* Telemeterize the robot's general speeds */
-    double currentTime = Utils.getCurrentTimeSeconds();
-    double diffTime = currentTime - lastTime;
-    lastTime = currentTime;
-    Translation2d distanceDiff = pose.minus(m_lastPose).getTranslation();
-    m_lastPose = pose;
-
-    Translation2d velocities =
-        distanceDiff.div(diffTime); // divide displacement by time to get velocity
-
     /* Telemeterize the module's states */
     for (int i = 0; i < 4; i++) {
       m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
@@ -129,10 +118,13 @@ public class Telemetry {
       m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
     }
 
-    SmartDashboard.putNumber("Odometry Frequency", 1.0 / state.OdometryPeriod);
-    SmartDashboard.putNumber("Robot Speed", velocities.getNorm());
-    SmartDashboard.putNumber("Robot Velocity X", velocities.getX());
-    SmartDashboard.putNumber("Robot Velocity Y", velocities.getY());
+    SmartDashboard.putNumber("Odometry Frequency (Hz)", 1.0 / state.OdometryPeriod);
+    SmartDashboard.putNumber(
+        "Robot Speed (m/s)",
+        Math.hypot(state.speeds.vxMetersPerSecond, state.speeds.vyMetersPerSecond));
+    SmartDashboard.putNumber("Robot Velocity X (m/s)", state.speeds.vxMetersPerSecond);
+    SmartDashboard.putNumber("Robot Velocity Y (m/s)", state.speeds.vyMetersPerSecond);
+    SmartDashboard.putNumber("Robot Angular Velocity (Rad/s)", state.speeds.omegaRadiansPerSecond);
 
     moduleStates.set(state.ModuleStates);
     desiredStates.set(state.ModuleTargets);

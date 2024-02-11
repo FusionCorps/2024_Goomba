@@ -16,7 +16,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -47,12 +46,6 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   private Notifier m_simNotifier = null;
   private double m_lastSimTime;
 
-  /* Keep a reference of the last pose to calculate the speeds */
-  private Pose2d m_lastPose = new Pose2d();
-  private double lastTime = Utils.getCurrentTimeSeconds();
-
-  private Translation2d vel = new Translation2d();
-
   public Drivetrain(
       Cameras camera,
       SwerveDrivetrainConstants driveTrainConstants,
@@ -72,7 +65,6 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   public void periodic() {
     // updates the odometry from aprilTag data
     updateOdometryFromAprilTags(1.0);
-    updateVelocityMeasurement();
   }
 
   /** Configures the PathPlanner's AutoBuilder. */
@@ -117,8 +109,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   private void updateOdometryFromAprilTags(double maxDist) {
     if (RobotBase.isReal()
         && mCamera.hasTarget()
-        && mCamera.getDistToAprilTagHorizontal() < maxDist
-        && mCamera.getPipeline() == 0) {
+        && mCamera.getPipeline() == 0
+        && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
       Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(LIMELIGHT_NAME);
       // System.out.println("Pose update: " + pose);
       // double timestamp = Timer.getFPGATimestamp();
@@ -191,26 +183,15 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     return mCamera;
   }
 
-  public Translation2d getVelocity() {
-    return vel;
-  }
-
-  private void updateVelocityMeasurement() {
-    // update velocity measurement
-    Pose2d pose = getState().Pose;
-
-    /* Telemeterize the robot's general speeds */
-    double currentTime = Utils.getCurrentTimeSeconds();
-    double diffTime = currentTime - lastTime;
-    lastTime = currentTime;
-    Translation2d distanceDiff = pose.minus(m_lastPose).getTranslation();
-    m_lastPose = pose;
-
-    // divide displacement by time to get velocity
-    vel = distanceDiff.div(diffTime);
+  public Pose2d getVelocity() {
+    return new Pose2d(
+        getState().speeds.vxMetersPerSecond,
+        getState().speeds.vyMetersPerSecond,
+        Rotation2d.fromRotations(getState().speeds.omegaRadiansPerSecond));
   }
 
   private void startSimThread() {
+    System.out.println("Starting sim thread");
     m_lastSimTime = Utils.getCurrentTimeSeconds();
 
     /* Run simulation at a faster rate so PID gains behave more reasonably */
