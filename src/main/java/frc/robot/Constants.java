@@ -229,7 +229,8 @@ public class Constants {
 
   public static class PivotConstants {
 
-    public static final double PIVOT_GEAR_RATIO = 4 * 5 * 66/9; // multiply ratios of two gearboxes and then small gear turning big gear
+    public static final double PIVOT_GEAR_RATIO =
+        4 * 5 * 66 / 9; // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
     public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
@@ -237,7 +238,6 @@ public class Constants {
     public static final int PIVOT_MOTOR_ID = 1;
     public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
 
-    
     public static final double PIVOT_kP = 2;
     public static final double PIVOT_kD = 0.3;
     public static final double PIVOT_kI = 0;
@@ -293,5 +293,8 @@ public class Constants {
   }
 
   public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
-  public static int allianceLocation = -1; // -1 by default, set in Robot.java\
+  public static int allianceLocation = -1; // -1 by default, set in Robot.java
+
+  public static ShuffleboardTab diagnosticsTab = Shuffleboard.getTab("Diagnostics");
+  public static ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");
 }

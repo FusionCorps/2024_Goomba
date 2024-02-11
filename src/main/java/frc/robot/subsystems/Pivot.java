@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.driverTab;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
@@ -25,8 +27,7 @@ public class Pivot extends SubsystemBase {
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
 
-    // sets the position of the motor according to the through bore encoder once the
-    // encoder is ready
+    // sets the position of the motor acc. to through bore encoder once the encoder is ready
     new Trigger(pivotEncoder::isConnected)
         .onTrue(
             runOnce(
@@ -49,6 +50,8 @@ public class Pivot extends SubsystemBase {
     pivotMotor.getConfigurator().apply(pivotConfigs);
 
     pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), true));
+
+    driverTab.addDouble("Pivot Angle", this::getPivotAngle);
   }
 
   @Override

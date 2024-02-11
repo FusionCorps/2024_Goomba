@@ -1,18 +1,19 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
-import static frc.robot.Constants.LimelightConstants.limelightTab;
+import static frc.robot.Constants.diagnosticsTab;
+import static frc.robot.Constants.driverTab;
 
+import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.LimelightHelpers;
+import java.util.Map;
 
 public class Cameras extends SubsystemBase {
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
-  private double distToAprilTagHorizontal = 0.0; // in meters
-  private double distToAprilTagVertical = 0.0; // in meters
 
   // apriltag pose relative to robot space
   // horizontal, vertical, forward distances
@@ -22,6 +23,7 @@ public class Cameras extends SubsystemBase {
     limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
     limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
     limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
+    // TODO: change limelight position for actual robot - shooter limelight is the one using 3d mode
     limelightTable
         .getEntry("camerapose_robotspace_set")
         .setDoubleArray(
@@ -34,11 +36,16 @@ public class Cameras extends SubsystemBase {
               0 // roll, pitch, yaw
             });
 
-    limelightTab.addDouble("tx", this::getTX);
-    limelightTab.addDouble("ty", this::getTY);
-    limelightTab.addBoolean("hasTarget", this::hasTarget);
-    limelightTab.addDouble("Horizontal Distance to AprilTag", () -> distToAprilTagHorizontal);
-    limelightTab.addInteger("Pipeline", this::getPipeline);
+    driverTab
+        .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))
+        .withSize(4, 4)
+        .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
+
+    diagnosticsTab.addDouble("tx", this::getTX);
+    diagnosticsTab.addDouble("ty", this::getTY);
+    diagnosticsTab.addBoolean("hasTarget", this::hasTarget);
+    diagnosticsTab.addDouble("TZ 3D AprilTag", () -> this.aprilTagTargetPose.getX());
+    diagnosticsTab.addInteger("Pipeline #", this::getPipeline);
   }
 
   @Override
@@ -114,7 +121,7 @@ public class Cameras extends SubsystemBase {
       var fid =
           LimelightHelpers.getLatestResults(LIMELIGHT_NAME).targetingResults.targets_Fiducials;
       aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
-      return aprilTagTargetPose;
-    } else return null;
+    }
+    return aprilTagTargetPose; // will return either updated or old pose
   }
 }

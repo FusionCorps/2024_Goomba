@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.IndexConstants.INDEX_MOTOR_ID;
+import static frc.robot.Constants.diagnosticsTab;
+import static frc.robot.Constants.driverTab;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
@@ -16,6 +18,9 @@ public class Index extends SubsystemBase {
 
     indexMotor = new CANSparkFlex(INDEX_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
     indexMotor.setIdleMode(IdleMode.kBrake);
+
+    driverTab.addBoolean("Note Ready", this::beamBroken);
+    diagnosticsTab.addDouble("Index Output %", () -> indexMotor.getAppliedOutput());
   }
 
   /**
