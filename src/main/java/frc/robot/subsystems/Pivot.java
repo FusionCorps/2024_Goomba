@@ -53,6 +53,7 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
   }
 
@@ -64,7 +65,7 @@ public class Pivot extends SubsystemBase {
   public void setPivotPct(double pct) {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
-    System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getDistance());
+    
   }
 
   /** Zeroes the pivot angle to the current angle. */

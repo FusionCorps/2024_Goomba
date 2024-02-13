@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DrivetrainConstants;
@@ -83,6 +85,11 @@ public class RobotContainer {
 
     // zero the pivot angle at current angle
     robotController.y().onTrue(new ResetPivotAngle(pivot));
+
+    // disables the robot
+    robotController.x().onTrue(new RunCommand(() -> {
+      CommandScheduler.getInstance().disable();
+    }));
 
     // move shooter up or down
     robotController.povRight().whileTrue(new SetPivotPct(pivot, .08));
