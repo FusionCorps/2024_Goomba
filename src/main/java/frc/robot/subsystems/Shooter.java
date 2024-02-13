@@ -53,10 +53,12 @@ public class Shooter extends SubsystemBase {
 
     // // Set PID for right motor
     rightController = rightMotor.getPIDController();
-    rightController.setP(0.00006);
+    rightController.setP(0);
+    //rightController.setP(0.00006);
     rightController.setI(0);
     rightController.setD(0);
-    rightController.setFF(0.000015);
+    rightController.setFF(0);
+    //rightController.setFF(0.000015);
     rightController.setIZone(0);
     rightController.setOutputRange(-1, 1);
 
