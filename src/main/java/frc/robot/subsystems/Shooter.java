@@ -77,7 +77,6 @@ public class Shooter extends SubsystemBase {
     tuningTable.getEntry("output").setDouble(rightMotor.getEncoder().getVelocity());
   }
 
-  
   /**
    * Runs the shooter motors using duty cycle percentages.
    *
@@ -99,7 +98,7 @@ public class Shooter extends SubsystemBase {
         rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
-  //TODO: Find out how to set rpm of shooter
+  // TODO: Find out how to set rpm of shooter
   // returns whether both shooters have reached the target speed
   public boolean reachedSpeeds() {
     return true;

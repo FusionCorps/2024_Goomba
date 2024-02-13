@@ -6,13 +6,13 @@ package frc.robot;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 import static frc.robot.Constants.allianceLocation;
+import static frc.robot.Constants.driverTab;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
@@ -40,8 +39,6 @@ public class RobotContainer {
   Shooter shooter = new Shooter();
   Index index = new Index();
   Pivot pivot = new Pivot();
-
-  private Telemetry logger = new Telemetry(DrivetrainConstants.MaxSpeed); // for logging data
 
   private SendableChooser<Command> autoChooser;
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
@@ -63,8 +60,8 @@ public class RobotContainer {
 
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
     robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67));
-    // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000)); //TODO: shooter
-    // velocity PID control
+    // TODO: shooter velocity PID control
+    // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
 
     // aim at amp and shoot at amp (TODO: add aiming at amp)
     robotController.leftBumper().whileTrue(new Shoot(shooter, 0.2, 0.2));
@@ -139,22 +136,26 @@ public class RobotContainer {
       allianceLocation = location.getAsInt();
     } else System.err.println("Location not found");
 
-    // configureAuto();
-
-    // set up pipeline chooser
-    pipeLineChooser.setDefaultOption("AprilTag", 0);
-    pipeLineChooser.addOption("Note", 1);
-    // pipeLineChooser.onChange((num) -> {drivetrain.getCamera().setPipeline(num);
-    // System.out.println("pipeline set to " + num);});
-    SmartDashboard.putData("Pipeline Chooser", pipeLineChooser);
+    setupAutoChooser();
+    setupPipelineChooser();
 
     configureBindings();
+  }
 
-    drivetrain.registerTelemetry(logger::telemeterize); // start telemetry
+  private void setupPipelineChooser() {
+    pipeLineChooser.setDefaultOption("AprilTag 3D", 0);
+    pipeLineChooser.addOption("AprilTag Basic", 1);
+    pipeLineChooser.addOption("Note", 2);
+    pipeLineChooser.onChange(
+        (num) -> {
+          drivetrain.getCamera().setPipeline(num);
+          System.out.println("pipeline set to " + num);
+        });
+    driverTab.add("Pipeline Chooser", pipeLineChooser);
   }
 
   // method that configures and initializes everything necessary for auton
-  public void configureAuto() {
+  private void setupAutoChooser() {
     NamedCommands.registerCommand("ShootSpeaker", Commands.print("ShootSpeaker"));
     NamedCommands.registerCommand("ShootAmp", Commands.print("ShootAmp"));
     NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
@@ -176,7 +177,7 @@ public class RobotContainer {
     // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    SmartDashboard.putData("Auto Chooser", autoChooser);
+    driverTab.add("Auto Chooser", autoChooser);
   }
 
   public Command getAutonomousCommand() {

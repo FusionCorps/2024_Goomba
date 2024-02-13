@@ -112,6 +112,7 @@ spotless {
             include '**/*.java'
             exclude '**/build/**', '**/build-*/**'
         }
+        cleanthat()
         toggleOffOn()
         googleJavaFormat()
         removeUnusedImports()
