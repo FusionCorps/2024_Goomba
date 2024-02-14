@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.PivotConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
@@ -80,7 +81,12 @@ public class RobotContainer {
     //                                                                                           new SetPivotPos(pivot, PivotConstants.PIVOT_AMP_POS)));
 
     // run index
+    if(ShooterConstants.IS_AMP){
+      robotController.leftTrigger().whileTrue(new Shoot(shooter, 0.82, 0.67).andThen(
+                                              new RunIndex(index, IndexConstants.INDEX_PCT)));
+    } else{
     robotController.leftTrigger().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
+    }
 
     // run intake
     robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));

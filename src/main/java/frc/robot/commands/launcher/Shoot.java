@@ -1,6 +1,7 @@
 package frc.robot.commands.launcher;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 public class Shoot extends Command {
@@ -25,5 +26,5 @@ public class Shoot extends Command {
   @Override
   public void end(boolean interrupted) {
     mShooter.shoot(0, 0);
-  }
+    ShooterConstants.IS_AMP = false;  }
 }

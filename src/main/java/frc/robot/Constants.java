@@ -264,6 +264,8 @@ public class Constants {
     public static final int SHOOTER_MOTOR_TOP_ID = 2;
     public static final int SHOOTER_MOTOR_BOTTOM_ID = 3;
 
+    public static boolean IS_AMP = false;
+
     public static final double ShooterSpeed = 28.06308713961776; // in ft/s
 
     // the speeds of the shooter motors when at the amp/spkr !!!!(UNTUNED)!!!!

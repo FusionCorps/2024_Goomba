@@ -6,7 +6,9 @@ import static frc.robot.Constants.LimelightConstants.LIMELIGHT_TX_RANGE_DEG;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Drivetrain;
 
 // horizontally strafes to align with a target
@@ -29,6 +31,7 @@ public class StrafeToAprilTag extends Command {
   @Override
   public void execute() {
     // if target detected, strafe toward it
+    ShooterConstants.IS_AMP = true;
     if (mDrivetrain.getCamera().hasTarget()) {
       System.out.println("Strafe error: " + strPID.getPositionError());
       double tx = mDrivetrain.getCamera().getTX();
