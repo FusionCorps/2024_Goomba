@@ -274,7 +274,6 @@ public class Constants {
 
     public static final double AMP_RIGHT_SPEED = .1;
     public static final double AMP_LEFT_SPEED = .2;
-
   }
 
   public static class LimelightConstants {

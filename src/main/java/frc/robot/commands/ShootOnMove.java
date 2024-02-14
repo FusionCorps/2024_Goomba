@@ -67,8 +67,7 @@ public class ShootOnMove extends Command {
       mShooter.shoot(0.8, 0.6);
     }
 
-    mDrivetrain.setControl(
-        req.withVelocityX(0).withVelocityY(-controller.getLeftX()));
+    mDrivetrain.setControl(req.withVelocityX(0).withVelocityY(-controller.getLeftX()));
   }
 
   // private void calcTargetTXAdvanced() {

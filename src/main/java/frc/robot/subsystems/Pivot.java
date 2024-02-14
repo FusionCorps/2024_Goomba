@@ -7,8 +7,6 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
-import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -19,8 +17,6 @@ public class Pivot extends SubsystemBase {
 
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
-
-  private InterpolatingDoubleTreeMap optimalAngles = new InterpolatingDoubleTreeMap();
 
   // the target position of the pivot
   private double targetPos;
@@ -61,13 +57,6 @@ public class Pivot extends SubsystemBase {
         .withSize(2, 2)
         .withPosition(4, 0)
         .withWidget(BuiltInWidgets.kDial);
-  }
-
-  // method that adds all the optimal angles to the lookup table
-  void initTable() {
-    /*
-     optimalAngles.put(DISTANCE, ANGLE);
-     */
   }
 
   @Override
