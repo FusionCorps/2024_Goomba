@@ -116,15 +116,17 @@ public class RobotContainer {
     //                 Commands.runOnce(
     //                     () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
 
-    robotController
-        .a()
-        .whileTrue(new AimAtTarget(drivetrain, 3.0, 0.25).andThen(new DriveToNote(drivetrain)));
-    robotController
-        .povUp()
-        .whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01 * MaxSpeed, () -> 0, () -> 0));
-    robotController
-        .povDown()
-        .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
+    // robotController
+    //     .a()
+    //     .whileTrue(new AimAtTarget(drivetrain, 3.0, 0.25).andThen(new DriveToNote(drivetrain)));
+
+    
+    // robotController
+    //     .povUp()
+    //     .whileTrue(drivetrain.runSwerveFCCommand(() -> -0.01 * MaxSpeed, () -> 0, () -> 0));
+    // robotController
+    //     .povDown()
+    //     .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
   }
 
   public RobotContainer() {
