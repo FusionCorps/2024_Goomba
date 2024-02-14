@@ -17,9 +17,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
+import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.ResetPivotAngle;
@@ -28,6 +30,8 @@ import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.commands.swerve.vision.DriveToNote;
+import frc.robot.commands.swerve.vision.RotateToAngle;
+import frc.robot.commands.swerve.vision.StrafeToAprilTag;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -62,8 +66,9 @@ public class RobotContainer {
     // TODO: shooter velocity PID control
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
 
-    // aim at amp and shoot at amp (TODO: add aiming at amp)
-    robotController.leftBumper().whileTrue(new Shoot(shooter, 0.2, 0.2));
+    // aim at amp and shoot at amp (TODO: set position of pivot)
+    robotController.leftBumper().onTrue(new SequentialCommandGroup(new RotateToAngle(drivetrain, 90, MaxSpeed, 0.3), 
+                                                                    new StrafeToAprilTag(drivetrain, StageAlignment.toleranceDeg)));
 
     // run index
     robotController.leftTrigger().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
