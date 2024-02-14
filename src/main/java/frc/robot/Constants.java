@@ -247,6 +247,8 @@ public class Constants {
     // intake position of the pivot !!!!(UNTUNED)!!!!
     public static final double PIVOT_INTAKE_POS = 30 / 360 * PIVOT_GEAR_RATIO;
 
+    public static final double PIVOT_AMP_POS = Units.degreesToRotations(-15);
+
     public static final double PIVOT_START_POS = Units.degreesToRotations(30);
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
     public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);

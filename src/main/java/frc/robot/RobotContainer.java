@@ -22,15 +22,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.ResetPivotAngle;
 import frc.robot.commands.launcher.SetPivotPct;
+import frc.robot.commands.launcher.SetPivotPos;
 import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
@@ -71,9 +74,10 @@ public class RobotContainer {
     // TODO: shooter velocity PID control
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
 
-    // aim at amp and shoot at amp (TODO: set position of pivot)
-    robotController.leftBumper().onTrue(new SequentialCommandGroup(new RotateToAngle(drivetrain, 90, MaxSpeed, 0.3), 
-                                                                    new StrafeToAprilTag(drivetrain, StageAlignment.toleranceDeg)));
+    // aim at amp and shoot at amp 
+    // robotController.leftBumper().onTrue(new SequentialCommandGroup(new RotateToAngle(drivetrain, 90, MaxSpeed, 0.3), 
+    //                                                                 new ParallelCommandGroup(new StrafeToAprilTag(drivetrain, StageAlignment.toleranceDeg)), 
+    //                                                                                           new SetPivotPos(pivot, PivotConstants.PIVOT_AMP_POS)));
 
     // run index
     robotController.leftTrigger().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
@@ -83,6 +87,7 @@ public class RobotContainer {
 
     // run outtake
     robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
+    //robotController.povLeft().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
@@ -98,6 +103,10 @@ public class RobotContainer {
     // move shooter up or down
     robotController.povRight().whileTrue(new SetPivotPct(pivot, .08));
     robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.08));
+
+    // Move climb to upright position
+    //robotController.povUp().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_CLIMB_UP_POS));
+    //robotController.povDown().whileTrue(new SetPivotPct(pivot, -0.4));
 
     // robotController.leftStick().whileTrue(new AimAtTarget(drivetrain, 2.0, 0.5)); // rotate in
     // place to aim at target
