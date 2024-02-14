@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.446567628177991,
-        "y": 4.186507290393498
+        "x": 0.7275269251393202,
+        "y": 4.315142989260338
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.5057118137086154,
-        "y": 4.176409502619978
+        "x": 0.7875269251393202,
+        "y": 4.315142989260338
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Mid"
     },
     {
       "anchor": {
-        "x": 1.8175856037874687,
-        "y": 4.450117887396973
+        "x": 2.5670791427174855,
+        "y": 4.315142989260338
       },
       "prevControl": {
-        "x": 1.840973912672349,
-        "y": 4.438423732954534
+        "x": 2.5070791427174854,
+        "y": 4.315142989260338
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,18 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 0.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -30.65066795705289,
+    "rotation": -21.903359164367544,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "2 Piece",
-  "previewStartingState": null,
-  "useDefaultConstraints": true
+  "folder": "VikesTesting",
+  "previewStartingState": {
+    "rotation": 0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
 }

@@ -39,6 +39,7 @@ public class Cameras extends SubsystemBase {
     driverTab
         .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))
         .withSize(4, 4)
+        .withPosition(0, 0)
         .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
 
     diagnosticsTab.addDouble("tx", this::getTX);

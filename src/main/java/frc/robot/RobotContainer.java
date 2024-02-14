@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
@@ -84,9 +83,7 @@ public class RobotContainer {
     robotController.y().onTrue(new ResetPivotAngle(pivot));
 
     // disables the robot
-    robotController.x().onTrue(new RunCommand(() -> {
-      CommandScheduler.getInstance().disable();
-    }));
+    robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
     // move shooter up or down
     robotController.povRight().whileTrue(new SetPivotPct(pivot, .08));
@@ -151,7 +148,7 @@ public class RobotContainer {
           drivetrain.getCamera().setPipeline(num);
           System.out.println("pipeline set to " + num);
         });
-    driverTab.add("Pipeline Chooser", pipeLineChooser);
+    driverTab.add("Pipeline Chooser", pipeLineChooser).withSize(2, 1).withPosition(4, 3);
   }
 
   // method that configures and initializes everything necessary for auton
@@ -177,7 +174,7 @@ public class RobotContainer {
     // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
     autoChooser = AutoBuilder.buildAutoChooser();
 
-    driverTab.add("Auto Chooser", autoChooser);
+    driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }
 
   public Command getAutonomousCommand() {

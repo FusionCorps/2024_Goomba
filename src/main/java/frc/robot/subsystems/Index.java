@@ -19,7 +19,8 @@ public class Index extends SubsystemBase {
     indexMotor = new CANSparkFlex(INDEX_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
     indexMotor.setIdleMode(IdleMode.kBrake);
 
-    driverTab.addBoolean("Note Ready", this::beamBroken);
+    driverTab.addBoolean("Note Ready", this::beamBroken).withSize(2, 2).withPosition(6, 0);
+
     diagnosticsTab.addDouble("Index Output %", () -> indexMotor.getAppliedOutput());
   }
 
