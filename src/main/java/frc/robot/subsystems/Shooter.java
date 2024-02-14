@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.ShooterConstants.SHOOTER_MAX_RPM;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_BOTTOM_ID;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_TOP_ID;
 
@@ -60,7 +61,7 @@ public class Shooter extends SubsystemBase {
     rightController.setFF(0);
     // rightController.setFF(0.000015);
     rightController.setIZone(0);
-    rightController.setOutputRange(-1, 1);
+    rightController.setOutputRange(-SHOOTER_MAX_RPM, SHOOTER_MAX_RPM);
 
     leftMotor.burnFlash();
     rightMotor.burnFlash();
@@ -86,12 +87,6 @@ public class Shooter extends SubsystemBase {
    * @param rightPct the percentage to set the right shooter to
    */
   public void shoot(double leftPct, double rightPct) {
-    // leftController.setReference(leftRpm, ControlType.kVelocity);
-    // rightController.setReference(-rightRpm, ControlType.kVelocity);
-
-    // TODO: check if this is correct based on setInverted
-    // rightController.setReference(rightRpm, ControlType.kVelocity);
-
     leftMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.set(rightPct);
@@ -100,22 +95,13 @@ public class Shooter extends SubsystemBase {
         rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
-  // TODO: Find out how to set rpm of shooter
   // returns whether both shooters have reached the target speed
   public boolean reachedSpeeds() {
     return true;
   }
 
-  // public void setShooterAngle(double angleOfShooter) {
-  //     pivotMotor.setPosition(angleOfShooter);
-  // }
-
-  // public Command aimShooterAngleCommand(double angle) {
-  //     return run(() -> setShooterAngle(angle));
-  // }
-
-  // public Command shootSpeakerCommand(double leftRPM, double rightRPM) {
-  //   return run(() -> shoot(leftRPM, rightRPM)).finallyDo(() -> shoot(0, 0));
-  // }
-
+  public void setVelocities(double leftRPM, double rightRPM) {
+    leftController.setReference(leftRPM, ControlType.kVelocity);
+    rightController.setReference(rightRPM, ControlType.kVelocity);
+  }
 }

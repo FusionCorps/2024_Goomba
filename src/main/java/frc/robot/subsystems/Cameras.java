@@ -6,6 +6,7 @@ import static frc.robot.Constants.driverTab;
 
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -23,17 +24,16 @@ public class Cameras extends SubsystemBase {
     limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
     limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
     limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
-    // TODO: change limelight position for actual robot - shooter limelight is the one using 3d mode
     limelightTable
         .getEntry("camerapose_robotspace_set")
         .setDoubleArray(
             new double[] {
-              0.12, // forward
+              -Units.inchesToMeters(16), // forward
               0.0, // right
-              1.3716, // up
-              0,
+              Units.inchesToMeters(18), // up
+              180,
               1,
-              0 // roll, pitch, yaw
+              0.0 // roll, pitch, yaw
             });
 
     driverTab

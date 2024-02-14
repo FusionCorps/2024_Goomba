@@ -6,7 +6,6 @@ import static frc.robot.Constants.LimelightConstants.LIMELIGHT_TX_RANGE_DEG;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Drivetrain;
