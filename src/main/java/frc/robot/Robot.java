@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.driverTab;
-
-import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;

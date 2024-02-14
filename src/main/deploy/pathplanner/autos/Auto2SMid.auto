@@ -2,15 +2,21 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7158327706968803,
-      "y": 4.3385312981452175
+      "x": 0.73,
+      "y": 4.32
     },
-    "rotation": -60.0
+    "rotation": -58.8616427842807
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AimAtTarget"
+          }
+        },
         {
           "type": "named",
           "data": {
@@ -24,7 +30,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2SMid1F"
+                  "pathName": "2SMid"
                 }
               },
               {
@@ -34,12 +40,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "2SMid2F"
           }
         },
         {
@@ -57,6 +57,6 @@
       ]
     }
   },
-  "folder": "2 Piece",
+  "folder": "VikesTesting",
   "choreoAuto": false
 }

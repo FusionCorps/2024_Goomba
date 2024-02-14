@@ -18,6 +18,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -26,6 +27,7 @@ import edu.wpi.first.networktables.DoubleEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -67,6 +69,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       driveTable.getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
   private StructArrayPublisher<SwerveModuleState> desiredStates =
       driveTable.getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
+  private StructPublisher<Pose3d> pose3D = driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
 
   /* Mechanisms to represent the swerve module states */
   private Mechanism2d[] m_moduleMechanisms =
@@ -161,6 +164,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
           moduleStates.set(state.ModuleStates);
           desiredStates.set(state.ModuleTargets);
+          pose3D.set(new Pose3d(getPose()));
         });
   }
 

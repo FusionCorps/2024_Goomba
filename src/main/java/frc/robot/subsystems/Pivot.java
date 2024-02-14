@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
@@ -55,7 +56,11 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), true));
 
-    driverTab.addDouble("Pivot Angle", this::getPivotAngle);
+    driverTab
+        .addDouble("Pivot Angle", this::getPivotAngle)
+        .withSize(2, 2)
+        .withPosition(4, 0)
+        .withWidget(BuiltInWidgets.kDial);
   }
 
   // method that adds all the optimal angles to the lookup table
@@ -67,7 +72,7 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
+    // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
   }
 
@@ -79,7 +84,6 @@ public class Pivot extends SubsystemBase {
   public void setPivotPct(double pct) {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
-    
   }
 
   /** Zeroes the pivot angle to the current angle. */
@@ -106,6 +110,6 @@ public class Pivot extends SubsystemBase {
   }
 
   public double getPivotAngle() {
-    return pivotMotor.getPosition().getValue();
+    return pivotEncoder.getAbsolutePosition();
   }
 }

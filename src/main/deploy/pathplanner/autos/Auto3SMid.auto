@@ -1,0 +1,25 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.73,
+      "y": 4.32
+    },
+    "rotation": -58.07307309548982
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "3SMid1"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "VikesTesting",
+  "choreoAuto": false
+}
