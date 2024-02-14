@@ -5,6 +5,11 @@
 package frc.robot;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
+import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
+import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
+import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
+import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_SPEED;
 import static frc.robot.Constants.allianceLocation;
 import static frc.robot.Constants.driverTab;
 
@@ -74,10 +79,10 @@ public class RobotContainer {
     robotController.leftTrigger().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
 
     // run intake
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.85));
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
 
     // run outtake
-    robotController.povDown().whileTrue(new RunIntake(intake, -0.85));
+    robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
@@ -160,13 +165,13 @@ public class RobotContainer {
 
   // method that configures and initializes everything necessary for auton
   private void setupAutoChooser() {
-    NamedCommands.registerCommand("ShootSpeaker", Commands.print("ShootSpeaker"));
-    NamedCommands.registerCommand("ShootAmp", Commands.print("ShootAmp"));
-    NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
-    NamedCommands.registerCommand("AimAtTarget", Commands.print("AimAtTarget"));
+    NamedCommands.registerCommand("ShootSpeaker", new Shoot(shooter, SPK_LEFT_SPEED, SPK_RIGHT_SPEED));
+    NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
+    NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
+    NamedCommands.registerCommand("AimAtTarget", new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, StageAlignment.runTime));
     NamedCommands.registerCommand(
         "getAutoStartingPos",
-        new InstantCommand(
+        Commands.runOnce(
             () ->
                 System.out.println(
                     "Starting Pose: "

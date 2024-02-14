@@ -225,6 +225,8 @@ public class Constants {
 
   public static class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 6;
+
+    public static final double INTAKE_RUN_PCT = 0.85;
   }
 
   public static class PivotConstants {
@@ -262,9 +264,13 @@ public class Constants {
 
     public static final double ShooterSpeed = 28.06308713961776; // in ft/s
 
-    // the speeds of the shooter motors when at the amp !!!!(UNTUNED)!!!!
+    // the speeds of the shooter motors when at the amp/spkr !!!!(UNTUNED)!!!!
+    public static final double SPK_LEFT_SPEED = .1;
+    public static final double SPK_RIGHT_SPEED = .1;
+
     public static final double AMP_RIGHT_SPEED = .1;
     public static final double AMP_LEFT_SPEED = .2;
+
   }
 
   public static class LimelightConstants {
