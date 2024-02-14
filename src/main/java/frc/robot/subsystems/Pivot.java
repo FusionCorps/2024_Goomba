@@ -50,7 +50,7 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
 
-    pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), true));
+    pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), false));
 
     driverTab
         .addDouble("Pivot Angle", this::getPivotAngle)
