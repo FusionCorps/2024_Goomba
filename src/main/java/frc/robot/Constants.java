@@ -50,8 +50,7 @@ public class Constants {
   }
 
   public class DrivetrainConstants {
-    // TODO: tune gains, slip current, theoretical free speed, couple ratio, and test
-    // torquecurrentfoc mode
+    // TODO: tune gains, slip current, couple ratio, and test torquecurrentfoc mode
 
     // Both sets of gains need to be tuned to your individual robot.
 
@@ -79,9 +78,8 @@ public class Constants {
     // This needs to be tuned to your individual robot
     private static final double kSlipCurrentA = 300.0;
 
-    // Theoretical free speed (m/s) at 12v applied output;
-    // This needs to be tuned to your individual robot
-    public static final double kSpeedAt12VoltsMps = 6.21;
+    // Theoretical free speed (m/s) at 12v applied output
+    public static final double kSpeedAt12VoltsMps = 6.0046;
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;
     // This may need to be tuned to your individual robot
