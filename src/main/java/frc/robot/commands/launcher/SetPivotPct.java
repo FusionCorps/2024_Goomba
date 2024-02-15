@@ -21,6 +21,7 @@ public class SetPivotPct extends Command {
 
   @Override
   public void end(boolean isInterrupted) {
+    //mPivot.stabilizeMotors();
     mPivot.setPivotPct(0);
   }
 }

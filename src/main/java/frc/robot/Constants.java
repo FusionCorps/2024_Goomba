@@ -239,7 +239,7 @@ public class Constants {
     public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
 
     public static final double PIVOT_kP = 2;
-    public static final double PIVOT_kD = 0.3;
+    public static final double PIVOT_kD = 2;
     public static final double PIVOT_kI = 0;
 
     // intake position of the pivot !!!!(UNTUNED)!!!!

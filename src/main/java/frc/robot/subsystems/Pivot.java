@@ -5,6 +5,7 @@ import static frc.robot.Constants.driverTab;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
+import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -18,6 +19,9 @@ public class Pivot extends SubsystemBase {
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
 
+
+  PositionDutyCycle stabilizingDutyCycle = new PositionDutyCycle(0);
+
   // the target position of the pivot
   private double targetPos;
 
@@ -27,15 +31,6 @@ public class Pivot extends SubsystemBase {
     pivotEncoder = new DutyCycleEncoder(0);
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
-
-    // sets the position of the motor acc. to through bore encoder once the encoder is ready
-    new Trigger(pivotEncoder::isConnected)
-        .onTrue(
-            runOnce(
-                () -> {
-                  pivotMotor.setPosition(
-                      pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-                }));
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -49,8 +44,23 @@ public class Pivot extends SubsystemBase {
     pivotConfigs.MotionMagic.MotionMagicJerk = 10;
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
+    pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
 
     pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), false));
+
+    
+
+    // sets the position of the motor acc. to through bore encoder once the encoder is ready
+    new Trigger(pivotEncoder::isConnected)
+        .onTrue(
+            runOnce(
+                () -> {
+                  System.out.println("here");
+                  pivotMotor.setPosition(
+                      pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+                }));
+
+    
 
     driverTab
         .addDouble("Pivot Angle", this::getPivotAngle)
@@ -61,7 +71,7 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
+    System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
   }
 
@@ -73,6 +83,7 @@ public class Pivot extends SubsystemBase {
   public void setPivotPct(double pct) {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
+    
   }
 
   /** Zeroes the pivot angle to the current angle. */
@@ -90,6 +101,7 @@ public class Pivot extends SubsystemBase {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(pos));
+    
   }
 
   // whether the pivot has reached the setpoint
@@ -99,6 +111,10 @@ public class Pivot extends SubsystemBase {
   }
 
   public double getPivotAngle() {
-    return pivotEncoder.getAbsolutePosition();
+    return pivotMotor.getPosition().getValueAsDouble();
+  }
+
+  public void stabilizeMotors(){
+    pivotMotor.setControl(stabilizingDutyCycle.withPosition(getPivotAngle()));
   }
 }
