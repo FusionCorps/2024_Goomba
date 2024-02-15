@@ -18,7 +18,9 @@ public class AutoPivotAim extends Command {
 
   @Override
   public void execute() {
-    double distanceToAprilTag = mDrivetrain.getCamera().getPrimaryAprilTagPose().getZ();
-    mPivot.setAngle(PIVOT_ANGLES_MAP.get(distanceToAprilTag));
+    if (mDrivetrain.getCamera().hasTarget()) {
+      double distanceToAprilTag = mDrivetrain.getCamera().getPrimaryAprilTagPose().getZ();
+      mPivot.setAngle(PIVOT_ANGLES_MAP.get(distanceToAprilTag));
+    }
   }
 }

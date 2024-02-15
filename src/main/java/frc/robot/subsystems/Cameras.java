@@ -32,7 +32,7 @@ public class Cameras extends SubsystemBase {
               0.0, // right
               Units.inchesToMeters(18), // up
               180,
-              1,
+              32.39,
               0.0 // roll, pitch, yaw
             });
 
