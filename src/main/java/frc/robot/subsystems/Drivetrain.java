@@ -45,6 +45,7 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.LimelightHelpers;
 import java.util.function.DoubleSupplier;
 
@@ -177,7 +178,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   @Override
   public void periodic() {
     // updates the odometry from aprilTag data
-    updateOdometryFromAprilTags(1.0);
+    // updateOdometryFromAprilTags(1.0);
   }
 
   /** Configures the PathPlanner's AutoBuilder. */
@@ -220,19 +221,19 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
    *     updated, recommended <= 1.0
    */
   private void updateOdometryFromAprilTags(double maxDist) {
-    // if (RobotBase.isReal()
-    //     && mCamera.hasTarget()
-    //     && mCamera.getPipeline() == 0
-    //     && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
-    //   Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(LIMELIGHT_NAME);
-    //   // System.out.println("Pose update: " + pose);
-    //   // double timestamp = Timer.getFPGATimestamp();
-    //   double timestamp =
-    //       Timer.getFPGATimestamp()
-    //           - LimelightHelpers.getLatency_Capture(LIMELIGHT_NAME) / 1000.0
-    //           - LimelightHelpers.getLatency_Pipeline(LIMELIGHT_NAME) / 1000.0;
-    //   addVisionMeasurement(pose, timestamp);
-    // }
+    if (RobotBase.isReal()
+        && mCamera.hasTarget()
+        && mCamera.getPipeline() == PIPELINE.APRILTAG_3D.value
+        && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
+      Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(LIMELIGHT_NAME);
+      // System.out.println("Pose update: " + pose);
+      // double timestamp = Timer.getFPGATimestamp();
+      double timestamp =
+          Timer.getFPGATimestamp()
+              - LimelightHelpers.getLatency_Capture(LIMELIGHT_NAME) / 1000.0
+              - LimelightHelpers.getLatency_Pipeline(LIMELIGHT_NAME) / 1000.0;
+      addVisionMeasurement(pose, timestamp);
+    }
   }
 
   /*
@@ -277,11 +278,6 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
    */
   private ChassisSpeeds getRobotRelativeSpeeds() {
     return m_kinematics.toChassisSpeeds(getState().ModuleStates);
-  }
-
-  public ChassisSpeeds getFieldRelativeSpeeds() {
-    return ChassisSpeeds.fromRobotRelativeSpeeds(
-        getRobotRelativeSpeeds(), new Rotation2d(m_yawGetter.getValue() % 360.0));
   }
 
   /** Zeroes the gyro yaw. */

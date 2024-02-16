@@ -10,6 +10,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.LimelightHelpers;
 import java.util.Map;
 
@@ -45,19 +46,14 @@ public class Cameras extends SubsystemBase {
     diagnosticsTab.addDouble("tx", this::getTX);
     diagnosticsTab.addDouble("ty", this::getTY);
     diagnosticsTab.addBoolean("hasTarget", this::hasTarget);
-    diagnosticsTab.addDouble("TZ 3D AprilTag", () -> this.aprilTagTargetPose.getX());
+    diagnosticsTab.addDouble("TZ 3D AprilTag", () -> this.aprilTagTargetPose.getZ());
     diagnosticsTab.addInteger("Pipeline #", this::getPipeline);
   }
 
   @Override
   public void periodic() {
     // update apriltag pose and distances to apriltag
-    // try {
-    //   getPrimaryAprilTagPose();
-    //   // System.out.println(distToAprilTag);
-    // } catch (Exception e) {
-    //   System.err.println("couldn't get latest apritag pose results");
-    // }
+    if (getPipeline() == PIPELINE.APRILTAG_3D.value) getPrimaryAprilTagPose();
   }
 
   /**
@@ -117,11 +113,16 @@ public class Cameras extends SubsystemBase {
   }
 
   public Pose3d getPrimaryAprilTagPose() {
-    // get latest apriltag pose results, if on correct pipeline and target seen
-    if (hasTarget() && getPipeline() == 0) {
-      var fid =
-          LimelightHelpers.getLatestResults(LIMELIGHT_NAME).targetingResults.targets_Fiducials;
-      aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
+    try {
+      // get latest apriltag pose results, if on correct pipeline and target seen
+      if (hasTarget() && getPipeline() == PIPELINE.APRILTAG_3D.value) {
+        // var fid =
+        //     LimelightHelpers.getLatestResults(LIMELIGHT_NAME).targetingResults.targets_Fiducials;
+        aprilTagTargetPose = LimelightHelpers.getTargetPose3d_RobotSpace(LIMELIGHT_NAME);
+        // aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
+      }
+    } catch (Exception e) {
+      System.err.println("couldn't get latest apritag pose results");
     }
     return aprilTagTargetPose; // will return either updated or old pose
   }

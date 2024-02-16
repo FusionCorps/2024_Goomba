@@ -230,7 +230,8 @@ public class Constants {
   public static class PivotConstants {
 
     public static final double PIVOT_GEAR_RATIO =
-        (60/14) * (60/16) * (66/9); // multiply ratios of two gearboxes and then small gear turning big gear
+        (60 / 14) * (60 / 16)
+            * (66 / 9); // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
     public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
@@ -280,6 +281,18 @@ public class Constants {
   }
 
   public static class LimelightConstants {
+    public static enum PIPELINE {
+      APRILTAG_3D(0),
+      NOTE(1),
+      APRILTAG_2D(2);
+
+      public int value;
+
+      private PIPELINE(int value) {
+        this.value = value;
+      }
+    }
+
     public static final String LIMELIGHT_NAME = "limelight";
     public static final double LIMELIGHT_TX_RANGE_DEG = 29.8; // range is thus -29.8 to 29.8
     public static final double LIMELIGHT_TY_RANGE_DEG = 24.85; // range is thus -24.85 to 24.85

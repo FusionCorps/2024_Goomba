@@ -4,6 +4,7 @@ import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.subsystems.Drivetrain;
 
 // drive forward to note
@@ -22,7 +23,8 @@ public class DriveToNote extends Command {
   @Override
   public void execute() {
     System.out.println("running DriveToNote");
-    if (mDrivetrain.getCamera().hasTarget()) {
+    if (mDrivetrain.getCamera().hasTarget()
+        && mDrivetrain.getCamera().getPipeline() == PIPELINE.NOTE.value) {
       double ty = mDrivetrain.getCamera().getTY();
       if (ty > tolerance) {
         SwerveRequest req = new SwerveRequest.RobotCentric().withVelocityX(-0.3 * MaxSpeed);

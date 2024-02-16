@@ -5,7 +5,6 @@
 package frc.robot;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
-import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
@@ -19,11 +18,11 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
+import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
@@ -104,7 +103,10 @@ public class RobotContainer {
     robotController.y().onTrue(new ResetPivotAngle(pivot));
 
     // Stow Pivot
-    robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET* PivotConstants.PIVOT_GEAR_RATIO));
+    robotController
+        .a()
+        .onTrue(
+            new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO));
     // disables the robot
     // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
@@ -168,9 +170,9 @@ public class RobotContainer {
   }
 
   private void setupPipelineChooser() {
-    pipeLineChooser.setDefaultOption("AprilTag 3D", 0);
-    pipeLineChooser.addOption("AprilTag Basic", 1);
-    pipeLineChooser.addOption("Note", 2);
+    pipeLineChooser.setDefaultOption("AprilTag 3D", PIPELINE.APRILTAG_3D.value);
+    pipeLineChooser.addOption("AprilTag Basic", PIPELINE.APRILTAG_2D.value);
+    pipeLineChooser.addOption("Note", PIPELINE.NOTE.value);
     pipeLineChooser.onChange(
         (num) -> {
           drivetrain.getCamera().setPipeline(num);

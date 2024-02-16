@@ -54,31 +54,19 @@ public class ShootOnMove extends Command {
    */
   @Override
   public void execute() {
-    // Pose3d aprilTagPose = mDrivetrain.getCamera().getPrimaryAprilTagPose();
-    // mPivot.setAngle(pivotAngleMap.get(aprilTagPose.getZ()));
+    Pose3d aprilTagPose = mDrivetrain.getCamera().getPrimaryAprilTagPose();
+    mPivot.setAngle(pivotAngleMap.get(aprilTagPose.getZ()));
 
-    // double zVelocity = ShooterSpeed * Math.cos(mPivot.getPivotAngle());
+    double zVelocity = ShooterSpeed * Math.cos(mPivot.getPivotAngle());
 
-    // double timeToWall = aprilTagPose.getZ() / zVelocity;
+    double timeToWall = aprilTagPose.getZ() / zVelocity;
 
-    // double skewDistance = timeToWall * mDrivetrain.getState().speeds.vyMetersPerSecond;
+    double skewDistance = timeToWall * mDrivetrain.getState().speeds.vyMetersPerSecond;
 
-    // if (Math.abs(aprilTagPose.getX() - skewDistance) < tolerance) {
-    //   mShooter.shoot(0.8, 0.6);
-    // }
+    if (Math.abs(aprilTagPose.getX() - skewDistance) < tolerance) {
+      mShooter.shoot(0.8, 0.6);
+    }
 
     mDrivetrain.setControl(req.withVelocityX(0).withVelocityY(-controller.getLeftX()));
   }
-
-  // private void calcTargetTXAdvanced() {
-  //   double theta =
-  //       45
-  //           - Math.atan(
-  //               (distToAprilTagVertical + LENGTH_SPEAKER_EDGE * Math.sin(14))
-  //                   / (distToAprilTagHorizontal
-  //                       + SHOOTER_HEIGHT * Math.tan(theta + 45)
-  //                       - LENGTH_SPEAKER_EDGE * Math.cos(14)));
-
-  //   goalTX = Math.atan(robotVel.getY() / (ShooterSpeed * Math.cos(45 - theta)));
-  // }
 }
