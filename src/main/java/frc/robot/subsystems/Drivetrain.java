@@ -220,19 +220,19 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
    *     updated, recommended <= 1.0
    */
   private void updateOdometryFromAprilTags(double maxDist) {
-    if (RobotBase.isReal()
-        && mCamera.hasTarget()
-        && mCamera.getPipeline() == 0
-        && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
-      Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(LIMELIGHT_NAME);
-      // System.out.println("Pose update: " + pose);
-      // double timestamp = Timer.getFPGATimestamp();
-      double timestamp =
-          Timer.getFPGATimestamp()
-              - LimelightHelpers.getLatency_Capture(LIMELIGHT_NAME) / 1000.0
-              - LimelightHelpers.getLatency_Pipeline(LIMELIGHT_NAME) / 1000.0;
-      addVisionMeasurement(pose, timestamp);
-    }
+    // if (RobotBase.isReal()
+    //     && mCamera.hasTarget()
+    //     && mCamera.getPipeline() == 0
+    //     && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
+    //   Pose2d pose = LimelightHelpers.getBotPose2d_wpiBlue(LIMELIGHT_NAME);
+    //   // System.out.println("Pose update: " + pose);
+    //   // double timestamp = Timer.getFPGATimestamp();
+    //   double timestamp =
+    //       Timer.getFPGATimestamp()
+    //           - LimelightHelpers.getLatency_Capture(LIMELIGHT_NAME) / 1000.0
+    //           - LimelightHelpers.getLatency_Pipeline(LIMELIGHT_NAME) / 1000.0;
+    //   addVisionMeasurement(pose, timestamp);
+    // }
   }
 
   /*

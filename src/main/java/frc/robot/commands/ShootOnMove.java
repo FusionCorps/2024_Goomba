@@ -54,18 +54,18 @@ public class ShootOnMove extends Command {
    */
   @Override
   public void execute() {
-    Pose3d aprilTagPose = mDrivetrain.getCamera().getPrimaryAprilTagPose();
-    mPivot.setAngle(pivotAngleMap.get(aprilTagPose.getZ()));
+    // Pose3d aprilTagPose = mDrivetrain.getCamera().getPrimaryAprilTagPose();
+    // mPivot.setAngle(pivotAngleMap.get(aprilTagPose.getZ()));
 
-    double zVelocity = ShooterSpeed * Math.cos(mPivot.getPivotAngle());
+    // double zVelocity = ShooterSpeed * Math.cos(mPivot.getPivotAngle());
 
-    double timeToWall = aprilTagPose.getZ() / zVelocity;
+    // double timeToWall = aprilTagPose.getZ() / zVelocity;
 
-    double skewDistance = timeToWall * mDrivetrain.getState().speeds.vyMetersPerSecond;
+    // double skewDistance = timeToWall * mDrivetrain.getState().speeds.vyMetersPerSecond;
 
-    if (Math.abs(aprilTagPose.getX() - skewDistance) < tolerance) {
-      mShooter.shoot(0.8, 0.6);
-    }
+    // if (Math.abs(aprilTagPose.getX() - skewDistance) < tolerance) {
+    //   mShooter.shoot(0.8, 0.6);
+    // }
 
     mDrivetrain.setControl(req.withVelocityX(0).withVelocityY(-controller.getLeftX()));
   }

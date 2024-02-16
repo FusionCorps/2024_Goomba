@@ -52,12 +52,12 @@ public class Cameras extends SubsystemBase {
   @Override
   public void periodic() {
     // update apriltag pose and distances to apriltag
-    try {
-      getPrimaryAprilTagPose();
-      // System.out.println(distToAprilTag);
-    } catch (Exception e) {
-      System.err.println("couldn't get latest apritag pose results");
-    }
+    // try {
+    //   getPrimaryAprilTagPose();
+    //   // System.out.println(distToAprilTag);
+    // } catch (Exception e) {
+    //   System.err.println("couldn't get latest apritag pose results");
+    // }
   }
 
   /**

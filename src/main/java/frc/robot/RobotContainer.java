@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
@@ -23,12 +24,14 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.launcher.ResetPivotAngle;
 import frc.robot.commands.launcher.SetPivotPct;
+import frc.robot.commands.launcher.SetPivotPos;
 import frc.robot.commands.launcher.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
@@ -94,14 +97,16 @@ public class RobotContainer {
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
-        .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
-        .onTrue(new RunIndex(index, 0));
+        .whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT))
+        .onFalse(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
     robotController.y().onTrue(new ResetPivotAngle(pivot));
 
+    // Stow Pivot
+    robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET* PivotConstants.PIVOT_GEAR_RATIO));
     // disables the robot
-    robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
+    // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
     // move shooter up or down
     robotController.povRight().whileTrue(new SetPivotPct(pivot, .08));
