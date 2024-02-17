@@ -32,7 +32,7 @@ public class AimAtTarget extends Command {
   @Override
   public void execute() {
     // if target detected, rotate to target
-    if (mDrivetrain.getCamera().hasTarget()) {
+    if (mDrivetrain.getCamera().hasTarget() && mDrivetrain.getCamera().getID() == 4) {
       // get pid output of normalized tx (-1 to 1) and scale by max angular rate
       SwerveRequest req =
           new SwerveRequest.FieldCentric()

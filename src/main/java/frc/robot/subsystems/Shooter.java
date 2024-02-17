@@ -91,8 +91,8 @@ public class Shooter extends SubsystemBase {
     rightMotor.setSmartCurrentLimit(60, 5500);
     rightMotor.set(rightPct);
     leftMotor.set(leftPct);
-    System.out.println(
-        rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
+    //System.out.println(
+       // rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
   // returns whether both shooters have reached the target speed

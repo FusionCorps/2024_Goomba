@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.IndexConstants.INDEX_MOTOR_ID;
+import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
@@ -11,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Index extends SubsystemBase {
   CANSparkFlex indexMotor;
-  DigitalInput beamBreak;
+  public static DigitalInput beamBreak;
 
   public Index() {
     beamBreak = new DigitalInput(1);
@@ -23,6 +24,8 @@ public class Index extends SubsystemBase {
 
     diagnosticsTab.addDouble("Index Output %", () -> indexMotor.getAppliedOutput());
   }
+
+ 
 
   /**
    * Runs the index at a duty cycle percentage.

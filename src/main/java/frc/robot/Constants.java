@@ -24,9 +24,9 @@ public class Constants {
   public class AimingPIDS {
 
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-    public static final double toTargetRotKP = 0.8;
+    public static final double toTargetRotKP = 0.15;
     public static final double toTargetRotKI = 0;
-    public static final double toTargetRotKD = 0.04;
+    public static final double toTargetRotKD = 0;
 
     public static final double toAngleRotKP = 4.25;
     public static final double toAngleRotKI = 0.0;
@@ -242,7 +242,7 @@ public class Constants {
     public static final double PIVOT_OFFSET = 0.307506;
     public static final double PIVOT_STOW = 5.5346679;
 
-    public static final double PIVOT_kP = 2;
+    public static final double PIVOT_kP = 8;
     public static final double PIVOT_kD = 0.3;
     public static final double PIVOT_kI = 0;
 
@@ -257,9 +257,9 @@ public class Constants {
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
         new InterpolatingDoubleTreeMap(); // maps Z distances to april tag with pivot angles
 
-    { // TODO: fill in map with measured data values
-      PIVOT_ANGLES_MAP.put(0.0, 0.0);
-    }
+    // { // TODO: fill in map with measured data values
+    //   PIVOT_ANGLES_MAP.put(0.0, 0.0);
+    // }
   }
 
   public static class ShooterConstants {

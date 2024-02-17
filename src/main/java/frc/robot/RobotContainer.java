@@ -11,6 +11,7 @@ import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_SPEED;
 import static frc.robot.Constants.allianceLocation;
 import static frc.robot.Constants.driverTab;
+import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -19,6 +20,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
@@ -28,6 +30,7 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
+import frc.robot.commands.launcher.AutoPivotAim;
 import frc.robot.commands.launcher.ResetPivotAngle;
 import frc.robot.commands.launcher.SetPivotPct;
 import frc.robot.commands.launcher.SetPivotPos;
@@ -52,6 +55,7 @@ public class RobotContainer {
   private void configureBindings() {
     // run field centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+    
 
     // reset odometry to current position, and zero gyro yaw
     robotController
@@ -64,7 +68,15 @@ public class RobotContainer {
                 }));
 
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
-    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67));
+    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67).alongWith(new SetPivotPos(pivot, 24.51)));
+    robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
+    // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82, 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
+
+    // robotController.rightBumper().toggleOnTrue(drivetrain.aimAtTargetCommand(2,0.7)
+    // .andThen(new AutoPivotAim(drivetrain, pivot))
+    // .alongWith(new Shoot(shooter,0.82,0.67)));
+
+    // robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 1, 0.73));
     // TODO: shooter velocity PID control
     // robotController.rightBumper().whileTrue(new ShootSpeaker(shooter,5000,3000));
 
@@ -100,7 +112,7 @@ public class RobotContainer {
         .onFalse(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
-    robotController.y().onTrue(new ResetPivotAngle(pivot));
+    //robotController.y().onTrue(new ResetPivotAngle(pivot));
 
     // Stow Pivot
     robotController
@@ -111,8 +123,8 @@ public class RobotContainer {
     // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
     // move shooter up or down
-    robotController.povRight().whileTrue(new SetPivotPct(pivot, .08));
-    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.08));
+    robotController.povRight().whileTrue(new SetPivotPct(pivot, .1));
+    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.1));
 
     // Move climb to upright position
     // robotController.povUp().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_CLIMB_UP_POS));
@@ -123,6 +135,7 @@ public class RobotContainer {
 
     // rotate to perpendicular with wall, strafe to center on april tag, and rumble
     // robotController
+
     //     .x()
     //     .whileTrue(
     //         drivetrain
