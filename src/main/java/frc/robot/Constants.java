@@ -206,6 +206,7 @@ public class Constants {
     public static final double MaxAngularRate =
         2 * Math.PI; // 1 rotation per second max rotation rate
     public static final double AimingDamper = 0.2;
+    public static final double DriveDeadband = 0.05 * MaxSpeed;
 
     public static final double FULL_LENGTH = 0.81; // in meters, includes bumpers
     public static final double FULL_WIDTH = 0.81; // in meters, includes bumpers
@@ -254,12 +255,17 @@ public class Constants {
     public static final double PIVOT_START_POS = Units.degreesToRotations(30);
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
     public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
-    public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
-        new InterpolatingDoubleTreeMap(); // maps Z distances to april tag with pivot angles
 
-    // { // TODO: fill in map with measured data values
-    //   PIVOT_ANGLES_MAP.put(0.0, 0.0);
-    // }
+    // maps Z distances to april tag (meters) with pivot angles (degrees)
+    public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
+        new InterpolatingDoubleTreeMap();
+
+    { // TODO: tune data point as needed
+      PIVOT_ANGLES_MAP.put(0.88, 19.75);
+      PIVOT_ANGLES_MAP.put(1.38, 23.68);
+      PIVOT_ANGLES_MAP.put(2.16, 25.89);
+      PIVOT_ANGLES_MAP.put(2.77, 26.88);
+    }
   }
 
   public static class ShooterConstants {

@@ -1,10 +1,8 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.driverTab;
-import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -46,15 +44,9 @@ public class Pivot extends SubsystemBase {
     pivotConfigs.MotionMagic.MotionMagicJerk = 350;
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
-<<<<<<< Updated upstream
-=======
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
-    
->>>>>>> Stashed changes
 
-    //pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), false));
-
-    initTable();
+    // pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), false));
 
     // sets the position of the motor acc. to through bore encoder once the encoder is ready
     new Trigger(pivotEncoder::isConnected)
@@ -89,12 +81,9 @@ public class Pivot extends SubsystemBase {
     //   motorConfigured = true;
     // }
 
-<<<<<<< Updated upstream
     pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-=======
-    pivotMotor.setPosition(pivotEncoder.getAbsolutePosition()* PivotConstants.PIVOT_GEAR_RATIO);
-    pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition()* PivotConstants.PIVOT_GEAR_RATIO);
->>>>>>> Stashed changes
+    pivotFollowerMotor.setPosition(
+        pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
   }
 
@@ -106,28 +95,16 @@ public class Pivot extends SubsystemBase {
   public void setPivotPct(double pct) {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
-<<<<<<< Updated upstream
-    // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
-
-=======
     pivotFollowerMotor.set(pct);
     System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
-    //System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
-    
->>>>>>> Stashed changes
+    // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
+
   }
 
   /** Zeroes the pivot angle to the current angle. */
   public void resetPivotAngle() {
     pivotMotor.setPosition(0);
-  }
-
-  void initTable(){
-    PIVOT_ANGLES_MAP.put(0.88, 19.75);
-    PIVOT_ANGLES_MAP.put(1.38, 23.68);
-    PIVOT_ANGLES_MAP.put(2.16, 25.89);
-    PIVOT_ANGLES_MAP.put(2.77, 26.88);
-    
+    pivotFollowerMotor.setPosition(0);
   }
 
   /**
@@ -140,11 +117,7 @@ public class Pivot extends SubsystemBase {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(targetPos));
-<<<<<<< Updated upstream
-=======
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
-    
->>>>>>> Stashed changes
   }
 
   // whether the pivot has reached the setpoint

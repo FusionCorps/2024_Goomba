@@ -1,6 +1,7 @@
 package frc.robot.commands.swerve.manual;
 
 import static frc.robot.Constants.DrivetrainConstants.AimingDamper;
+import static frc.robot.Constants.DrivetrainConstants.DriveDeadband;
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
@@ -34,6 +35,6 @@ public class RunSwerveFCWithAim extends Command {
     mDrivetrain.setControl(
         req.withVelocityX(-controller.getLeftY() * MaxSpeed * AimingDamper)
             .withVelocityY(-controller.getLeftX() * MaxSpeed * AimingDamper)
-            .withDeadband(0.05));
+            .withDeadband(DriveDeadband));
   }
 }

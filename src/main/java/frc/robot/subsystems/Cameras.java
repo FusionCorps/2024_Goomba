@@ -17,14 +17,22 @@ import java.util.Map;
 public class Cameras extends SubsystemBase {
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
+  // cached data
+  private double tx = 0.0;
+  private double ty = 0.0;
+  private boolean hasTarget = false;
+  private int fidID = 0;
+  private Pose3d aprilTagTargetPose = new Pose3d();
+
+  private int pipelineNum = 0;
+
   // apriltag pose relative to robot space
   // horizontal, vertical, forward distances
-  private Pose3d aprilTagTargetPose = new Pose3d();
 
   public Cameras() {
     limelightTable.getEntry("ledMode").setNumber(1); // turn off limelight LEDs
     limelightTable.getEntry("camMode").setNumber(0); // set limelight to vision processing mode
-    limelightTable.getEntry("pipeline").setNumber(0); // set limelight to default pipeline
+    limelightTable.getEntry("pipeline").setNumber(pipelineNum); // set limelight to default pipeline
     limelightTable
         .getEntry("camerapose_robotspace_set")
         .setDoubleArray(
@@ -52,8 +60,15 @@ public class Cameras extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // update apriltag pose and distances to apriltag
-    if (getPipeline() == PIPELINE.APRILTAG_3D.value) getPrimaryAprilTagPose();
+    hasTarget = limelightTable.getEntry("tv").getDouble(0) == 1;
+    if (hasTarget) {
+      tx = limelightTable.getEntry("tx").getDouble(0);
+      ty = limelightTable.getEntry("ty").getDouble(0);
+      fidID = (int) limelightTable.getEntry("id").getDouble(0);
+      pipelineNum = (int) limelightTable.getEntry("getpipe").getDouble(0);
+      // update apriltag pose and distances to apriltag
+      if (pipelineNum == PIPELINE.APRILTAG_3D.value) updatePrimaryAprilTagPose();
+    }
   }
 
   /**
@@ -63,15 +78,15 @@ public class Cameras extends SubsystemBase {
    * @return tx (degrees)
    */
   public double getTX() {
-    if (hasTarget()) {
-      return limelightTable.getEntry("tx").getDouble(0.0);
-    } else {
-      return 0.0;
-    }
+    return hasTarget ? tx : 0.0;
   }
 
   public double getID() {
-    return LimelightHelpers.getFiducialID(LIMELIGHT_NAME);
+    return (hasTarget
+            && (pipelineNum == PIPELINE.APRILTAG_3D.value
+                || pipelineNum == PIPELINE.APRILTAG_2D.value))
+        ? fidID
+        : 0;
   }
 
   /**
@@ -81,7 +96,7 @@ public class Cameras extends SubsystemBase {
    * @return ty (degrees)
    */
   public double getTY() {
-    return limelightTable.getEntry("ty").getDouble(0.0);
+    return hasTarget ? ty : 0.0;
   }
 
   /**
@@ -91,7 +106,7 @@ public class Cameras extends SubsystemBase {
    * @return tv (0 or 1)
    */
   public boolean hasTarget() {
-    return limelightTable.getEntry("tv").getDouble(0) == 1;
+    return hasTarget;
   }
 
   /**
@@ -109,10 +124,19 @@ public class Cameras extends SubsystemBase {
    * @return pipeline integer (0-9)
    */
   public int getPipeline() {
-    return (int) limelightTable.getEntry("getpipe").getDouble(0);
+    return pipelineNum;
   }
 
+  /**
+   * Returns the last known pose of the primary apriltag target
+   *
+   * @return
+   */
   public Pose3d getPrimaryAprilTagPose() {
+    return aprilTagTargetPose;
+  }
+
+  private void updatePrimaryAprilTagPose() {
     try {
       // get latest apriltag pose results, if on correct pipeline and target seen
       if (hasTarget() && getPipeline() == PIPELINE.APRILTAG_3D.value) {
@@ -124,6 +148,5 @@ public class Cameras extends SubsystemBase {
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");
     }
-    return aprilTagTargetPose; // will return either updated or old pose
   }
 }

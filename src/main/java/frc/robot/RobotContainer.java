@@ -11,7 +11,6 @@ import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_SPEED;
 import static frc.robot.Constants.allianceLocation;
 import static frc.robot.Constants.driverTab;
-import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -20,9 +19,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
@@ -30,8 +29,6 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.launcher.AutoPivotAim;
-import frc.robot.commands.launcher.ResetPivotAngle;
 import frc.robot.commands.launcher.SetPivotPct;
 import frc.robot.commands.launcher.SetPivotPos;
 import frc.robot.commands.launcher.Shoot;
@@ -55,7 +52,6 @@ public class RobotContainer {
   private void configureBindings() {
     // run field centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
-    
 
     // reset odometry to current position, and zero gyro yaw
     robotController
@@ -68,9 +64,12 @@ public class RobotContainer {
                 }));
 
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
-    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, 0.82, 0.67).alongWith(new SetPivotPos(pivot, 24.51)));
+    robotController
+        .rightBumper()
+        .toggleOnTrue(new Shoot(shooter, 0.82, 0.67).alongWith(new SetPivotPos(pivot, 24.51)));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
-    // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82, 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
+    // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
+    // 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
 
     // robotController.rightBumper().toggleOnTrue(drivetrain.aimAtTargetCommand(2,0.7)
     // .andThen(new AutoPivotAim(drivetrain, pivot))
@@ -112,7 +111,7 @@ public class RobotContainer {
         .onFalse(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
-    //robotController.y().onTrue(new ResetPivotAngle(pivot));
+    // robotController.y().onTrue(new ResetPivotAngle(pivot));
 
     // Stow Pivot
     robotController
@@ -163,6 +162,23 @@ public class RobotContainer {
     // robotController
     //     .povDown()
     //     .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
+
+    robotController
+        .back()
+        .and(robotController.povUp())
+        .whileTrue(drivetrain.sysIDQuasistatic(Direction.kForward));
+    robotController
+        .back()
+        .and(robotController.povDown())
+        .whileTrue(drivetrain.sysIDQuasistatic(Direction.kReverse));
+    robotController
+        .start()
+        .and(robotController.povUp())
+        .whileTrue(drivetrain.sysIDDynamic(Direction.kForward));
+    robotController
+        .start()
+        .and(robotController.povDown())
+        .whileTrue(drivetrain.sysIDDynamic(Direction.kReverse));
   }
 
   public RobotContainer() {
@@ -189,7 +205,7 @@ public class RobotContainer {
     pipeLineChooser.onChange(
         (num) -> {
           drivetrain.getCamera().setPipeline(num);
-          System.out.println("pipeline set to " + num);
+          System.out.println("Pipeline set to " + num);
         });
     driverTab.add("Pipeline Chooser", pipeLineChooser).withSize(2, 1).withPosition(4, 3);
   }

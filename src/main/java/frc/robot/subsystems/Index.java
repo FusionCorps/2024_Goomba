@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.IndexConstants.INDEX_MOTOR_ID;
-import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
@@ -24,8 +23,6 @@ public class Index extends SubsystemBase {
 
     diagnosticsTab.addDouble("Index Output %", () -> indexMotor.getAppliedOutput());
   }
-
- 
 
   /**
    * Runs the index at a duty cycle percentage.
