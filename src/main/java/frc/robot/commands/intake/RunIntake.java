@@ -2,24 +2,27 @@ package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
+import java.util.function.BooleanSupplier;
 
 public class RunIntake extends Command {
-  private Intake m_intake;
+  private Intake mIntake;
+  BooleanSupplier beamBroken;
   double speed;
 
-  public RunIntake(Intake intake, double pct) {
-    m_intake = intake;
+  public RunIntake(Intake intake, double pct, BooleanSupplier beamBroken) {
+    mIntake = intake;
     speed = pct;
+    this.beamBroken = beamBroken;
     addRequirements(intake);
   }
 
   @Override
   public void execute() {
-    m_intake.runIntake(speed);
+    if (!beamBroken.getAsBoolean()) mIntake.runIntake(speed);
   }
 
   @Override
   public void end(boolean isInterrupted) {
-    m_intake.runIntake(0);
+    mIntake.runIntake(0);
   }
 }

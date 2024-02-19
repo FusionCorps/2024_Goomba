@@ -99,10 +99,12 @@ public class RobotContainer {
     }
 
     // run intake
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
+    robotController
+        .rightTrigger()
+        .whileTrue(new RunIntake(intake, INTAKE_RUN_PCT, index::beamBroken));
 
     // run outtake
-    robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
+    robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT, index::beamBroken));
     // robotController.povLeft().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
 
     // while the beam break sensor is not broken, run the index
@@ -215,7 +217,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "ShootSpeaker", new Shoot(shooter, SPK_LEFT_SPEED, SPK_RIGHT_SPEED));
     NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
-    NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
+    NamedCommands.registerCommand(
+        "RunIntake", new RunIntake(intake, INTAKE_RUN_PCT, index::beamBroken));
     NamedCommands.registerCommand(
         "AimAtTarget",
         new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, StageAlignment.runTime));
