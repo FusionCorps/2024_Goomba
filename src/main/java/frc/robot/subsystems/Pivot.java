@@ -18,6 +18,9 @@ public class Pivot extends SubsystemBase {
 
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
+  double errorThreshold = 0.5;
+
+  boolean isBreaking = true;
 
   PositionDutyCycle stabilizingDutyCycle = new PositionDutyCycle(0);
 
@@ -39,9 +42,9 @@ public class Pivot extends SubsystemBase {
     pivotConfigs.Slot0.kI = PivotConstants.PIVOT_kI;
     pivotConfigs.Slot0.kD = PivotConstants.PIVOT_kD;
 
-    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 1000;
-    pivotConfigs.MotionMagic.MotionMagicAcceleration = 400;
-    pivotConfigs.MotionMagic.MotionMagicJerk = 350;
+    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 5000;
+    pivotConfigs.MotionMagic.MotionMagicAcceleration = 1000;
+    pivotConfigs.MotionMagic.MotionMagicJerk = 400;
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
@@ -67,12 +70,12 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(
-        PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO
-            + ", "
-            + pivotMotor.getPosition().getValueAsDouble()
-            + " , "
-            + pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+    // System.out.println(
+    //     PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO
+    //         + ", "
+    //         + pivotMotor.getPosition().getValueAsDouble()
+    //         + " , "
+    //         + pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
 
     // if(!motorConfigured && pivotEncoder.isConnected() &&
     // pivotMotor.getPosition().getValueAsDouble()/PivotConstants.PIVOT_GEAR_RATIO !=
@@ -87,6 +90,20 @@ public class Pivot extends SubsystemBase {
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
   }
 
+  // public void setBrake(){
+
+  //   if(isBreaking){
+  //     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+  //     pivotMotor.getConfigurator().apply(pivotConfigs);
+  //   pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
+
+  //   } else{
+  //     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+  //     pivotMotor.getConfigurator().apply(pivotConfigs);
+  //   pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
+  //   }
+  // }
+
   /**
    * Sets the pivot angle using a duty cycle percentage.
    *
@@ -96,7 +113,7 @@ public class Pivot extends SubsystemBase {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
-    System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
+    //System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
     // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
 
   }
@@ -115,9 +132,24 @@ public class Pivot extends SubsystemBase {
   public void setAngle(double pos) {
     targetPos = pos;
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
-    MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
-    pivotMotor.setControl(positionReq.withPosition(targetPos));
-    pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
+    // MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
+    // pivotMotor.setControl(positionReq.withPosition(targetPos));
+    // pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
+
+    if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >= errorThreshold){
+      if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
+        pivotMotor.set(-0.3);
+        pivotFollowerMotor.set(-0.3);
+      } else{
+        pivotMotor.set(0.3);
+        pivotFollowerMotor.set(0.3);
+      }
+    } else{
+      pivotMotor.set(0);
+      pivotFollowerMotor.set(0);
+    }
+
+    //System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
   }
 
   // whether the pivot has reached the setpoint

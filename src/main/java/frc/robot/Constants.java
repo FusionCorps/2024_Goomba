@@ -244,7 +244,7 @@ public class Constants {
     public static final double PIVOT_STOW = 5.5346679;
 
     public static final double PIVOT_kP = 8;
-    public static final double PIVOT_kD = 0.3;
+    public static final double PIVOT_kD = 0;
     public static final double PIVOT_kI = 0;
 
     // intake position of the pivot !!!!(UNTUNED)!!!!
