@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
@@ -112,7 +113,8 @@ public class RobotContainer {
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
         .whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT))
-        .onFalse(new RunIndex(index, 0));
+        .onFalse(new RunIndex(index, 0))
+        .whileFalse(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET*PIVOT_GEAR_RATIO));
 
     // zero the pivot angle at current angle
     // robotController.y().onTrue(new ResetPivotAngle(pivot));
