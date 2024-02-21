@@ -187,7 +187,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   @Override
   public void periodic() {
     // updates the odometry from aprilTag data
-    // updateOdometryFromAprilTags(1.0);
+    updateOdometryFromAprilTags(1.0);
   }
 
   /**

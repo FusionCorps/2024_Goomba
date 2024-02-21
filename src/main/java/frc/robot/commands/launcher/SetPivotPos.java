@@ -1,9 +1,6 @@
 package frc.robot.commands.launcher;
 
-import static frc.robot.subsystems.Index.beamBreak;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.Pivot;
 
 public class SetPivotPos extends Command {

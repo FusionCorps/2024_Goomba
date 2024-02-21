@@ -19,9 +19,8 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -67,13 +66,12 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    
-
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
     // robotController
     //     .rightBumper()
-    //     .toggleOnTrue(new Shoot(shooter, index, 0.82, 0.67).alongWith(new SetPivotPos(pivot, 24.51)));
-    
+    //     .toggleOnTrue(new Shoot(shooter, index, 0.82, 0.67).alongWith(new SetPivotPos(pivot,
+    // 24.51)));
+
     robotController.rightBumper().toggleOnTrue(new AutoPivotAim(drivetrain, pivot));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
@@ -97,33 +95,22 @@ public class RobotContainer {
 
     // run index
 
-    robotController.leftTrigger().onTrue(new InstantCommand(() -> {
-      if(ShooterConstants.IS_AMP){
-        CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0.82, 0.67)
-                  .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)));
-        
-      } else{
-        CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0, 1000));
-      }
-    }));
+    robotController
+        .leftTrigger()
+        .whileTrue(
+            new ConditionalCommand(
+                new Shoot(shooter, index, 0.82, 0.67)
+                    .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)),
+                new Shoot(shooter, index, 0, 1000),
+                () -> ShooterConstants.IS_AMP));
 
-    robotController.leftTrigger().onFalse(new InstantCommand(() -> {
-      if(!ShooterConstants.IS_AMP){
-        CommandScheduler.getInstance().schedule(new RunIndex(index, INTAKE_RUN_PCT));
-      }
-    }));
-
-
-    // if (ShooterConstants.IS_AMP) {
-    //   robotController
-    //       .leftTrigger()
-    //       .whileTrue(
-    //           new Shoot(shooter, index, 0.82, 0.67)
-    //               .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)));
-    // } else {
-    //   robotController.leftTrigger().whileTrue(new Shoot(shooter, index, 0, 1000));
-    //   robotController.leftTrigger().onFalse(new RunIndex(index, INTAKE_RUN_PCT));
-    // }
+    robotController
+        .leftTrigger()
+        .whileFalse(
+            new ConditionalCommand(
+                new RunIndex(index, IndexConstants.INDEX_PCT),
+                null,
+                () -> !ShooterConstants.IS_AMP));
 
     // run intake
     robotController
@@ -136,7 +123,9 @@ public class RobotContainer {
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
-        .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT).alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET*PIVOT_GEAR_RATIO)))
+        .whileFalse(
+            new RunIndex(index, IndexConstants.INDEX_PCT)
+                .alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET * PIVOT_GEAR_RATIO)))
         .onFalse(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
@@ -243,7 +232,8 @@ public class RobotContainer {
   private void setupAutoChooser() {
     NamedCommands.registerCommand(
         "ShootSpeaker", new Shoot(shooter, index, SPK_LEFT_SPEED, SPK_RIGHT_SPEED));
-    NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
+    NamedCommands.registerCommand(
+        "ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
     NamedCommands.registerCommand(
         "RunIntake", new RunIntake(intake, INTAKE_RUN_PCT, index::beamBroken));
     NamedCommands.registerCommand(

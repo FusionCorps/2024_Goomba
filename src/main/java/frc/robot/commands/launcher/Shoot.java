@@ -23,38 +23,34 @@ public class Shoot extends Command {
     lRpm = leftRpm;
     rRpm = rightRpm;
 
-    
-
     addRequirements(mShooter);
   }
 
   @Override
-  public void initialize(){
+  public void initialize() {
     mTimer.stop();
     mTimer.reset();
   }
 
   @Override
   public void execute() {
-    //mShooter.shoot(lRpm, rRpm);
+    // mShooter.shoot(lRpm, rRpm);
     mShooter.shootRightRPM(rRpm);
   }
 
   @Override
-  public boolean isFinished(){
+  public boolean isFinished() {
 
-    if(!mIndex.beamBroken() && !hasTimerStarted){
+    if (!mIndex.beamBroken() && !hasTimerStarted) {
 
       mTimer.start();
       hasTimerStarted = true;
     }
-    
 
-    if(hasTimerStarted && mTimer.hasElapsed(0.5)){
+    if (hasTimerStarted && mTimer.hasElapsed(0.5)) {
       mTimer.stop();
       mTimer.reset();
       return true;
-      
     }
 
     return false;
@@ -62,8 +58,7 @@ public class Shoot extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    //mShooter.shoot(0, 0);
-    
+    // mShooter.shoot(0, 0);
 
     mShooter.shootRightRPM(0);
     ShooterConstants.IS_AMP = false;

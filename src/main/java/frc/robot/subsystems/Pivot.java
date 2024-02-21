@@ -79,10 +79,11 @@ public class Pivot extends SubsystemBase {
     //         + " , "
     //         + pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
 
-    if(!motorConfigured && pivotEncoder.isConnected() &&
-    pivotMotor.getPosition().getValueAsDouble()/PivotConstants.PIVOT_GEAR_RATIO !=
-    pivotEncoder.getAbsolutePosition()){
-    
+    if (!motorConfigured
+        && pivotEncoder.isConnected()
+        && pivotMotor.getPosition().getValueAsDouble() / PivotConstants.PIVOT_GEAR_RATIO
+            != pivotEncoder.getAbsolutePosition()) {
+
       pivotMotor.set(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
       pivotFollowerMotor.set(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
       motorConfigured = true;
@@ -117,7 +118,8 @@ public class Pivot extends SubsystemBase {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
-    //System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
+    // System.out.println(pivotMotor.getMotorVoltage() + ", " +
+    // pivotFollowerMotor.getMotorVoltage());
     // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
 
   }
@@ -135,7 +137,7 @@ public class Pivot extends SubsystemBase {
    */
   public void setAngle(double pos) {
     targetPos = pos;
-    
+
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
@@ -153,7 +155,8 @@ public class Pivot extends SubsystemBase {
     //   pivotFollowerMotor.set(0);
     // }
 
-    //System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
+    // System.out.println(pivotMotor.getMotorVoltage() + ", " +
+    // pivotFollowerMotor.getMotorVoltage());
   }
 
   // whether the pivot has reached the setpoint
