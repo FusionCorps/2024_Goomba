@@ -9,13 +9,13 @@ import frc.robot.subsystems.Pivot;
 public class AutoPivotAim extends Command {
   Pivot mPivot;
   Drivetrain mDrivetrain;
-  double errorThreshold = 0.75;
+  double errorThreshold = 0.15;
   Double distanceToAprilTag;
 
   public AutoPivotAim(Drivetrain drivetrain, Pivot pivot) {
     mDrivetrain = drivetrain;
     mPivot = pivot;
-    addRequirements(mDrivetrain, pivot);
+    addRequirements(pivot);
   }
 
   @Override

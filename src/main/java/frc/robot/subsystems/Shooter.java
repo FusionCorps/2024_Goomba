@@ -44,24 +44,25 @@ public class Shooter extends SubsystemBase {
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();
+    //leftController.setP(0.00006);
     leftController.setP(0);
     leftController.setI(0.0);
     leftController.setD(0.0);
-    leftController.setFF(0);
+    leftController.setFF(0.000015);
     leftController.setIZone(0);
-    leftController.setOutputRange(-1, 1);
+    leftController.setOutputRange(0, 1);
     leftMotor.setInverted(true);
 
     // // Set PID for right motor
     rightController = rightMotor.getPIDController();
     rightController.setP(0);
-    // rightController.setP(0.00006);
+    //rightController.setP(0.00006);
     rightController.setI(0);
     rightController.setD(0);
-    rightController.setFF(0);
-    // rightController.setFF(0.000015);
+    //rightController.setFF(0);
+    rightController.setFF(0.000015);
     rightController.setIZone(0);
-    rightController.setOutputRange(-SHOOTER_MAX_RPM, SHOOTER_MAX_RPM);
+    rightController.setOutputRange(0, 1);
 
     leftMotor.burnFlash();
     rightMotor.burnFlash();

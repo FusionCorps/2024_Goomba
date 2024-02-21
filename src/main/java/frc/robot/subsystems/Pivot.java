@@ -20,6 +20,8 @@ public class Pivot extends SubsystemBase {
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
   double errorThreshold = 0.5;
 
+  boolean motorConfigured = false;
+
   boolean isBreaking = true;
 
   PositionDutyCycle stabilizingDutyCycle = new PositionDutyCycle(0);
@@ -42,9 +44,9 @@ public class Pivot extends SubsystemBase {
     pivotConfigs.Slot0.kI = PivotConstants.PIVOT_kI;
     pivotConfigs.Slot0.kD = PivotConstants.PIVOT_kD;
 
-    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 5000;
-    pivotConfigs.MotionMagic.MotionMagicAcceleration = 1000;
-    pivotConfigs.MotionMagic.MotionMagicJerk = 400;
+    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = 1000;
+    pivotConfigs.MotionMagic.MotionMagicAcceleration = 400;
+    pivotConfigs.MotionMagic.MotionMagicJerk = 3000;
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
@@ -77,16 +79,18 @@ public class Pivot extends SubsystemBase {
     //         + " , "
     //         + pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
 
-    // if(!motorConfigured && pivotEncoder.isConnected() &&
-    // pivotMotor.getPosition().getValueAsDouble()/PivotConstants.PIVOT_GEAR_RATIO !=
-    // pivotEncoder.getAbsolutePosition()){
-    //
-    //   motorConfigured = true;
-    // }
+    if(!motorConfigured && pivotEncoder.isConnected() &&
+    pivotMotor.getPosition().getValueAsDouble()/PivotConstants.PIVOT_GEAR_RATIO !=
+    pivotEncoder.getAbsolutePosition()){
+    
+      pivotMotor.set(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+      pivotFollowerMotor.set(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+      motorConfigured = true;
+    }
 
-    pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-    pivotFollowerMotor.setPosition(
-        pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+    // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+    // pivotFollowerMotor.setPosition(
+    //     pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
   }
 
@@ -131,23 +135,23 @@ public class Pivot extends SubsystemBase {
    */
   public void setAngle(double pos) {
     targetPos = pos;
-    // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
-    // MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
-    // pivotMotor.setControl(positionReq.withPosition(targetPos));
-    // pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
+    
+    MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
+    pivotMotor.setControl(positionReq.withPosition(targetPos));
+    pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
 
-    if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >= errorThreshold){
-      if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
-        pivotMotor.set(-0.3);
-        pivotFollowerMotor.set(-0.3);
-      } else{
-        pivotMotor.set(0.3);
-        pivotFollowerMotor.set(0.3);
-      }
-    } else{
-      pivotMotor.set(0);
-      pivotFollowerMotor.set(0);
-    }
+    // if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >= errorThreshold){
+    //   if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
+    //     pivotMotor.set(-0.3);
+    //     pivotFollowerMotor.set(-0.3);
+    //   } else{
+    //     pivotMotor.set(0.3);
+    //     pivotFollowerMotor.set(0.3);
+    //   }
+    // } else{
+    //   pivotMotor.set(0);
+    //   pivotFollowerMotor.set(0);
+    // }
 
     //System.out.println(pivotMotor.getMotorVoltage() + ", " + pivotFollowerMotor.getMotorVoltage());
   }

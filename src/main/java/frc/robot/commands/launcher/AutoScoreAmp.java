@@ -33,7 +33,7 @@ public class AutoScoreAmp extends SequentialCommandGroup {
         new SetPivotPos(pivot, 0)
             .alongWith(
                 new Shoot(
-                    mShooter, ShooterConstants.AMP_LEFT_SPEED, ShooterConstants.AMP_RIGHT_SPEED))
+                    mShooter, mIndex, ShooterConstants.AMP_LEFT_SPEED, ShooterConstants.AMP_RIGHT_SPEED))
             .until(() -> mShooter.reachedSpeeds() && mPivot.reachedAngle())
             .andThen(new RunIndex(mIndex, IndexConstants.INDEX_PCT))
             .withTimeout(4));
