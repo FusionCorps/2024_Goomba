@@ -34,8 +34,13 @@ public class Shoot extends Command {
 
   @Override
   public void execute() {
+<<<<<<< Updated upstream
     // mShooter.shoot(lRpm, rRpm);
     mShooter.shootRightRPM(rRpm);
+=======
+    mShooter.shoot(lRpm, rRpm);
+    //mShooter.shootRightRPM(rRpm);
+>>>>>>> Stashed changes
   }
 
   @Override
@@ -58,9 +63,14 @@ public class Shoot extends Command {
 
   @Override
   public void end(boolean interrupted) {
+<<<<<<< Updated upstream
     // mShooter.shoot(0, 0);
+=======
+    mShooter.shoot(0, 0);
+    
+>>>>>>> Stashed changes
 
-    mShooter.shootRightRPM(0);
+    //mShooter.shootRightRPM(0);
     ShooterConstants.IS_AMP = false;
   }
 }

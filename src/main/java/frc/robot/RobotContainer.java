@@ -95,6 +95,7 @@ public class RobotContainer {
 
     // run index
 
+<<<<<<< Updated upstream
     robotController
         .leftTrigger()
         .whileTrue(
@@ -103,6 +104,17 @@ public class RobotContainer {
                     .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)),
                 new Shoot(shooter, index, 0, 1000),
                 () -> ShooterConstants.IS_AMP));
+=======
+    robotController.leftTrigger().onTrue(new InstantCommand(() -> {
+      if(ShooterConstants.IS_AMP){
+        CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0.82, 0.67)
+                  .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)));
+        
+      } else{
+        CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0.82, 0.67));
+      }
+    }));
+>>>>>>> Stashed changes
 
     robotController
         .leftTrigger()
@@ -115,17 +127,24 @@ public class RobotContainer {
     // run intake
     robotController
         .rightTrigger()
-        .whileTrue(new RunIntake(intake, INTAKE_RUN_PCT, index::beamBroken));
+        .whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
 
     // run outtake
-    robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT, index::beamBroken));
+    //robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT, index::beamBroken));
+    robotController.povDown().whileTrue(new RunIndex(index, -0.175));
+
+    robotController.povUp().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
     // robotController.povLeft().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
+<<<<<<< Updated upstream
         .whileFalse(
             new RunIndex(index, IndexConstants.INDEX_PCT)
                 .alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET * PIVOT_GEAR_RATIO)))
+=======
+        .whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT))
+>>>>>>> Stashed changes
         .onFalse(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
@@ -140,8 +159,8 @@ public class RobotContainer {
     // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
     // move shooter up or down
-    robotController.povRight().whileTrue(new SetPivotPct(pivot, .1));
-    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.1));
+    robotController.povRight().whileTrue(new SetPivotPct(pivot, .5));
+    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.5));
 
     // Move climb to upright position
     // robotController.povUp().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_CLIMB_UP_POS));
@@ -235,7 +254,7 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
     NamedCommands.registerCommand(
-        "RunIntake", new RunIntake(intake, INTAKE_RUN_PCT, index::beamBroken));
+        "RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
     NamedCommands.registerCommand(
         "AimAtTarget",
         new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, StageAlignment.runTime));

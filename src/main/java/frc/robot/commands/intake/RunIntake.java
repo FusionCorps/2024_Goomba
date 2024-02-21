@@ -6,19 +6,19 @@ import java.util.function.BooleanSupplier;
 
 public class RunIntake extends Command {
   private Intake mIntake;
-  BooleanSupplier beamBroken;
+  
   double speed;
 
-  public RunIntake(Intake intake, double pct, BooleanSupplier beamBroken) {
+  public RunIntake(Intake intake, double pct ) {
     mIntake = intake;
     speed = pct;
-    this.beamBroken = beamBroken;
+    
     addRequirements(intake);
   }
 
   @Override
   public void execute() {
-    if (!beamBroken.getAsBoolean()) mIntake.runIntake(speed);
+    mIntake.runIntake(speed);
   }
 
   @Override

@@ -231,8 +231,7 @@ public class Constants {
   public static class PivotConstants {
 
     public static final double PIVOT_GEAR_RATIO =
-        (60 / 14) * (60 / 16)
-            * (66 / 9); // multiply ratios of two gearboxes and then small gear turning big gear
+        (4) * (52/24) * (60/16) * (66/9); // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
     public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
@@ -243,8 +242,8 @@ public class Constants {
     public static final double PIVOT_OFFSET = 0.307506;
     public static final double PIVOT_STOW = 5.5346679;
 
-    public static final double PIVOT_kP = 8;
-    public static final double PIVOT_kD = 0;
+    public static final double PIVOT_kP = 6;
+    public static final double PIVOT_kD = 0.01;
     public static final double PIVOT_kI = 0;
 
     // intake position of the pivot !!!!(UNTUNED)!!!!
