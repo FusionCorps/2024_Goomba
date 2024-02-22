@@ -24,11 +24,11 @@ public class Constants {
   public class AimingPIDS {
 
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-    public static final double toTargetRotKP = 0.15;
+    public static final double toTargetRotKP = 0.3;
     public static final double toTargetRotKI = 0;
-    public static final double toTargetRotKD = 0;
+    public static final double toTargetRotKD = 0.001;
 
-    public static final double toAngleRotKP = 4.25;
+    public static final double toAngleRotKP = 0.25;
     public static final double toAngleRotKI = 0.0;
     public static final double toAngleRotKD = 0.0;
 
@@ -231,7 +231,8 @@ public class Constants {
   public static class PivotConstants {
 
     public static final double PIVOT_GEAR_RATIO =
-        (4) * (52/24) * (60/16) * (66/9); // multiply ratios of two gearboxes and then small gear turning big gear
+        (4) * (52 / 24) * (60 / 16)
+            * (66 / 9); // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
     public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
@@ -260,10 +261,7 @@ public class Constants {
         new InterpolatingDoubleTreeMap();
 
     { // TODO: tune data point as needed
-      PIVOT_ANGLES_MAP.put(0.88, 19.75);
-      PIVOT_ANGLES_MAP.put(1.38, 23.68);
-      PIVOT_ANGLES_MAP.put(2.16, 25.89);
-      PIVOT_ANGLES_MAP.put(2.77, 26.88);
+      PIVOT_ANGLES_MAP.put(0.0, 0.0);
     }
   }
 
@@ -283,6 +281,17 @@ public class Constants {
     public static final double AMP_LEFT_SPEED = .2;
 
     public static final double SHOOTER_MAX_RPM = 6784;
+
+    // TODO: tune further: get both faster
+    public static final double SHOOTER_LEFT_kP = 0.0004;
+    public static final double SHOOTER_LEFT_kI = 0.0;
+    public static final double SHOOTER_LEFT_kD = 0.004;
+    public static final double SHOOTER_LEFT_kFF = 0.000185;
+
+    public static final double SHOOTER_RIGHT_kP = 0.002;
+    public static final double SHOOTER_RIGHT_kI = 0.0;
+    public static final double SHOOTER_RIGHT_kD = 0.001; // increase
+    public static final double SHOOTER_RIGHT_kFF = 0.000226;
   }
 
   public static class LimelightConstants {

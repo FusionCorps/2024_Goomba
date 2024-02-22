@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
@@ -36,8 +37,6 @@ public class Pivot extends SubsystemBase {
     pivotEncoder = new DutyCycleEncoder(0);
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
-
-    
 
     pivotConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     pivotConfigs.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
@@ -73,50 +72,50 @@ public class Pivot extends SubsystemBase {
         .withWidget(BuiltInWidgets.kDial);
   }
 
-
-
   @Override
   public void periodic() {
-    
 
-<<<<<<< Updated upstream
     if (!motorConfigured
         && pivotEncoder.isConnected()
         && pivotMotor.getPosition().getValueAsDouble() / PivotConstants.PIVOT_GEAR_RATIO
             != pivotEncoder.getAbsolutePosition()) {
-
-      pivotMotor.set(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-      pivotFollowerMotor.set(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-=======
-    if(!motorConfigured && pivotEncoder.isConnected() &&
-    pivotMotor.getPosition().getValueAsDouble()/PivotConstants.PIVOT_GEAR_RATIO !=
-    pivotEncoder.getAbsolutePosition() ){
       System.out.println("present");
-    
-      pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-      pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
->>>>>>> Stashed changes
-      motorConfigured = true;
-      
-    
-    } 
 
-    // if(Math.abs(pivotMotor.getPosition().getValueAsDouble() - (pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO)) > 1){
-    //   pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-    //   pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+      pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+      pivotFollowerMotor.setPosition(
+          pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+      motorConfigured = true;
+    }
+
+    // if(Math.abs(pivotMotor.getPosition().getValueAsDouble() - (pivotEncoder.getAbsolutePosition()
+    // * PivotConstants.PIVOT_GEAR_RATIO)) > 1){
+    //   pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+    // PivotConstants.PIVOT_GEAR_RATIO);
+    //   pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+    // PivotConstants.PIVOT_GEAR_RATIO);
     // }
 
-    System.out.println(
-        PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO
-            + ", "
-            + pivotMotor.getPosition().getValueAsDouble()
-            + " , "
-            + pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+    // System.out.println(
+    //     PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO
+    //         + ", "
+    //         + pivotMotor.getPosition().getValueAsDouble()
+    //         + " , "
+    //         + pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
 
     // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
     // pivotFollowerMotor.setPosition(
     //     pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
     // pivotMotor.setPosition(pivotEncoder.getDistance() / PivotConstants.PIVOT_GEAR_RATIO);
+  }
+
+  public Command syncPosition() {
+    return runOnce(
+        () -> {
+          pivotMotor.setPosition(
+              pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+          pivotFollowerMotor.setPosition(
+              pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+        });
   }
 
   // public void setBrake(){
@@ -162,7 +161,8 @@ public class Pivot extends SubsystemBase {
   public void setAngle(double pos) {
 
     pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
-      pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
+    pivotFollowerMotor.setPosition(
+        pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO);
     targetPos = pos;
 
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);

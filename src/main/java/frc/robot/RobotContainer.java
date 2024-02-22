@@ -4,8 +4,8 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
-import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
@@ -20,18 +20,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.launcher.AutoPivotAim;
 import frc.robot.commands.launcher.SetPivotPct;
 import frc.robot.commands.launcher.SetPivotPos;
 import frc.robot.commands.launcher.Shoot;
@@ -66,13 +63,19 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
+    robotController.back().onTrue(pivot.syncPosition());
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
     // robotController
     //     .rightBumper()
     //     .toggleOnTrue(new Shoot(shooter, index, 0.82, 0.67).alongWith(new SetPivotPos(pivot,
     // 24.51)));
 
-    robotController.rightBumper().toggleOnTrue(new AutoPivotAim(drivetrain, pivot));
+    // robotController
+    //     .rightBumper()
+    //     .toggleOnTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
+    // robotController.rightBumper().toggleOnTrue(new AutoPivotAim(drivetrain, pivot));
+    // robotController.rightBumper().toggleOnTrue(new Shoot(shooter, index, 0.82, 0.67));
+    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, index, 5000, 3000));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
     // 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
@@ -95,42 +98,38 @@ public class RobotContainer {
 
     // run index
 
-<<<<<<< Updated upstream
-    robotController
-        .leftTrigger()
-        .whileTrue(
-            new ConditionalCommand(
-                new Shoot(shooter, index, 0.82, 0.67)
-                    .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)),
-                new Shoot(shooter, index, 0, 1000),
-                () -> ShooterConstants.IS_AMP));
-=======
-    robotController.leftTrigger().onTrue(new InstantCommand(() -> {
-      if(ShooterConstants.IS_AMP){
-        CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0.82, 0.67)
-                  .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)));
-        
-      } else{
-        CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0.82, 0.67));
-      }
-    }));
->>>>>>> Stashed changes
+    robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
+    // robotController
+    //     .leftTrigger()
+    //     .onTrue(
+    //         new InstantCommand(
+    //             () -> {
+    //               if (ShooterConstants.IS_AMP) {
+    //                 CommandScheduler.getInstance()
+    //                     .schedule(
+    //                         new Shoot(shooter, index, 0.82, 0.67)
+    //                             .andThen(new RunIndex(index, IndexConstants.INDEX_PCT)));
 
-    robotController
-        .leftTrigger()
-        .whileFalse(
-            new ConditionalCommand(
-                new RunIndex(index, IndexConstants.INDEX_PCT),
-                null,
-                () -> !ShooterConstants.IS_AMP));
+    //               } else {
+    //                 CommandScheduler.getInstance().schedule(new Shoot(shooter, index, 0.82,
+    // 0.67));
+    //               }
+    //             }));
+
+    // robotController
+    //     .leftTrigger()
+    //     .whileFalse(
+    //         new ConditionalCommand(
+    //             new RunIndex(index, IndexConstants.INDEX_PCT),
+    //             Commands.none(),
+    //             () -> !ShooterConstants.IS_AMP));
 
     // run intake
-    robotController
-        .rightTrigger()
-        .whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
 
     // run outtake
-    //robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT, index::beamBroken));
+    // robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT,
+    // index::beamBroken));
     robotController.povDown().whileTrue(new RunIndex(index, -0.175));
 
     robotController.povUp().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
@@ -138,13 +137,7 @@ public class RobotContainer {
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
-<<<<<<< Updated upstream
-        .whileFalse(
-            new RunIndex(index, IndexConstants.INDEX_PCT)
-                .alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET * PIVOT_GEAR_RATIO)))
-=======
         .whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT))
->>>>>>> Stashed changes
         .onFalse(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
@@ -253,11 +246,9 @@ public class RobotContainer {
         "ShootSpeaker", new Shoot(shooter, index, SPK_LEFT_SPEED, SPK_RIGHT_SPEED));
     NamedCommands.registerCommand(
         "ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
+    NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
     NamedCommands.registerCommand(
-        "RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
-    NamedCommands.registerCommand(
-        "AimAtTarget",
-        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, StageAlignment.runTime));
+        "AimAtTarget", new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     NamedCommands.registerCommand(
         "getAutoStartingPos",
         Commands.runOnce(

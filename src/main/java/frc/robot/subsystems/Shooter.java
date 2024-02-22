@@ -1,7 +1,16 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kD;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kFF;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kI;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_BOTTOM_ID;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_TOP_ID;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kD;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kFF;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kI;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kP;
+import static frc.robot.Constants.diagnosticsTab;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkFlex;
@@ -10,6 +19,7 @@ import com.revrobotics.SparkPIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 // Rev motor PID example:
 // https://github.com/REVrobotics/SPARK-MAX-Examples/blob/master/Java/Velocity%20Closed%20Loop%20Control/src/main/java/frc/robot/Robot.java
@@ -27,7 +37,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 public class Shooter extends SubsystemBase {
 
-  private NetworkTable tuningTable = NetworkTableInstance.getDefault().getTable("flywheelTuning");
+  private NetworkTable tuningTable =
+      NetworkTableInstance.getDefault().getTable("Shooter PID Tuning");
 
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
@@ -43,28 +54,27 @@ public class Shooter extends SubsystemBase {
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();
-    // leftController.setP(0.00006);
-    leftController.setP(0);
-    leftController.setI(0.0);
-    leftController.setD(0.0);
-    leftController.setFF(0.000015);
+    leftController.setP(SHOOTER_LEFT_kP);
+    leftController.setI(SHOOTER_LEFT_kI);
+    leftController.setD(SHOOTER_LEFT_kD);
+    leftController.setFF(SHOOTER_LEFT_kFF);
     leftController.setIZone(0);
-    leftController.setOutputRange(0, 1);
+    leftController.setOutputRange(0, ShooterConstants.SHOOTER_MAX_RPM);
     leftMotor.setInverted(true);
 
     // // Set PID for right motor
     rightController = rightMotor.getPIDController();
-    rightController.setP(0);
-    // rightController.setP(0.00006);
-    rightController.setI(0);
-    rightController.setD(0);
-    // rightController.setFF(0);
-    rightController.setFF(0.000015);
+    rightController.setP(SHOOTER_RIGHT_kP);
+    rightController.setI(SHOOTER_RIGHT_kI);
+    rightController.setD(SHOOTER_RIGHT_kD);
+    rightController.setFF(SHOOTER_RIGHT_kFF);
     rightController.setIZone(0);
-    rightController.setOutputRange(0, 1);
+    rightController.setOutputRange(0, ShooterConstants.SHOOTER_MAX_RPM);
 
     leftMotor.burnFlash();
     rightMotor.burnFlash();
+    diagnosticsTab.addNumber("Shooter Vel Left", () -> leftMotor.getEncoder().getVelocity());
+    diagnosticsTab.addNumber("Shooter Vel Right", () -> rightMotor.getEncoder().getVelocity());
   }
 
   // method that sets the rpm of the right motor
@@ -81,18 +91,17 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * Runs the shooter motors using duty cycle percentages.
+   * Runs the shooter motors using RPM and PID control.
    *
-   * @param leftPct the percentage to set the left shooter to
-   * @param rightPct the percentage to set the right shooter to
+   * @param leftRPM the RPM to set the left shooter to
+   * @param rightRPM the RPM to set the right shooter to
    */
-  public void shoot(double leftPct, double rightPct) {
-    leftMotor.setSmartCurrentLimit(60, 5500);
-    rightMotor.setSmartCurrentLimit(60, 5500);
-    rightMotor.set(rightPct);
-    leftMotor.set(leftPct);
-    // System.out.println(rightMotor.getEncoder().getVelocity() + " " +
-    // leftMotor.getEncoder().getVelocity());
+  public void shoot(double leftRPM, double rightRPM) {
+    leftMotor.setSmartCurrentLimit(50, 5500);
+    rightMotor.setSmartCurrentLimit(50, 5500);
+    setVelocities(leftRPM, rightRPM);
+    System.out.println(
+        rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
   // returns whether both shooters have reached the target speed
@@ -100,7 +109,7 @@ public class Shooter extends SubsystemBase {
     return true;
   }
 
-  public void setVelocities(double leftRPM, double rightRPM) {
+  private void setVelocities(double leftRPM, double rightRPM) {
     leftController.setReference(leftRPM, ControlType.kVelocity);
     rightController.setReference(rightRPM, ControlType.kVelocity);
   }
