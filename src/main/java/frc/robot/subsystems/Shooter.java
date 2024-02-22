@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.ShooterConstants.SHOOTER_FREE_SPEED_LIMIT;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kD;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kFF;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kI;
@@ -10,6 +11,7 @@ import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kD;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kFF;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kI;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kP;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_STALL_LIMIT_CURRENT;
 import static frc.robot.Constants.diagnosticsTab;
 
 import com.revrobotics.CANSparkBase.ControlType;
@@ -43,9 +45,6 @@ public class Shooter extends SubsystemBase {
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
 
-  // the setpoint (rpm) of the right motor
-  private double rSetpoint = 0;
-
   public Shooter() {
     leftMotor = new CANSparkFlex(SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
     rightMotor = new CANSparkFlex(SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
@@ -75,31 +74,48 @@ public class Shooter extends SubsystemBase {
     rightMotor.burnFlash();
     diagnosticsTab.addNumber("Shooter Vel Left", () -> leftMotor.getEncoder().getVelocity());
     diagnosticsTab.addNumber("Shooter Vel Right", () -> rightMotor.getEncoder().getVelocity());
+
+    tuningTable.getDoubleTopic("lSetpoint").publish();
+    tuningTable.getDoubleTopic("lkP").publish();
+    tuningTable.getDoubleTopic("lkI").publish();
+    tuningTable.getDoubleTopic("lkD").publish();
+    tuningTable.getDoubleTopic("lkFF").publish();
+
+    tuningTable.getDoubleTopic("rSetpoint").publish();
+    tuningTable.getDoubleTopic("rkP").publish();
+    tuningTable.getDoubleTopic("rkI").publish();
+    tuningTable.getDoubleTopic("rkD").publish();
+    tuningTable.getDoubleTopic("rkFF").publish();
   }
 
-  // method that sets the rpm of the right motor
-  public void shootRightRPM(double rpm) {
-    rSetpoint = rpm;
-    rightController.setReference(rpm, ControlType.kVelocity);
-  }
-
-  // updates the reference and the output in NT for PID tuning
-  // (drag&drop these entries into an AdvantageScope graph)
+  // we can use this to tune the PID constants quickly
   public void periodic() {
-    tuningTable.getEntry("setpoint").setDouble(rSetpoint);
-    tuningTable.getEntry("output").setDouble(rightMotor.getEncoder().getVelocity());
+    rightController.setP(tuningTable.getEntry("rkP").getDouble(SHOOTER_RIGHT_kP));
+    rightController.setI(tuningTable.getEntry("rkI").getDouble(SHOOTER_RIGHT_kI));
+    rightController.setD(tuningTable.getEntry("rkD").getDouble(SHOOTER_RIGHT_kD));
+    rightController.setFF(tuningTable.getEntry("rkFF").getDouble(SHOOTER_RIGHT_kFF));
+
+    leftController.setP(tuningTable.getEntry("lkP").getDouble(SHOOTER_LEFT_kP));
+    leftController.setI(tuningTable.getEntry("lkI").getDouble(SHOOTER_LEFT_kI));
+    leftController.setD(tuningTable.getEntry("lkD").getDouble(SHOOTER_LEFT_kD));
+    leftController.setFF(tuningTable.getEntry("lkFF").getDouble(SHOOTER_LEFT_kFF));
   }
 
   /**
-   * Runs the shooter motors using RPM and PID control.
+   * Runs the shooter motors using velocity PID control.
    *
    * @param leftRPM the RPM to set the left shooter to
    * @param rightRPM the RPM to set the right shooter to
    */
   public void shoot(double leftRPM, double rightRPM) {
-    leftMotor.setSmartCurrentLimit(50, 5500);
-    rightMotor.setSmartCurrentLimit(50, 5500);
-    setVelocities(leftRPM, rightRPM);
+    tuningTable.getEntry("lSetpoint").setDouble(leftRPM);
+    tuningTable.getEntry("rSetpoint").setDouble(rightRPM);
+
+    leftMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
+    rightMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
+    leftController.setReference(leftRPM, ControlType.kVelocity);
+    rightController.setReference(rightRPM, ControlType.kVelocity);
+
     System.out.println(
         rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
@@ -107,10 +123,5 @@ public class Shooter extends SubsystemBase {
   // returns whether both shooters have reached the target speed
   public boolean reachedSpeeds() {
     return true;
-  }
-
-  private void setVelocities(double leftRPM, double rightRPM) {
-    leftController.setReference(leftRPM, ControlType.kVelocity);
-    rightController.setReference(rightRPM, ControlType.kVelocity);
   }
 }

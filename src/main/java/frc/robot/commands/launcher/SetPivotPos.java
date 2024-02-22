@@ -23,6 +23,6 @@ public class SetPivotPos extends Command {
     // } else {
     //   mPivot.setAngle(PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO);
     // }
-    mPivot.setAngle(angle);
+    mPivot.setPivotAngle(angle);
   }
 }

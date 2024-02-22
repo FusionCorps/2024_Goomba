@@ -243,9 +243,15 @@ public class Constants {
     public static final double PIVOT_OFFSET = 0.307506;
     public static final double PIVOT_STOW = 5.5346679;
 
+    public static final double PIVOT_kV = 0;
     public static final double PIVOT_kP = 6;
     public static final double PIVOT_kD = 0.01;
     public static final double PIVOT_kI = 0;
+
+    // motion magic constraints
+    public static final double PIVOT_CRUISE_VELOCITY = 1000;
+    public static final double PIVOT_ACCELERATION = 400;
+    public static final double PIVOT_JERK = 3000;
 
     // intake position of the pivot !!!!(UNTUNED)!!!!
     public static final double PIVOT_INTAKE_POS = 30 / 360 * PIVOT_GEAR_RATIO;
@@ -292,6 +298,9 @@ public class Constants {
     public static final double SHOOTER_RIGHT_kI = 0.0;
     public static final double SHOOTER_RIGHT_kD = 0.001; // increase
     public static final double SHOOTER_RIGHT_kFF = 0.000226;
+
+    public static final int SHOOTER_STALL_LIMIT_CURRENT = 50; // in amps
+    public static final int SHOOTER_FREE_SPEED_LIMIT = 5500; // in RPM
   }
 
   public static class LimelightConstants {

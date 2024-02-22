@@ -53,7 +53,7 @@ public class ShootOnMove extends Command {
   public void execute() {
     Pose3d aprilTagPose = mDrivetrain.getCamera().getPrimaryAprilTagPose();
 
-    mPivot.setAngle(PIVOT_ANGLES_MAP.get(aprilTagPose.getZ()));
+    mPivot.setPivotAngle(PIVOT_ANGLES_MAP.get(aprilTagPose.getZ()));
 
     double zVelocity = ShooterSpeed * Math.cos(mPivot.getPivotAngle());
 

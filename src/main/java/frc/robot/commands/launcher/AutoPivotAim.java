@@ -22,7 +22,7 @@ public class AutoPivotAim extends Command {
   public void execute() {
     if (mDrivetrain.getCamera().hasTarget()) {
       distanceToAprilTag = mDrivetrain.getCamera().getPrimaryAprilTagPose().getZ();
-      mPivot.setAngle(PIVOT_ANGLES_MAP.get(distanceToAprilTag));
+      mPivot.setPivotAngle(PIVOT_ANGLES_MAP.get(distanceToAprilTag));
       System.out.println(
           PIVOT_ANGLES_MAP.get(distanceToAprilTag)
               + ", "
