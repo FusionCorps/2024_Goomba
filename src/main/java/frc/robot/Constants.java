@@ -229,19 +229,25 @@ public class Constants {
   }
 
   public static class PivotConstants {
-
+    // public static final double PIVOT_GEAR_RATIO =
+    //     (4.0)
+    //         * (50.0 / 24.0)
+    //         * (60.0 / 16.0)
+    //         * (66.0 / 9.0); // multiply ratios of two gearboxes and then small gear turning big
+    // gear
     public static final double PIVOT_GEAR_RATIO =
-        (4) * (52 / 24) * (60 / 16)
-            * (66 / 9); // multiply ratios of two gearboxes and then small gear turning big gear
+        231.0; // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
-    public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
+    // public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
+    public static final double PIVOT_ERROR_THRESHOLD = 0.2;
 
     public static final int PIVOT_MOTOR_ID = 1;
     public static final int PIVOT_FOLLOWER_MOTOR_ID = 5;
 
     public static final double PIVOT_OFFSET = 0.307506;
-    public static final double PIVOT_STOW = 5.5346679;
+
+    public static final double PIVOT_STOW_POS = PIVOT_OFFSET * PIVOT_GEAR_RATIO;
 
     public static final double PIVOT_kV = 0;
     public static final double PIVOT_kP = 6;
@@ -251,7 +257,7 @@ public class Constants {
     // motion magic constraints
     public static final double PIVOT_CRUISE_VELOCITY = 1000;
     public static final double PIVOT_ACCELERATION = 400;
-    public static final double PIVOT_JERK = 3000;
+    public static final double PIVOT_JERK = 4000;
 
     // intake position of the pivot !!!!(UNTUNED)!!!!
     public static final double PIVOT_INTAKE_POS = 30 / 360 * PIVOT_GEAR_RATIO;
@@ -262,12 +268,15 @@ public class Constants {
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
     public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
 
-    // maps Z distances to april tag (meters) with pivot angles (degrees)
+    // maps Z distances to april tag (meters) with pivot angles (rotations)
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
         new InterpolatingDoubleTreeMap();
 
-    { // TODO: tune data point as needed
-      PIVOT_ANGLES_MAP.put(0.0, 0.0);
+    { // TODO: tune data points as needed
+      PIVOT_ANGLES_MAP.put(1.87, 66.22);
+      PIVOT_ANGLES_MAP.put(2.27, 69.23);
+      PIVOT_ANGLES_MAP.put(2.67, PIVOT_STOW_POS);
+      PIVOT_ANGLES_MAP.put(3.37, 72.2);
     }
   }
 

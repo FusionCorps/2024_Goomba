@@ -63,7 +63,7 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    robotController.back().onTrue(pivot.syncPosition());
+    robotController.back().onTrue(Commands.runOnce(() -> pivot.syncPosition(), pivot));
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
     // robotController
     //     .rightBumper()
@@ -144,10 +144,7 @@ public class RobotContainer {
     // robotController.y().onTrue(new ResetPivotAngle(pivot));
 
     // Stow Pivot
-    robotController
-        .a()
-        .onTrue(
-            new SetPivotPos(pivot, PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO));
+    robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
     // disables the robot
     // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 

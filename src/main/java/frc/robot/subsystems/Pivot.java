@@ -9,7 +9,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
@@ -27,7 +26,7 @@ public class Pivot extends SubsystemBase {
   private double targetPos;
 
   private DutyCycleEncoder pivotEncoder; // through bore encoder
-  DoubleSupplier adjustedPivotEncoderAngle;
+  private DoubleSupplier adjustedPivotEncoderAngle;
 
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
@@ -74,7 +73,6 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
-
     if (!motorConfigured
         && pivotEncoder.isConnected()
         && pivotMotor.getPosition().getValueAsDouble() != adjustedPivotEncoderAngle.getAsDouble()) {
@@ -84,21 +82,18 @@ public class Pivot extends SubsystemBase {
       pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
       motorConfigured = true;
     }
-
-    // System.out.println(
-    //     PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO
-    //         + ", "
-    //         + pivotMotor.getPosition().getValueAsDouble()
-    //         + " , "
-    //         + adjustedPivotEncoderAngle.getAsDouble());
+    // SmartDashboard.putNumber(
+    //     "smthn", PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO);
+    // SmartDashboard.putNumber("pivot Motor Pos", pivotMotor.getPosition().getValueAsDouble());
+    // SmartDashboard.putNumber("pivot Encoder Pos", adjustedPivotEncoderAngle.getAsDouble());
+    // SmartDashboard.putNumber("pivot main volt", pivotMotor.getMotorVoltage().getValueAsDouble());
+    // SmartDashboard.putNumber(
+    //     "pivot second volt", pivotFollowerMotor.getMotorVoltage().getValueAsDouble());
   }
 
-  public Command syncPosition() {
-    return runOnce(
-        () -> {
-          pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-          pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-        });
+  public void syncPosition() {
+    pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
+    pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
   }
 
   /**
@@ -110,10 +105,6 @@ public class Pivot extends SubsystemBase {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
-    // System.out.println(pivotMotor.getMotorVoltage() + ", " +
-    // pivotFollowerMotor.getMotorVoltage());
-    // System.out.println(pivotMotor.getPosition() + ", " + pivotEncoder.getAbsolutePosition());
-
   }
 
   /** Zeroes the pivot angle to the current angle. */
@@ -128,9 +119,6 @@ public class Pivot extends SubsystemBase {
    * @param pos the position to set the shooter to, in rotations
    */
   public void setPivotAngle(double pos) {
-    pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-    pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-
     targetPos = pos;
 
     pivotMotor.setControl(positionReq.withPosition(targetPos));
