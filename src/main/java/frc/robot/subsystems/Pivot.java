@@ -109,7 +109,6 @@ public class Pivot extends SubsystemBase {
 
   /**
    * Sets the pivot angle using a duty cycle percentage.
-   *
    * @param pct the percentage to set the shooter to
    */
   public void setPivotPct(double pct) {
@@ -118,7 +117,7 @@ public class Pivot extends SubsystemBase {
     pivotFollowerMotor.set(pct);
   }
 
-  /** Zeroes the pivot angle to the current angle. */
+  /** Zeroes the pivot angle at the current angle. */
   public void resetPivotAngle() {
     pivotMotor.setPosition(0);
     pivotFollowerMotor.setPosition(0);
@@ -152,7 +151,7 @@ public class Pivot extends SubsystemBase {
     // pivotFollowerMotor.getMotorVoltage());
   }
 
-  // whether the pivot has reached the setpoint
+  /** @return true if the pivot is close enough to its target position */
   public boolean reachedAngle() {
     return Math.abs(targetPos - pivotMotor.getPosition().getValue())
         < PivotConstants.PIVOT_ERROR_THRESHOLD;

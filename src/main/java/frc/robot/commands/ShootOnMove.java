@@ -62,7 +62,7 @@ public class ShootOnMove extends Command {
     double skewDistance = timeToWall * mDrivetrain.getState().speeds.vyMetersPerSecond;
 
     if (Math.abs(aprilTagPose.getX() - skewDistance) < tolerance) {
-      mShooter.shoot(0.8, 0.6);
+      mShooter.setRPMs(0.8, 0.6);
     }
 
     mDrivetrain.setControl(req.withVelocityX(0).withVelocityY(-controller.getLeftX()));

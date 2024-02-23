@@ -82,7 +82,7 @@ public class Shooter extends SubsystemBase {
    * @param leftRPM the RPM to set the left shooter to
    * @param rightRPM the RPM to set the right shooter to
    */
-  public void shoot(double leftRPM, double rightRPM) {
+  public void setRPMs(double leftRPM, double rightRPM) {
     tuningTable.getEntry("lSetpoint").setDouble(leftRPM);
     tuningTable.getEntry("rSetpoint").setDouble(rightRPM);
 
@@ -90,9 +90,6 @@ public class Shooter extends SubsystemBase {
     rightMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
     leftController.setReference(leftRPM, ControlType.kVelocity);
     rightController.setReference(rightRPM, ControlType.kVelocity);
-
-    // System.out.println(
-    //     rightMotor.getEncoder().getVelocity() + " " + leftMotor.getEncoder().getVelocity());
   }
 
   // returns whether both shooters have reached the target speed

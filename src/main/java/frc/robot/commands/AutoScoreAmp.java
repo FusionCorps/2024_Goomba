@@ -1,9 +1,11 @@
-package frc.robot.commands.launcher;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.RunIndex;
+import frc.robot.commands.index.RunIndex;
+import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.shooter.Shoot;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;

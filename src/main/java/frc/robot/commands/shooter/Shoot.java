@@ -1,4 +1,4 @@
-package frc.robot.commands.launcher;
+package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ShooterConstants;
@@ -34,7 +34,7 @@ public class Shoot extends Command {
 
   @Override
   public void execute() {
-    mShooter.shoot(lRPM, rRPM);
+    mShooter.setRPMs(lRPM, rRPM);
     // mShooter.shootRightRPM(rRpm);
   }
 
@@ -58,7 +58,7 @@ public class Shoot extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    mShooter.shoot(0, 0);
+    mShooter.setRPMs(0, 0);
 
     // mShooter.shootRightRPM(0);
     ShooterConstants.IS_AMP = false;

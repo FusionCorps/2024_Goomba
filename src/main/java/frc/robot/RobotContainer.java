@@ -26,13 +26,14 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
-import frc.robot.commands.RunIndex;
+import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.launcher.AutoPivotAim;
-import frc.robot.commands.launcher.SetPivotPct;
-import frc.robot.commands.launcher.SetPivotPos;
-import frc.robot.commands.launcher.Shoot;
+import frc.robot.commands.pivot.AutoPivotAim;
+import frc.robot.commands.pivot.SetPivotPct;
+import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.subsystems.*;
@@ -64,7 +65,7 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    robotController.back().onTrue(Commands.runOnce(() -> pivot.syncPosition(), pivot));
+    robotController.back().onTrue(pivot.runOnce(() -> pivot.syncPosition()));
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
     // robotController
     //     .rightBumper()
@@ -79,8 +80,8 @@ public class RobotContainer {
     robotController
         .rightBumper()
         .toggleOnTrue(
-            new Shoot(shooter, index, 5000, 3000)
-                .alongWith(new AutoPivotAim(drivetrain, pivot))
+            new Shoot(shooter, index, ShooterConstants.SPK_LEFT_RPM, ShooterConstants.SPK_RIGHT_RPM)
+                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())).repeatedly()
                 .alongWith(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
@@ -143,8 +144,8 @@ public class RobotContainer {
 
     // while the beam break sensor is not broken, run the index
     new Trigger(index::beamBroken)
-        .whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT))
-        .onFalse(new RunIndex(index, 0));
+        .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
+        .onTrue(new RunIndex(index, 0));
 
     // zero the pivot angle at current angle
     // robotController.y().onTrue(new ResetPivotAngle(pivot));

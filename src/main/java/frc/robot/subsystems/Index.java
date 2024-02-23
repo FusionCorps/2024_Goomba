@@ -34,9 +34,9 @@ public class Index extends SubsystemBase {
   }
 
   /**
-   * @return true if the beam is broken, false if not
+   * @return true when note is loaded, false when no note detected
    */
   public boolean beamBroken() {
-    return beamBreak.get();
+    return !beamBreak.get(); // sensor actually returns true when beam is detected, so inverting it
   }
 }

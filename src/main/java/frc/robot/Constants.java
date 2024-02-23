@@ -282,10 +282,11 @@ public class Constants {
 
     public static final double ShooterSpeed = 28.06308713961776; // in ft/s
 
-    // the speeds of the shooter motors when at the amp/spkr !!!!(UNTUNED)!!!!
-    public static final double SPK_LEFT_SPEED = .1;
-    public static final double SPK_RIGHT_SPEED = .1;
+    // the speeds of the shooter motors when at the amp/spkr
+    public static final double SPK_LEFT_RPM = 5000;
+    public static final double SPK_RIGHT_RPM = 3000;
 
+    //TODO: change these
     public static final double AMP_RIGHT_SPEED = .1;
     public static final double AMP_LEFT_SPEED = .2;
 
