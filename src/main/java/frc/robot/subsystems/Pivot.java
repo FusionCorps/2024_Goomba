@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
+import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
+import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -31,6 +34,12 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
+    PIVOT_ANGLES_MAP.put(1.87, 66.22);
+    PIVOT_ANGLES_MAP.put(2.27, 69.23);
+    PIVOT_ANGLES_MAP.put(2.67, PIVOT_STOW_POS);
+    PIVOT_ANGLES_MAP.put(3.06, 72.02);
+    PIVOT_ANGLES_MAP.put(3.73, 74.07);
+    PIVOT_ANGLES_MAP.put(3.37, 72.2);
     pivotEncoder = new DutyCycleEncoder(0);
     adjustedPivotEncoderAngle =
         () -> pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO;
@@ -69,6 +78,15 @@ public class Pivot extends SubsystemBase {
         .withSize(2, 2)
         .withPosition(4, 0)
         .withWidget(BuiltInWidgets.kDial);
+
+    diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
+    diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
+    diagnosticsTab.addDouble("Pivot Encoder Pos", () -> pivotEncoder.getAbsolutePosition());
+    diagnosticsTab.addDouble(
+        "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
+    diagnosticsTab.addDouble(
+        "Follower Pivot Motor Voltage",
+        () -> pivotFollowerMotor.getMotorVoltage().getValueAsDouble());
   }
 
   @Override
@@ -82,13 +100,6 @@ public class Pivot extends SubsystemBase {
       pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
       motorConfigured = true;
     }
-    // SmartDashboard.putNumber(
-    //     "smthn", PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO);
-    // SmartDashboard.putNumber("pivot Motor Pos", pivotMotor.getPosition().getValueAsDouble());
-    // SmartDashboard.putNumber("pivot Encoder Pos", adjustedPivotEncoderAngle.getAsDouble());
-    // SmartDashboard.putNumber("pivot main volt", pivotMotor.getMotorVoltage().getValueAsDouble());
-    // SmartDashboard.putNumber(
-    //     "pivot second volt", pivotFollowerMotor.getMotorVoltage().getValueAsDouble());
   }
 
   public void syncPosition() {

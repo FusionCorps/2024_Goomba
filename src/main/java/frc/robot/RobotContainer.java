@@ -29,6 +29,7 @@ import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.RunIndex;
 import frc.robot.commands.intake.RunIntake;
+import frc.robot.commands.launcher.AutoPivotAim;
 import frc.robot.commands.launcher.SetPivotPct;
 import frc.robot.commands.launcher.SetPivotPos;
 import frc.robot.commands.launcher.Shoot;
@@ -75,7 +76,12 @@ public class RobotContainer {
     //     .toggleOnTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     // robotController.rightBumper().toggleOnTrue(new AutoPivotAim(drivetrain, pivot));
     // robotController.rightBumper().toggleOnTrue(new Shoot(shooter, index, 0.82, 0.67));
-    robotController.rightBumper().toggleOnTrue(new Shoot(shooter, index, 5000, 3000));
+    robotController
+        .rightBumper()
+        .toggleOnTrue(
+            new Shoot(shooter, index, 5000, 3000)
+                .alongWith(new AutoPivotAim(drivetrain, pivot))
+                .alongWith(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
     // 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
@@ -130,7 +136,7 @@ public class RobotContainer {
     // run outtake
     // robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT,
     // index::beamBroken));
-    robotController.povDown().whileTrue(new RunIndex(index, -0.175));
+    robotController.povDown().whileTrue(new RunIndex(index, -0.15));
 
     robotController.povUp().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
     // robotController.povLeft().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));

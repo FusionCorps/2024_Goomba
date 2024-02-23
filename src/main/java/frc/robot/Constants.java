@@ -23,6 +23,7 @@ public class Constants {
 
   public class AimingPIDS {
 
+    // TODO: tune these better
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
     public static final double toTargetRotKP = 0.3;
     public static final double toTargetRotKI = 0;
@@ -262,7 +263,7 @@ public class Constants {
     // intake position of the pivot !!!!(UNTUNED)!!!!
     public static final double PIVOT_INTAKE_POS = 30 / 360 * PIVOT_GEAR_RATIO;
 
-    public static final double PIVOT_AMP_POS = Units.degreesToRotations(-15);
+    public static final double PIVOT_AMP_POS = 54.43; // empirical testing
 
     public static final double PIVOT_START_POS = Units.degreesToRotations(30);
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
@@ -271,13 +272,6 @@ public class Constants {
     // maps Z distances to april tag (meters) with pivot angles (rotations)
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
         new InterpolatingDoubleTreeMap();
-
-    { // TODO: tune data points as needed
-      PIVOT_ANGLES_MAP.put(1.87, 66.22);
-      PIVOT_ANGLES_MAP.put(2.27, 69.23);
-      PIVOT_ANGLES_MAP.put(2.67, PIVOT_STOW_POS);
-      PIVOT_ANGLES_MAP.put(3.37, 72.2);
-    }
   }
 
   public static class ShooterConstants {

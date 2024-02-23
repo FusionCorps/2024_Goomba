@@ -74,31 +74,6 @@ public class Shooter extends SubsystemBase {
     rightMotor.burnFlash();
     diagnosticsTab.addNumber("Shooter Vel Left", () -> leftMotor.getEncoder().getVelocity());
     diagnosticsTab.addNumber("Shooter Vel Right", () -> rightMotor.getEncoder().getVelocity());
-
-    // tuningTable.getDoubleTopic("lSetpoint").publish();
-    // tuningTable.getDoubleTopic("lkP").publish();
-    // tuningTable.getDoubleTopic("lkI").publish();
-    // tuningTable.getDoubleTopic("lkD").publish();
-    // tuningTable.getDoubleTopic("lkFF").publish();
-
-    // tuningTable.getDoubleTopic("rSetpoint").publish();
-    // tuningTable.getDoubleTopic("rkP").publish();
-    // tuningTable.getDoubleTopic("rkI").publish();
-    // tuningTable.getDoubleTopic("rkD").publish();
-    // tuningTable.getDoubleTopic("rkFF").publish();
-  }
-
-  // we can use this to tune the PID constants quickly
-  public void periodic() {
-    // rightController.setP(tuningTable.getEntry("rkP").getDouble(SHOOTER_RIGHT_kP));
-    // rightController.setI(tuningTable.getEntry("rkI").getDouble(SHOOTER_RIGHT_kI));
-    // rightController.setD(tuningTable.getEntry("rkD").getDouble(SHOOTER_RIGHT_kD));
-    // rightController.setFF(tuningTable.getEntry("rkFF").getDouble(SHOOTER_RIGHT_kFF));
-
-    // leftController.setP(tuningTable.getEntry("lkP").getDouble(SHOOTER_LEFT_kP));
-    // leftController.setI(tuningTable.getEntry("lkI").getDouble(SHOOTER_LEFT_kI));
-    // leftController.setD(tuningTable.getEntry("lkD").getDouble(SHOOTER_LEFT_kD));
-    // leftController.setFF(tuningTable.getEntry("lkFF").getDouble(SHOOTER_LEFT_kFF));
   }
 
   /**
