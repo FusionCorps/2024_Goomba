@@ -8,8 +8,8 @@ import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
-import static frc.robot.Constants.ShooterConstants.SPK_LEFT_SPEED;
-import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_SPEED;
+import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
+import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.allianceLocation;
 import static frc.robot.Constants.driverTab;
 
@@ -247,7 +247,7 @@ public class RobotContainer {
   // method that configures and initializes everything necessary for auton
   private void setupAutoChooser() {
     NamedCommands.registerCommand(
-        "ShootSpeaker", new Shoot(shooter, index, SPK_LEFT_SPEED, SPK_RIGHT_SPEED));
+        "ShootSpeaker", new Shoot(shooter, index, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     NamedCommands.registerCommand(
         "ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
     NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
