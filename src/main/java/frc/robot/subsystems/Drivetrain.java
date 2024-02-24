@@ -36,6 +36,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -48,6 +49,8 @@ import frc.robot.Constants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.LimelightHelpers;
+import frc.robot.commands.swerve.manual.RunSwerveFC;
+import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.RotateToAngle;
 
 /**
@@ -174,6 +177,11 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
     // add diagnostics telemetry to shuffleboard
     diagnosticsTab.add(field2d);
+    SendableChooser<Command> driveMode = new SendableChooser<>();
+    driveMode.addOption("Field-Centric", new RunSwerveFC(this));
+    driveMode.addOption("Robot-Centric", new RunSwerveRC(this));
+    driveMode.onChange((newDriveMode) -> this.setDefaultCommand(newDriveMode));
+    diagnosticsTab.add(driveMode);
 
     diagnosticsTab.addDouble(
         "Odometry Frequency", () -> truncPlaces(odometryFrequency.get(0.0), 2));

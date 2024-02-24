@@ -25,7 +25,7 @@ public class Constants {
 
     // TODO: tune these better
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-    public static final double toTargetRotKP = 0.3;
+    public static final double toTargetRotKP = 0.5;
     public static final double toTargetRotKI = 0;
     public static final double toTargetRotKD = 0.001;
 
@@ -226,7 +226,7 @@ public class Constants {
   public static class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 6;
 
-    public static final double INTAKE_RUN_PCT = 0.85;
+    public static final double INTAKE_RUN_PCT = 0.50;
   }
 
   public static class PivotConstants {
@@ -286,7 +286,7 @@ public class Constants {
     public static final double SPK_LEFT_RPM = 5000;
     public static final double SPK_RIGHT_RPM = 3000;
 
-    //TODO: change these
+    // TODO: change these
     public static final double AMP_RIGHT_SPEED = .1;
     public static final double AMP_LEFT_SPEED = .2;
 

@@ -34,7 +34,6 @@ import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.commands.shooter.Shoot;
-import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.subsystems.*;
 
@@ -53,7 +52,10 @@ public class RobotContainer {
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
     // run field centric swerve drive
-    drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+    // drivetrain.setDefaultCommand(
+    //     DRIVE_MODE_CURRENT == DRIVE_MODE.FIELD_CENTRIC
+    //         ? new RunSwerveFC(drivetrain)
+    //         : new RunSwerveRC(drivetrain));
 
     // reset odometry to current position, and zero gyro yaw
     robotController
@@ -81,8 +83,8 @@ public class RobotContainer {
         .rightBumper()
         .toggleOnTrue(
             new Shoot(shooter, index, ShooterConstants.SPK_LEFT_RPM, ShooterConstants.SPK_RIGHT_RPM)
-                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())).repeatedly()
-                .alongWith(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)));
+            .alongWith(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+            .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()).repeatedly())));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
     // 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
@@ -250,7 +252,8 @@ public class RobotContainer {
         "ShootSpeaker", new Shoot(shooter, index, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     NamedCommands.registerCommand(
         "ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
-    NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
+    // NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
+    NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
     NamedCommands.registerCommand(
         "AimAtTarget", new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     NamedCommands.registerCommand(
