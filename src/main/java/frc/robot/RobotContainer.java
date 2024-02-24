@@ -51,6 +51,11 @@ public class RobotContainer {
 
   /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
+
+    // Run Index default
+
+    index.setDefaultCommand(new RunIndex(index, INDEX_PCT));
+
     // run field centric swerve drive
     // drivetrain.setDefaultCommand(
     //     DRIVE_MODE_CURRENT == DRIVE_MODE.FIELD_CENTRIC
@@ -134,12 +139,12 @@ public class RobotContainer {
     //             () -> !ShooterConstants.IS_AMP));
 
     // run intake
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
+    robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT). alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)));
 
     // run outtake
     // robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT,
     // index::beamBroken));
-    robotController.povDown().whileTrue(new RunIndex(index, -0.15));
+    robotController.povDown().whileTrue(new RunIndex(index, -0.15). alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
 
     robotController.povUp().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
     // robotController.povLeft().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
