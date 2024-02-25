@@ -178,10 +178,10 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     // add diagnostics telemetry to shuffleboard
     diagnosticsTab.add(field2d);
     SendableChooser<Command> driveMode = new SendableChooser<>();
-    driveMode.addOption("Field-Centric", new RunSwerveFC(this));
+    driveMode.setDefaultOption("Field-Centric", new RunSwerveFC(this));
     driveMode.addOption("Robot-Centric", new RunSwerveRC(this));
     driveMode.onChange((newDriveMode) -> this.setDefaultCommand(newDriveMode));
-    diagnosticsTab.add(driveMode);
+    diagnosticsTab.add("Drive Mode Chooser", driveMode);
 
     diagnosticsTab.addDouble(
         "Odometry Frequency", () -> truncPlaces(odometryFrequency.get(0.0), 2));
