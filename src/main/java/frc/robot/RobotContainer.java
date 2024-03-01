@@ -4,10 +4,9 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
-import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
-import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.allianceLocation;
@@ -31,9 +30,11 @@ import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
-import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.swerve.manual.RunSwerveFC;
+import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.subsystems.*;
 
@@ -53,14 +54,12 @@ public class RobotContainer {
   private void configureBindings() {
 
     // Run Index default
-
-    index.setDefaultCommand(new RunIndex(index, INDEX_PCT));
+    // index.setDefaultCommand(new RunIndex(index, INDEX_PCT));
 
     // run field centric swerve drive
-    // drivetrain.setDefaultCommand(
-    //     DRIVE_MODE_CURRENT == DRIVE_MODE.FIELD_CENTRIC
-    //         ? new RunSwerveFC(drivetrain)
-    //         : new RunSwerveRC(drivetrain));
+    drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+
+    robotController.x().whileTrue(new RunSwerveRC(drivetrain, 0.05 * MaxSpeed, 0, 0));
 
     // reset odometry to current position, and zero gyro yaw
     robotController
@@ -72,7 +71,7 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    robotController.back().onTrue(pivot.runOnce(() -> pivot.syncPosition()));
+    // robotController.back().onTrue(pivot.runOnce(() -> pivot.syncPosition()));
     // aim at speaker and shoot at speaker (TODO: add aiming at target)
     // robotController
     //     .rightBumper()
@@ -87,9 +86,10 @@ public class RobotContainer {
     robotController
         .rightBumper()
         .toggleOnTrue(
-            new Shoot(shooter, index, ShooterConstants.SPK_LEFT_RPM, ShooterConstants.SPK_RIGHT_RPM)
-            .alongWith(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-            .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()).repeatedly())));
+            new RevShooter(shooter, ShooterConstants.SPK_LEFT_RPM, ShooterConstants.SPK_RIGHT_RPM)
+                .alongWith(
+                    new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+                        .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()).repeatedly())));
     robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
     // 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
@@ -139,14 +139,20 @@ public class RobotContainer {
     //             () -> !ShooterConstants.IS_AMP));
 
     // run intake
-    robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT). alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)));
+    robotController
+        .rightTrigger()
+        .whileTrue(
+            new RunIntake(intake, INTAKE_RUN_PCT)
+                .alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)));
 
     // run outtake
     // robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT,
     // index::beamBroken));
-    robotController.povDown().whileTrue(new RunIndex(index, -0.15). alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
+    // robotController
+    //     .povDown()
+    //     .whileTrue(new RunIndex(index, -0.15).alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
 
-    robotController.povUp().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
+    // robotController.povUp().whileTrue(new RunIndex(index, IndexConstants.INDEX_PCT));
     // robotController.povLeft().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT));
 
     // while the beam break sensor is not broken, run the index
@@ -157,14 +163,15 @@ public class RobotContainer {
     // zero the pivot angle at current angle
     // robotController.y().onTrue(new ResetPivotAngle(pivot));
 
+    robotController.x().whileTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     // Stow Pivot
     robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
     // disables the robot
     // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
     // move shooter up or down
-    robotController.povRight().whileTrue(new SetPivotPct(pivot, .5));
-    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.5));
+    // robotController.povRight().whileTrue(new SetPivotPct(pivot, .5));
+    // robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.5));
 
     // Move climb to upright position
     // robotController.povUp().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_CLIMB_UP_POS));
@@ -254,13 +261,14 @@ public class RobotContainer {
   // method that configures and initializes everything necessary for auton
   private void setupAutoChooser() {
     NamedCommands.registerCommand(
-        "ShootSpeaker", new Shoot(shooter, index, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+        "RevShooter", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+    NamedCommands.registerCommand("ShootSpeaker", new Shoot(shooter, index));
+    NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, index)); // TODO: fix
+    NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
     NamedCommands.registerCommand(
-        "ShootAmp", new Shoot(shooter, index, AMP_LEFT_SPEED, AMP_RIGHT_SPEED));
-    // NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
-    NamedCommands.registerCommand("RunIntake", Commands.print("RunIntake"));
-    NamedCommands.registerCommand(
-        "AimAtTarget", new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
+        "AimAtTarget",
+        // new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+        new AutoPivotAim(pivot, drivetrain.getCamera()).withTimeout(2.0));
     NamedCommands.registerCommand(
         "getAutoStartingPos",
         Commands.runOnce(

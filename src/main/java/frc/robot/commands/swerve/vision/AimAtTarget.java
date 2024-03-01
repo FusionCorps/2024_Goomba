@@ -3,6 +3,7 @@ package frc.robot.commands.swerve.vision;
 import static frc.robot.Constants.DrivetrainConstants.MaxAngularRate;
 import static frc.robot.Constants.LimelightConstants.LIMELIGHT_TX_RANGE_DEG;
 
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -21,6 +22,7 @@ public class AimAtTarget extends Command {
   private PIDController pid =
       new PIDController(
           AimingPIDS.toTargetRotKP, AimingPIDS.toTargetRotKI, AimingPIDS.toTargetRotKD);
+
   PIDWidget pidTuner =
       new PIDWidget(
           AimingPIDS.toTargetRotKP,
@@ -46,6 +48,7 @@ public class AimAtTarget extends Command {
       // get pid output of normalized tx (-1 to 1) and scale by max angular rate
       SwerveRequest req =
           new SwerveRequest.FieldCentric()
+              .withDriveRequestType(DriveRequestType.Velocity)
               .withVelocityX(-mController.getLeftY())
               .withVelocityY(-mController.getLeftX())
               .withDeadband(DrivetrainConstants.DriveDeadband)

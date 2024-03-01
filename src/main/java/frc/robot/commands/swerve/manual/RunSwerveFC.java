@@ -2,6 +2,8 @@ package frc.robot.commands.swerve.manual;
 
 import static frc.robot.Constants.DrivetrainConstants.DriveDeadband;
 
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -47,6 +49,8 @@ public class RunSwerveFC extends Command {
 
     SwerveRequest request =
         new SwerveRequest.FieldCentric()
+            .withDriveRequestType(DriveRequestType.Velocity)
+            .withSteerRequestType(SteerRequestType.MotionMagic)
             .withDeadband(DriveDeadband)
             .withVelocityX(velX)
             .withVelocityY(velY)

@@ -44,6 +44,7 @@ public class Shooter extends SubsystemBase {
 
   private CANSparkFlex leftMotor, rightMotor;
   private SparkPIDController leftController, rightController;
+  double leftRPM, rightRPM;
 
   public Shooter() {
     leftMotor = new CANSparkFlex(SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
@@ -70,6 +71,9 @@ public class Shooter extends SubsystemBase {
     rightController.setIZone(0);
     rightController.setOutputRange(0, ShooterConstants.SHOOTER_MAX_RPM);
 
+    leftMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
+    rightMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
+
     leftMotor.burnFlash();
     rightMotor.burnFlash();
     diagnosticsTab.addNumber("Shooter Vel Left", () -> leftMotor.getEncoder().getVelocity());
@@ -82,18 +86,20 @@ public class Shooter extends SubsystemBase {
    * @param leftRPM the RPM to set the left shooter to
    * @param rightRPM the RPM to set the right shooter to
    */
-  public void setRPMs(double leftRPM, double rightRPM) {
+  public void setRPMs(double inleftRPM, double inrightRPM) {
+    leftRPM = inleftRPM;
+    rightRPM = inrightRPM;
+
     tuningTable.getEntry("lSetpoint").setDouble(leftRPM);
     tuningTable.getEntry("rSetpoint").setDouble(rightRPM);
 
-    leftMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
-    rightMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
     leftController.setReference(leftRPM, ControlType.kVelocity);
     rightController.setReference(rightRPM, ControlType.kVelocity);
   }
 
   // returns whether both shooters have reached the target speed
   public boolean reachedSpeeds() {
-    return true;
+    return Math.abs(leftMotor.getEncoder().getVelocity() - leftRPM) < 50.0
+        && Math.abs(rightMotor.getEncoder().getVelocity() - rightRPM) < 50.0;
   }
 }

@@ -70,8 +70,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       new SysIdRoutine(
           new SysIdRoutine.Config(
               null,
-              Units.Volts.of(4),
-              null,
+              Units.Volts.of(3),
+              Units.Seconds.of(5),
               (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
               (volts) -> this.setControl(sysIdTransReq.withVolts(volts)), null, this));
@@ -80,8 +80,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       new SysIdRoutine(
           new SysIdRoutine.Config(
               null,
-              Units.Volts.of(4),
-              null,
+              Units.Volts.of(3),
+              Units.Seconds.of(5),
               (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
               (volts) -> this.setControl(sysIdSteerReq.withVolts(volts)), null, this));
@@ -90,8 +90,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       new SysIdRoutine(
           new SysIdRoutine.Config(
               null,
-              Units.Volts.of(4),
-              null,
+              Units.Volts.of(3),
+              Units.Seconds.of(5),
               (state) -> SignalLogger.writeString("state", state.toString())),
           new SysIdRoutine.Mechanism(
               (volts) -> this.setControl(sysIdRotReq.withVolts(volts)), null, this));
@@ -188,7 +188,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     diagnosticsTab.addDouble("Robot Speed", () -> truncPlaces(robotSpeed.get(0.0), 2));
     diagnosticsTab.addDouble("Robot Velocity X", () -> truncPlaces(robotVelocityX.get(0.0), 2));
     diagnosticsTab.addDouble("Robot Velocity Y", () -> truncPlaces(robotVelocityY.get(0.0), 2));
-
+    diagnosticsTab.addDouble("Yaw", () -> m_yawGetter.getValueAsDouble());
     registerTelemetry(this::telemeterize);
   }
 
@@ -229,8 +229,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         this::getRobotRelativeSpeeds,
         this::driveRobotRelative,
         new HolonomicPathFollowerConfig(
-            DrivetrainConstants.AUTO_TRANS_PID,
-            DrivetrainConstants.AUTO_ROT_PID,
+            DrivetrainConstants.AUTO_DRIVE_PID,
+            DrivetrainConstants.AUTO_STEER_PID,
             DrivetrainConstants.MaxSpeed,
             DrivetrainConstants.DRIVEBASE_RADIUS,
             new ReplanningConfig()),
@@ -367,7 +367,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         });
   }
 
-  private SysIdRoutine sysIdRoutineToApply = sysIdTransRoutine;
+  private SysIdRoutine sysIdRoutineToApply = sysIdRotRoutine;
 
   public Command sysIDDynamic(Direction direction) {
     return sysIdRoutineToApply.dynamic(direction);

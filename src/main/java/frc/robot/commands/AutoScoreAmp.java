@@ -1,46 +1,46 @@
-package frc.robot.commands;
+// package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.Constants.IndexConstants;
-import frc.robot.Constants.ShooterConstants;
-import frc.robot.commands.index.RunIndex;
-import frc.robot.commands.pivot.SetPivotPos;
-import frc.robot.commands.shooter.Shoot;
-import frc.robot.subsystems.Index;
-import frc.robot.subsystems.Pivot;
-import frc.robot.subsystems.Shooter;
+// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+// import frc.robot.Constants.IndexConstants;
+// import frc.robot.Constants.ShooterConstants;
+// import frc.robot.commands.index.RunIndex;
+// import frc.robot.commands.pivot.SetPivotPos;
+// import frc.robot.commands.shooter.Shoot;
+// import frc.robot.subsystems.Index;
+// import frc.robot.subsystems.Pivot;
+// import frc.robot.subsystems.Shooter;
 
-/* Command that runs automatically when robot gets close enough to amp
- * Specifically, it:
- *  1) Moves pivot to amp position and runs shooter to target velocity
- *  2) After both of those targets are achieved, index note to shooter for a few seconds
- */
-public class AutoScoreAmp extends SequentialCommandGroup {
+// /* Command that runs automatically when robot gets close enough to amp
+//  * Specifically, it:
+//  *  1) Moves pivot to amp position and runs shooter to target velocity
+//  *  2) After both of those targets are achieved, index note to shooter for a few seconds
+//  */
+// public class AutoScoreAmp extends SequentialCommandGroup {
 
-  Shooter mShooter;
-  Pivot mPivot;
-  Index mIndex;
+//   Shooter mShooter;
+//   Pivot mPivot;
+//   Index mIndex;
 
-  public AutoScoreAmp(Shooter shooter, Pivot pivot, Index index) {
+//   public AutoScoreAmp(Shooter shooter, Pivot pivot, Index index) {
 
-    mShooter = shooter;
-    mPivot = pivot;
-    mIndex = index;
+//     mShooter = shooter;
+//     mPivot = pivot;
+//     mIndex = index;
 
-    addRequirements(mShooter);
-    addRequirements(mPivot);
-    addRequirements(mIndex);
+//     addRequirements(mShooter);
+//     addRequirements(mPivot);
+//     addRequirements(mIndex);
 
-    addCommands(
-        new SetPivotPos(pivot, 0)
-            .alongWith(
-                new Shoot(
-                    mShooter,
-                    mIndex,
-                    ShooterConstants.AMP_LEFT_SPEED,
-                    ShooterConstants.AMP_RIGHT_SPEED))
-            .until(() -> mShooter.reachedSpeeds() && mPivot.reachedAngle())
-            .andThen(new RunIndex(mIndex, IndexConstants.INDEX_PCT))
-            .withTimeout(4));
-  }
-}
+//     addCommands(
+//         new SetPivotPos(pivot, 0)
+//             .alongWith(
+//                 new Shoot(
+//                     mShooter,
+//                     mIndex,
+//                     ShooterConstants.AMP_LEFT_SPEED,
+//                     ShooterConstants.AMP_RIGHT_SPEED))
+//             .until(() -> mShooter.reachedSpeeds() && mPivot.reachedAngle())
+//             .andThen(new RunIndex(mIndex, IndexConstants.INDEX_PCT))
+//             .withTimeout(4));
+//   }
+// }
