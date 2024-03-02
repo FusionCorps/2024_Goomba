@@ -17,6 +17,7 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
@@ -110,7 +111,10 @@ public class RobotContainer {
 
     // run index
 
-    robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
+    //robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
+
+    robotController.leftTrigger().whileTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+    robotController.leftTrigger().onFalse(new RunIndex(index, INTAKE_RUN_PCT).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
     // robotController
     //     .leftTrigger()
     //     .onTrue(

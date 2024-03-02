@@ -151,7 +151,7 @@ public class Constants {
 
     // Back Left
     private static final int kBackLeftDriveMotorId = 16;
-    private static final int kBackLeftSteerMotorId = 2;
+    private static final int kBackLeftSteerMotorId = 17;
     private static final int kBackLeftEncoderId = 18;
     private static final double kBackLeftEncoderOffset = 0.45263671875;
 
@@ -282,6 +282,8 @@ public class Constants {
   public static class ShooterConstants {
     public static final int SHOOTER_MOTOR_TOP_ID = 2;
     public static final int SHOOTER_MOTOR_BOTTOM_ID = 3;
+
+    public static boolean IS_SHOOTING_RIGHT = false;
 
     public static boolean IS_AMP = false;
 
