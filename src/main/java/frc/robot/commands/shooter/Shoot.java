@@ -81,11 +81,6 @@ public class Shoot extends Command {
   }
 
   @Override
-  public void initialize() {
-    System.out.println("1");
-  }
-
-  @Override
   public void execute() {
     if (mIndex.beamBroken() && mShooter.reachedSpeeds()) {
       mIndex.runIndex(INDEX_PCT);

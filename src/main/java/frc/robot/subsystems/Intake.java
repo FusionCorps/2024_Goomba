@@ -17,6 +17,7 @@ public class Intake extends SubsystemBase {
 
   /**
    * Runs the intake at a duty cycle percentage.
+   *
    * @param pct the percentage to run the intake at
    */
   public void runIntake(double pct) {

@@ -59,6 +59,12 @@ public class Pivot extends SubsystemBase {
     pivotConfigs.MotionMagic.MotionMagicAcceleration = PivotConstants.PIVOT_ACCELERATION;
     pivotConfigs.MotionMagic.MotionMagicJerk = PivotConstants.PIVOT_JERK;
 
+    // TODO: Set the soft limits for the pivot motor
+    // pivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+    // pivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
+    // pivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+    // pivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
 
@@ -109,6 +115,7 @@ public class Pivot extends SubsystemBase {
 
   /**
    * Sets the pivot angle using a duty cycle percentage.
+   *
    * @param pct the percentage to set the shooter to
    */
   public void setPivotPct(double pct) {
@@ -151,7 +158,9 @@ public class Pivot extends SubsystemBase {
     // pivotFollowerMotor.getMotorVoltage());
   }
 
-  /** @return true if the pivot is close enough to its target position */
+  /**
+   * @return true if the pivot is close enough to its target position
+   */
   public boolean reachedAngle() {
     return Math.abs(targetPos - pivotMotor.getPosition().getValue())
         < PivotConstants.PIVOT_ERROR_THRESHOLD;

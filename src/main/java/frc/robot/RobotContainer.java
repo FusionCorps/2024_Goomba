@@ -9,19 +9,16 @@ import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
-import static frc.robot.Constants.allianceLocation;
 import static frc.robot.Constants.driverTab;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
@@ -36,6 +33,7 @@ import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
+import frc.robot.commands.swerve.vision.RotateToAngle;
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
@@ -47,7 +45,7 @@ public class RobotContainer {
   Index index = new Index();
   Pivot pivot = new Pivot();
 
-  private SendableChooser<Command> autoChooser;
+  private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /** Configures the bindings for the robot's subsystems and commands. */
@@ -210,36 +208,9 @@ public class RobotContainer {
     // robotController
     //     .povDown()
     //     .whileTrue(drivetrain.runSwerveFCCommand(() -> 0.01 * MaxSpeed, () -> 0, () -> 0));
-
-    robotController
-        .back()
-        .and(robotController.povUp())
-        .whileTrue(drivetrain.sysIDQuasistatic(Direction.kForward));
-    robotController
-        .back()
-        .and(robotController.povDown())
-        .whileTrue(drivetrain.sysIDQuasistatic(Direction.kReverse));
-    robotController
-        .start()
-        .and(robotController.povUp())
-        .whileTrue(drivetrain.sysIDDynamic(Direction.kForward));
-    robotController
-        .start()
-        .and(robotController.povDown())
-        .whileTrue(drivetrain.sysIDDynamic(Direction.kReverse));
   }
 
   public RobotContainer() {
-    // get alliance color and location
-    var alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
-      Constants.allianceColor = alliance.get();
-    } else System.err.println("Alliance not found");
-    var location = DriverStation.getLocation();
-    if (location.isPresent()) {
-      allianceLocation = location.getAsInt();
-    } else System.err.println("Location not found");
-
     setupAutoChooser();
     setupPipelineChooser();
 
@@ -267,8 +238,9 @@ public class RobotContainer {
     NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
     NamedCommands.registerCommand(
         "AimAtTarget",
-        // new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-        new AutoPivotAim(pivot, drivetrain.getCamera()).withTimeout(2.0));
+        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+            .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()))
+            .withTimeout(2.0));
     NamedCommands.registerCommand(
         "getAutoStartingPos",
         Commands.runOnce(
@@ -277,6 +249,15 @@ public class RobotContainer {
                     "Starting Pose: "
                         + PathPlannerAuto.getStaringPoseFromAutoFile(
                             autoChooser.getSelected().getName()))));
+    NamedCommands.registerCommand(
+        "Rotate180",
+        new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));
+    NamedCommands.registerCommand(
+        "AimAndShoot",
+        (new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())))
+            .withTimeout(2.0)
+            .andThen(new Shoot(shooter, index)));
 
     // testing the single path autons
     // autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));
@@ -284,7 +265,15 @@ public class RobotContainer {
     System.out.println(AutoBuilder.getAllAutoNames());
     // if this throws an error, make sure all autos are complete
     // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
-    autoChooser = AutoBuilder.buildAutoChooser();
+    // autoChooser = AutoBuilder.buildAutoChooser();
+    autoChooser = new SendableChooser<>();
+    autoChooser.setDefaultOption("Do Nothing", Commands.none());
+    autoChooser.addOption("ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
+    autoChooser.addOption("StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
+    autoChooser.addOption("RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
+
+    autoChooser.addOption("Auto1STopF", AutoBuilder.buildAuto("Auto1STopF"));
+    autoChooser.addOption("Auto3STopF", AutoBuilder.buildAuto("Auto3STopF"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }

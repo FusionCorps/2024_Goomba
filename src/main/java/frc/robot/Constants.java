@@ -10,6 +10,7 @@ import com.pathplanner.lib.util.PIDConstants;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.Cameras;
@@ -348,8 +349,9 @@ public class Constants {
     public static final double INDEX_PCT = .35;
   }
 
-  public static DriverStation.Alliance allianceColor = null; // null by default, set in Robot.java
-  public static int allianceLocation = -1; // -1 by default, set in Robot.java
+  public static DriverStation.Alliance allianceColor =
+      Alliance.Blue; // blue by default, set in Robot.java
+  public static int allianceLocation = 1; // 1 by default, set in Robot.java
 
   public static ShuffleboardTab diagnosticsTab = Shuffleboard.getTab("Diagnostics");
   public static ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");

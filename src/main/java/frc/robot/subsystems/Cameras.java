@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
+import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
@@ -9,6 +10,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.LimelightHelpers;
@@ -45,11 +47,13 @@ public class Cameras extends SubsystemBase {
               0.0 // roll, pitch, yaw
             });
 
+    limelightTable.getEntry("priorityid").setNumber(allianceColor == Alliance.Blue ? 8 : 3);
+
     driverTab
         .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))
         .withSize(4, 4)
         .withPosition(0, 0)
-        .withProperties(Map.of("Show Crosshair", true, "Show Controls", false));
+        .withProperties(Map.of("Show Crosshair", false, "Show Controls", false));
 
     diagnosticsTab.addDouble("tx", this::getTX);
     diagnosticsTab.addDouble("ty", this::getTY);

@@ -6,7 +6,6 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.subsystems.Drivetrain;
@@ -14,13 +13,10 @@ import frc.robot.subsystems.Drivetrain;
 // rotates to a desired angle in place - angle is measured counterclockwise
 public class RotateToAngle extends Command {
   private Drivetrain mDrivetrain;
-  private Timer timer = new Timer();
-  private double runTime; // how long in seconds to aim
 
   SwerveRequest.FieldCentricFacingAngle rotReq;
 
-  public RotateToAngle(
-      Drivetrain drivetrain, double desiredHeadingDeg, double toleranceDeg, double runTime) {
+  public RotateToAngle(Drivetrain drivetrain, double desiredHeadingDeg, double toleranceDeg) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
 
@@ -35,15 +31,6 @@ public class RotateToAngle extends Command {
         AimingPIDS.toAngleRotKP, AimingPIDS.toAngleRotKI, AimingPIDS.toAngleRotKD);
     rotReq.HeadingController.enableContinuousInput(-Math.PI, Math.PI);
     rotReq.HeadingController.setTolerance(Units.degreesToRadians(toleranceDeg));
-
-    this.runTime = runTime;
-
-    timer.start();
-  }
-
-  @Override
-  public void initialize() {
-    timer.restart();
   }
 
   @Override
@@ -55,7 +42,7 @@ public class RotateToAngle extends Command {
   @Override
   public boolean isFinished() {
     // stop aiming if we have been aiming for longer than runTime, or if we are at setpoint
-    return timer.hasElapsed(runTime) || rotReq.HeadingController.atSetpoint();
+    return rotReq.HeadingController.atSetpoint();
   }
 
   @Override
@@ -63,7 +50,5 @@ public class RotateToAngle extends Command {
     // stop rotating
     mDrivetrain.setControl(new SwerveRequest.SwerveDriveBrake());
     rotReq.HeadingController.reset();
-    timer.stop();
-    timer.reset();
   }
 }
