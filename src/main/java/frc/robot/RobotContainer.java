@@ -49,7 +49,15 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
-  /** Configures the bindings for the robot's subsystems and commands. */
+  /** Configures the bindings for the robot's subsystems and commands. 
+   * LT: rev up shooter, releasing shooter
+   * RT: intake + stow
+   * RB: aim w speaker
+   * LB: aim with amp/trap
+   * A: stow pivito
+   * B: reset gyro
+   * POV up/down - move pivot
+  */
   private void configureBindings() {
 
     // Run Index default
