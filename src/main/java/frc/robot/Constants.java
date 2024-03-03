@@ -349,6 +349,8 @@ public class Constants {
   public static class IndexConstants {
     public static final int INDEX_MOTOR_ID = 4;
     public static final double INDEX_PCT = .35;
+
+    public static boolean IS_TRAPPING = false;
   }
 
   public static DriverStation.Alliance allianceColor =

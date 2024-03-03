@@ -66,7 +66,7 @@ public class RobotContainer {
     // run field centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
 
-    robotController.x().whileTrue(new RunSwerveRC(drivetrain, 0.05 * MaxSpeed, 0, 0));
+    //robotController.x().whileTrue(new RunSwerveRC(drivetrain, 0.05 * MaxSpeed, 0, 0));
 
     // reset odometry to current position, and zero gyro yaw
     robotController
@@ -90,14 +90,15 @@ public class RobotContainer {
     //     .toggleOnTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     // robotController.rightBumper().toggleOnTrue(new AutoPivotAim(drivetrain, pivot));
     // robotController.rightBumper().toggleOnTrue(new Shoot(shooter, index, 0.82, 0.67));
+
     robotController
         .rightBumper()
         .toggleOnTrue(
-            new RevShooter(shooter, ShooterConstants.SPK_LEFT_RPM, ShooterConstants.SPK_RIGHT_RPM)
-                .alongWith(
                     new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-                        .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()).repeatedly())));
-    robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
+                        .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()).repeatedly()));
+
+    // robotController.y().onTrue(new SetPivotPos(pivot, 24.51));
+
     // robotController.rightBumper().toggleOnTrue(new ParallelCommandGroup(new Shoot(shooter, 0.82,
     // 0.67), drivetrain.aimAtTargetCommand(2,0.5)).andThen(new AutoPivotAim(drivetrain, pivot)));
 
@@ -122,7 +123,9 @@ public class RobotContainer {
     //robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
 
     robotController.leftTrigger().whileTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
-    robotController.leftTrigger().onFalse(new RunIndex(index, INTAKE_RUN_PCT).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
+    robotController.leftTrigger().onFalse(new Shoot(shooter, index).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
+
+
     // robotController
     //     .leftTrigger()
     //     .onTrue(
@@ -170,10 +173,10 @@ public class RobotContainer {
         .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
         .onTrue(new RunIndex(index, 0));
 
-    // zero the pivot angle at current angle
-    // robotController.y().onTrue(new ResetPivotAngle(pivot));
+    // cancel reving the shooter
+    robotController.y().onTrue(new RevShooter(shooter, 0, 0));
 
-    robotController.x().whileTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
+    //robotController.x().whileTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     // Stow Pivot
     robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
     // disables the robot

@@ -1,5 +1,6 @@
 package frc.robot.commands.shooter;
 
+import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
 
@@ -25,20 +26,24 @@ public class RevShooter extends Command {
   @Override
   public void execute() {
 
-    if(!IS_AMP){
-      if(!IS_SHOOTING_RIGHT){
-        mShooter.setRPMs(lRPM, rRPM);
-      } else{
-        mShooter.setRPMs(rRPM, lRPM);
+    if (!IS_TRAPPING) {
+      if (!IS_AMP) {
+        if (!IS_SHOOTING_RIGHT) {
+          mShooter.setRPMs(lRPM, rRPM);
+        } else {
+          mShooter.setRPMs(rRPM, lRPM);
+        }
+      } else {
+        mShooter.setRPMs(0, 0);
       }
-   } else{
-    mShooter.setRPMs(0,0);
-   }
+    } else {
+      mShooter.setRPMs(0, 0);
+    }
   }
 
   // @Override
   // public void end(boolean interrupted) {
-  //   mShooter.setRPMs(0, 0);
-  //   ShooterConstants.IS_AMP = false;
+  // mShooter.setRPMs(0, 0);
+  // ShooterConstants.IS_AMP = false;
   // }
 }
