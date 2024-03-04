@@ -235,6 +235,8 @@ public class Constants {
   }
 
   public static class PivotConstants {
+
+    public static boolean IS_SHUTTLING = false;
     // public static final double PIVOT_GEAR_RATIO =
     //     (4.0)
     //         * (50.0 / 24.0)
@@ -270,6 +272,8 @@ public class Constants {
 
     public static final double PIVOT_AMP_POS = 54.43; // empirical testing
 
+    public static final double PIVOT_SHUTTLING_POS = 20;
+
     public static final double PIVOT_START_POS = Units.degreesToRotations(30);
     public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
     public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
@@ -293,6 +297,8 @@ public class Constants {
     public static final double SPK_LEFT_RPM = 5000;
     public static final double SPK_RIGHT_RPM = 3000;
 
+    public static final double SHUTTLING_RPM = 2000;
+
     // TODO: change these
     public static final double AMP_RIGHT_SPEED = .1;
     public static final double AMP_LEFT_SPEED = .2;
@@ -305,10 +311,10 @@ public class Constants {
     public static final double SHOOTER_LEFT_kD = 0.004;
     public static final double SHOOTER_LEFT_kFF = 0.000185;
 
-    public static final double SHOOTER_RIGHT_kP = 0.002;
+    public static final double SHOOTER_RIGHT_kP = 0.0004;
     public static final double SHOOTER_RIGHT_kI = 0.0;
-    public static final double SHOOTER_RIGHT_kD = 0.001; // increase
-    public static final double SHOOTER_RIGHT_kFF = 0.000226;
+    public static final double SHOOTER_RIGHT_kD = 0.004; // increase
+    public static final double SHOOTER_RIGHT_kFF = 0.000185;
 
     public static final int SHOOTER_STALL_LIMIT_CURRENT = 50; // in amps
     public static final int SHOOTER_FREE_SPEED_LIMIT = 5500; // in RPM

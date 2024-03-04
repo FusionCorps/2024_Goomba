@@ -28,7 +28,9 @@ import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
+import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.pivot.Shuttling;
 import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
@@ -158,6 +160,8 @@ public class RobotContainer {
             new RunIntake(intake, INTAKE_RUN_PCT)
                 .alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)));
 
+    // robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.3));
+
     // run outtake
     // robotController.povDown().whileTrue(new RunIntake(intake, -INTAKE_RUN_PCT,
     // index::beamBroken));
@@ -175,16 +179,22 @@ public class RobotContainer {
 
     // cancel reving the shooter
     robotController.y().onTrue(new RevShooter(shooter, 0, 0));
+    // robotController.y().onTrue(new RevShooter(shooter, 3000, 2000));
+    // robotController.x().onTrue(new RevShooter(shooter, 0, 0));
 
     //robotController.x().whileTrue(new AimAtTarget(drivetrain, StageAlignment.toleranceDeg));
     // Stow Pivot
     robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
+
+    // puts robot in shuttling mode
+    robotController.x().onTrue(new Shuttling(pivot));
+
     // disables the robot
     // robotController.x().onTrue(Commands.run(() -> CommandScheduler.getInstance().disable()));
 
     // move shooter up or down
-    // robotController.povRight().whileTrue(new SetPivotPct(pivot, .5));
-    // robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.5));
+    robotController.povRight().whileTrue(new SetPivotPct(pivot, .1));
+    robotController.povLeft().whileTrue(new SetPivotPct(pivot, -.1));
 
     // Move climb to upright position
     // robotController.povUp().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_CLIMB_UP_POS));
@@ -251,11 +261,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(shooter, index));
     NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, index)); // TODO: fix
     NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
-    NamedCommands.registerCommand(
-        "AimAtTarget",
-        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-            .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()))
-            .withTimeout(2.0));
+    // NamedCommands.registerCommand(
+    //     "AimAtTarget",
+    //     new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+    //         .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()))
+    //         .withTimeout(2.0));
     NamedCommands.registerCommand(
         "getAutoStartingPos",
         Commands.runOnce(
@@ -267,12 +277,12 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "Rotate180",
         new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));
-    NamedCommands.registerCommand(
-        "AimAndShoot",
-        (new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())))
-            .withTimeout(2.0)
-            .andThen(new Shoot(shooter, index)));
+    // NamedCommands.registerCommand(
+    //     "AimAndShoot",
+    //     (new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
+    //             .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())))
+    //         .withTimeout(2.0)
+    //         .andThen(new Shoot(shooter, index)));
 
     // testing the single path autons
     // autoChooser.addOption("ScoreOne", drivetrain.singlePathToCommand("ScoreOne"));

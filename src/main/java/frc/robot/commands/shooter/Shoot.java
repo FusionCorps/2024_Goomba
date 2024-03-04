@@ -90,6 +90,8 @@ public class Shoot extends Command {
     } else{
       mIndex.runIndex(-INDEX_PCT);
     }
+
+    mIndex.runIndex(INDEX_PCT);
   }
 
   @Override

@@ -3,8 +3,10 @@ package frc.robot.commands.shooter;
 import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
+import static frc.robot.Constants.ShooterConstants.SHUTTLING_RPM;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
@@ -27,18 +29,23 @@ public class RevShooter extends Command {
   public void execute() {
 
     if (!IS_TRAPPING) {
-      if (!IS_AMP) {
-        if (!IS_SHOOTING_RIGHT) {
-          mShooter.setRPMs(lRPM, rRPM);
+      if (!PivotConstants.IS_SHUTTLING) {
+        if (!IS_AMP) {
+          if (!IS_SHOOTING_RIGHT) {
+            mShooter.setRPMs(lRPM, rRPM);
+          } else {
+            mShooter.setRPMs(rRPM, lRPM);
+          }
         } else {
-          mShooter.setRPMs(rRPM, lRPM);
+          mShooter.setRPMs(0, 0);
         }
       } else {
-        mShooter.setRPMs(0, 0);
+        mShooter.setRPMs(SHUTTLING_RPM, SHUTTLING_RPM);
       }
     } else {
       mShooter.setRPMs(0, 0);
     }
+
   }
 
   // @Override
