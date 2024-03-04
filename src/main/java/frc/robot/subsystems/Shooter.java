@@ -12,7 +12,6 @@ import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kFF;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kI;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_STALL_LIMIT_CURRENT;
-import static frc.robot.Constants.diagnosticsTab;
 
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkFlex;
@@ -22,6 +21,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 // Rev motor PID example:
 // https://github.com/REVrobotics/SPARK-MAX-Examples/blob/master/Java/Velocity%20Closed%20Loop%20Control/src/main/java/frc/robot/Robot.java
@@ -38,6 +39,17 @@ import frc.robot.Constants.ShooterConstants;
  * 3) Make the lookup table and then test it
  */
 public class Shooter extends SubsystemBase {
+  @AutoLog
+  public static class ShooterInputs {
+    public double leftMotorVelocityRot = 0.0;
+    public double rightMotorVelocityRot = 0.0;
+    public double leftMotorVoltage = 0.0;
+    public double leftMotorCurrent = 0.0;
+    public double rightMotorVoltage = 0.0;
+    public double rightMotorCurrent = 0.0;
+  }
+
+  public ShooterInputsAutoLogged inputs = new ShooterInputsAutoLogged();
 
   private NetworkTable tuningTable =
       NetworkTableInstance.getDefault().getTable("Shooter PID Tuning");
@@ -76,8 +88,16 @@ public class Shooter extends SubsystemBase {
 
     leftMotor.burnFlash();
     rightMotor.burnFlash();
-    diagnosticsTab.addNumber("Shooter Vel Left", () -> leftMotor.getEncoder().getVelocity());
-    diagnosticsTab.addNumber("Shooter Vel Right", () -> rightMotor.getEncoder().getVelocity());
+  }
+
+  @Override
+  public void periodic() {
+    inputs.leftMotorVelocityRot = leftMotor.getEncoder().getVelocity();
+    inputs.rightMotorVelocityRot = rightMotor.getEncoder().getVelocity();
+    inputs.leftMotorVoltage = leftMotor.getBusVoltage();
+    inputs.leftMotorCurrent = leftMotor.getOutputCurrent();
+    inputs.rightMotorVoltage = rightMotor.getBusVoltage();
+    inputs.rightMotorCurrent = rightMotor.getOutputCurrent();
   }
 
   /**
@@ -98,6 +118,7 @@ public class Shooter extends SubsystemBase {
   }
 
   // returns whether both shooters have reached the target speed
+  @AutoLogOutput
   public boolean reachedSpeeds() {
     return Math.abs(leftMotor.getEncoder().getVelocity() - leftRPM) < 50.0
         && Math.abs(rightMotor.getEncoder().getVelocity() - rightRPM) < 50.0;

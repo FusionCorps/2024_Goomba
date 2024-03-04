@@ -13,24 +13,16 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PathPlannerLogging;
 import com.pathplanner.lib.util.ReplanningConfig;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.networktables.DoubleEntry;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.networktables.StructArrayPublisher;
-import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -47,6 +39,9 @@ import frc.robot.LimelightHelpers;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.RotateToAngle;
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
 
 /**
  * This class represents a command-based swerve drivetrain subsystem. It extends the
@@ -55,6 +50,17 @@ import frc.robot.commands.swerve.vision.RotateToAngle;
  * the drivetrain.
  */
 public class Drivetrain extends SwerveDrivetrain implements Subsystem {
+  @AutoLog
+  public static class DrivetrainInputs {
+    public double odometryFrequency = 0.0;
+    public double robotSpeed = 0.0;
+    public double robotVelocityX = 0.0;
+    public double robotVelocityY = 0.0;
+    public double yaw = 0.0;
+  }
+
+  public DrivetrainInputsAutoLogged inputs = new DrivetrainInputsAutoLogged();
+
   public Cameras mCamera;
 
   // simulation variables
@@ -100,6 +106,13 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   public void periodic() {
     // updates the odometry from aprilTag data
     updateOdometryFromAprilTags(1.0);
+
+    inputs.odometryFrequency = 1.0 / getState().OdometryPeriod;
+    inputs.robotSpeed =
+        Math.hypot(getState().speeds.vxMetersPerSecond, getState().speeds.vyMetersPerSecond);
+    inputs.robotVelocityX = getState().speeds.vxMetersPerSecond;
+    inputs.robotVelocityY = getState().speeds.vyMetersPerSecond;
+    inputs.yaw = getState().Pose.getRotation().getDegrees();
   }
 
   /**
@@ -171,6 +184,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   /**
    * @return The current pose of the robot.
    */
+  @AutoLogOutput
   public Pose2d getPose() {
     return getState().Pose;
   }
@@ -219,11 +233,6 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     m_simNotifier.startPeriodic(kSimLoopPeriod);
   }
 
-  private double truncPlaces(double value, int numOfPlaces) {
-    double scale = Math.pow(10, numOfPlaces);
-    return Math.round(value * scale) / scale;
-  }
-
   // method that rotates the robot a certain angle to face the stage
   public Command rotateInStageCommand() {
     return new InstantCommand(
@@ -243,18 +252,6 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   }
 
   private class DriveTelemetry {
-
-    // telemetry for the swerve drivetrain
-    private Field2d field2d = new Field2d();
-    // use networktables for things that cannot be displayed on shuffleboard
-    private NetworkTable driveTable = NetworkTableInstance.getDefault().getTable("Drivetrain");
-    private StructArrayPublisher<SwerveModuleState> moduleStates =
-        driveTable.getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
-    private StructArrayPublisher<SwerveModuleState> desiredStates =
-        driveTable.getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
-    private StructPublisher<Pose3d> pose3D =
-        driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
-
     /* Mechanisms to represent the swerve module states */
     private Mechanism2d[] m_moduleMechanisms =
         new Mechanism2d[] {
@@ -296,45 +293,15 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
               .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
         };
 
-    private DoubleEntry odometryFrequency =
-        driveTable.getDoubleTopic("Odometry Frequency").getEntry(0.0);
-    private DoubleEntry robotSpeed = driveTable.getDoubleTopic("Robot Speed").getEntry(0.0);
-    private DoubleEntry robotVelocityX =
-        driveTable.getDoubleTopic("Robot Velocity X").getEntry(0.0);
-    private DoubleEntry robotVelocityY =
-        driveTable.getDoubleTopic("Robot Velocity Y").getEntry(0.0);
-
     public DriveTelemetry(Drivetrain drivetrain) {
-      PathPlannerLogging.setLogActivePathCallback(
-          (poses) -> {
-            field2d.getObject("autoTrajectory").setPoses(poses);
-          });
-
-      // add diagnostics telemetry to shuffleboard
-      diagnosticsTab.add(field2d);
       SendableChooser<Command> driveMode = new SendableChooser<>();
       driveMode.setDefaultOption("Field-Centric", new RunSwerveFC(drivetrain));
       driveMode.addOption("Robot-Centric", new RunSwerveRC(drivetrain));
       driveMode.onChange((newDriveMode) -> drivetrain.setDefaultCommand(newDriveMode));
       diagnosticsTab.add("Drive Mode Chooser", driveMode);
-
-      diagnosticsTab.addDouble(
-          "Odometry Frequency", () -> truncPlaces(odometryFrequency.get(0.0), 2));
-      diagnosticsTab.addDouble("Robot Speed", () -> truncPlaces(robotSpeed.get(0.0), 2));
-      diagnosticsTab.addDouble("Robot Velocity X", () -> truncPlaces(robotVelocityX.get(0.0), 2));
-      diagnosticsTab.addDouble("Robot Velocity Y", () -> truncPlaces(robotVelocityY.get(0.0), 2));
-      diagnosticsTab.addDouble("Yaw", () -> m_yawGetter.getValueAsDouble());
     }
 
     private void telemeterize(SwerveDriveState state) {
-      Pose2d pose = state.Pose;
-      field2d.setRobotPose(pose);
-
-      odometryFrequency.set(1.0 / state.OdometryPeriod);
-      robotSpeed.set(Math.hypot(state.speeds.vxMetersPerSecond, state.speeds.vyMetersPerSecond));
-      robotVelocityX.set(state.speeds.vxMetersPerSecond);
-      robotVelocityY.set(state.speeds.vyMetersPerSecond);
-
       /* Telemeterize the module's states */
       for (int i = 0; i < 4; i++) {
         m_moduleSpeeds[i].setAngle(state.ModuleStates[i].angle);
@@ -342,9 +309,14 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         m_moduleSpeeds[i].setLength(state.ModuleStates[i].speedMetersPerSecond / (2 * MaxSpeed));
       }
 
-      moduleStates.set(state.ModuleStates);
-      desiredStates.set(state.ModuleTargets);
-      pose3D.set(new Pose3d(getPose()));
+      Logger.recordOutput("Module States", state.ModuleStates);
+      Logger.recordOutput("Desired Module States", state.ModuleTargets);
+      Logger.recordOutput("Robot Pose2d", state.Pose);
+      Logger.recordOutput("Robot Pose3d", new Pose3d(getPose()));
+      Logger.recordOutput("FL Swerve", m_moduleMechanisms[0]);
+      Logger.recordOutput("FR Swerve", m_moduleMechanisms[1]);
+      Logger.recordOutput("BL Swerve", m_moduleMechanisms[2]);
+      Logger.recordOutput("BR Swerve", m_moduleMechanisms[3]);
     }
   }
 }

@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
 import static frc.robot.Constants.allianceColor;
-import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
 import edu.wpi.first.cscore.HttpCamera;
@@ -15,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.LimelightHelpers;
 import java.util.Map;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Cameras extends SubsystemBase {
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
@@ -54,12 +54,6 @@ public class Cameras extends SubsystemBase {
         .withSize(4, 4)
         .withPosition(0, 0)
         .withProperties(Map.of("Show Crosshair", false, "Show Controls", false));
-
-    diagnosticsTab.addDouble("tx", this::getTX);
-    diagnosticsTab.addDouble("ty", this::getTY);
-    diagnosticsTab.addBoolean("hasTarget", this::hasTarget);
-    diagnosticsTab.addDouble("TZ 3D AprilTag", () -> this.aprilTagTargetPose.getZ());
-    diagnosticsTab.addInteger("Pipeline #", this::getPipeline);
   }
 
   @Override
@@ -81,10 +75,12 @@ public class Cameras extends SubsystemBase {
    *
    * @return tx (degrees)
    */
+  @AutoLogOutput
   public double getTX() {
     return hasTarget ? tx : 0.0;
   }
 
+  @AutoLogOutput
   public double getID() {
     return (hasTarget
             && (pipelineNum == PIPELINE.APRILTAG_3D.value
@@ -99,6 +95,7 @@ public class Cameras extends SubsystemBase {
    *
    * @return ty (degrees)
    */
+  @AutoLogOutput
   public double getTY() {
     return hasTarget ? ty : 0.0;
   }
@@ -109,6 +106,7 @@ public class Cameras extends SubsystemBase {
    *
    * @return tv (0 or 1)
    */
+  @AutoLogOutput
   public boolean hasTarget() {
     return hasTarget;
   }
@@ -127,6 +125,7 @@ public class Cameras extends SubsystemBase {
    *
    * @return pipeline integer (0-9)
    */
+  @AutoLogOutput
   public int getPipeline() {
     return pipelineNum;
   }
@@ -136,6 +135,7 @@ public class Cameras extends SubsystemBase {
    *
    * @return
    */
+  @AutoLogOutput
   public Pose3d getPrimaryAprilTagPose() {
     return aprilTagTargetPose;
   }

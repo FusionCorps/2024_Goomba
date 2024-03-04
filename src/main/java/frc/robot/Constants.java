@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.Drivetrain;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Constants {
   public class TarsArmConstants {
@@ -253,6 +254,7 @@ public class Constants {
 
     public static final double PIVOT_OFFSET = 0.307506;
 
+    @AutoLogOutput(key = "Pivot/Stow Pos")
     public static final double PIVOT_STOW_POS = PIVOT_OFFSET * PIVOT_GEAR_RATIO;
 
     public static final double PIVOT_kV = 0;

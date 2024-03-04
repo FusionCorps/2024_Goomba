@@ -5,7 +5,6 @@
 package frc.robot;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
-import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
@@ -17,7 +16,6 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
@@ -49,15 +47,23 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
-  /** Configures the bindings for the robot's subsystems and commands. 
-   * LT: rev up shooter, releasing shooter
-   * RT: intake + stow
-   * RB: aim w speaker
-   * LB: aim with amp/trap
-   * A: stow pivito
-   * B: reset gyro
-   * POV up/down - move pivot
-  */
+  /**
+   * Configures the bindings for the robot's subsystems and commands.
+   *
+   * <p>LT: rev up shooter, releasing shooter
+   *
+   * <p>RT: intake + stow
+   *
+   * <p>RB: aim w speaker
+   *
+   * <p>LB: aim with amp/trap
+   *
+   * <p>A: stow pivito
+   *
+   * <p>B: reset gyro
+   *
+   * <p>POV up/down - move pivot
+   */
   private void configureBindings() {
 
     // Run Index default
@@ -119,10 +125,15 @@ public class RobotContainer {
 
     // run index
 
-    //robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
+    // robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
 
     robotController.leftTrigger().whileTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
-    robotController.leftTrigger().onFalse(new RunIndex(index, INTAKE_RUN_PCT).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
+    robotController
+        .leftTrigger()
+        .onFalse(
+            new RunIndex(index, INTAKE_RUN_PCT)
+                .withTimeout(0.03)
+                .andThen(new RevShooter(shooter, 0, 0)));
     // robotController
     //     .leftTrigger()
     //     .onTrue(

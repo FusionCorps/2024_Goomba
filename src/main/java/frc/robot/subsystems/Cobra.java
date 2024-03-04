@@ -1,15 +1,24 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.CobraConstants.*;
-import static frc.robot.Constants.diagnosticsTab;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import org.littletonrobotics.junction.AutoLog;
 
 public class Cobra extends SubsystemBase {
+  @AutoLog
+  public static class CobraInputs {
+    public double motorPosRot = 0.0;
+    public double motorVoltage = 0.0;
+    public double motorCurrent = 0.0;
+  }
+
+  private CobraInputsAutoLogged inputs = new CobraInputsAutoLogged();
+
   TalonFX cobraMotor;
   TalonFXConfiguration cobraConfigs = new TalonFXConfiguration();
 
@@ -25,8 +34,13 @@ public class Cobra extends SubsystemBase {
     cobraConfigs.MotionMagic.MotionMagicAcceleration = 15;
     cobraConfigs.MotionMagic.MotionMagicJerk = 10;
     cobraMotor.getConfigurator().apply(cobraConfigs);
+  }
 
-    diagnosticsTab.addDouble("Cobra Position", this::getCobraPos);
+  @Override
+  public void periodic() {
+    inputs.motorPosRot = cobraMotor.getPosition().getValueAsDouble();
+    inputs.motorVoltage = cobraMotor.getMotorVoltage().getValueAsDouble();
+    inputs.motorCurrent = cobraMotor.getStatorCurrent().getValueAsDouble();
   }
 
   /**
@@ -46,12 +60,5 @@ public class Cobra extends SubsystemBase {
   public void setCobraPos(double pos) {
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
     cobraMotor.setControl(positionReq.withPosition(pos));
-  }
-
-  /**
-   * @return the current position of the cobra, in rotations
-   */
-  public double getCobraPos() {
-    return cobraMotor.getPosition().getValue();
   }
 }

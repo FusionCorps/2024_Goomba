@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
-import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -16,8 +15,21 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
 import java.util.function.DoubleSupplier;
+import org.littletonrobotics.junction.AutoLog;
+import org.littletonrobotics.junction.AutoLogOutput;
 
 public class Pivot extends SubsystemBase {
+  @AutoLog
+  public static class PivotInputs {
+    public double motorPosRot = 0.0;
+    public double encoderPosRot = 0.0;
+    public double mainMotorVoltage = 0.0;
+    public double mainMotorCurrent = 0.0;
+    public double followerMotorVoltage = 0.0;
+    public double followerMotorCurrent = 0.0;
+  }
+
+  PivotInputsAutoLogged inputs = new PivotInputsAutoLogged();
 
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
@@ -73,39 +85,31 @@ public class Pivot extends SubsystemBase {
     // sets the position of the motor acc. to through bore encoder once the encoder is ready
     new Trigger(pivotEncoder::isConnected)
         .onTrue(
-            runOnce(
-                () -> {
-                  System.out.println("syncing pivot encoders init");
-                  pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-                }));
+            run(() -> {
+                  System.out.println("syncing pivot encoders");
+                  syncPosition();
+                })
+                .until(
+                    () ->
+                        pivotMotor.getPosition().getValueAsDouble()
+                                - adjustedPivotEncoderAngle.getAsDouble()
+                            < 0.1));
 
     driverTab
         .addDouble("Pivot Angle", this::getPivotAngle)
         .withSize(2, 2)
         .withPosition(4, 0)
         .withWidget(BuiltInWidgets.kDial);
-
-    diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
-    diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
-    diagnosticsTab.addDouble("Pivot Encoder Pos", () -> pivotEncoder.getAbsolutePosition());
-    diagnosticsTab.addDouble(
-        "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
-    diagnosticsTab.addDouble(
-        "Follower Pivot Motor Voltage",
-        () -> pivotFollowerMotor.getMotorVoltage().getValueAsDouble());
   }
 
   @Override
   public void periodic() {
-    if (!motorConfigured
-        && pivotEncoder.isConnected()
-        && pivotMotor.getPosition().getValueAsDouble() != adjustedPivotEncoderAngle.getAsDouble()) {
-      System.out.println("syncing pivot encoders periodic");
-
-      pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-      pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-      motorConfigured = true;
-    }
+    inputs.motorPosRot = pivotMotor.getPosition().getValueAsDouble();
+    inputs.encoderPosRot = adjustedPivotEncoderAngle.getAsDouble();
+    inputs.mainMotorVoltage = pivotMotor.getMotorVoltage().getValueAsDouble();
+    inputs.mainMotorCurrent = pivotMotor.getStatorCurrent().getValueAsDouble();
+    inputs.followerMotorVoltage = pivotFollowerMotor.getMotorVoltage().getValueAsDouble();
+    inputs.followerMotorCurrent = pivotFollowerMotor.getStatorCurrent().getValueAsDouble();
   }
 
   public void syncPosition() {
@@ -140,33 +144,24 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
-
-    // if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >= errorThreshold){
-    //   if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
-    //     pivotMotor.set(-0.3);
-    //     pivotFollowerMotor.set(-0.3);
-    //   } else{
-    //     pivotMotor.set(0.3);
-    //     pivotFollowerMotor.set(0.3);
-    //   }
-    // } else{
-    //   pivotMotor.set(0);
-    //   pivotFollowerMotor.set(0);
-    // }
-
-    // System.out.println(pivotMotor.getMotorVoltage() + ", " +
-    // pivotFollowerMotor.getMotorVoltage());
   }
 
   /**
    * @return true if the pivot is close enough to its target position
    */
+  @AutoLogOutput
   public boolean reachedAngle() {
     return Math.abs(targetPos - pivotMotor.getPosition().getValue())
         < PivotConstants.PIVOT_ERROR_THRESHOLD;
   }
 
+  @AutoLogOutput
   public double getPivotAngle() {
     return pivotMotor.getPosition().getValueAsDouble();
+  }
+
+  @AutoLogOutput
+  public double getPivotEncoderAngle() {
+    return adjustedPivotEncoderAngle.getAsDouble();
   }
 }
