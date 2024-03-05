@@ -1,6 +1,10 @@
 package frc.robot.commands.intake;
 
+import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
+import static frc.robot.Constants.ShooterConstants.IS_AMP;
+
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.Intake;
 
 public class RunIntake extends Command {
@@ -17,6 +21,9 @@ public class RunIntake extends Command {
 
   @Override
   public void execute() {
+    IS_TRAPPING = false;
+    PivotConstants.IS_SHUTTLING = false;
+    IS_AMP = false;
     mIntake.runIntake(speed);
   }
 

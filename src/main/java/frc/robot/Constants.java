@@ -274,9 +274,9 @@ public class Constants {
 
     public static final double PIVOT_SHUTTLING_POS = 20;
 
-    public static final double PIVOT_START_POS = Units.degreesToRotations(30);
-    public static final double PIVOT_CLIMB_UP_POS = Units.degreesToRotations(120);
-    public static final double PIVOT_CLIMB_DOWN_POS = Units.degreesToRotations(40);
+    // TODO: Change these values
+    public static final double PIVOT_CLIMB_UP_POS = 0;
+    public static final double PIVOT_CLIMB_DOWN_POS = 0;
 
     // maps Z distances to april tag (meters) with pivot angles (rotations)
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
@@ -289,6 +289,7 @@ public class Constants {
 
     public static boolean IS_SHOOTING_RIGHT = false;
 
+    public static boolean HAS_STOPPED_REVING = false;
     public static boolean IS_AMP = false;
 
     public static final double ShooterSpeed = 28.06308713961776; // in ft/s
@@ -300,8 +301,8 @@ public class Constants {
     public static final double SHUTTLING_RPM = 2000;
 
     // TODO: change these
-    public static final double AMP_RIGHT_SPEED = .1;
-    public static final double AMP_LEFT_SPEED = .2;
+    public static final double AMP_RIGHT_SPEED = 2500;
+    public static final double AMP_LEFT_SPEED = 2500;
 
     public static final double SHOOTER_MAX_RPM = 6784;
 
@@ -318,6 +319,8 @@ public class Constants {
 
     public static final int SHOOTER_STALL_LIMIT_CURRENT = 50; // in amps
     public static final int SHOOTER_FREE_SPEED_LIMIT = 5500; // in RPM
+
+    public static final double SHOOTER_OUTTAKE_RPM = 1500;
   }
 
   public static class LimelightConstants {
