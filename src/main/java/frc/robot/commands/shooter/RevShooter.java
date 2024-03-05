@@ -10,7 +10,6 @@ import static frc.robot.Constants.ShooterConstants.SHUTTLING_RPM;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Shooter;
 
 /** Runs the shooter at given RPMS. */
