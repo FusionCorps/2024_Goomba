@@ -60,9 +60,13 @@ public class RobotContainer {
    * RT: intake + stow
    * RB: aim w speaker
    * LB: aim with amp/trap
-   * A: stow pivito
+   * A: stow pivot
    * B: reset gyro
    * POV up/down - move pivot
+   * POV right - outtake thru intake
+   * POV left - outtake thru shooter
+   * Start - Up climb pos
+   * Back - Down climb pos
    */
   private void configureBindings() {
 
