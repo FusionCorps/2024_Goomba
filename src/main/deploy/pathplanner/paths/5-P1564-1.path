@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7,
-        "y": 4.4
+        "x": 0.7023114046228107,
+        "y": 6.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8180592453482832,
-        "y": 4.359312349949912
+        "x": 1.3535296301361848,
+        "y": 6.423725601297357
       },
       "isLocked": false,
-      "linkedName": "LoadSide"
+      "linkedName": "AmpSide"
     },
     {
       "anchor": {
-        "x": 2.4031274310765443,
-        "y": 4.315142989260338
+        "x": 2.55,
+        "y": 6.8
       },
       "prevControl": {
-        "x": 2.4031274310765443,
-        "y": 4.315142989260338
+        "x": 2.6362321955413157,
+        "y": 6.847658310701237
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,18 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -20.85204646571856,
+    "rotation": 35.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3 Piece",
-  "previewStartingState": null,
-  "useDefaultConstraints": false
+  "folder": "5-P1564",
+  "previewStartingState": {
+    "rotation": 60.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
 }

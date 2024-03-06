@@ -2,17 +2,17 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.78,
-      "y": 6.82
+      "x": 1.35,
+      "y": 5.55
     },
-    "rotation": 60.0
+    "rotation": 0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -28,13 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAtTarget"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
@@ -44,7 +38,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3STop1F"
+                              "pathName": "4-P321-1"
                             }
                           },
                           {
@@ -59,13 +53,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAtTarget"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
@@ -75,7 +63,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3STop2F"
+                              "pathName": "4-P321-2"
                             }
                           },
                           {
@@ -90,13 +78,32 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAtTarget"
+                        "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P321-3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "RunIntake"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     }
                   ]
@@ -108,6 +115,6 @@
       ]
     }
   },
-  "folder": "VikesTesting",
+  "folder": null,
   "choreoAuto": false
 }

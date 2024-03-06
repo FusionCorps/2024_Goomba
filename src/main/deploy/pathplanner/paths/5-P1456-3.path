@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7275269251393202,
-        "y": 4.315142989260338
+        "x": 7.85,
+        "y": 7.45
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.7275269251393202,
-        "y": 4.315142989260338
+        "x": 7.91,
+        "y": 7.45
       },
       "isLocked": false,
-      "linkedName": "Mid"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.5,
-        "y": 4.3
+        "x": 5.8,
+        "y": 6.0
       },
       "prevControl": {
-        "x": 1.5,
-        "y": 4.3
+        "x": 5.859999999999999,
+        "y": 6.0
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 0.5,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -25.89188342560124,
+    "rotation": 3.9004937423821153,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "VikesTesting",
+  "folder": "5-P1456",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 0.0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

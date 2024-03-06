@@ -7,28 +7,26 @@
     "2 Piece",
     "3 Piece",
     "4 Piece",
+    "4-P321",
+    "4-P873",
     "5 Piece",
+    "5-P1456",
+    "5-P1564",
     "6 Piece",
     "7 Piece",
     "Mobility",
-    "VikesTesting",
     "Old"
   ],
   "autoFolders": [
     "1 Piece",
-    "2 Piece",
-    "3 Piece",
     "4 Piece",
     "5 Piece",
-    "6 Piece",
-    "7 Piece",
     "Mobility",
-    "VikesTesting",
     "Old"
   ],
-  "defaultMaxVel": 3.0,
-  "defaultMaxAccel": 2.0,
+  "defaultMaxVel": 5.0,
+  "defaultMaxAccel": 1.0,
   "defaultMaxAngVel": 540.0,
   "defaultMaxAngAccel": 720.0,
-  "maxModuleSpeed": 6.0
+  "maxModuleSpeed": 6.22
 }

@@ -3,69 +3,59 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.86,
-        "y": 6.1
+        "x": 7.95,
+        "y": 4.45
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.92,
-        "y": 6.1
+        "x": 8.010000000000002,
+        "y": 4.45
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.92,
-        "y": 5.79
+        "x": 5.152302612297534,
+        "y": 4.55
       },
       "prevControl": {
-        "x": 7.436238350169007,
-        "y": 5.867026142513823
+        "x": 6.039404793315561,
+        "y": 3.9427420478634563
       },
       "nextControl": {
-        "x": 8.403761649830994,
-        "y": 5.712973857486177
+        "x": 4.49121744397335,
+        "y": 5.00254000508001
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.86,
-        "y": 6.1
+        "x": 3.9,
+        "y": 5.5
       },
       "prevControl": {
-        "x": 7.032558768146383,
-        "y": 6.124790187032297
-      },
-      "nextControl": {
-        "x": 4.687441231853618,
-        "y": 6.075209812967702
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.66239424786542,
-        "y": 5.545221859674489
-      },
-      "prevControl": {
-        "x": 3.6023942478654205,
-        "y": 5.545221859674489
+        "x": 3.8400000000000003,
+        "y": 5.5
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -45.0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 5.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -75,9 +65,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": null,
+  "folder": "5-P1456",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
