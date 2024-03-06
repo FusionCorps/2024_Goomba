@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
+import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
@@ -40,7 +41,7 @@ public class Pivot extends SubsystemBase {
     PIVOT_ANGLES_MAP.put(3.06, 72.02);
     PIVOT_ANGLES_MAP.put(3.73, 74.07);
     PIVOT_ANGLES_MAP.put(3.37, 72.2);
-    pivotEncoder = new DutyCycleEncoder(0);
+    pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle =
         () -> pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO;
 
@@ -120,6 +121,7 @@ public class Pivot extends SubsystemBase {
    */
   public void setPivotPct(double pct) {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
+    System.out.println(pivotMotor.getPosition().getValueAsDouble() + ", " + pivotEncoder.getDistance()*PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
   }

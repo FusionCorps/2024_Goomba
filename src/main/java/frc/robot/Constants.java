@@ -237,14 +237,12 @@ public class Constants {
   public static class PivotConstants {
 
     public static boolean IS_SHUTTLING = false;
-    // public static final double PIVOT_GEAR_RATIO =
-    //     (4.0)
-    //         * (50.0 / 24.0)
-    //         * (60.0 / 16.0)
-    //         * (66.0 / 9.0); // multiply ratios of two gearboxes and then small gear turning big
-    // gear
     public static final double PIVOT_GEAR_RATIO =
-        231.0; // multiply ratios of two gearboxes and then small gear turning big gear
+        (4.0)
+            * (50.0 / 24.0)
+            * (60.0 / 16.0); // multiply ratios of two gearboxes and then small gear turning big gear
+    // public static final double PIVOT_GEAR_RATIO =
+    //     231.0; // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
     // public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
