@@ -84,11 +84,12 @@ public class Pivot extends SubsystemBase {
         .addDouble("Pivot Angle", this::getPivotAngle)
         .withSize(2, 2)
         .withPosition(4, 0)
-        .withWidget(BuiltInWidgets.kDial);
+        .withWidget(BuiltInWidgets.kTextView);
 
     diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
     diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
-    diagnosticsTab.addDouble("Pivot Encoder Pos", () -> pivotEncoder.getAbsolutePosition());
+    diagnosticsTab.addDouble(
+        "Pivot Encoder Pos", () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
     diagnosticsTab.addDouble(
         "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
     diagnosticsTab.addDouble(
@@ -103,15 +104,20 @@ public class Pivot extends SubsystemBase {
         && pivotMotor.getPosition().getValueAsDouble() != adjustedPivotEncoderAngle.getAsDouble()) {
       System.out.println("syncing pivot encoders periodic");
 
-      pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-      pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
+      pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
+      pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
       motorConfigured = true;
     }
+
+    System.out.println(
+        pivotMotor.getPosition().getValueAsDouble()
+            + ", "
+            + pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
   }
 
   public void syncPosition() {
-    pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-    pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
+    pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
+    pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
   }
 
   /**
@@ -121,7 +127,10 @@ public class Pivot extends SubsystemBase {
    */
   public void setPivotPct(double pct) {
     // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
-    System.out.println(pivotMotor.getPosition().getValueAsDouble() + ", " + pivotEncoder.getDistance()*PIVOT_GEAR_RATIO);
+    System.out.println(
+        pivotMotor.getPosition().getValueAsDouble()
+            + ", "
+            + pivotEncoder.getDistance() * PIVOT_GEAR_RATIO);
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
   }

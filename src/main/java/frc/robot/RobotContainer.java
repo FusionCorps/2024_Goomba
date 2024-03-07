@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
-import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
-import static frc.robot.Constants.ShooterConstants.SHOOTER_OUTTAKE_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.driverTab;
@@ -18,13 +15,11 @@ import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
@@ -32,12 +27,10 @@ import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.DownClimbPos;
 import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
-import frc.robot.commands.pivot.Shuttling;
 import frc.robot.commands.pivot.UpClimbPos;
 import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
-import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.commands.swerve.vision.RotateToAngle;
 import frc.robot.subsystems.*;
@@ -55,21 +48,12 @@ public class RobotContainer {
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /**
-   * Configures the bindings for the robot's subsystems and commands.
-   * LT: rev up shooter, releasing shooter
-   * RT: intake + stow
-   * RB: aim w speaker
-   * LB: aim with amp/trap
-   * A: stow pivot
-   * B: reset gyro
-   * POV up/down - move pivot
-   * POV right - outtake thru intake
-   * POV left - outtake thru shooter
-   * Start - Up climb pos
-   * Back - Down climb pos
+   * Configures the bindings for the robot's subsystems and commands. LT: rev up shooter, releasing
+   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow pivot B: reset gyro
+   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake thru shooter Start
+   * - Up climb pos Back - Down climb pos
    */
   private void configureBindings() {
-
 
     // run field centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
@@ -86,11 +70,13 @@ public class RobotContainer {
 
     //  // outake through intake
     // robotController.povLeft().whileTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)
-    //     .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
+    //     .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
+    // -INTAKE_RUN_PCT)));
 
     // // outake through shooter
     // robotController.povRight().whileTrue(
-    //     new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM).alongWith(new Shoot(shooter, index)));
+    //     new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM).alongWith(new
+    // Shoot(shooter, index)));
 
     robotController
         .rightBumper()
@@ -110,10 +96,10 @@ public class RobotContainer {
     // run index
 
     robotController.leftTrigger().onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
-    robotController.leftTrigger()
-        .onFalse(new Shoot(shooter, index).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
-
-    
+    robotController
+        .leftTrigger()
+        .onFalse(
+            new Shoot(shooter, index).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
 
     // run intake
     robotController
@@ -132,7 +118,6 @@ public class RobotContainer {
     // cancel reving the shooter
     robotController.y().onTrue(new RevShooter(shooter, 0, 0));
 
-
     // robotController.y().onTrue(new RevShooter(shooter, 3000, 2000));
     // robotController.x().onTrue(new RevShooter(shooter, 0, 0));
 
@@ -140,13 +125,11 @@ public class RobotContainer {
     robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
 
     // puts robot in shuttling mode
-    //robotController.x().onTrue(new Shuttling(pivot));
+    // robotController.x().onTrue(new Shuttling(pivot));
 
     // move shooter up or down
     robotController.povUp().whileTrue(new SetPivotPct(pivot, -.1));
     robotController.povDown().whileTrue(new SetPivotPct(pivot, .1));
-
-   
 
     // Move climb to upright position
     robotController.start().onTrue(new UpClimbPos(pivot));
@@ -212,10 +195,11 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "getAutoStartingPos",
         Commands.runOnce(
-            () -> System.out.println(
-                "Starting Pose: "
-                    + PathPlannerAuto.getStaringPoseFromAutoFile(
-                        autoChooser.getSelected().getName()))));
+            () ->
+                System.out.println(
+                    "Starting Pose: "
+                        + PathPlannerAuto.getStaringPoseFromAutoFile(
+                            autoChooser.getSelected().getName()))));
     NamedCommands.registerCommand(
         "Rotate180",
         new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));

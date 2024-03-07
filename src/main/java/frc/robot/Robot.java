@@ -23,6 +23,8 @@ public class Robot extends TimedRobot {
     SignalLogger.start();
     m_robotContainer = new RobotContainer();
     Shuffleboard.selectTab("Driver"); // default to driver tab
+
+    m_robotContainer.pivot.syncPosition();
   }
 
   @Override
