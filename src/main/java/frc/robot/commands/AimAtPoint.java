@@ -24,10 +24,10 @@ public class AimAtPoint extends Command {
     mDrivetrain = drivetrain;
     mTarget = target;
     addRequirements(mDrivetrain);
-
-    headingReq.HeadingController.setP(AimingPIDS.toAngleRotKP);
-    headingReq.HeadingController.setI(AimingPIDS.toAngleRotKI);
-    headingReq.HeadingController.setD(AimingPIDS.toAngleRotKD);
+    headingReq.HeadingController.setPID(
+        AimingPIDS.toAngleRotKP, AimingPIDS.toAngleRotKI, AimingPIDS.toAngleRotKD);
+    // TODO: might need this
+    // headingReq.HeadingController.enableContinuousInput(-180, 180);
   }
 
   @Override

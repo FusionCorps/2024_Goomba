@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
@@ -109,12 +110,13 @@ public class Pivot extends SubsystemBase {
       motorConfigured = true;
     }
 
-    System.out.println(
-        pivotMotor.getPosition().getValueAsDouble()
-            + ", "
-            + adjustedPivotEncoderAngle.getAsDouble()
-            + ", "
-            + pivotEncoder.getAbsolutePosition());
+    SmartDashboard.putNumberArray(
+        "pivot encoders",
+        new double[] {
+          pivotMotor.getPosition().getValueAsDouble(),
+          adjustedPivotEncoderAngle.getAsDouble(),
+          pivotEncoder.getAbsolutePosition()
+        });
   }
 
   public void syncPosition() {

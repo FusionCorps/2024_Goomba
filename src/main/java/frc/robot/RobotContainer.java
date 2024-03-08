@@ -33,12 +33,12 @@ import frc.robot.subsystems.*;
 
 public class RobotContainer {
   public static CommandXboxController robotController = new CommandXboxController(0);
-  public static Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
+  public Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
 
-  Intake intake = new Intake();
-  Shooter shooter = new Shooter();
-  Index index = new Index();
-  public static Pivot pivot = new Pivot();
+  public Intake intake = new Intake();
+  public Shooter shooter = new Shooter();
+  public Index index = new Index();
+  public Pivot pivot = new Pivot();
 
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();

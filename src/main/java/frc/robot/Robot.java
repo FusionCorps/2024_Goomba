@@ -19,11 +19,12 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    Shuffleboard.selectTab("Driver"); // default to driver tab
+
     SignalLogger.setPath("home/lvuser/logs");
     SignalLogger.start();
     m_robotContainer = new RobotContainer();
     m_robotContainer.pivot.syncPosition();
-    Shuffleboard.selectTab("Driver"); // default to driver tab
 
     m_robotContainer.pivot.syncPosition();
   }

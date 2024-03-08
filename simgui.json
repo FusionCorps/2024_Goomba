@@ -2,6 +2,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Diagnostics/Drive Mode Chooser": "String Chooser",
       "/Shuffleboard/Diagnostics/Field": "Field2d",
       "/Shuffleboard/Driver/Auto Chooser": "String Chooser",
       "/Shuffleboard/Driver/Pipeline Chooser": "String Chooser",
@@ -9,6 +10,7 @@
       "/Shuffleboard/Module Mechanisms/Module 1": "Mechanism2d",
       "/Shuffleboard/Module Mechanisms/Module 2": "Mechanism2d",
       "/Shuffleboard/Module Mechanisms/Module 3": "Mechanism2d",
+      "/SmartDashboard/AimAtTarget pid": "PIDController",
       "/SmartDashboard/Auto Chooser": "String Chooser",
       "/SmartDashboard/Field": "Field2d",
       "/SmartDashboard/Pipeline Chooser": "String Chooser"
@@ -58,6 +60,12 @@
         "open": true
       },
       "PathPlanner": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "Driver": {
+          "open": true
+        },
         "open": true
       }
     }

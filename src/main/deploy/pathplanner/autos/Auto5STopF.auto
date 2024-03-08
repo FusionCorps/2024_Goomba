@@ -14,7 +14,7 @@
         {
           "type": "named",
           "data": {
-            "name": "ShootSpeaker"
+            "name": "AimAndShoot"
           }
         },
         {
@@ -30,7 +30,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RunIntake"
+                  "name": "IntakeNote"
                 }
               }
             ]
@@ -39,13 +39,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
+            "name": "AimAndShoot"
           }
         },
         {
@@ -61,7 +55,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RunIntake"
+                  "name": "IntakeNote"
                 }
               }
             ]
@@ -76,13 +70,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
+            "name": "AimAndShoot"
           }
         },
         {
@@ -98,7 +86,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RunIntake"
+                  "name": "IntakeNote"
                 }
               }
             ]
@@ -113,13 +101,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
+            "name": "AimAndShoot"
           }
         },
         {
@@ -135,7 +117,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RunIntake"
+                  "name": "IntakeNote"
                 }
               }
             ]
@@ -150,13 +132,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AimAtTarget"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "ShootSpeaker"
+            "name": "AimAndShoot"
           }
         }
       ]

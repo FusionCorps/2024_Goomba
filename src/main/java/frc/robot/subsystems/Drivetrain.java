@@ -254,6 +254,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         driveTable.getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
     private StructPublisher<Pose3d> pose3D =
         driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
+    private StructPublisher<Pose2d> pose2D =
+        driveTable.getStructTopic("2D Pose", Pose2d.struct).publish();
 
     /* Mechanisms to represent the swerve module states */
     private Mechanism2d[] m_moduleMechanisms =
@@ -344,7 +346,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
       moduleStates.set(state.ModuleStates);
       desiredStates.set(state.ModuleTargets);
-      pose3D.set(new Pose3d(getPose()));
+      pose3D.set(new Pose3d(pose));
+      pose2D.set(pose);
     }
   }
 }
