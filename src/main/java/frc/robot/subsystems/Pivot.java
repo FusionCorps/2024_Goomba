@@ -19,7 +19,6 @@ import frc.robot.Constants.PivotConstants;
 import java.util.function.DoubleSupplier;
 
 public class Pivot extends SubsystemBase {
-
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
   double errorThreshold = 0.5;
@@ -43,7 +42,8 @@ public class Pivot extends SubsystemBase {
     PIVOT_ANGLES_MAP.put(4.07, 12.70263671875);
 
     pivotEncoder = new DutyCycleEncoder(2);
-    adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO + PIVOT_GEAR_RATIO;
+    adjustedPivotEncoderAngle =
+        () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO + PIVOT_GEAR_RATIO;
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
@@ -89,10 +89,7 @@ public class Pivot extends SubsystemBase {
 
     diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
     diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
-    diagnosticsTab.addDouble(
-        "Pivot Encoder Pos", () -> adjustedPivotEncoderAngle.getAsDouble());
-    // diagnosticsTab.addDouble("Pivot Encoder Pos", () ->
-    // adjustedPivotEncoderAngle.getAsDouble());
+    diagnosticsTab.addDouble("Pivot Encoder Pos", () -> adjustedPivotEncoderAngle.getAsDouble());
     diagnosticsTab.addDouble(
         "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
     diagnosticsTab.addDouble(
@@ -112,9 +109,12 @@ public class Pivot extends SubsystemBase {
       motorConfigured = true;
     }
 
-    System.out.println(pivotMotor.getPosition().getValueAsDouble() + ", " +
-        adjustedPivotEncoderAngle.getAsDouble() + ", " +
-        pivotEncoder.getAbsolutePosition());
+    System.out.println(
+        pivotMotor.getPosition().getValueAsDouble()
+            + ", "
+            + adjustedPivotEncoderAngle.getAsDouble()
+            + ", "
+            + pivotEncoder.getAbsolutePosition());
   }
 
   public void syncPosition() {
@@ -174,7 +174,8 @@ public class Pivot extends SubsystemBase {
    * @return true if the pivot is close enough to its target position
    */
   public boolean reachedAngle() {
-    return Math.abs(targetPos - pivotMotor.getPosition().getValue()) < PivotConstants.PIVOT_ERROR_THRESHOLD;
+    return Math.abs(targetPos - pivotMotor.getPosition().getValue())
+        < PivotConstants.PIVOT_ERROR_THRESHOLD;
   }
 
   public double getPivotAngle() {

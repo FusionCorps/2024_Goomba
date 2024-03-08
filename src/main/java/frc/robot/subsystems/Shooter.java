@@ -23,22 +23,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
-// Rev motor PID example:
-// https://github.com/REVrobotics/SPARK-MAX-Examples/blob/master/Java/Velocity%20Closed%20Loop%20Control/src/main/java/frc/robot/Robot.java
-
-// Lookup table post:
-// https://www.chiefdelphi.com/t/frc-4481-team-rembrandts-2024-build-thread-open-alliance/441907/324
-// TODO: Use InterpolatingDoubleTreeMap for {distance: rpm} and {distance: pivotAngle} to determine
-// optimal rpm
-// CAVEAT: There are two motors moving at different velocities
-/*
- * Order of testing:
- * 1) Determine optimal PID and FF constants for both shooter motors
- * 2) Test the effects of different RPMs on both motors on the note
- * 3) Make the lookup table and then test it
- */
 public class Shooter extends SubsystemBase {
-
   private NetworkTable tuningTable =
       NetworkTableInstance.getDefault().getTable("Shooter PID Tuning");
 

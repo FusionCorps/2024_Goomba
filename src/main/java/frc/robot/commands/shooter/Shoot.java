@@ -23,7 +23,7 @@ public class Shoot extends Command {
     if (!HAS_STOPPED_REVING) {
       if (!IS_TRAPPING) {
         // if (mIndex.beamBroken() && mShooter.reachedSpeeds()) {
-          mIndex.runIndex(INDEX_PCT);
+        mIndex.runIndex(INDEX_PCT);
         // }
       } else {
         mIndex.runIndex(-INDEX_PCT);
@@ -31,7 +31,6 @@ public class Shoot extends Command {
     } else {
       mIndex.runIndex(0);
     }
-
   }
 
   // @Override

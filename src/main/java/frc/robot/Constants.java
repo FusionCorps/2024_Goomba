@@ -7,6 +7,7 @@ import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstants.SteerFeedbackType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModuleConstantsFactory;
 import com.pathplanner.lib.util.PIDConstants;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -52,7 +53,7 @@ public class Constants {
   }
 
   public class DrivetrainConstants {
-    // TODO: tune gains, slip current, couple ratio, and test torquecurrentfoc mode
+    // TODO: slip current, couple ratio
 
     // Both sets of gains need to be tuned to your individual robot.
 
@@ -239,9 +240,9 @@ public class Constants {
     public static boolean IS_SHUTTLING = false;
     public static final double PIVOT_GEAR_RATIO = 31.25;
     // public static final double PIVOT_GEAR_RATIO =
-        // (4.0)
-        //     * (50.0 / 24.0)
-        //     * (60.0 / 16.0); // multiply ratios of two gearboxes and then small gear turning big gear
+    // (4.0)
+    //     * (50.0 / 24.0)
+    //     * (60.0 / 16.0); // multiply ratios of two gearboxes and then small gear turning big gear
     // public static final double PIVOT_GEAR_RATIO =
     //     (4.0)
     //         * (50.0 / 24.0)
@@ -271,9 +272,6 @@ public class Constants {
     public static final double PIVOT_CRUISE_VELOCITY = 1000;
     public static final double PIVOT_ACCELERATION = 400;
     public static final double PIVOT_JERK = 4000;
-
-    // intake position of the pivot !!!!(UNTUNED)!!!!
-    public static final double PIVOT_INTAKE_POS = 30 / 360 * PIVOT_GEAR_RATIO;
 
     public static final double PIVOT_AMP_POS = 54.43; // empirical testing
 
@@ -373,4 +371,7 @@ public class Constants {
 
   public static ShuffleboardTab diagnosticsTab = Shuffleboard.getTab("Diagnostics");
   public static ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");
+
+  public static Translation2d blueSpeakerPos = new Translation2d(0.076, 5.547868);
+  public static Translation2d redSpeakerPos = new Translation2d(16.465042, 5.547868);
 }

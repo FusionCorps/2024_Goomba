@@ -30,7 +30,6 @@ public class RevShooter extends Command {
 
   @Override
   public void execute() {
-
     HAS_STOPPED_REVING = false;
     if (!IS_TRAPPING) {
       if (!PivotConstants.IS_SHUTTLING) {
@@ -49,7 +48,6 @@ public class RevShooter extends Command {
     } else {
       mShooter.setRPMs(0, 0);
     }
-
   }
 
   // @Override

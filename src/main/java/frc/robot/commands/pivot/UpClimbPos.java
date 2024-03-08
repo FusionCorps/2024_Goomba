@@ -6,19 +6,19 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.Pivot;
 
-public class UpClimbPos extends Command{
+public class UpClimbPos extends Command {
 
-    Pivot mPivot;
-    
-    public UpClimbPos(Pivot pivot){
-        mPivot = pivot;
+  Pivot mPivot;
 
-        addRequirements(mPivot);
-    }
+  public UpClimbPos(Pivot pivot) {
+    mPivot = pivot;
 
-    @Override
-    public void execute(){
-        IS_TRAPPING = true;
-        mPivot.setPivotAngle(PivotConstants.PIVOT_CLIMB_UP_POS);
-    }
+    addRequirements(mPivot);
+  }
+
+  @Override
+  public void execute() {
+    IS_TRAPPING = true;
+    mPivot.setPivotAngle(PivotConstants.PIVOT_CLIMB_UP_POS);
+  }
 }
