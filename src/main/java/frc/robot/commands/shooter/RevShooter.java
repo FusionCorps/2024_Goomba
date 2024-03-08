@@ -20,6 +20,7 @@ public class RevShooter extends Command {
   private double rRPM = 0;
 
   public RevShooter(Shooter shooter, double lRPM, double rRPM) {
+    System.out.println("rev " + lRPM);
     mShooter = shooter;
     this.lRPM = lRPM;
     this.rRPM = rRPM;

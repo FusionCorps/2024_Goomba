@@ -8,6 +8,7 @@ import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.driverTab;
+import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -21,6 +22,7 @@ import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.StageAlignment;
+import frc.robot.commands.IntakeNote;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
@@ -42,21 +44,26 @@ public class RobotContainer {
   Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Index index = new Index();
-  Pivot pivot = new Pivot();
+  public static Pivot pivot = new Pivot();
 
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /**
-   * Configures the bindings for the robot's subsystems and commands. LT: rev up shooter, releasing
-   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow pivot B: reset gyro
-   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake thru shooter Start
+   * Configures the bindings for the robot's subsystems and commands. LT: rev up
+   * shooter, releasing
+   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow
+   * pivot B: reset gyro
+   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake
+   * thru shooter Start
    * - Up climb pos Back - Down climb pos
    */
   private void configureBindings() {
 
     // run field centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+
+    // index.setDefaultCommand(new RunIndex(index, IndexConstants.INDEX_PCT));
 
     // reset odometry to current position, and zero gyro yaw
     robotController
@@ -68,14 +75,16 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    //  // outake through intake
-    // robotController.povLeft().whileTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)
-    //     .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
+    // // outake through intake
+    // robotController.povLeft().whileTrue(new SetPivotPos(pivot,
+    // PivotConstants.PIVOT_STOW_POS)
+    // .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
     // -INTAKE_RUN_PCT)));
 
     // // outake through shooter
     // robotController.povRight().whileTrue(
-    //     new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM).alongWith(new
+    // new RevShooter(shooter, SHOOTER_OUTTAKE_RPM,
+    // SHOOTER_OUTTAKE_RPM).alongWith(new
     // Shoot(shooter, index)));
 
     robotController
@@ -98,22 +107,28 @@ public class RobotContainer {
     robotController.leftTrigger().onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     robotController
         .leftTrigger()
-        .onFalse(
-            new Shoot(shooter, index).withTimeout(0.03).andThen(new RevShooter(shooter, 0, 0)));
+        .onFalse(new Shoot(shooter, index).withTimeout(0.2).andThen(new RevShooter(shooter, 0, 0)));
+    // .onFalse(
+    // new RunIndex(index, IndexConstants.INDEX_PCT).withTimeout(0.2).andThen(new
+    // RevShooter(shooter, 0, 0)));
+    // robotController.leftTrigger()
+    // .onFalse(new Shoot(shooter, index).withTimeout(0.03).andThen(new
+    // RevShooter(shooter, 0, 0)));
+
+    // robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
 
     // run intake
     robotController
         .rightTrigger()
-        .whileTrue(
-            new RunIntake(intake, INTAKE_RUN_PCT)
-                .alongWith(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)));
+        .whileTrue(new IntakeNote(intake, index, pivot));
 
-    // robotController.rightTrigger().whileTrue(new RunIntake(intake, 0.3));
+    // robotController.rightTrigger().whileTrue(new RunIntake(intake,
+    // INTAKE_RUN_PCT));
 
     // while the beam break sensor is not broken, run the index
-    new Trigger(index::beamBroken)
-        .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
-        .onTrue(new RunIndex(index, 0));
+    // new Trigger(index::beamBroken)
+    // .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
+    // .onTrue(new RunIndex(index, 0));
 
     // cancel reving the shooter
     robotController.y().onTrue(new RevShooter(shooter, 0, 0));
@@ -186,7 +201,9 @@ public class RobotContainer {
         "RevShooter", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(shooter, index));
     NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, index)); // TODO: fix
-    NamedCommands.registerCommand("RunIntake", new RunIntake(intake, INTAKE_RUN_PCT));
+    NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
+    NamedCommands.registerCommand("AimAndShoot",
+        new AutoPivotAim(pivot, drivetrain.getCamera()).andThen(new Shoot(shooter, index)));
     // NamedCommands.registerCommand(
     // "AimAtTarget",
     // new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
@@ -195,11 +212,10 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "getAutoStartingPos",
         Commands.runOnce(
-            () ->
-                System.out.println(
-                    "Starting Pose: "
-                        + PathPlannerAuto.getStaringPoseFromAutoFile(
-                            autoChooser.getSelected().getName()))));
+            () -> System.out.println(
+                "Starting Pose: "
+                    + PathPlannerAuto.getStaringPoseFromAutoFile(
+                        autoChooser.getSelected().getName()))));
     NamedCommands.registerCommand(
         "Rotate180",
         new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));

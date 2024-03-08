@@ -35,15 +35,15 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.87, 66.22);
-    PIVOT_ANGLES_MAP.put(2.27, 69.23);
-    PIVOT_ANGLES_MAP.put(2.67, PIVOT_STOW_POS);
-    PIVOT_ANGLES_MAP.put(3.06, 72.02);
-    PIVOT_ANGLES_MAP.put(3.73, 74.07);
-    PIVOT_ANGLES_MAP.put(3.37, 72.2);
+    PIVOT_ANGLES_MAP.put(1.56, 23.965087890625);
+    PIVOT_ANGLES_MAP.put(1.79, 22.768798828125);
+    PIVOT_ANGLES_MAP.put(2.15, 19.80615234375);
+    PIVOT_ANGLES_MAP.put(2.71, 17.603759765625);
+    PIVOT_ANGLES_MAP.put(3.41, 14.358154296875);
+    PIVOT_ANGLES_MAP.put(4.07, 12.70263671875);
+
     pivotEncoder = new DutyCycleEncoder(2);
-    adjustedPivotEncoderAngle =
-        () -> pivotEncoder.getAbsolutePosition() * PivotConstants.PIVOT_GEAR_RATIO;
+    adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO + PIVOT_GEAR_RATIO;
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
@@ -71,7 +71,8 @@ public class Pivot extends SubsystemBase {
 
     // pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), false));
 
-    // sets the position of the motor acc. to through bore encoder once the encoder is ready
+    // sets the position of the motor acc. to through bore encoder once the encoder
+    // is ready
     new Trigger(pivotEncoder::isConnected)
         .onTrue(
             runOnce(
@@ -89,7 +90,9 @@ public class Pivot extends SubsystemBase {
     diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
     diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
     diagnosticsTab.addDouble(
-        "Pivot Encoder Pos", () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
+        "Pivot Encoder Pos", () -> adjustedPivotEncoderAngle.getAsDouble());
+    // diagnosticsTab.addDouble("Pivot Encoder Pos", () ->
+    // adjustedPivotEncoderAngle.getAsDouble());
     diagnosticsTab.addDouble(
         "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
     diagnosticsTab.addDouble(
@@ -104,20 +107,19 @@ public class Pivot extends SubsystemBase {
         && pivotMotor.getPosition().getValueAsDouble() != adjustedPivotEncoderAngle.getAsDouble()) {
       System.out.println("syncing pivot encoders periodic");
 
-      pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
-      pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
+      pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
+      pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
       motorConfigured = true;
     }
 
-    System.out.println(
-        pivotMotor.getPosition().getValueAsDouble()
-            + ", "
-            + pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
+    System.out.println(pivotMotor.getPosition().getValueAsDouble() + ", " +
+        adjustedPivotEncoderAngle.getAsDouble() + ", " +
+        pivotEncoder.getAbsolutePosition());
   }
 
   public void syncPosition() {
-    pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
-    pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO);
+    pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
+    pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
   }
 
   /**
@@ -126,11 +128,9 @@ public class Pivot extends SubsystemBase {
    * @param pct the percentage to set the shooter to
    */
   public void setPivotPct(double pct) {
-    // pivotMotor.setPosition(pivotEncoder.getDistance() * PivotConstants.PIVOT_GEAR_RATIO);
-    System.out.println(
-        pivotMotor.getPosition().getValueAsDouble()
-            + ", "
-            + pivotEncoder.getDistance() * PIVOT_GEAR_RATIO);
+    // pivotMotor.setPosition(pivotEncoder.getDistance() *
+    // PivotConstants.PIVOT_GEAR_RATIO);
+
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
   }
@@ -152,17 +152,18 @@ public class Pivot extends SubsystemBase {
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
 
-    // if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >= errorThreshold){
-    //   if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
-    //     pivotMotor.set(-0.3);
-    //     pivotFollowerMotor.set(-0.3);
-    //   } else{
-    //     pivotMotor.set(0.3);
-    //     pivotFollowerMotor.set(0.3);
-    //   }
+    // if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >=
+    // errorThreshold){
+    // if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
+    // pivotMotor.set(-0.3);
+    // pivotFollowerMotor.set(-0.3);
     // } else{
-    //   pivotMotor.set(0);
-    //   pivotFollowerMotor.set(0);
+    // pivotMotor.set(0.3);
+    // pivotFollowerMotor.set(0.3);
+    // }
+    // } else{
+    // pivotMotor.set(0);
+    // pivotFollowerMotor.set(0);
     // }
 
     // System.out.println(pivotMotor.getMotorVoltage() + ", " +
@@ -173,8 +174,7 @@ public class Pivot extends SubsystemBase {
    * @return true if the pivot is close enough to its target position
    */
   public boolean reachedAngle() {
-    return Math.abs(targetPos - pivotMotor.getPosition().getValue())
-        < PivotConstants.PIVOT_ERROR_THRESHOLD;
+    return Math.abs(targetPos - pivotMotor.getPosition().getValue()) < PivotConstants.PIVOT_ERROR_THRESHOLD;
   }
 
   public double getPivotAngle() {

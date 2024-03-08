@@ -22,9 +22,9 @@ public class Shoot extends Command {
   public void execute() {
     if (!HAS_STOPPED_REVING) {
       if (!IS_TRAPPING) {
-        if (mIndex.beamBroken() && mShooter.reachedSpeeds()) {
+        // if (mIndex.beamBroken() && mShooter.reachedSpeeds()) {
           mIndex.runIndex(INDEX_PCT);
-        }
+        // }
       } else {
         mIndex.runIndex(-INDEX_PCT);
       }
@@ -34,10 +34,10 @@ public class Shoot extends Command {
 
   }
 
-  @Override
-  public boolean isFinished() {
-    return !mIndex.beamBroken();
-  }
+  // @Override
+  // public boolean isFinished() {
+  //   return !mIndex.beamBroken();
+  // }
 
   @Override
   public void end(boolean interrupted) {

@@ -237,14 +237,19 @@ public class Constants {
   public static class PivotConstants {
 
     public static boolean IS_SHUTTLING = false;
+    public static final double PIVOT_GEAR_RATIO = 31.25;
+    // public static final double PIVOT_GEAR_RATIO =
+        // (4.0)
+        //     * (50.0 / 24.0)
+        //     * (60.0 / 16.0); // multiply ratios of two gearboxes and then small gear turning big gear
     // public static final double PIVOT_GEAR_RATIO =
     //     (4.0)
     //         * (50.0 / 24.0)
     //         * (60.0 / 16.0)
     //         * (66.0 / 9.0); // multiply ratios of two gearboxes and then small gear turning big
     // gear
-    public static final double PIVOT_GEAR_RATIO =
-        31.25; // multiply ratios of two gearboxes and then small gear turning big gear
+    // public static final double PIVOT_GEAR_RATIO =
+    //     31.25; // multiply ratios of two gearboxes and then small gear turning big gear
 
     // error threshold of the pivot (1 deg)
     // public static final double PIVOT_ERROR_THRESHOLD = 1 / 360 * PIVOT_GEAR_RATIO;
@@ -255,7 +260,7 @@ public class Constants {
 
     public static final double PIVOT_OFFSET = 0.307506;
 
-    public static final double PIVOT_STOW_POS = 18.07;
+    public static final double PIVOT_STOW_POS = 17.56787109375;
 
     public static final double PIVOT_kV = 0;
     public static final double PIVOT_kP = 8;
@@ -310,12 +315,12 @@ public class Constants {
     public static final double SHOOTER_LEFT_kP = 0.0004;
     public static final double SHOOTER_LEFT_kI = 0.0;
     public static final double SHOOTER_LEFT_kD = 0.006;
-    public static final double SHOOTER_LEFT_kFF = 0.00018;
+    public static final double SHOOTER_LEFT_kFF = 0.000176;
 
     public static final double SHOOTER_RIGHT_kP = 0.0004;
     public static final double SHOOTER_RIGHT_kI = 0.0;
     public static final double SHOOTER_RIGHT_kD = 0.006; // increase
-    public static final double SHOOTER_RIGHT_kFF = 0.00018;
+    public static final double SHOOTER_RIGHT_kFF = 0.000176;
 
     public static final int SHOOTER_STALL_LIMIT_CURRENT = 50; // in amps
     public static final int SHOOTER_FREE_SPEED_LIMIT = 5500; // in RPM

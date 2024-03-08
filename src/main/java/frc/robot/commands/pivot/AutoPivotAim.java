@@ -19,7 +19,7 @@ public class AutoPivotAim extends Command {
     mPivot = pivot;
     addRequirements(pivot);
 
-    diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet);
+    // diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet);
   }
 
   @Override

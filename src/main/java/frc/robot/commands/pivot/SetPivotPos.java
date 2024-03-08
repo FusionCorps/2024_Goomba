@@ -17,12 +17,6 @@ public class SetPivotPos extends Command {
 
   @Override
   public void execute() {
-    // if (beamBreak.get()) {
-
-    //   mPivot.setAngle(24.51);
-    // } else {
-    //   mPivot.setAngle(PivotConstants.PIVOT_OFFSET * PivotConstants.PIVOT_GEAR_RATIO);
-    // }
     mPivot.setPivotAngle(angle);
   }
 

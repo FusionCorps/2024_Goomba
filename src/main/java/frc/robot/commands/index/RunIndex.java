@@ -20,6 +20,11 @@ public class RunIndex extends Command {
   }
 
   @Override
+  public boolean isFinished() {
+    return mIndex.beamBroken();
+  }
+
+  @Override
   public void end(boolean isInterrupted) {
     mIndex.runIndex(0);
   }
