@@ -5,6 +5,7 @@ import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kD;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kFF;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kI;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_LEFT_kP;
+import static frc.robot.Constants.ShooterConstants.SHOOTER_MAX_RPM;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_BOTTOM_ID;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_MOTOR_TOP_ID;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_RIGHT_kD;
@@ -44,7 +45,7 @@ public class Shooter extends SubsystemBase {
     leftController.setD(SHOOTER_LEFT_kD);
     leftController.setFF(SHOOTER_LEFT_kFF);
     leftController.setIZone(0);
-    leftController.setOutputRange(0, ShooterConstants.SHOOTER_MAX_RPM);
+    leftController.setOutputRange(-SHOOTER_MAX_RPM, ShooterConstants.SHOOTER_MAX_RPM);
     leftMotor.setInverted(true);
 
     // // Set PID for right motor
@@ -54,7 +55,7 @@ public class Shooter extends SubsystemBase {
     rightController.setD(SHOOTER_RIGHT_kD);
     rightController.setFF(SHOOTER_RIGHT_kFF);
     rightController.setIZone(0);
-    rightController.setOutputRange(0, ShooterConstants.SHOOTER_MAX_RPM);
+    rightController.setOutputRange(-SHOOTER_MAX_RPM, ShooterConstants.SHOOTER_MAX_RPM);
 
     leftMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);
     rightMotor.setSmartCurrentLimit(SHOOTER_STALL_LIMIT_CURRENT, SHOOTER_FREE_SPEED_LIMIT);

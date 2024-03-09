@@ -7,6 +7,7 @@ package frc.robot;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.driverTab;
+import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
 import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 
@@ -14,6 +15,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
@@ -51,9 +54,12 @@ public class RobotContainer {
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /**
-   * Configures the bindings for the robot's subsystems and commands. LT: rev up shooter, releasing
-   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow pivot B: reset gyro
-   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake thru shooter Start
+   * Configures the bindings for the robot's subsystems and commands. LT: rev up
+   * shooter, releasing
+   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow
+   * pivot B: reset gyro
+   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake
+   * thru shooter Start
    * - Up climb pos Back - Down climb pos
    */
   private void configureBindings() {
@@ -75,41 +81,50 @@ public class RobotContainer {
 
     // // outake through intake
     robotController.povLeft().whileTrue(new SetPivotPos(pivot,
-    PivotConstants.PIVOT_STOW_POS)
-    .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
-    -INTAKE_RUN_PCT)));
+        PivotConstants.PIVOT_STOW_POS)
+        .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
+            -INTAKE_RUN_PCT)));
 
     // // outake through shooter
     robotController.povRight().whileTrue(
-    new RevShooter(shooter, ShooterConstants.SHOOTER_OUTTAKE_RPM,
-    ShooterConstants.SHOOTER_OUTTAKE_RPM).alongWith(new
-    Shoot(shooter, index)));
+        new RevShooter(shooter, ShooterConstants.SHOOTER_OUTTAKE_RPM,
+            ShooterConstants.SHOOTER_OUTTAKE_RPM).alongWith(new Shoot(shooter, index)));
 
-    // robotController.povRight().whileTrue(new SetHooksPct(hooks, 0.5));
-    // robotController.povLeft().whileTrue(new SetHooksPct(hooks, -0.5));
+    robotController.povRight().onFalse(new RevShooter(shooter, 0, 0));
+
+    robotController.start().whileTrue(new SetHooksPct(hooks, 0.5));
+    robotController.back().whileTrue(new SetHooksPct(hooks, -0.5));
 
     robotController
         .rightBumper()
         .toggleOnTrue(
-            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())));
+            new AimAtTarget(drivetrain, index, StageAlignment.toleranceDeg)
+                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)));
 
     // aim at amp and shoot at amp
     // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
     // RotateToAngle(drivetrain,
-    // 90, MaxSpeed, 0.3),
-    // new ParallelCommandGroup(new
-    // StrafeToAprilTag(drivetrain, StageAlignment.toleranceDeg)),
-    // new
-    // SetPivotPos(pivot, PivotConstants.PIVOT_AMP_POS)));
+    // 90, 0.5)
+    // ));
 
     // TODO: test aim with localization
-    robotController.leftBumper().toggleOnTrue(new AimAtPoint(drivetrain, Constants.redSpeakerPos));
+    // robotController.leftBumper().toggleOnTrue(new AimAtPoint(drivetrain,
+    // Constants.redSpeakerPos));
+    robotController.leftBumper().whileTrue(new RevShooter(shooter, -500, -500).alongWith(new RunIndex(index, 0.17))
+        .andThen(new RevShooter(shooter, 0, 0)));
 
     robotController
         .leftTrigger()
         .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
         .onFalse(new Shoot(shooter, index).withTimeout(0.2).andThen(new StopRevShooter(shooter)));
+
+    // robotController
+    // .leftTrigger()
+    // .onTrue(new RevShooter(shooter, 500, 500))
+    // .onFalse(new Shoot(shooter, index).withTimeout(0.2).andThen(new
+    // StopRevShooter(shooter)));
+
+    // robotController.leftTrigger().whileTrue(new RunIndex(index, -0.17));
     // .onFalse(
     // new RunIndex(index, IndexConstants.INDEX_PCT).withTimeout(0.2).andThen(new
     // RevShooter(shooter, 0, 0)));
@@ -123,7 +138,8 @@ public class RobotContainer {
     // run complete intake mechanism
     robotController.rightTrigger().whileTrue(new IntakeNote(intake, index, pivot));
 
-    // robotController.rightTrigger().whileTrue(new RunIntake(intake, INTAKE_RUN_PCT));
+    // robotController.rightTrigger().whileTrue(new RunIntake(intake,
+    // INTAKE_RUN_PCT));
 
     // cancel reving the shooter
     robotController.y().onTrue(new StopRevShooter(shooter));
@@ -142,9 +158,9 @@ public class RobotContainer {
     robotController.povDown().whileTrue(new SetPivotPct(pivot, .1));
 
     // Move climb to upright position
-    robotController.start().onTrue(new UpClimbPos(pivot));
+    // robotController.start().onTrue(new UpClimbPos(pivot));
     // Move climb to down position
-    robotController.back().onTrue(new DownClimbPos(pivot));
+    // robotController.back().onTrue(new DownClimbPos(pivot));
 
     // // rotate in
     // place to aim at target
@@ -202,8 +218,8 @@ public class RobotContainer {
         new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));
     NamedCommands.registerCommand(
         "AimAndShoot",
-        (new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())))
+        (new AimAtTarget(drivetrain, index, StageAlignment.toleranceDeg)
+            .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)))
             .withTimeout(1.0)
             .andThen(new Shoot(shooter, index)));
 

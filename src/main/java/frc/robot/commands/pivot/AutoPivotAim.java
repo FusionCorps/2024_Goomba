@@ -4,18 +4,21 @@ import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Cameras;
+import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
 
 public class AutoPivotAim extends Command {
   Pivot mPivot;
   Cameras mCamera;
+  Index mIndex;
   double errorThreshold = 0.15;
   double distanceToAprilTag = 0.0;
   double angleToSet = 0.0;
 
-  public AutoPivotAim(Pivot pivot, Cameras camera) {
+  public AutoPivotAim(Pivot pivot, Cameras camera, Index index) {
     mCamera = camera;
     mPivot = pivot;
+    mIndex = index;
     addRequirements(pivot);
 
     // diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet);
@@ -30,9 +33,14 @@ public class AutoPivotAim extends Command {
     }
   }
 
+  // @Override
+  // public boolean isFinished() {
+  //   return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag))
+  //       < errorThreshold;
+  // }
+
   @Override
-  public boolean isFinished() {
-    return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag))
-        < errorThreshold;
+  public boolean isFinished(){
+    return !mIndex.beamBroken();
   }
 }

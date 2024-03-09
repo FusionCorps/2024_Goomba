@@ -19,16 +19,19 @@ public class RunIndex extends Command {
   @Override
   public void execute() {
     mIndex.runIndex(pct);
+    if(mIndex.beamBroken()){
+      RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
+    }
   }
 
-  @Override
-  public boolean isFinished() {
-    return mIndex.beamBroken();
-  }
+  // @Override
+  // public boolean isFinished() {
+  //   return mIndex.beamBroken();
+  // }
 
   @Override
   public void end(boolean isInterrupted) {
-    RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
+    RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
     mIndex.runIndex(0);
   }
 }

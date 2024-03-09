@@ -57,9 +57,8 @@ public class RevShooter extends Command {
     }
   }
 
-  // @Override
-  // public void end(boolean interrupted) {
-  // mShooter.setRPMs(0, 0);
-  // ShooterConstants.IS_AMP = false;
-  // }
+  @Override
+  public void end(boolean interrupted) {
+    RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+  }
 }

@@ -47,7 +47,7 @@ public class Cameras extends SubsystemBase {
               0.0 // roll, pitch, yaw
             });
 
-    limelightTable.getEntry("priorityid").setNumber(allianceColor == Alliance.Blue ? 8 : 3);
+    limelightTable.getEntry("priorityid").setNumber(allianceColor == Alliance.Blue ? 7 : 4);
 
     driverTab
         .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))
