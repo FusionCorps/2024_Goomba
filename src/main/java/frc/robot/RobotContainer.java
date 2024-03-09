@@ -7,6 +7,8 @@ package frc.robot;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.driverTab;
+import static frc.robot.Constants.IndexConstants.INDEX_PCT;
+import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -15,9 +17,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.PivotConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.AimAtPoint;
 import frc.robot.commands.IntakeNote;
+import frc.robot.commands.TransferHooks.SetHooksPct;
+import frc.robot.commands.index.RunIndex;
+import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.DownClimbPos;
 import frc.robot.commands.pivot.SetPivotPct;
@@ -39,6 +45,7 @@ public class RobotContainer {
   public Shooter shooter = new Shooter();
   public Index index = new Index();
   public Pivot pivot = new Pivot();
+  public TransferHooks hooks = new TransferHooks();
 
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
@@ -67,16 +74,19 @@ public class RobotContainer {
                 }));
 
     // // outake through intake
-    // robotController.povLeft().whileTrue(new SetPivotPos(pivot,
-    // PivotConstants.PIVOT_STOW_POS)
-    // .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
-    // -INTAKE_RUN_PCT)));
+    robotController.povLeft().whileTrue(new SetPivotPos(pivot,
+    PivotConstants.PIVOT_STOW_POS)
+    .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
+    -INTAKE_RUN_PCT)));
 
     // // outake through shooter
-    // robotController.povRight().whileTrue(
-    // new RevShooter(shooter, SHOOTER_OUTTAKE_RPM,
-    // SHOOTER_OUTTAKE_RPM).alongWith(new
-    // Shoot(shooter, index)));
+    robotController.povRight().whileTrue(
+    new RevShooter(shooter, ShooterConstants.SHOOTER_OUTTAKE_RPM,
+    ShooterConstants.SHOOTER_OUTTAKE_RPM).alongWith(new
+    Shoot(shooter, index)));
+
+    // robotController.povRight().whileTrue(new SetHooksPct(hooks, 0.5));
+    // robotController.povLeft().whileTrue(new SetHooksPct(hooks, -0.5));
 
     robotController
         .rightBumper()

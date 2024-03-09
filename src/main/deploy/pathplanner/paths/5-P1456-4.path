@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.8,
-        "y": 6.0
+        "x": 4.86,
+        "y": 6.34
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.86,
-        "y": 6.0
+        "x": 4.920000000000001,
+        "y": 6.34
       },
       "isLocked": false,
       "linkedName": null
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1456",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

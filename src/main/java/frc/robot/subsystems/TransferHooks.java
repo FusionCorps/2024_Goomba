@@ -13,7 +13,7 @@ import frc.robot.Constants.TransferHookConstants;
 public class TransferHooks extends SubsystemBase {
 
     private TalonFX transferHookMotor;
-    private TalonFXConfiguration transferHookConfiguration;
+    private TalonFXConfiguration transferHookConfiguration = new TalonFXConfiguration();
     double targetPosition;
 
     MotionMagicVoltage positionReq = new MotionMagicVoltage(0);

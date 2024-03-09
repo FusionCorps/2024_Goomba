@@ -12,12 +12,6 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "StrafePath"
@@ -26,6 +20,6 @@
       ]
     }
   },
-  "folder": "Old",
+  "folder": null,
   "choreoAuto": false
 }

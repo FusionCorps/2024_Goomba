@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 5.9,
-        "y": 6.2
+        "x": 5.56,
+        "y": 6.48
       },
       "prevControl": {
-        "x": 5.840000000000001,
-        "y": 6.2
+        "x": 5.5,
+        "y": 6.48
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 4.289153328819008,
+    "rotation": 8.686354581236694,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1564",
+  "folder": null,
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0
