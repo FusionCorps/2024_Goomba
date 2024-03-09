@@ -28,6 +28,6 @@ public class SetPivotPos extends Command {
   @Override
   public void end(boolean interrupted) {
     // System.out.println("set pos ended");
-    mPivot.syncPosition();
+    // mPivot.syncPosition();
   }
 }

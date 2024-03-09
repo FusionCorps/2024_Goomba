@@ -235,6 +235,22 @@ public class Constants {
     public static final double INTAKE_RUN_PCT = 0.75;
   }
 
+  public static class TransferHookConstants{
+    public static final int TRANSFER_HOOK_MOTOR_ID = 25;
+
+    public static final double TRANSFER_HOOK_kV = 0;
+    public static final double TRANSFER_HOOK_kP = 3;
+    public static final double TRANSFER_HOOK_kD = 0.01;
+    public static final double TRANSFER_HOOK_kI = 0;
+
+    // motion magic constraints
+    public static final double TRANSFER_HOOK_CRUISE_VELOCITY = 100;
+    public static final double TRANSFER_HOOK_ACCELERATION = 30;
+    public static final double TRANSFER_HOOK_JERK = 30;
+
+    public static final double TRANSFER_HOOK_ERROR = 0.5;
+  }
+
   public static class PivotConstants {
 
     public static boolean IS_SHUTTLING = false;

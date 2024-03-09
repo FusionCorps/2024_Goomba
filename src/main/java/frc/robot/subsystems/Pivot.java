@@ -44,7 +44,7 @@ public class Pivot extends SubsystemBase {
 
     pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle =
-        () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO + PIVOT_GEAR_RATIO;
+        () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
@@ -110,13 +110,13 @@ public class Pivot extends SubsystemBase {
       motorConfigured = true;
     }
 
-    SmartDashboard.putNumberArray(
-        "pivot encoders",
-        new double[] {
-          pivotMotor.getPosition().getValueAsDouble(),
-          adjustedPivotEncoderAngle.getAsDouble(),
-          pivotEncoder.getAbsolutePosition()
-        });
+    // SmartDashboard.putNumberArray(
+    //     "pivot encoders",
+    //     new double[] {
+    //       pivotMotor.getPosition().getValueAsDouble(),
+    //       adjustedPivotEncoderAngle.getAsDouble(),
+    //       pivotEncoder.getAbsolutePosition()
+    //     });
   }
 
   public void syncPosition() {

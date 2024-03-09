@@ -8,13 +8,16 @@ import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
 import static frc.robot.Constants.ShooterConstants.SHUTTLING_RPM;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.RobotContainer;
 import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.Shooter;
 
 /** Runs the shooter at given RPMS. */
 public class RevShooter extends Command {
   private Shooter mShooter;
+  
 
   private double lRPM = 0;
   private double rRPM = 0;
@@ -47,6 +50,10 @@ public class RevShooter extends Command {
       }
     } else {
       mShooter.setRPMs(0, 0);
+    }
+
+    if(mShooter.reachedSpeeds()){
+      RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
     }
   }
 
