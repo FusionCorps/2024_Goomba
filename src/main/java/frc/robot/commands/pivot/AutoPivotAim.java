@@ -11,7 +11,7 @@ public class AutoPivotAim extends Command {
   Pivot mPivot;
   Cameras mCamera;
   Index mIndex;
-  double errorThreshold = 0.15;
+  double errorThreshold = 0.2;
   double distanceToAprilTag = 0.0;
   double angleToSet = 0.0;
 
@@ -33,14 +33,14 @@ public class AutoPivotAim extends Command {
     }
   }
 
-  // @Override
-  // public boolean isFinished() {
-  //   return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag))
-  //       < errorThreshold;
-  // }
-
   @Override
-  public boolean isFinished(){
-    return !mIndex.beamBroken();
+  public boolean isFinished() {
+    return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag))
+        < errorThreshold;
   }
+
+  // @Override
+  // public boolean isFinished(){
+  //   return !mIndex.beamBroken();
+  // }
 }

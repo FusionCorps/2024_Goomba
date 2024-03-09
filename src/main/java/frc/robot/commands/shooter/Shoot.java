@@ -3,6 +3,7 @@ package frc.robot.commands.shooter;
 import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
 import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVING;
+import static frc.robot.Constants.ShooterConstants.IS_AMP;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
@@ -22,8 +23,11 @@ public class Shoot extends Command {
   public void execute() {
     if (!HAS_STOPPED_REVING) {
       if (!IS_TRAPPING) {
-        // if (mIndex.beamBroken() && mShooter.reachedSpeeds()) {
-        mIndex.runIndex(INDEX_PCT);
+        if(!IS_AMP){
+            mIndex.runIndex(INDEX_PCT);
+        } else {
+          mIndex.runIndex(0.23);
+        }
         // }
       } else {
         mIndex.runIndex(-INDEX_PCT);
@@ -33,10 +37,10 @@ public class Shoot extends Command {
     }
   }
 
-  // @Override
-  // public boolean isFinished() {
-  //   return !mIndex.beamBroken();
-  // }
+  @Override
+  public boolean isFinished() {
+    return !mIndex.beamBroken();
+  }
 
   @Override
   public void end(boolean interrupted) {

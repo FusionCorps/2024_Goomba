@@ -32,8 +32,14 @@ public class RevShooter extends Command {
   }
 
   @Override
-  public void execute() {
+  public void initialize(){
+
     HAS_STOPPED_REVING = false;
+  }
+
+  @Override
+  public void execute() {
+    
     if (!IS_TRAPPING) {
       if (!PivotConstants.IS_SHUTTLING) {
         if (!IS_AMP) {

@@ -18,12 +18,15 @@ public class RunIntake extends Command {
 
     addRequirements(intake);
   }
-
   @Override
-  public void execute() {
+  public void initialize(){
     IS_TRAPPING = false;
     PivotConstants.IS_SHUTTLING = false;
     IS_AMP = false;
+  }
+
+  @Override
+  public void execute() {
     mIntake.runIntake(speed);
   }
 

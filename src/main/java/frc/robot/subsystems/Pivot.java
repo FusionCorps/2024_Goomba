@@ -35,12 +35,13 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.56, 23.965087890625);
-    PIVOT_ANGLES_MAP.put(1.79, 22.768798828125);
-    PIVOT_ANGLES_MAP.put(2.15, 19.80615234375);
-    PIVOT_ANGLES_MAP.put(2.71, 17.603759765625);
-    PIVOT_ANGLES_MAP.put(3.41, 14.358154296875);
-    PIVOT_ANGLES_MAP.put(4.07, 12.70263671875);
+    PIVOT_ANGLES_MAP.put(1.08, 34.05615234375);
+    PIVOT_ANGLES_MAP.put(1.33, 27.271484375);
+    PIVOT_ANGLES_MAP.put(1.71, 21.98095703125);
+    PIVOT_ANGLES_MAP.put(2.06, 17.5654296875);
+    PIVOT_ANGLES_MAP.put(2.33, 15.73291015625);
+    PIVOT_ANGLES_MAP.put(2.75, 14.0087890625);
+    PIVOT_ANGLES_MAP.put(2.94, 12.1337890625);
 
     pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle =

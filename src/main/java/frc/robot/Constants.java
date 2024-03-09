@@ -232,7 +232,7 @@ public class Constants {
   public static class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 6;
 
-    public static final double INTAKE_RUN_PCT = 0.75;
+    public static final double INTAKE_RUN_PCT = 0.85;
   }
 
   public static class TransferHookConstants{
@@ -289,7 +289,7 @@ public class Constants {
     public static final double PIVOT_ACCELERATION = 400;
     public static final double PIVOT_JERK = 4000;
 
-    public static final double PIVOT_AMP_POS = 54.43; // empirical testing
+    public static final double PIVOT_AMP_POS = -55.894775390625; // empirical testing
 
     public static final double PIVOT_SHUTTLING_POS = 20;
 
@@ -320,8 +320,8 @@ public class Constants {
     public static final double SHUTTLING_RPM = 2000;
 
     // TODO: change these
-    public static final double AMP_RIGHT_SPEED = 2500;
-    public static final double AMP_LEFT_SPEED = 2500;
+    public static final double AMP_RIGHT_SPEED = -1200;
+    public static final double AMP_LEFT_SPEED = -1200;
 
     public static final double SHOOTER_MAX_RPM = 6784;
 
