@@ -37,10 +37,10 @@ public class Shoot extends Command {
     }
   }
 
-  @Override
-  public boolean isFinished() {
-    return !mIndex.beamBroken();
-  }
+  // @Override
+  // public boolean isFinished() {
+  //   return !mIndex.beamBroken();
+  // }
 
   @Override
   public void end(boolean interrupted) {

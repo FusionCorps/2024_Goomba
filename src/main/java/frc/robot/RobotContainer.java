@@ -32,9 +32,11 @@ import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.DownClimbPos;
 import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
+import frc.robot.commands.pivot.Shuttling;
 import frc.robot.commands.pivot.UpClimbPos;
 import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.shooter.StopRevShooter;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
 import frc.robot.commands.swerve.vision.RotateToAngle;
@@ -112,14 +114,16 @@ public class RobotContainer {
     // run index
     robotController.leftBumper().onTrue(new Amp(pivot));
 
-    // robotController.leftBumper().whileTrue(new RevShooter(shooter, -1200, -1200));
+    // robotController.leftBumper().whileTrue(new RevShooter(shooter, -1200,
+    // -1200));
     // robotController.leftBumper()
-    //     .onFalse(new RunIndex(index, 0.23).withTimeout(1).andThen(new RevShooter(shooter, 0, 0)));
+    // .onFalse(new RunIndex(index, 0.23).withTimeout(1).andThen(new
+    // RevShooter(shooter, 0, 0)));
 
     robotController.leftTrigger().onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     robotController
         .leftTrigger()
-        .onFalse(new Shoot(shooter, index).withTimeout(0.4).andThen(new RevShooter(shooter, 0, 0)));
+        .onFalse(new Shoot(shooter, index).withTimeout(0.8).andThen(new RevShooter(shooter, 0, 0)));
     // .onFalse(
     // new RunIndex(index, IndexConstants.INDEX_PCT).withTimeout(0.2).andThen(new
     // RevShooter(shooter, 0, 0)));
@@ -130,9 +134,16 @@ public class RobotContainer {
     // robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
 
     // run intake
-    robotController
-        .rightTrigger()
-        .whileTrue(new IntakeNote(intake, index, pivot));
+    // robotController
+    // .rightTrigger()
+    // .whileTrue(new IntakeNote(intake, index, pivot));
+
+    robotController.rightTrigger()
+        .whileTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS).alongWith(new Shoot(shooter, index))
+            .alongWith(new RunIntake(intake, INTAKE_RUN_PCT))
+            .alongWith(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM)));
+
+    robotController.rightTrigger().onFalse(new StopRevShooter(shooter));
 
     // robotController.rightTrigger().whileTrue(new RunIntake(intake,
     // INTAKE_RUN_PCT));
@@ -152,13 +163,11 @@ public class RobotContainer {
     robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
 
     // puts robot in shuttling mode
-    // robotController.x().onTrue(new Shuttling(pivot));
+    robotController.x().onTrue(new Shuttling(pivot));
 
     // move shooter up or down
     robotController.povUp().whileTrue(new SetPivotPct(pivot, -.4));
     robotController.povDown().whileTrue(new SetPivotPct(pivot, .15));
-
-    
 
     // Move climb to upright position
     // robotController.start().onTrue(new UpClimbPos(pivot));
@@ -213,7 +222,13 @@ public class RobotContainer {
   private void setupAutoChooser() {
     NamedCommands.registerCommand(
         "RevShooter", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+    NamedCommands.registerCommand(
+        "RevShooterAmpSide", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
+
+    NamedCommands.registerCommand("First shot at 5 Piece", new SetPivotPos(pivot, 19.55));
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(shooter, index));
+    NamedCommands.registerCommand("Last 5 Piece Angle", new SetPivotPos(pivot, 15.909912109375));
+    NamedCommands.registerCommand("4 Piece Shot", new SetPivotPos(pivot, 13));
     NamedCommands.registerCommand("StartPosition", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, index)); // TODO: fix
     NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
@@ -235,6 +250,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "Rotate180",
         new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));
+
+    NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
     // NamedCommands.registerCommand(
     // "AimAndShoot",
     // (new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
@@ -257,6 +274,8 @@ public class RobotContainer {
     autoChooser.addOption("RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
     autoChooser.addOption("4 Piece far side", AutoBuilder.buildAuto("Auto4-P873"));
     autoChooser.addOption("Close 4 Piece", AutoBuilder.buildAuto("Auto4-P321"));
+    autoChooser.addOption("1456", AutoBuilder.buildAuto("Auto5-P1456"));
+    autoChooser.addOption("1564", AutoBuilder.buildAuto("Auto5-P1564"));
 
     autoChooser.addOption("Auto1STopF", AutoBuilder.buildAuto("Auto1STopF"));
     autoChooser.addOption("Auto3STopF", AutoBuilder.buildAuto("Auto3STopF"));

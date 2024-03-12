@@ -23,9 +23,9 @@ public class RunIndex extends Command {
     
       mIndex.runIndex(pct);
     
-    if (mIndex.beamBroken()) {
-      RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
-    }
+    // if (mIndex.beamBroken()) {
+    //   RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
+    // }
   }
 
   // @Override
@@ -35,7 +35,7 @@ public class RunIndex extends Command {
 
   @Override
   public void end(boolean isInterrupted) {
-    RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+    // RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
     mIndex.runIndex(0);
   }
 }

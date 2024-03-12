@@ -16,6 +16,7 @@ import static frc.robot.Constants.ShooterConstants.SHOOTER_STALL_LIMIT_CURRENT;
 import static frc.robot.Constants.diagnosticsTab;
 
 import com.revrobotics.CANSparkBase.ControlType;
+import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
@@ -37,6 +38,8 @@ public class Shooter extends SubsystemBase {
     rightMotor = new CANSparkFlex(SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
     rightMotor.setInverted(false);
     leftMotor.setInverted(true);
+    rightMotor.setIdleMode(IdleMode.kCoast);
+    leftMotor.setIdleMode(IdleMode.kCoast);
 
     // Set PID for left motor
     leftController = leftMotor.getPIDController();

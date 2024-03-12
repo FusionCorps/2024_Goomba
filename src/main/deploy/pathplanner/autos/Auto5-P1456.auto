@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooter"
+                  "name": "RevShooterAmpSide"
                 }
               },
               {
@@ -28,7 +28,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "StartPosAmp"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -53,7 +59,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "First shot at 5 Piece"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -84,7 +96,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "4 Piece Shot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -115,7 +133,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "4 Piece Shot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -146,7 +170,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "4 Piece Shot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     }
                   ]

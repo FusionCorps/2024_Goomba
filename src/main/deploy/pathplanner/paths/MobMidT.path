@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7,
-        "y": 4.4
+        "x": 0.6900000000000001,
+        "y": 4.44
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.3630552442693458,
-        "y": 4.4
+        "x": 1.3530552442693458,
+        "y": 4.44
       },
       "isLocked": false,
       "linkedName": "LoadSide"

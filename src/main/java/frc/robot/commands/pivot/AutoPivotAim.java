@@ -2,6 +2,7 @@ package frc.robot.commands.pivot;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.Index;
@@ -35,8 +36,12 @@ public class AutoPivotAim extends Command {
 
   @Override
   public boolean isFinished() {
+    if(DriverStation.isAutonomous()){
     return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag))
         < errorThreshold;
+    } else{
+      return !mIndex.beamBroken();
+    }
   }
 
   // @Override

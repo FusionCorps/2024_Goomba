@@ -1,13 +1,14 @@
 package frc.robot.commands.shooter;
 
 import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
+import static frc.robot.Constants.PivotConstants.IS_SHUTTLING;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVING;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
-import static frc.robot.Constants.ShooterConstants.SHUTTLING_RPM;
-
+import static frc.robot.Constants.ShooterConstants.LEFT_SHUTTLING_RPM;
+import static frc.robot.Constants.ShooterConstants.RIGHT_SHUTTLING_RPM;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
@@ -40,6 +41,7 @@ public class RevShooter extends Command {
   @Override
   public void execute() {
     
+    System.out.println(IS_AMP + ", " + IS_SHUTTLING);
     if (!IS_TRAPPING) {
       if (!PivotConstants.IS_SHUTTLING) {
         if (!IS_AMP) {
@@ -52,7 +54,7 @@ public class RevShooter extends Command {
           mShooter.setRPMs(AMP_LEFT_SPEED, AMP_RIGHT_SPEED);
         }
       } else {
-        mShooter.setRPMs(SHUTTLING_RPM, SHUTTLING_RPM);
+        mShooter.setRPMs(LEFT_SHUTTLING_RPM, RIGHT_SHUTTLING_RPM);
       }
     } else {
       mShooter.setRPMs(0, 0);
@@ -65,6 +67,8 @@ public class RevShooter extends Command {
 
   @Override
   public void end(boolean interrupted) {
+    IS_SHUTTLING = false;
+    IS_AMP = false;
     RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
   }
 }
