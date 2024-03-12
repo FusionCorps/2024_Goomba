@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
     SignalLogger.setPath("home/lvuser/logs");
     SignalLogger.start();
     m_robotContainer = new RobotContainer();
-    
   }
 
   @Override
@@ -63,14 +62,10 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-    // System.out.println(RobotContainer.drivetrain.getPose());
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
-
-    RobotContainer.shooter.setRPMs(0,0);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }

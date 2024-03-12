@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooter"
+                  "name": "RevShooterLoadSide"
                 }
               },
               {
@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosAmp"
+                        "name": "StartPosLoad"
                       }
                     },
                     {
@@ -122,6 +122,12 @@
                       "type": "named",
                       "data": {
                         "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "StopRevShooter"
                       }
                     }
                   ]

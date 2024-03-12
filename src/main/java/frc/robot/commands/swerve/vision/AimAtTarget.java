@@ -13,22 +13,23 @@ import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Index;
+import java.util.function.BooleanSupplier;
 
 // aims at a target in place
 public class AimAtTarget extends Command {
   CommandXboxController mController = RobotContainer.robotController;
   private Drivetrain mDrivetrain;
-  private Index mIndex;
   private PIDController pid =
       new PIDController(
           AimingPIDS.toTargetRotKP, AimingPIDS.toTargetRotKI, AimingPIDS.toTargetRotKD);
+  private BooleanSupplier finishCondition;
 
-  public AimAtTarget(Drivetrain drivetrain, Index index, double toleranceDeg) {
+  public AimAtTarget(Drivetrain drivetrain, double toleranceDeg, BooleanSupplier finishCondition) {
     pid.setTolerance(toleranceDeg);
     pid.setSetpoint(0.0); // goal is to have tx be 0 (centered on target)
     mDrivetrain = drivetrain;
-    mIndex = index;
+    this.finishCondition = finishCondition;
+
     addRequirements(mDrivetrain);
 
     SmartDashboard.putData("AimAtTarget pid", pid);
@@ -54,8 +55,8 @@ public class AimAtTarget extends Command {
   }
 
   @Override
-  public boolean isFinished(){
-    return !mIndex.beamBroken();
+  public boolean isFinished() {
+    return finishCondition.getAsBoolean();
   }
 
   @Override

@@ -90,6 +90,5 @@ public class Shooter extends SubsystemBase {
   public boolean reachedSpeeds() {
     return Math.abs(leftMotor.getEncoder().getVelocity() - leftRPM) < 50.0
         && Math.abs(rightMotor.getEncoder().getVelocity() - rightRPM) < 50.0;
-    
   }
 }

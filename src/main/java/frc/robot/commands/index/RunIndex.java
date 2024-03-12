@@ -1,7 +1,5 @@
 package frc.robot.commands.index;
 
-import static frc.robot.Constants.ShooterConstants.IS_AMP;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
@@ -20,22 +18,22 @@ public class RunIndex extends Command {
 
   @Override
   public void execute() {
-    
-      mIndex.runIndex(pct);
-    
-    // if (mIndex.beamBroken()) {
-    //   RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
-    // }
+
+    mIndex.runIndex(pct);
+
+    if (mIndex.beamBroken()) {
+      RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
+    }
   }
 
-  // @Override
-  // public boolean isFinished() {
-  // return mIndex.beamBroken();
-  // }
+  @Override
+  public boolean isFinished() {
+    return mIndex.beamBroken();
+  }
 
   @Override
   public void end(boolean isInterrupted) {
-    // RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
+    RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
     mIndex.runIndex(0);
   }
 }

@@ -2,8 +2,8 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.66,
-      "y": 4.35
+      "x": 0.69,
+      "y": 4.44
     },
     "rotation": -60.0
   },
@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooter"
+                  "name": "RevShooterLoadSide"
                 }
               },
               {
@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosition"
+                        "name": "StartPosLoad"
                       }
                     },
                     {
@@ -110,6 +110,12 @@
                       "type": "named",
                       "data": {
                         "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "StopRevShooter"
                       }
                     }
                   ]

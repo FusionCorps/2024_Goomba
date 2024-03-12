@@ -1,19 +1,19 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
 import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
 import edu.wpi.first.cscore.HttpCamera;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
-import frc.robot.LimelightHelpers;
 import java.util.Map;
 
 public class Cameras extends SubsystemBase {
@@ -47,7 +47,7 @@ public class Cameras extends SubsystemBase {
               0.0 // roll, pitch, yaw
             });
 
-    limelightTable.getEntry("priorityid").setNumber(allianceColor == Alliance.Blue ? 7 : 4);
+    setPriorityID(allianceColor == Alliance.Blue ? 7 : 4);
 
     driverTab
         .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))
@@ -122,6 +122,10 @@ public class Cameras extends SubsystemBase {
     limelightTable.getEntry("pipeline").setNumber(pipeline);
   }
 
+  public void setPriorityID(int id) {
+    limelightTable.getEntry("priorityid").setNumber(id);
+  }
+
   /**
    * Returns the current Limelight pipeline.
    *
@@ -144,10 +148,18 @@ public class Cameras extends SubsystemBase {
     try {
       // get latest apriltag pose results, if on correct pipeline and target seen
       if (hasTarget() && getPipeline() == PIPELINE.APRILTAG_3D.value) {
-        // var fid =
-        //     LimelightHelpers.getLatestResults(LIMELIGHT_NAME).targetingResults.targets_Fiducials;
-        aprilTagTargetPose = LimelightHelpers.getTargetPose3d_RobotSpace(LIMELIGHT_NAME);
-        // aprilTagTargetPose = fid[0].getTargetPose_RobotSpace();
+        double[] dataPose =
+            limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
+        if (dataPose.length < 6) aprilTagTargetPose = new Pose3d();
+        else {
+          aprilTagTargetPose =
+              new Pose3d(
+                  new Translation3d(dataPose[0], dataPose[1], dataPose[2]),
+                  new Rotation3d(
+                      Units.degreesToRadians(dataPose[3]),
+                      Units.degreesToRadians(dataPose[4]),
+                      Units.degreesToRadians(dataPose[5])));
+        }
       }
     } catch (Exception e) {
       System.err.println("couldn't get latest apritag pose results");

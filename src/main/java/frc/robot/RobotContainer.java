@@ -4,74 +4,68 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
+import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_OUTTAKE_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.driverTab;
-import static frc.robot.Constants.IndexConstants.INDEX_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.IndexConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
-import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
-import frc.robot.commands.pivot.Amp;
 import frc.robot.commands.pivot.AutoPivotAim;
-import frc.robot.commands.pivot.DownClimbPos;
+import frc.robot.commands.pivot.SetAngleAmp;
+import frc.robot.commands.pivot.SetAngleShuttle;
 import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
-import frc.robot.commands.pivot.Shuttling;
-import frc.robot.commands.pivot.UpClimbPos;
 import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.shooter.StopRevShooter;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
-import frc.robot.commands.swerve.vision.RotateToAngle;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.TransferHooks;
 
 public class RobotContainer {
   public static CommandXboxController robotController = new CommandXboxController(0);
-  public static Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
+  Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
 
   Intake intake = new Intake();
-  public static Shooter shooter = new Shooter();
+  Shooter shooter = new Shooter();
   Index index = new Index();
   TransferHooks transferHooks = new TransferHooks();
-  public static Pivot pivot = new Pivot();
+  Pivot pivot = new Pivot();
 
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /**
-   * Configures the bindings for the robot's subsystems and commands. LT: rev up
-   * shooter, releasing
-   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow
-   * pivot B: reset gyro
-   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake
-   * thru shooter Start
+   * Configures the bindings for the robot's subsystems and commands. LT: rev up shooter, releasing
+   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow pivot B: reset gyro
+   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake thru shooter Start
    * - Up climb pos Back - Down climb pos
    */
   private void configureBindings() {
-
-    // run field centric swerve drive
+    // Run field-centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
 
-    // index.setDefaultCommand(new RunIndex(index, IndexConstants.INDEX_PCT));
-
-    // reset odometry to current position, and zero gyro yaw
+    // Reset odometry to current position, and zero gyro yaw
     robotController
         .b()
         .onTrue(
@@ -81,26 +75,56 @@ public class RobotContainer {
                   drivetrain.resetGyro();
                 }));
 
-    // // outake through intake
-    robotController.povLeft().whileTrue(new SetPivotPos(pivot,
-        PivotConstants.PIVOT_STOW_POS)
-        .alongWith(new RunIndex(index, -INDEX_PCT)).alongWith(new RunIntake(intake,
-            -INTAKE_RUN_PCT)));
-
-    // // outake through shooter
-    robotController.povRight().whileTrue(
-        new RevShooter(shooter, SHOOTER_OUTTAKE_RPM,
-            SHOOTER_OUTTAKE_RPM).alongWith(new Shoot(shooter, index)));
-    robotController.povRight().onFalse(new RevShooter(shooter, 0, 0));
-
-    robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
-    robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
-
+    // Aims in-place at april tag
     robotController
         .rightBumper()
         .toggleOnTrue(
-            new AimAtTarget(drivetrain, index, StageAlignment.toleranceDeg)
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
                 .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)));
+
+    // Run intake mechanism
+    robotController.rightTrigger().whileTrue(new IntakeNote(intake, index, pivot));
+
+    // Shoots note at speaker
+    robotController
+        .leftTrigger()
+        .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
+        .onFalse(new Shoot(index).withTimeout(0.8).andThen(new StopRevShooter(shooter)));
+
+    // Manually stop revving the shooter
+    robotController.y().onTrue(new StopRevShooter(shooter));
+    robotController.povRight().onFalse(new StopRevShooter(shooter));
+
+    // Stows Pivot
+    robotController.a().onTrue(new SetPivotPos(pivot, PIVOT_STOW_POS));
+
+    // Move pivot up/down
+    robotController.povUp().whileTrue(new SetPivotPct(pivot, -.4));
+    robotController.povDown().whileTrue(new SetPivotPct(pivot, .15));
+
+    // Sets pivot to angle for Amp scoring
+    robotController.leftBumper().onTrue(new SetAngleAmp(pivot));
+
+    // Sets Pivot to angle for Shuttling
+    robotController.x().onTrue(new SetAngleShuttle(pivot));
+
+    // Outtake thru intake
+    robotController
+        .povLeft()
+        .whileTrue(
+            new SetPivotPos(pivot, PIVOT_STOW_POS)
+                .alongWith(new RunIndex(index, -INDEX_RUN_PCT))
+                .alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
+
+    // Outtake thru shooter
+    robotController
+        .povRight()
+        .whileTrue(
+            new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
+                .alongWith(new Shoot(index)));
+
+    robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
+    robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
 
     // aim at amp and shoot at amp
     // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
@@ -111,63 +135,21 @@ public class RobotContainer {
     // new
     // SetPivotPos(pivot, PivotConstants.PIVOT_AMP_POS)));
 
-    // run index
-    robotController.leftBumper().onTrue(new Amp(pivot));
-
     // robotController.leftBumper().whileTrue(new RevShooter(shooter, -1200,
     // -1200));
     // robotController.leftBumper()
     // .onFalse(new RunIndex(index, 0.23).withTimeout(1).andThen(new
     // RevShooter(shooter, 0, 0)));
 
-    robotController.leftTrigger().onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
-    robotController
-        .leftTrigger()
-        .onFalse(new Shoot(shooter, index).withTimeout(0.8).andThen(new RevShooter(shooter, 0, 0)));
-    // .onFalse(
-    // new RunIndex(index, IndexConstants.INDEX_PCT).withTimeout(0.2).andThen(new
-    // RevShooter(shooter, 0, 0)));
-    // robotController.leftTrigger()
-    // .onFalse(new Shoot(shooter, index).withTimeout(0.03).andThen(new
-    // RevShooter(shooter, 0, 0)));
-
-    // robotController.leftTrigger().whileTrue(new RunIndex(index, INDEX_PCT));
-
-    // run intake
+    // Continuous intake+shooting motion
     // robotController
-    // .rightTrigger()
-    // .whileTrue(new IntakeNote(intake, index, pivot));
-
-    robotController.rightTrigger()
-        .whileTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS).alongWith(new Shoot(shooter, index))
-            .alongWith(new RunIntake(intake, INTAKE_RUN_PCT))
-            .alongWith(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM)));
-
-    robotController.rightTrigger().onFalse(new StopRevShooter(shooter));
-
-    // robotController.rightTrigger().whileTrue(new RunIntake(intake,
-    // INTAKE_RUN_PCT));
-
-    // while the beam break sensor is not broken, run the index
-    // new Trigger(index::beamBroken)
-    // .whileFalse(new RunIndex(index, IndexConstants.INDEX_PCT))
-    // .onTrue(new RunIndex(index, 0));
-
-    // cancel reving the shooter
-    robotController.y().onTrue(new RevShooter(shooter, 0, 0));
-
-    // robotController.y().onTrue(new RevShooter(shooter, 3000, 2000));
-    // robotController.x().onTrue(new RevShooter(shooter, 0, 0));
-
-    // Stow Pivot
-    robotController.a().onTrue(new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS));
-
-    // puts robot in shuttling mode
-    robotController.x().onTrue(new Shuttling(pivot));
-
-    // move shooter up or down
-    robotController.povUp().whileTrue(new SetPivotPct(pivot, -.4));
-    robotController.povDown().whileTrue(new SetPivotPct(pivot, .15));
+    //     .rightTrigger()
+    //     .whileTrue(
+    //         new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)
+    //             .alongWith(new Shoot(index))
+    //             .alongWith(new RunIntake(intake, INTAKE_RUN_PCT))
+    //             .alongWith(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))).onFalse(new
+    // StopRevShooter(shooter));
 
     // Move climb to upright position
     // robotController.start().onTrue(new UpClimbPos(pivot));
@@ -196,14 +178,6 @@ public class RobotContainer {
     // .andThen(
     // Commands.runOnce(
     // () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
-
-  }
-
-  public RobotContainer() {
-    setupAutoChooser();
-    setupPipelineChooser();
-
-    configureBindings();
   }
 
   private void setupPipelineChooser() {
@@ -221,47 +195,25 @@ public class RobotContainer {
   // method that configures and initializes everything necessary for auton
   private void setupAutoChooser() {
     NamedCommands.registerCommand(
-        "RevShooter", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+        "RevShooterLoadSide", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     NamedCommands.registerCommand(
         "RevShooterAmpSide", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
+    NamedCommands.registerCommand("StopRevShooter", new StopRevShooter(shooter));
 
-    NamedCommands.registerCommand("First shot at 5 Piece", new SetPivotPos(pivot, 19.55));
-    NamedCommands.registerCommand("ShootSpeaker", new Shoot(shooter, index));
-    NamedCommands.registerCommand("Last 5 Piece Angle", new SetPivotPos(pivot, 15.909912109375));
-    NamedCommands.registerCommand("4 Piece Shot", new SetPivotPos(pivot, 13));
-    NamedCommands.registerCommand("StartPosition", new SetPivotPos(pivot, 33.84));
-    NamedCommands.registerCommand("ShootAmp", new Shoot(shooter, index)); // TODO: fix
-    NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
-    NamedCommands.registerCommand("PivotAim", new AutoPivotAim(pivot, drivetrain.getCamera(), index));
-    NamedCommands.registerCommand("AimAndShoot",
-        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new Shoot(shooter, index)));
-    // NamedCommands.registerCommand(
-    // "AimAtTarget",
-    // new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-    // .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera()))
-    // .withTimeout(2.0));
-    NamedCommands.registerCommand(
-        "getAutoStartingPos",
-        Commands.runOnce(
-            () -> System.out.println(
-                "Starting Pose: "
-                    + PathPlannerAuto.getStaringPoseFromAutoFile(
-                        autoChooser.getSelected().getName()))));
-    NamedCommands.registerCommand(
-        "Rotate180",
-        new RotateToAngle(drivetrain, 180.0, StageAlignment.toleranceDeg).withTimeout(1.0));
-
+    NamedCommands.registerCommand("StartPosLoad", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
-    // NamedCommands.registerCommand(
-    // "AimAndShoot",
-    // (new AimAtTarget(drivetrain, StageAlignment.toleranceDeg)
-    // .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera())))
-    // .withTimeout(2.0)
-    // .andThen(new Shoot(shooter, index)));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 19.55));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 13));
 
-    // testing the single path autons
-    // autoChooser.addOption("ScoreOne",
-    // drivetrain.singlePathToCommand("ScoreOne"));
+    NamedCommands.registerCommand(
+        "AimAndShoot",
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new Shoot(index)));
+
+    NamedCommands.registerCommand("ShootSpeaker", new Shoot(index));
+    NamedCommands.registerCommand(
+        "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index)));
+
+    NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
 
     System.out.println(AutoBuilder.getAllAutoNames());
     // if this throws an error, make sure all autos are complete
@@ -281,6 +233,12 @@ public class RobotContainer {
     autoChooser.addOption("Auto3STopF", AutoBuilder.buildAuto("Auto3STopF"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
+  }
+
+  public RobotContainer() {
+    setupAutoChooser();
+    setupPipelineChooser();
+    configureBindings();
   }
 
   public Command getAutonomousCommand() {

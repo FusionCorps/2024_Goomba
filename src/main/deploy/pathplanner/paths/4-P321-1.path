@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.6597969003303449,
-        "y": 4.35
+        "x": 0.6900000000000001,
+        "y": 4.44
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.7197969003303452,
-        "y": 4.35
+        "x": 0.7500000000000003,
+        "y": 4.44
       },
       "isLocked": false,
-      "linkedName": "Subwoofer"
+      "linkedName": "LoadSide"
     },
     {
       "anchor": {
@@ -48,5 +48,5 @@
     "rotation": -60.945609870897705,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

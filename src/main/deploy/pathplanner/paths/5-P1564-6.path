@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.9,
-        "y": 6.2
+        "x": 5.884649034255332,
+        "y": 6.221290163378048
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.942426406871194,
-        "y": 6.157573593128807
+        "x": 5.927075441126526,
+        "y": 6.178863756506854
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "5-P1456/P1564 Far Shoot"
     },
     {
       "anchor": {

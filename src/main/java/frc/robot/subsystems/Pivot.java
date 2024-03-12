@@ -13,7 +13,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
@@ -45,8 +44,7 @@ public class Pivot extends SubsystemBase {
     PIVOT_ANGLES_MAP.put(3.45, 13.201416015625);
 
     pivotEncoder = new DutyCycleEncoder(2);
-    adjustedPivotEncoderAngle =
-        () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;
+    adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);

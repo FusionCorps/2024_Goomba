@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooter"
+                  "name": "RevShooterAmpSide"
                 }
               },
               {
@@ -28,7 +28,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "StartPosAmp"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -53,7 +59,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-1"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -84,7 +96,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-Far"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -110,6 +128,18 @@
                       "type": "path",
                       "data": {
                         "pathName": "5-P1564-5"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PivotAimP1456/P1564-Far"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -140,7 +170,19 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-Far"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "StopRevShooter"
                       }
                     }
                   ]

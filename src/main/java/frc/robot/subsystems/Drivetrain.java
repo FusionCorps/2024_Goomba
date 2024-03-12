@@ -43,18 +43,15 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import frc.robot.Constants;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
-import frc.robot.LimelightHelpers;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.RotateToAngle;
+import frc.robot.util.LimelightHelpers;
 
 /**
- * This class represents a command-based swerve drivetrain subsystem. It extends
- * the
- * SwerveDrivetrain class and implements the Subsystem interface. It provides
- * methods for
- * controlling the swerve drivetrain, updating odometry, and executing various
- * commands related to
+ * This class represents a command-based swerve drivetrain subsystem. It extends the
+ * SwerveDrivetrain class and implements the Subsystem interface. It provides methods for
+ * controlling the swerve drivetrain, updating odometry, and executing various commands related to
  * the drivetrain.
  */
 public class Drivetrain extends SwerveDrivetrain implements Subsystem {
@@ -95,8 +92,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     // measurements)
     setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, 9999999));
 
-    if (Utils.isSimulation())
-      startSimThread();
+    if (Utils.isSimulation()) startSimThread();
 
     registerTelemetry(driveTelemetry::telemeterize);
   }
@@ -108,13 +104,11 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   }
 
   /**
-   * Updates the odometry from the latest april tag data. If the robot is real and
-   * the limelight
+   * Updates the odometry from the latest april tag data. If the robot is real and the limelight
    * detects a target, the robot's position and orientation will be updated.
    *
-   * @param maxDist the maximum distance to the target in meters required for
-   *                odometry to be
-   *                updated, recommended <= 1.0
+   * @param maxDist the maximum distance to the target in meters required for odometry to be
+   *     updated, recommended <= 1.0
    */
   private void updateOdometryFromAprilTags(double maxDist) {
     if (RobotBase.isReal()
@@ -122,7 +116,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         && mCamera.getPipeline() == PIPELINE.APRILTAG_3D.value
         && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
 
-      LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue(LIMELIGHT_NAME);
+      LimelightHelpers.PoseEstimate limelightMeasurement =
+          LimelightHelpers.getBotPoseEstimate_wpiBlue(LIMELIGHT_NAME);
 
       addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds);
     }
@@ -146,9 +141,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   }
 
   /**
-   * @return true if the robot is on the red alliance, false if on the blue
-   *         alliance or if the
-   *         alliance color is unknown
+   * @return true if the robot is on the red alliance, false if on the blue alliance or if the
+   *     alliance color is unknown
    */
   private boolean isAllianceRed() {
     // Boolean supplier that controls when the path will be mirrored for the red
@@ -163,16 +157,16 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   }
 
   /**
-   * Drives the robot relative to its current orientation using the specified
-   * speeds.
+   * Drives the robot relative to its current orientation using the specified speeds.
    *
    * @param speeds The desired chassis speeds in meters per second.
    */
   private void driveRobotRelative(ChassisSpeeds speeds) {
-    SwerveRequest request = new SwerveRequest.RobotCentric()
-        .withVelocityX(speeds.vxMetersPerSecond)
-        .withVelocityY(speeds.vyMetersPerSecond)
-        .withRotationalRate(speeds.omegaRadiansPerSecond);
+    SwerveRequest request =
+        new SwerveRequest.RobotCentric()
+            .withVelocityX(speeds.vxMetersPerSecond)
+            .withVelocityY(speeds.vyMetersPerSecond)
+            .withRotationalRate(speeds.omegaRadiansPerSecond);
     setControl(request);
   }
 
@@ -214,15 +208,16 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     m_lastSimTime = Utils.getCurrentTimeSeconds();
 
     /* Run simulation at a faster rate so PID gains behave more reasonably */
-    m_simNotifier = new Notifier(
-        () -> {
-          final double currentTime = Utils.getCurrentTimeSeconds();
-          double deltaTime = currentTime - m_lastSimTime;
-          m_lastSimTime = currentTime;
+    m_simNotifier =
+        new Notifier(
+            () -> {
+              final double currentTime = Utils.getCurrentTimeSeconds();
+              double deltaTime = currentTime - m_lastSimTime;
+              m_lastSimTime = currentTime;
 
-          /* use the measured time delta, get battery voltage from WPILib */
-          updateSimState(deltaTime, RobotController.getBatteryVoltage());
-        });
+              /* use the measured time delta, get battery voltage from WPILib */
+              updateSimState(deltaTime, RobotController.getBatteryVoltage());
+            });
     m_simNotifier.startPeriodic(kSimLoopPeriod);
   }
 
@@ -255,55 +250,63 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     private Field2d field2d = new Field2d();
     // use networktables for things that cannot be displayed on shuffleboard
     private NetworkTable driveTable = NetworkTableInstance.getDefault().getTable("Drivetrain");
-    private StructArrayPublisher<SwerveModuleState> moduleStates = driveTable
-        .getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
-    private StructArrayPublisher<SwerveModuleState> desiredStates = driveTable
-        .getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
-    private StructPublisher<Pose3d> pose3D = driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
-    private StructPublisher<Pose2d> pose2D = driveTable.getStructTopic("2D Pose", Pose2d.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> moduleStates =
+        driveTable.getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> desiredStates =
+        driveTable.getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
+    private StructPublisher<Pose3d> pose3D =
+        driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
+    private StructPublisher<Pose2d> pose2D =
+        driveTable.getStructTopic("2D Pose", Pose2d.struct).publish();
 
     /* Mechanisms to represent the swerve module states */
-    private Mechanism2d[] m_moduleMechanisms = new Mechanism2d[] {
-        new Mechanism2d(1, 1),
-        new Mechanism2d(1, 1),
-        new Mechanism2d(1, 1),
-        new Mechanism2d(1, 1),
-    };
+    private Mechanism2d[] m_moduleMechanisms =
+        new Mechanism2d[] {
+          new Mechanism2d(1, 1),
+          new Mechanism2d(1, 1),
+          new Mechanism2d(1, 1),
+          new Mechanism2d(1, 1),
+        };
     /* A direction and length changing ligament for speed representation */
-    private MechanismLigament2d[] m_moduleSpeeds = new MechanismLigament2d[] {
-        m_moduleMechanisms[0]
-            .getRoot("RootSpeed", 0.5, 0.5)
-            .append(new MechanismLigament2d("Speed", 0.5, 0)),
-        m_moduleMechanisms[1]
-            .getRoot("RootSpeed", 0.5, 0.5)
-            .append(new MechanismLigament2d("Speed", 0.5, 0)),
-        m_moduleMechanisms[2]
-            .getRoot("RootSpeed", 0.5, 0.5)
-            .append(new MechanismLigament2d("Speed", 0.5, 0)),
-        m_moduleMechanisms[3]
-            .getRoot("RootSpeed", 0.5, 0.5)
-            .append(new MechanismLigament2d("Speed", 0.5, 0)),
-    };
+    private MechanismLigament2d[] m_moduleSpeeds =
+        new MechanismLigament2d[] {
+          m_moduleMechanisms[0]
+              .getRoot("RootSpeed", 0.5, 0.5)
+              .append(new MechanismLigament2d("Speed", 0.5, 0)),
+          m_moduleMechanisms[1]
+              .getRoot("RootSpeed", 0.5, 0.5)
+              .append(new MechanismLigament2d("Speed", 0.5, 0)),
+          m_moduleMechanisms[2]
+              .getRoot("RootSpeed", 0.5, 0.5)
+              .append(new MechanismLigament2d("Speed", 0.5, 0)),
+          m_moduleMechanisms[3]
+              .getRoot("RootSpeed", 0.5, 0.5)
+              .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        };
     /* A direction changing and length constant ligament for module direction */
-    private MechanismLigament2d[] m_moduleDirections = new MechanismLigament2d[] {
-        m_moduleMechanisms[0]
-            .getRoot("RootDirection", 0.5, 0.5)
-            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-        m_moduleMechanisms[1]
-            .getRoot("RootDirection", 0.5, 0.5)
-            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-        m_moduleMechanisms[2]
-            .getRoot("RootDirection", 0.5, 0.5)
-            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-        m_moduleMechanisms[3]
-            .getRoot("RootDirection", 0.5, 0.5)
-            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-    };
+    private MechanismLigament2d[] m_moduleDirections =
+        new MechanismLigament2d[] {
+          m_moduleMechanisms[0]
+              .getRoot("RootDirection", 0.5, 0.5)
+              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+          m_moduleMechanisms[1]
+              .getRoot("RootDirection", 0.5, 0.5)
+              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+          m_moduleMechanisms[2]
+              .getRoot("RootDirection", 0.5, 0.5)
+              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+          m_moduleMechanisms[3]
+              .getRoot("RootDirection", 0.5, 0.5)
+              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        };
 
-    private DoubleEntry odometryFrequency = driveTable.getDoubleTopic("Odometry Frequency").getEntry(0.0);
+    private DoubleEntry odometryFrequency =
+        driveTable.getDoubleTopic("Odometry Frequency").getEntry(0.0);
     private DoubleEntry robotSpeed = driveTable.getDoubleTopic("Robot Speed").getEntry(0.0);
-    private DoubleEntry robotVelocityX = driveTable.getDoubleTopic("Robot Velocity X").getEntry(0.0);
-    private DoubleEntry robotVelocityY = driveTable.getDoubleTopic("Robot Velocity Y").getEntry(0.0);
+    private DoubleEntry robotVelocityX =
+        driveTable.getDoubleTopic("Robot Velocity X").getEntry(0.0);
+    private DoubleEntry robotVelocityY =
+        driveTable.getDoubleTopic("Robot Velocity Y").getEntry(0.0);
 
     public DriveTelemetry(Drivetrain drivetrain) {
       PathPlannerLogging.setLogActivePathCallback(

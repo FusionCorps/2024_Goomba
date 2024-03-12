@@ -9,58 +9,50 @@ import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
 import static frc.robot.Constants.ShooterConstants.LEFT_SHUTTLING_RPM;
 import static frc.robot.Constants.ShooterConstants.RIGHT_SHUTTLING_RPM;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
-import frc.robot.Constants.PivotConstants;
 import frc.robot.subsystems.Shooter;
 
 /** Runs the shooter at given RPMS. */
 public class RevShooter extends Command {
   private Shooter mShooter;
-  
 
   private double lRPM = 0;
   private double rRPM = 0;
 
   public RevShooter(Shooter shooter, double lRPM, double rRPM) {
-    System.out.println("rev " + lRPM);
     mShooter = shooter;
     this.lRPM = lRPM;
     this.rRPM = rRPM;
-
     addRequirements(mShooter);
   }
 
   @Override
-  public void initialize(){
-
+  public void initialize() {
+    System.out.println("rev " + lRPM);
     HAS_STOPPED_REVING = false;
   }
 
   @Override
   public void execute() {
-    
-    System.out.println(IS_AMP + ", " + IS_SHUTTLING);
-    if (!IS_TRAPPING) {
-      if (!PivotConstants.IS_SHUTTLING) {
-        if (!IS_AMP) {
-          if (!IS_SHOOTING_RIGHT) {
-            mShooter.setRPMs(lRPM, rRPM);
-          } else {
-            mShooter.setRPMs(rRPM, lRPM);
-          }
-        } else {
-          mShooter.setRPMs(AMP_LEFT_SPEED, AMP_RIGHT_SPEED);
-        }
-      } else {
-        mShooter.setRPMs(LEFT_SHUTTLING_RPM, RIGHT_SHUTTLING_RPM);
-      }
-    } else {
+    SmartDashboard.putString("Shooter Consts", IS_AMP + ", " + IS_SHUTTLING);
+
+    if (IS_TRAPPING) {
       mShooter.setRPMs(0, 0);
+    } else if (IS_SHUTTLING) {
+      mShooter.setRPMs(LEFT_SHUTTLING_RPM, RIGHT_SHUTTLING_RPM);
+    } else if (IS_AMP) {
+      mShooter.setRPMs(AMP_LEFT_SPEED, AMP_RIGHT_SPEED);
+    } else if (IS_SHOOTING_RIGHT) {
+      mShooter.setRPMs(rRPM, lRPM);
+    } else {
+      mShooter.setRPMs(lRPM, rRPM);
     }
 
-    if(mShooter.reachedSpeeds()){
+    if (mShooter.reachedSpeeds()) {
       RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
     }
   }

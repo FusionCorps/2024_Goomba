@@ -1,6 +1,6 @@
 package frc.robot.commands.shooter;
 
-import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVING;
+import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVVING;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
@@ -17,7 +17,7 @@ public class StopRevShooter extends Command {
 
   @Override
   public void execute() {
-    HAS_STOPPED_REVING = true;
-    mShooter.setRPMs(0, 0);
+    HAS_STOPPED_REVVING = true;
+    mShooter.setRPMs(0.0, 0.0);
   }
 }
