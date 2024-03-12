@@ -4,7 +4,7 @@ import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
 import static frc.robot.Constants.PivotConstants.IS_SHUTTLING;
 import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
 import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
-import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVING;
+import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVVING;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
 import static frc.robot.Constants.ShooterConstants.LEFT_SHUTTLING_RPM;
@@ -33,7 +33,7 @@ public class RevShooter extends Command {
   @Override
   public void initialize() {
     System.out.println("rev " + lRPM);
-    HAS_STOPPED_REVING = false;
+    HAS_STOPPED_REVVING = false;
   }
 
   @Override
