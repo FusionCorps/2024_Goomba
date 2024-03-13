@@ -204,7 +204,6 @@ public class RobotContainer {
         "RevShooterLoadSide", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     NamedCommands.registerCommand(
         "RevShooterAmpSide", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
-    NamedCommands.registerCommand("StopRevShooter", new StopRevShooter(shooter));
 
     NamedCommands.registerCommand("StartPosLoad", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
