@@ -58,10 +58,24 @@ public class RobotContainer {
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
   /**
-   * Configures the bindings for the robot's subsystems and commands. LT: rev up shooter, releasing
-   * shooter RT: intake + stow RB: aim w speaker LB: aim with amp/trap A: stow pivot B: reset gyro
-   * POV up/down - move pivot POV right - outtake thru intake POV left - outtake thru shooter Start
-   * - Up climb pos Back - Down climb pos
+   * Configures the bindings for the robot's subsystems and commands.
+   *
+   * <ul>
+   *   <li>Left/Right sticks - field-centric swerve drive
+   *   <li>B: reset gyro
+   *   <li>RB: aim drivetrain + pivot at speaker
+   *   <li>RT: intake note + stow pivot
+   *   <li>LT: rev shooter on hold + shoot note on release
+   *   <li>Y - manually stop revving shooter
+   *   <li>A: stow pivot
+   *   <li>POV up/down - manually move pivot
+   *   <li>LB: aim pivot at amp
+   *   <li>X: aim pivot for shuttling
+   *   <li>POV left - outtake thru intake
+   *   <li>POV right - outtake thru shooter
+   *   <li>Start - Aims pivot for climbing
+   *   <li>Back - Runs climb routine
+   * </ul>
    */
   private void configureBindings() {
     // Run field-centric swerve drive
@@ -94,7 +108,7 @@ public class RobotContainer {
         .onFalse(new Shoot(index).withTimeout(0.8).andThen(new StopRevShooter(shooter)));
 
     // Manually stop revving the shooter
-    robotController.povRight().onFalse(new StopRevShooter(shooter));
+    robotController.y().onTrue(new StopRevShooter(shooter));
 
     // Set to Subwoofer Shot
     robotController.a().onTrue(new SetPivotPos(pivot, PIVOT_SUB_POS));
@@ -122,7 +136,8 @@ public class RobotContainer {
         .povRight()
         .whileTrue(
             new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
-                .alongWith(new Shoot(index)));
+                .alongWith(new Shoot(index)))
+        .onFalse(new StopRevShooter(shooter));
 
     // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
     // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
