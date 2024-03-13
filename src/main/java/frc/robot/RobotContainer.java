@@ -226,16 +226,13 @@ public class RobotContainer {
     // autoChooser = AutoBuilder.buildAutoChooser();
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
-    autoChooser.addOption("ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
-    autoChooser.addOption("StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
-    autoChooser.addOption("RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
-    autoChooser.addOption("4 Piece far side", AutoBuilder.buildAuto("Auto4-P873"));
-    autoChooser.addOption("Close 4 Piece", AutoBuilder.buildAuto("Auto4-P321"));
-    autoChooser.addOption("1456", AutoBuilder.buildAuto("Auto5-P1456"));
-    autoChooser.addOption("1564", AutoBuilder.buildAuto("Auto5-P1564"));
-
-    autoChooser.addOption("Auto1STopF", AutoBuilder.buildAuto("Auto1STopF"));
-    autoChooser.addOption("Auto3STopF", AutoBuilder.buildAuto("Auto3STopF"));
+    autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873"));
+    autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321"));
+    autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456"));
+    autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564"));
+    autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
+    autoChooser.addOption("Testing-StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
+    autoChooser.addOption("Testing-RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }
