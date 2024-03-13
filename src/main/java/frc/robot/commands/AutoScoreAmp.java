@@ -1,46 +1,28 @@
-// package frc.robot.commands;
+package frc.robot.commands;
 
-// import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import frc.robot.Constants.IndexConstants;
-// import frc.robot.Constants.ShooterConstants;
-// import frc.robot.commands.index.RunIndex;
-// import frc.robot.commands.pivot.SetPivotPos;
-// import frc.robot.commands.shooter.Shoot;
-// import frc.robot.subsystems.Index;
-// import frc.robot.subsystems.Pivot;
-// import frc.robot.subsystems.Shooter;
+import static frc.robot.Constants.IndexConstants.INDEX_AMP_PCT;
 
-// /* Command that runs automatically when robot gets close enough to amp
-//  * Specifically, it:
-//  *  1) Moves pivot to amp position and runs shooter to target velocity
-//  *  2) After both of those targets are achieved, index note to shooter for a few seconds
-//  */
-// public class AutoScoreAmp extends SequentialCommandGroup {
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.index.RunIndex;
+import frc.robot.commands.pivot.SetAngleAmp;
+import frc.robot.commands.shooter.RevShooter;
+import frc.robot.commands.swerve.manual.RunSwerveRC;
+import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.Index;
+import frc.robot.subsystems.Pivot;
+import frc.robot.subsystems.Shooter;
 
-//   Shooter mShooter;
-//   Pivot mPivot;
-//   Index mIndex;
-
-//   public AutoScoreAmp(Shooter shooter, Pivot pivot, Index index) {
-
-//     mShooter = shooter;
-//     mPivot = pivot;
-//     mIndex = index;
-
-//     addRequirements(mShooter);
-//     addRequirements(mPivot);
-//     addRequirements(mIndex);
-
-//     addCommands(
-//         new SetPivotPos(pivot, 0)
-//             .alongWith(
-//                 new Shoot(
-//                     mShooter,
-//                     mIndex,
-//                     ShooterConstants.AMP_LEFT_SPEED,
-//                     ShooterConstants.AMP_RIGHT_SPEED))
-//             .until(() -> mShooter.reachedSpeeds() && mPivot.reachedAngle())
-//             .andThen(new RunIndex(mIndex, IndexConstants.INDEX_PCT))
-//             .withTimeout(4));
-//   }
-// }
+/* Routine for automatically scoring at amp
+ * Specifically, it moves pivot to amp position and revs shooter, then moves forward for 1/4 second and runs the index
+ */
+public class AutoScoreAmp extends SequentialCommandGroup {
+  public AutoScoreAmp(Drivetrain drivetrain, Shooter shooter, Pivot pivot, Index index) {
+    addCommands(
+        new SetAngleAmp(pivot)
+            .alongWith(
+                new RevShooter(shooter, 0, 0)
+                    .alongWith(new RunSwerveRC(drivetrain, 0.05, 0.0, 0.0).withTimeout(0.25))
+                    .andThen(new RunIndex(index, INDEX_AMP_PCT))
+                    .withTimeout(4)));
+  }
+}

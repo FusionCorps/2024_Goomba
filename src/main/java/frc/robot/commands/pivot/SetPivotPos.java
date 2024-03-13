@@ -24,10 +24,4 @@ public class SetPivotPos extends Command {
   public boolean isFinished() {
     return mPivot.reachedAngle();
   }
-
-  @Override
-  public void end(boolean interrupted) {
-    // System.out.println("set pos ended");
-    // mPivot.syncPosition();
-  }
 }

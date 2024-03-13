@@ -25,6 +25,12 @@ public class RunSwerveFC extends Command {
 
   private double velX = 0, velY = 0, rot = 0;
 
+  SwerveRequest.FieldCentric fc =
+      new SwerveRequest.FieldCentric()
+          .withDriveRequestType(DriveRequestType.Velocity)
+          .withSteerRequestType(SteerRequestType.MotionMagic)
+          .withDeadband(DriveDeadband);
+
   public RunSwerveFC(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
@@ -47,14 +53,11 @@ public class RunSwerveFC extends Command {
     velY = (presetInputs ? velY : -controller.getLeftX()) * DrivetrainConstants.MaxSpeed;
     rot = (presetInputs ? rot : -controller.getRightX()) * DrivetrainConstants.MaxAngularRate;
 
-    SwerveRequest request =
-        new SwerveRequest.FieldCentric()
-            .withDriveRequestType(DriveRequestType.Velocity)
-            .withSteerRequestType(SteerRequestType.MotionMagic)
-            .withDeadband(DriveDeadband)
-            .withVelocityX(velX)
-            .withVelocityY(velY)
-            .withRotationalRate(rot);
-    mDrivetrain.setControl(request);
+    mDrivetrain.setControl(fc.withVelocityX(velX).withVelocityY(velY).withRotationalRate(rot));
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    mDrivetrain.setControl(fc.withVelocityX(0.0).withVelocityY(0.0).withRotationalRate(0.0));
   }
 }

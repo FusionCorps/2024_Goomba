@@ -15,14 +15,19 @@ public class UpClimbPos extends Command {
 
     addRequirements(mPivot);
   }
-  
+
   @Override
-  public void initialize(){
+  public void initialize() {
     IS_TRAPPING = true;
   }
 
   @Override
   public void execute() {
     mPivot.setPivotAngle(PivotConstants.PIVOT_CLIMB_UP_POS);
+  }
+
+  @Override
+  public boolean isFinished() {
+    return mPivot.reachedAngle();
   }
 }

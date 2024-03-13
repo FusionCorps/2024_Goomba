@@ -40,7 +40,8 @@ public class TransferHooks extends SubsystemBase {
 
     transferHookMotor.setPosition(0);
 
-    diagnosticsTab.addDouble("TransferHooks Angle", () -> transferHookMotor.getPosition().getValueAsDouble());
+    diagnosticsTab.addDouble(
+        "TransferHooks Angle", () -> transferHookMotor.getPosition().getValueAsDouble());
   }
 
   public void runHookPct(double pct) {

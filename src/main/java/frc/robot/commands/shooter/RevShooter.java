@@ -33,13 +33,13 @@ public class RevShooter extends Command {
 
   @Override
   public void initialize() {
-    System.out.println("rev " + lRPM);
     HAS_STOPPED_REVVING = false;
   }
 
   @Override
   public void execute() {
-    SmartDashboard.putString("Shooter Consts", IS_AMP + ", " + IS_SHUTTLING);
+    SmartDashboard.putString(
+        "Shooter Consts", IS_AMP + ", " + IS_SHUTTLING + ", " + IS_TRAPPING + ", " + IS_TRAPPING);
 
     if (IS_TRAPPING) {
       mShooter.setRPMs(0, 0);

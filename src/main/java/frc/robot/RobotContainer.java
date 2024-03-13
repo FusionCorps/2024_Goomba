@@ -17,21 +17,17 @@ import static frc.robot.Constants.driverTab;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
-
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
-import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.StageAlignment;
+import frc.robot.commands.Climb;
 import frc.robot.commands.IntakeNote;
-import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
-import frc.robot.commands.pivot.Climb;
 import frc.robot.commands.pivot.SetAngleAmp;
 import frc.robot.commands.pivot.SetAngleShuttle;
 import frc.robot.commands.pivot.SetPivotPct;
@@ -98,7 +94,6 @@ public class RobotContainer {
         .onFalse(new Shoot(index).withTimeout(0.8).andThen(new StopRevShooter(shooter)));
 
     // Manually stop revving the shooter
-    robotController.y().onTrue(new StopRevShooter(shooter));
     robotController.povRight().onFalse(new StopRevShooter(shooter));
 
     // Set to Subwoofer Shot
@@ -137,8 +132,6 @@ public class RobotContainer {
     // Auto Climb
     robotController.back().onTrue(new Climb(pivot, drivetrain, transferHooks, index));
 
-
-    
     // aim at amp and shoot at amp
     // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
     // RotateToAngle(drivetrain,

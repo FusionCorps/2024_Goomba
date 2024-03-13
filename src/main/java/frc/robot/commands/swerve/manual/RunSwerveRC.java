@@ -24,6 +24,12 @@ public class RunSwerveRC extends Command {
 
   private double velX = 0, velY = 0, rot = 0;
 
+  SwerveRequest.RobotCentric rc =
+      new SwerveRequest.RobotCentric()
+          .withDriveRequestType(DriveRequestType.Velocity)
+          .withSteerRequestType(SteerRequestType.MotionMagic)
+          .withDeadband(DriveDeadband);
+
   public RunSwerveRC(Drivetrain drivetrain) {
     mDrivetrain = drivetrain;
     addRequirements(mDrivetrain);
@@ -45,19 +51,11 @@ public class RunSwerveRC extends Command {
     velY = (presetInputs ? velY : -controller.getLeftX()) * DrivetrainConstants.MaxSpeed;
     rot = (presetInputs ? rot : -controller.getRightX()) * DrivetrainConstants.MaxAngularRate;
 
-    SwerveRequest request =
-        new SwerveRequest.RobotCentric()
-            .withDriveRequestType(DriveRequestType.Velocity)
-            .withSteerRequestType(SteerRequestType.MotionMagic)
-            .withDeadband(DriveDeadband)
-            .withVelocityX(1)
-            .withVelocityY(velY)
-            .withRotationalRate(rot);
-    // SwerveRequest req =
-    //     new SwerveRequest.ApplyChassisSpeeds().withSpeeds(new ChassisSpeeds(0.4, 0, 0));
-    // SwerveRequest req = new SwerveRequest.SysIdSwerveTranslation().withVolts(Units.Volts.of(1));
-    mDrivetrain.setControl(request);
+    mDrivetrain.setControl(rc.withVelocityX(velX).withVelocityY(velY).withRotationalRate(rot));
+  }
 
-    // mDrivetrain.setControl(request);
+  @Override
+  public void end(boolean interrupted) {
+    mDrivetrain.setControl(rc.withVelocityX(0.0).withVelocityY(0.0).withRotationalRate(0.0));
   }
 }

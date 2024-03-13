@@ -9,7 +9,6 @@ public class ResetPivotAngle extends Command {
 
   public ResetPivotAngle(Pivot pivot) {
     mPivot = pivot;
-
     addRequirements(mPivot);
   }
 

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.swerve.vision;
 
 import static frc.robot.Constants.DrivetrainConstants.DriveDeadband;
 

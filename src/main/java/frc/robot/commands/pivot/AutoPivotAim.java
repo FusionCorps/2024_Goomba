@@ -1,7 +1,7 @@
 package frc.robot.commands.pivot;
 
-import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
+import static frc.robot.Constants.diagnosticsTab;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,8 +10,8 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
 
 /**
- * Aims the pivot using a manually tuned look-up table, 
- * relating depth distance to speaker apriltag with pivot angles for shooting.
+ * Aims the pivot using a manually tuned look-up table, relating depth distance to speaker apriltag
+ * with pivot angles for shooting.
  */
 public class AutoPivotAim extends Command {
   Pivot mPivot;
@@ -30,7 +30,7 @@ public class AutoPivotAim extends Command {
 
   @Override
   public void initialize() {
-    diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); //TODO: might crash
+    diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO: might crash
   }
 
   @Override
