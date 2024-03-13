@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.diagnosticsTab;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -37,6 +39,8 @@ public class TransferHooks extends SubsystemBase {
     transferHookMotor.getConfigurator().apply(transferHookConfiguration);
 
     transferHookMotor.setPosition(0);
+
+    diagnosticsTab.addDouble("TransferHooks Angle", () -> transferHookMotor.getPosition().getValueAsDouble());
   }
 
   public void runHookPct(double pct) {

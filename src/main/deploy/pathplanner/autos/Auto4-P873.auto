@@ -123,12 +123,6 @@
                       "data": {
                         "name": "AimAndShoot"
                       }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "StopRevShooter"
-                      }
                     }
                   ]
                 }

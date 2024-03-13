@@ -3,7 +3,9 @@ package frc.robot.commands.intake;
 import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
 import static frc.robot.Constants.PivotConstants.IS_SHUTTLING;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
+import static frc.robot.Constants.ShooterConstants.IS_SHOOTING_RIGHT;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
@@ -24,6 +26,9 @@ public class RunIntake extends Command {
     IS_TRAPPING = false;
     IS_SHUTTLING = false;
     IS_AMP = false;
+    if (!DriverStation.isAutonomous()) {
+      IS_SHOOTING_RIGHT = !IS_SHOOTING_RIGHT;
+    }
   }
 
   @Override

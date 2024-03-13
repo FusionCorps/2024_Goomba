@@ -9,8 +9,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Intake extends SubsystemBase {
   private CANSparkFlex intakeMotor;
 
+  
+
   public Intake() {
     intakeMotor = new CANSparkFlex(INTAKE_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
+    
+
+  
+    
+  
+    
 
     diagnosticsTab.addDouble("Intake Output %", () -> intakeMotor.getAppliedOutput());
   }

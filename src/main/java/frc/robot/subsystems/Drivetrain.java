@@ -79,7 +79,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
           .apply(
               new CurrentLimitsConfigs()
                   .withStatorCurrentLimitEnable(true)
-                  .withStatorCurrentLimit(60)
+                  .withStatorCurrentLimit(70)
                   .withSupplyCurrentThreshold(80)
                   .withSupplyTimeThreshold(0.75)); // per 2023-Ignition code, TODO: test this
     }

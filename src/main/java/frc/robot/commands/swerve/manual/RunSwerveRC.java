@@ -50,7 +50,7 @@ public class RunSwerveRC extends Command {
             .withDriveRequestType(DriveRequestType.Velocity)
             .withSteerRequestType(SteerRequestType.MotionMagic)
             .withDeadband(DriveDeadband)
-            .withVelocityX(velX)
+            .withVelocityX(1)
             .withVelocityY(velY)
             .withRotationalRate(rot);
     // SwerveRequest req =

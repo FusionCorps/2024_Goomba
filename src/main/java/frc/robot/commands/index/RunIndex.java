@@ -1,5 +1,6 @@
 package frc.robot.commands.index;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
@@ -21,8 +22,10 @@ public class RunIndex extends Command {
 
     mIndex.runIndex(pct);
 
-    if (mIndex.beamBroken()) {
-      RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
+    if (!DriverStation.isAutonomous()) {
+      if (mIndex.beamBroken()) {
+        RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
+      }
     }
   }
 

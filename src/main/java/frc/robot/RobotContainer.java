@@ -6,7 +6,9 @@ package frc.robot;
 
 import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.PivotConstants.PIVOT_READY_CLIMB_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
+import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_OUTTAKE_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
@@ -15,17 +17,21 @@ import static frc.robot.Constants.driverTab;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
+import frc.robot.Constants.PivotConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
+import frc.robot.commands.pivot.Climb;
 import frc.robot.commands.pivot.SetAngleAmp;
 import frc.robot.commands.pivot.SetAngleShuttle;
 import frc.robot.commands.pivot.SetPivotPct;
@@ -95,8 +101,8 @@ public class RobotContainer {
     robotController.y().onTrue(new StopRevShooter(shooter));
     robotController.povRight().onFalse(new StopRevShooter(shooter));
 
-    // Stows Pivot
-    robotController.a().onTrue(new SetPivotPos(pivot, PIVOT_STOW_POS));
+    // Set to Subwoofer Shot
+    robotController.a().onTrue(new SetPivotPos(pivot, PIVOT_SUB_POS));
 
     // Move pivot up/down
     robotController.povUp().whileTrue(new SetPivotPct(pivot, -.4));
@@ -123,9 +129,16 @@ public class RobotContainer {
             new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
                 .alongWith(new Shoot(index)));
 
-    robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
-    robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
+    // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
+    // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
 
+    // Ready climb
+    robotController.start().onTrue(new SetPivotPos(pivot, PIVOT_READY_CLIMB_POS));
+    // Auto Climb
+    robotController.back().onTrue(new Climb(pivot, drivetrain, transferHooks, index));
+
+
+    
     // aim at amp and shoot at amp
     // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
     // RotateToAngle(drivetrain,
