@@ -223,13 +223,14 @@ public class RobotContainer {
     System.out.println(AutoBuilder.getAllAutoNames());
     // if this throws an error, make sure all autos are complete
     // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
-    // autoChooser = AutoBuilder.buildAutoChooser();
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
     autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873"));
     autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321"));
     autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456"));
     autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564"));
+    autoChooser.addOption("Testing-Mobility Loadside", AutoBuilder.buildAuto("AutoMobMid"));
+    autoChooser.addOption("Testing-Mobility Ampside", AutoBuilder.buildAuto("AutoMobTop"));
     autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
     autoChooser.addOption("Testing-StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
     autoChooser.addOption("Testing-RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
