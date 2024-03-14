@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.04,
-        "y": 4.37
+        "x": 7.88,
+        "y": 4.29
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.866958007420288,
-        "y": 6.4902557155541665
+        "x": 7.100841096269087,
+        "y": 7.71814193201036
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.884649034255332,
-        "y": 6.221290163378048
+        "x": 4.96,
+        "y": 6.48
       },
       "prevControl": {
-        "x": 5.824649034255333,
-        "y": 6.221290163378048
+        "x": 4.9,
+        "y": 6.48
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "5-P1456/P1564 Far Shoot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,13 +33,13 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 8.0,
+    "rotation": 6.52,
     "rotateFast": false
   },
   "reversed": false,
@@ -48,5 +48,5 @@
     "rotation": 0.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

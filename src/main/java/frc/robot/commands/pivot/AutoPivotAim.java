@@ -30,7 +30,7 @@ public class AutoPivotAim extends Command {
 
   @Override
   public void initialize() {
-    diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO: might crash
+    // diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO: might crash
   }
 
   @Override

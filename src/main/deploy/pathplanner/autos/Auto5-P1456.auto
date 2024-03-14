@@ -96,13 +96,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimP1456/P1564-Far"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
@@ -133,17 +127,11 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimP1456/P1564-Far"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
-                      }
-                    },
-                    {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
@@ -170,13 +158,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimP1456/P1564-Far"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     }
                   ]

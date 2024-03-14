@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.351218225513374,
-        "y": 6.423725601297357
+        "x": 0.8104687641854593,
+        "y": 6.653131544303899
       },
       "isLocked": false,
       "linkedName": "AmpSide"
     },
     {
       "anchor": {
-        "x": 2.76,
-        "y": 6.6
+        "x": 2.69214487146923,
+        "y": 6.7
       },
       "prevControl": {
-        "x": 2.8462321955413157,
-        "y": 6.647658310701237
+        "x": 2.677109260742737,
+        "y": 6.684266369102538
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -48,5 +48,5 @@
     "rotation": 60.0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

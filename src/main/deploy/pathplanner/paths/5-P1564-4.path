@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.884649034255332,
-        "y": 6.221290163378048
+        "x": 5.650765945406534,
+        "y": 6.548726487766366
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.572185241374762,
-        "y": 6.0076591479859145
+        "x": 6.338302152525964,
+        "y": 6.335095472374233
       },
       "isLocked": false,
       "linkedName": "5-P1456/P1564 Far Shoot"
@@ -33,7 +33,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

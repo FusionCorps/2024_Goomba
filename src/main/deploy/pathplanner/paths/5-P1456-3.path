@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 5.884649034255332,
-        "y": 6.221290163378048
+        "x": 4.9608108333025775,
+        "y": 6.478561561111727
       },
       "prevControl": {
-        "x": 5.944649034255332,
-        "y": 6.221290163378048
+        "x": 5.020810833302577,
+        "y": 6.478561561111727
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "5-P1456/P1564 Far Shoot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -33,13 +33,13 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.5,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 8.004728857292811,
+    "rotation": 6.519801751656912,
     "rotateFast": false
   },
   "reversed": false,

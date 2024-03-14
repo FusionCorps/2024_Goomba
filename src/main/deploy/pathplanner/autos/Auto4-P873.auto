@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosLoad"
+                        "name": "StartPosAmp"
                       }
                     },
                     {
@@ -57,9 +57,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "parallel",
                       "data": {
-                        "pathName": "4-P873-2"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P873-2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -88,9 +101,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "parallel",
                       "data": {
-                        "pathName": "4-P873-4"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P873-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -100,7 +126,7 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {

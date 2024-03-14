@@ -232,6 +232,8 @@ public class Constants {
 
   public static class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 6;
+    
+
     public static final double INTAKE_RUN_PCT = 0.9;
   }
 
@@ -293,7 +295,7 @@ public class Constants {
     // motion magic constraints
     public static final double PIVOT_CRUISE_VELOCITY = 2000;
     public static final double PIVOT_ACCELERATION = 700;
-    public static final double PIVOT_JERK = 6000;
+    public static final double PIVOT_JERK = 10000;
 
     public static final double PIVOT_AMP_POS = -55.894775390625; // empirical testing
 
@@ -390,7 +392,7 @@ public class Constants {
   public static class IndexConstants {
     public static final int INDEX_MOTOR_ID = 4;
     public static final double INDEX_RUN_PCT = .35;
-    public static final double INDEX_AMP_PCT = .23;
+    public static final double INDEX_AMP_PCT = .30;
 
     public static boolean IS_TRAPPING = false;
   }

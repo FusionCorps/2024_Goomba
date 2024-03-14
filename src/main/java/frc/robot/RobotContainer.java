@@ -9,6 +9,8 @@ import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.PivotConstants.PIVOT_READY_CLIMB_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
+import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
+import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_OUTTAKE_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
@@ -25,7 +27,9 @@ import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.Climb;
 import frc.robot.commands.IntakeNote;
+import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.index.RunIndex;
+import frc.robot.commands.index.Trap;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.SetAngleAmp;
@@ -99,13 +103,15 @@ public class RobotContainer {
                 .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)));
 
     // Run intake mechanism
-    robotController.rightTrigger().whileTrue(new IntakeNote(intake, index, pivot));
+    robotController.rightTrigger().whileTrue(new IntakeNote(intake, index, pivot).andThen(new RevShooter(shooter, SPK_LEFT_RPM/2, SPK_RIGHT_RPM/2)));
 
     // Shoots note at speaker
     robotController
         .leftTrigger()
         .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
         .onFalse(new Shoot(index).withTimeout(0.8).andThen(new StopRevShooter(shooter)));
+
+    // robotController.leftTrigger().whileTrue(new Trap(index));
 
     // Manually stop revving the shooter
     robotController.y().onTrue(new StopRevShooter(shooter));
@@ -115,7 +121,7 @@ public class RobotContainer {
 
     // Move pivot up/down
     robotController.povUp().whileTrue(new SetPivotPct(pivot, -.4));
-    robotController.povDown().whileTrue(new SetPivotPct(pivot, .15));
+    robotController.povDown().whileTrue(new SetPivotPct(pivot, .35));
 
     // Sets pivot to angle for Amp scoring
     robotController.leftBumper().onTrue(new SetAngleAmp(pivot));
@@ -139,13 +145,13 @@ public class RobotContainer {
                 .alongWith(new Shoot(index)))
         .onFalse(new StopRevShooter(shooter));
 
-    // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
-    // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
+    robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
+    robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
 
     // Ready climb
-    robotController.start().onTrue(new SetPivotPos(pivot, PIVOT_READY_CLIMB_POS));
+    // robotController.start().onTrue(new SetPivotPos(pivot, PIVOT_READY_CLIMB_POS));
     // Auto Climb
-    robotController.back().onTrue(new Climb(pivot, drivetrain, transferHooks, index));
+    // robotController.back().onTrue(new Climb(pivot, drivetrain, transferHooks, index));
 
     // aim at amp and shoot at amp
     // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
@@ -223,7 +229,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("StartPosLoad", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
     NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 19.55));
-    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 13));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12));
+    NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 11.6));
 
     NamedCommands.registerCommand(
         "AimAndShoot",
@@ -244,6 +251,7 @@ public class RobotContainer {
     autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321"));
     autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456"));
     autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564"));
+    autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P145"));
     autoChooser.addOption("Testing-Mobility Loadside", AutoBuilder.buildAuto("AutoMobMid"));
     autoChooser.addOption("Testing-Mobility Ampside", AutoBuilder.buildAuto("AutoMobTop"));
     autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));

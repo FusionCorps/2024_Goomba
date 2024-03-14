@@ -41,6 +41,7 @@ public class RevShooter extends Command {
     SmartDashboard.putString(
         "Shooter Consts", IS_AMP + ", " + IS_SHUTTLING + ", " + IS_TRAPPING + ", " + IS_TRAPPING);
 
+    HAS_STOPPED_REVVING = false;
     if (IS_TRAPPING) {
       mShooter.setRPMs(0, 0);
     } else if (IS_SHUTTLING) {
@@ -62,9 +63,6 @@ public class RevShooter extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    IS_SHUTTLING = false;
-    IS_AMP = false;
-    IS_TRAPPING = false;
     RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0);
   }
 }
