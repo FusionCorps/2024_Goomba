@@ -250,25 +250,25 @@ public class RobotContainer {
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
     if (allianceColor == Alliance.Red) {
-      autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873Red"));
-      autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321Red"));
-      autoChooser.addOption(
-          "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
-      autoChooser.addOption(
-          "Comp-5 Piece Top Last Mid", Commands.print("Auto5-P1564Red")); // TODO: add
+      autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Red"));
+      autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Red"));
+      // autoChooser.addOption(
+      //     "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
+      // autoChooser.addOption(
+      //     "Comp-5 Piece Top Last Mid", Commands.print("Auto5-P1564Red")); // TODO: add
       autoChooser.addOption(
           "Comp 4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
     } else {
-      autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873Blue"));
-      autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321Blue"));
-      autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456Blue"));
-      autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564Blue"));
+      autoChooser.addOption("Comp-4 Piece load size", AutoBuilder.buildAuto("Auto4-P873Blue"));
+      autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Blue"));
+      // autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456Blue"));
+      // autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564Blue"));
       autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
     }
 
-    autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
-    autoChooser.addOption("Testing-StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
-    autoChooser.addOption("Testing-RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
+    // autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
+    // autoChooser.addOption("Testing-StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
+    // autoChooser.addOption("Testing-RotationAuto", AutoBuilder.buildAuto("RotationAuto"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }
