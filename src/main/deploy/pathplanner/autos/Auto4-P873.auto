@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-1"
+                              "pathName": "4-P873-1Blue"
                             }
                           },
                           {
@@ -63,7 +63,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-2"
+                              "pathName": "4-P873-2Blue"
                             }
                           },
                           {
@@ -88,7 +88,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-3"
+                              "pathName": "4-P873-3Blue"
                             }
                           },
                           {
@@ -107,7 +107,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-4"
+                              "pathName": "4-P873-4Blue"
                             }
                           },
                           {
@@ -132,7 +132,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-5"
+                              "pathName": "4-P873-5Blue"
                             }
                           },
                           {
@@ -159,6 +159,6 @@
       ]
     }
   },
-  "folder": "4 Piece",
+  "folder": "4 Piece Blue",
   "choreoAuto": false
 }

@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 0.7,
-      "y": 6.7
+      "x": 15.8,
+      "y": 4.44
     },
-    "rotation": 60.0
+    "rotation": -120.0
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterAmpSide"
+                  "name": "RevShooterLoadSide"
                 }
               },
               {
@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosAmp"
+                        "name": "StartPosLoad"
                       }
                     },
                     {
@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-1"
+                              "pathName": "4-P873-1Red"
                             }
                           },
                           {
@@ -57,25 +57,13 @@
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "PivotAimP1456/P1564-1"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-2"
+                              "pathName": "4-P873-2Red"
                             }
                           },
                           {
@@ -85,12 +73,6 @@
                             }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5-P1456-3"
                       }
                     },
                     {
@@ -106,7 +88,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-4"
+                              "pathName": "4-P873-3Red"
                             }
                           },
                           {
@@ -119,9 +101,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "parallel",
                       "data": {
-                        "pathName": "5-P1456-5"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P873-4Red"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -131,13 +126,13 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-6"
+                              "pathName": "4-P873-5Red"
                             }
                           },
                           {
@@ -147,12 +142,6 @@
                             }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "5-P1456-7"
                       }
                     },
                     {
@@ -170,6 +159,6 @@
       ]
     }
   },
-  "folder": "5 Piece Blue",
+  "folder": "4 Piece Red",
   "choreoAuto": false
 }
