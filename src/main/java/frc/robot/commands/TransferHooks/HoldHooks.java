@@ -3,30 +3,21 @@ package frc.robot.commands.TransferHooks;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TransferHooks;
 
-public class SetHooksPos extends Command {
+public class HoldHooks extends Command {
 
   TransferHooks mTransferHooks;
   double pos;
 
-  public SetHooksPos(TransferHooks transferHooks, double position) {
+  public HoldHooks(TransferHooks transferHooks) {
     mTransferHooks = transferHooks;
-    pos = position;
-
     addRequirements(mTransferHooks);
   }
 
-  @Override
-  public void initialize() {
-    mTransferHooks.setHookPos(pos);
-  }
 
   @Override
   public void execute() {
     mTransferHooks.holdAtTargetPos();
   }
 
-  @Override
-  public boolean isFinished() {
-    return mTransferHooks.reachedPos();
-  }
 }
+

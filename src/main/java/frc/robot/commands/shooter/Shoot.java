@@ -22,7 +22,7 @@ public class Shoot extends Command {
     if (HAS_STOPPED_REVVING) {
       mIndex.runIndex(0.0);
     } else if (IS_TRAPPING) {
-      mIndex.runIndex(-INDEX_RUN_PCT);
+      mIndex.runIndex(-0.18);
     } else if (IS_AMP) {
       mIndex.runIndex(INDEX_AMP_PCT);
     } else {
@@ -32,7 +32,12 @@ public class Shoot extends Command {
 
   @Override
   public boolean isFinished() {
-    return !mIndex.beamBroken();
+
+    if(!IS_TRAPPING){
+      return !mIndex.beamBroken();
+    } else{
+      return false;
+    }
   }
 
   @Override

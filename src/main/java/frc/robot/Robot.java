@@ -5,6 +5,12 @@
 package frc.robot;
 
 import com.ctre.phoenix6.SignalLogger;
+<<<<<<< Updated upstream
+=======
+
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DriverStation;
+>>>>>>> Stashed changes
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
+
+  private NetworkTableEntry isTrappingEntry;
 
   @Override
   public void robotInit() {

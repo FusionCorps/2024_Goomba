@@ -6,18 +6,29 @@ import static frc.robot.Constants.driverTab;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
+
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Index extends SubsystemBase {
   CANSparkFlex indexMotor;
   public static DigitalInput beamBreak;
 
+  ShuffleboardTab tab = Shuffleboard.getTab("General");
+
+  public GenericEntry isTrapping = tab.add("Is Trapping", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+
   public Index() {
     beamBreak = new DigitalInput(1);
 
     indexMotor = new CANSparkFlex(INDEX_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
     indexMotor.setIdleMode(IdleMode.kBrake);
+
+    isTrapping.setBoolean(false);
 
     driverTab.addBoolean("Note Ready", this::beamBroken).withSize(2, 2).withPosition(6, 0);
 

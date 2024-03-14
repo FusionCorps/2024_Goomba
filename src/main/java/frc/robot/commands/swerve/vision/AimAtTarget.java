@@ -15,6 +15,8 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 import java.util.function.BooleanSupplier;
 
+import static edu.wpi.first.math.MathUtil.clamp;
+
 // aims at a target in place
 public class AimAtTarget extends Command {
   CommandXboxController mController = RobotContainer.robotController;
@@ -47,7 +49,7 @@ public class AimAtTarget extends Command {
               .withVelocityY(-mController.getLeftX())
               .withDeadband(DrivetrainConstants.DriveDeadband)
               .withRotationalRate(
-                  pid.calculate(mDrivetrain.getCamera().getTX() / LIMELIGHT_TX_RANGE_DEG)
+                  clamp(pid.calculate(mDrivetrain.getCamera().getTX()), -0.75, 0.75) // AO cook - taking out to make deg prim
                       * MaxAngularRate);
 
       mDrivetrain.setControl(req);

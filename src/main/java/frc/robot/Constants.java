@@ -27,9 +27,13 @@ public class Constants {
 
     // TODO: tune these better
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-    public static final double toTargetRotKP = 0.235;
+    // public static final double toTargetRotKP = 0.5;
+    // public static final double toTargetRotKI = 0;
+    // public static final double toTargetRotKD = 0.03;
+
+    public static final double toTargetRotKP = 0.01;
     public static final double toTargetRotKI = 0;
-    public static final double toTargetRotKD = 0.015;
+    public static final double toTargetRotKD = 0.0;
 
     public static final double toAngleRotKP = 0.25;
     public static final double toAngleRotKI = 0.0;
@@ -244,7 +248,7 @@ public class Constants {
     public static final double TRANSFER_HOOK_kD = 0.01;
     public static final double TRANSFER_HOOK_kI = 0;
 
-    public static final double TRANSFER_HOOK_POS_CLIMB = 67.48828125;
+    public static final double TRANSFER_HOOK_POS_CLIMB = 30;
 
     // motion magic constraints
     public static final double TRANSFER_HOOK_CRUISE_VELOCITY = 100;
@@ -304,11 +308,11 @@ public class Constants {
 
     public static final double PIVOT_READY_CLIMB_POS = 7.34228515625;
 
-    public static final double PIVOT_TRAP_POS = -63.71630859375;
+    public static final double PIVOT_TRAP_POS = -78.76025390625;
 
     // TODO: Change these values
     public static final double PIVOT_CLIMB_UP_POS = -12.61279296875;
-    public static final double PIVOT_CLIMB_DOWN_POS = 35.70751953125;
+    public static final double PIVOT_CLIMB_DOWN_POS = 15;
 
     // maps Z distances to april tag (meters) with pivot angles (rotations)
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
