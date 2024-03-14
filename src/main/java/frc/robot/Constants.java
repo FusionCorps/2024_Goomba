@@ -27,9 +27,9 @@ public class Constants {
 
     // TODO: tune these better
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-    public static final double toTargetRotKP = 0.32;
+    public static final double toTargetRotKP = 0.235;
     public static final double toTargetRotKI = 0;
-    public static final double toTargetRotKD = 0.001;
+    public static final double toTargetRotKD = 0.015;
 
     public static final double toAngleRotKP = 0.25;
     public static final double toAngleRotKI = 0.0;
@@ -292,9 +292,9 @@ public class Constants {
     public static final double PIVOT_kI = 0;
 
     // motion magic constraints
-    public static final double PIVOT_CRUISE_VELOCITY = 2000;
-    public static final double PIVOT_ACCELERATION = 700;
-    public static final double PIVOT_JERK = 10000;
+    public static final double PIVOT_CRUISE_VELOCITY = 8000;
+    public static final double PIVOT_ACCELERATION = 1000;
+    public static final double PIVOT_JERK = 15000;
 
     public static final double PIVOT_AMP_POS = -55.894775390625; // empirical testing
 
