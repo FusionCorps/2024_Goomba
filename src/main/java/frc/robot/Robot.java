@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.allianceLocation;
-
 import com.ctre.phoenix6.SignalLogger;
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -31,19 +28,14 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
   }
 
-  @Override
-  public void driverStationConnected() {
-    try {
-      Constants.allianceColor = DriverStation.getAlliance().get();
-    } catch (Exception e) {
-      System.err.println("Alliance not found");
-    }
-    try {
-      allianceLocation = DriverStation.getLocation().getAsInt();
-    } catch (Exception e) {
-      System.err.println("Location not found");
-    }
-  }
+  // @Override
+  // public void driverStationConnected() {
+  //   try {
+  //     Constants.allianceColor = DriverStation.getAlliance().get();
+  //   } catch (Exception e) {
+  //     System.err.println("Alliance not found");
+  //   }
+  // }
 
   @Override
   public void disabledInit() {}

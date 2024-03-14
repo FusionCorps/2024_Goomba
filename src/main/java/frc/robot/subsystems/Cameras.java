@@ -47,8 +47,7 @@ public class Cameras extends SubsystemBase {
               0.0 // roll, pitch, yaw
             });
 
-    
-    setPriorityID(4);
+    setPriorityID(allianceColor == Alliance.Blue ? 7 : 4);
 
     driverTab
         .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))

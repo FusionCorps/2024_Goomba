@@ -397,8 +397,7 @@ public class Constants {
   }
 
   public static DriverStation.Alliance allianceColor =
-      Alliance.Blue; // blue by default, set in Robot.java
-  public static int allianceLocation = 1; // 1 by default, set in Robot.java
+      Alliance.Blue; // TODO: change manually pre-match, until better solution found
 
   public static ShuffleboardTab diagnosticsTab = Shuffleboard.getTab("Diagnostics");
   public static ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");

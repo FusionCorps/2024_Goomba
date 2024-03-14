@@ -256,13 +256,15 @@ public class RobotContainer {
       //     "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
       // autoChooser.addOption(
       //     "Comp-5 Piece Top Last Mid", Commands.print("Auto5-P1564Red")); // TODO: add
-      autoChooser.addOption(
-          "Comp 4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
+      // autoChooser.addOption(
+      //     "Comp-4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
     } else {
-      autoChooser.addOption("Comp-4 Piece load size", AutoBuilder.buildAuto("Auto4-P873Blue"));
+      autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Blue"));
       autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Blue"));
-      // autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456Blue"));
-      // autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564Blue"));
+      // autoChooser.addOption("Comp-5 Piece Top First Mid",
+      // AutoBuilder.buildAuto("Auto5-P1456Blue"));
+      // autoChooser.addOption("Comp-5 Piece Top Last Mid",
+      // AutoBuilder.buildAuto("Auto5-P1564Blue"));
       autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
     }
 
