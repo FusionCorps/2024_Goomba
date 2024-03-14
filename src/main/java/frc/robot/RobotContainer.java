@@ -6,30 +6,27 @@ package frc.robot;
 
 import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
-import static frc.robot.Constants.PivotConstants.PIVOT_READY_CLIMB_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
-import static frc.robot.Constants.ShooterConstants.AMP_LEFT_SPEED;
-import static frc.robot.Constants.ShooterConstants.AMP_RIGHT_SPEED;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_OUTTAKE_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
+import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.driverTab;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
-import frc.robot.commands.Climb;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.index.RunIndex;
-import frc.robot.commands.index.Trap;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.SetAngleAmp;
@@ -103,7 +100,11 @@ public class RobotContainer {
                 .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)));
 
     // Run intake mechanism
-    robotController.rightTrigger().whileTrue(new IntakeNote(intake, index, pivot).andThen(new RevShooter(shooter, SPK_LEFT_RPM/2, SPK_RIGHT_RPM/2)));
+    robotController
+        .rightTrigger()
+        .whileTrue(
+            new IntakeNote(intake, index, pivot)
+                .andThen(new RevShooter(shooter, SPK_LEFT_RPM / 2, SPK_RIGHT_RPM / 2)));
 
     // Shoots note at speaker
     robotController
@@ -247,13 +248,24 @@ public class RobotContainer {
     // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
-    autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873"));
-    autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321"));
-    autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456"));
-    autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564"));
-    autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P145"));
-    autoChooser.addOption("Testing-Mobility Loadside", AutoBuilder.buildAuto("AutoMobMid"));
-    autoChooser.addOption("Testing-Mobility Ampside", AutoBuilder.buildAuto("AutoMobTop"));
+
+    if (allianceColor == Alliance.Red) {
+      autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873Red"));
+      autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321Red"));
+      autoChooser.addOption(
+          "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
+      autoChooser.addOption(
+          "Comp-5 Piece Top Last Mid", Commands.print("Auto5-P1564Red")); // TODO: add
+      autoChooser.addOption(
+          "Comp 4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
+    } else {
+      autoChooser.addOption("Comp-4 Piece far side", AutoBuilder.buildAuto("Auto4-P873Blue"));
+      autoChooser.addOption("Comp-4 Piece close side", AutoBuilder.buildAuto("Auto4-P321Blue"));
+      autoChooser.addOption("Comp-5 Piece Top First Mid", AutoBuilder.buildAuto("Auto5-P1456Blue"));
+      autoChooser.addOption("Comp-5 Piece Top Last Mid", AutoBuilder.buildAuto("Auto5-P1564Blue"));
+      autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
+    }
+
     autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
     autoChooser.addOption("Testing-StrafeAuto", AutoBuilder.buildAuto("StrafeAuto"));
     autoChooser.addOption("Testing-RotationAuto", AutoBuilder.buildAuto("RotationAuto"));

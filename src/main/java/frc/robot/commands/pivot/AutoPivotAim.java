@@ -1,7 +1,6 @@
 package frc.robot.commands.pivot;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
-import static frc.robot.Constants.diagnosticsTab;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;

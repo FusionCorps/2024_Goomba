@@ -62,7 +62,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   private Notifier m_simNotifier = null;
   private double m_lastSimTime;
 
-  DriveTelemetry driveTelemetry = new DriveTelemetry(this);
+  public DriveTelemetry driveTelemetry = new DriveTelemetry(this);
 
   public Drivetrain(
       Cameras camera,
@@ -244,10 +244,9 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
         });
   }
 
-  private class DriveTelemetry {
-
+  public class DriveTelemetry {
     // telemetry for the swerve drivetrain
-    private Field2d field2d = new Field2d();
+    public Field2d field2d = new Field2d();
     // use networktables for things that cannot be displayed on shuffleboard
     private NetworkTable driveTable = NetworkTableInstance.getDefault().getTable("Drivetrain");
     private StructArrayPublisher<SwerveModuleState> moduleStates =

@@ -3,23 +3,23 @@ package frc.robot.commands.index;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 
-public class Trap extends Command{
+public class Trap extends Command {
 
-    Index mIndex;
+  Index mIndex;
 
-    public Trap(Index index){
-        mIndex = index;
+  public Trap(Index index) {
+    mIndex = index;
 
-        addRequirements(mIndex);
-    }
+    addRequirements(mIndex);
+  }
 
-    @Override
-    public void execute(){
-        mIndex.runIndex(-0.18);
-    }
-    
-    @Override
-    public void end(boolean isInterrupted){
-        mIndex.runIndex(0);
-    }
+  @Override
+  public void execute() {
+    mIndex.runIndex(-0.18);
+  }
+
+  @Override
+  public void end(boolean isInterrupted) {
+    mIndex.runIndex(0);
+  }
 }
