@@ -27,13 +27,13 @@ public class Constants {
 
     // TODO: tune these better
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
-    // public static final double toTargetRotKP = 0.5;
-    // public static final double toTargetRotKI = 0;
-    // public static final double toTargetRotKD = 0.03;
-
-    public static final double toTargetRotKP = 0.01;
+    public static final double toTargetRotKP = 0.23;
     public static final double toTargetRotKI = 0;
-    public static final double toTargetRotKD = 0.0;
+    public static final double toTargetRotKD = 0.015;
+
+    // public static final double toTargetRotKP = 0.01;
+    // public static final double toTargetRotKI = 0;
+    // public static final double toTargetRotKD = 0.0;
 
     public static final double toAngleRotKP = 0.25;
     public static final double toAngleRotKI = 0.0;

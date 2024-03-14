@@ -15,11 +15,17 @@ public class RotateToAngle extends Command {
   private Drivetrain mDrivetrain;
 
   SwerveRequest.FieldCentricFacingAngle rotReq;
+  double desiredHeadingDeg, toleranceDeg;
 
   public RotateToAngle(Drivetrain drivetrain, double desiredHeadingDeg, double toleranceDeg) {
     mDrivetrain = drivetrain;
+    this.desiredHeadingDeg = desiredHeadingDeg;
+    this.toleranceDeg = toleranceDeg;
     addRequirements(mDrivetrain);
+  }
 
+  @Override
+  public void initialize() {
     rotReq =
         new SwerveRequest.FieldCentricFacingAngle()
             .withTargetDirection(

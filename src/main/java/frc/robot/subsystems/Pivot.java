@@ -183,4 +183,9 @@ public class Pivot extends SubsystemBase {
   public double getPivotAngle() {
     return pivotMotor.getPosition().getValueAsDouble();
   }
+
+  public void holdPivotPos() {
+    pivotMotor.setControl(positionReq.withPosition(targetPos));
+    pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
+  }
 }

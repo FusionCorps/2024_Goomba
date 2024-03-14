@@ -28,7 +28,7 @@ public class SetPivotPct extends Command {
   public void execute() {
     mPivot.setPivotPct(pct);
     if(IS_TRAPPING){
-    mIndex.runIndex(0.09);
+    mIndex.runIndex(0.06);
     }
   }
 

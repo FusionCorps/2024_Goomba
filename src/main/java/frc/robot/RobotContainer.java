@@ -16,10 +16,13 @@ import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.TransferHookConstants.TRANSFER_HOOK_POS_CLIMB;
 import static frc.robot.Constants.allianceColor;
+import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -36,6 +39,7 @@ import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.index.Trap;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
+import frc.robot.commands.pivot.HoldPivotAngle;
 import frc.robot.commands.pivot.SetAngleAmp;
 import frc.robot.commands.pivot.SetAngleShuttle;
 import frc.robot.commands.pivot.SetPivotPct;
@@ -117,10 +121,9 @@ public class RobotContainer {
 
     // Shoots note at speaker
     robotController
-    .leftTrigger()
-    .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
-    .onFalse(new Shoot(index).withTimeout(1.5).andThen(new
-    StopRevShooter(shooter)));
+        .leftTrigger()
+        .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
+        .onFalse(new Shoot(index).withTimeout(1.5).andThen(new StopRevShooter(shooter)));
 
     // robotController.leftTrigger().whileTrue(new Trap(index));
 
@@ -161,7 +164,8 @@ public class RobotContainer {
 
     // Ready climb
     robotController.start().onTrue(
-        new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS).andThen(new SetHooksPos(transferHooks, TRANSFER_HOOK_POS_CLIMB)));
+        new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS)
+            .andThen(new HoldPivotAngle(pivot).alongWith(new SetHooksPos(transferHooks, TRANSFER_HOOK_POS_CLIMB))));
     // Auto Climb
     robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_TRAP_POS));
 
@@ -292,6 +296,16 @@ public class RobotContainer {
   public RobotContainer() {
     setupAutoChooser();
     setupPipelineChooser();
+    SendableChooser<DriverStation.Alliance> colorChooser = new SendableChooser<>();
+    
+    colorChooser.addOption("Red", Alliance.Red);
+    colorChooser.addOption("Blue", Alliance.Blue);
+    colorChooser.setDefaultOption(allianceColor.toString(), allianceColor);
+    colorChooser.onChange(color -> {
+      allianceColor = color;
+      drivetrain.getCamera().setPriorityID(color == Alliance.Blue ? 7 : 4);
+    });
+    driverTab.add("Alliance Color Chooser", colorChooser).withSize(2, 1).withPosition(4, 4);
     configureBindings();
   }
 

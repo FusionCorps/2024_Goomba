@@ -49,7 +49,8 @@ public class AimAtTarget extends Command {
               .withVelocityY(-mController.getLeftX())
               .withDeadband(DrivetrainConstants.DriveDeadband)
               .withRotationalRate(
-                  clamp(pid.calculate(mDrivetrain.getCamera().getTX()), -0.75, 0.75) // AO cook - taking out to make deg prim
+                  // clamp(pid.calculate(mDrivetrain.getCamera().getTX()), -0.75, 0.75) // AO cook - taking out to make deg prim
+                  pid.calculate(mDrivetrain.getCamera().getTX() / LIMELIGHT_TX_RANGE_DEG)
                       * MaxAngularRate);
 
       mDrivetrain.setControl(req);

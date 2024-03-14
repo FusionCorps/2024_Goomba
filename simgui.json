@@ -4,8 +4,10 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Diagnostics/Drive Mode Chooser": "String Chooser",
       "/Shuffleboard/Diagnostics/Field": "Field2d",
+      "/Shuffleboard/Driver/Alliance Color Chooser": "String Chooser",
       "/Shuffleboard/Driver/Auto Chooser": "String Chooser",
       "/Shuffleboard/Driver/Pipeline Chooser": "String Chooser",
+      "/Shuffleboard/Driver/SendableChooser[4]": "String Chooser",
       "/Shuffleboard/Module Mechanisms/Module 0": "Mechanism2d",
       "/Shuffleboard/Module Mechanisms/Module 1": "Mechanism2d",
       "/Shuffleboard/Module Mechanisms/Module 2": "Mechanism2d",
@@ -16,6 +18,16 @@
       "/SmartDashboard/Pipeline Chooser": "String Chooser"
     },
     "windows": {
+      "/Shuffleboard/Driver/Alliance Color Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
+      "/Shuffleboard/Driver/Pipeline Chooser": {
+        "window": {
+          "visible": true
+        }
+      },
       "/Shuffleboard/Module Mechanisms/Module 0": {
         "window": {
           "visible": true
@@ -32,11 +44,6 @@
         }
       },
       "/Shuffleboard/Module Mechanisms/Module 3": {
-        "window": {
-          "visible": true
-        }
-      },
-      "/SmartDashboard/Auto Chooser": {
         "window": {
           "visible": true
         }
