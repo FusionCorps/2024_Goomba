@@ -38,7 +38,7 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -59,11 +59,17 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-1"
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
+                      }
+                    },
+                    {
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -90,11 +96,17 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-Far"
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
+                      }
+                    },
+                    {
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -121,7 +133,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-Far"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     }
                   ]

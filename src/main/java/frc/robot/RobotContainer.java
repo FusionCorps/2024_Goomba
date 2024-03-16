@@ -4,7 +4,6 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.PivotConstants.PIVOT_CLIMB_DOWN_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
@@ -16,8 +15,8 @@ import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.TransferHookConstants.TRANSFER_HOOK_POS_CLIMB;
 import static frc.robot.Constants.allianceColor;
-import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
+import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -34,9 +33,9 @@ import frc.robot.commands.IntakeNote;
 import frc.robot.commands.TransferHooks.HoldHooks;
 import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.TransferHooks.SetHooksPos;
+import frc.robot.commands.index.IndexDummy;
 import frc.robot.commands.index.Outtake;
 import frc.robot.commands.index.RunIndex;
-import frc.robot.commands.index.Trap;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.HoldPivotAngle;
@@ -93,7 +92,7 @@ public class RobotContainer {
     // Run field-centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
 
-    transferHooks.setDefaultCommand(new HoldHooks(transferHooks));
+    // transferHooks.setDefaultCommand(new HoldHooks(transferHooks));
 
     // Reset odometry to current position, and zero gyro yaw
     robotController
@@ -115,15 +114,14 @@ public class RobotContainer {
     // Run intake mechanism
     robotController
         .rightTrigger()
-        .whileTrue(
-            new IntakeNote(intake, index, pivot)
-                .andThen(new RevShooter(shooter, SPK_LEFT_RPM / 2, SPK_RIGHT_RPM / 2)));
+        .whileTrue( new RevShooter(shooter, 0, 0). alongWith(
+            new IntakeNote(intake, index, pivot)));
 
     // Shoots note at speaker
     robotController
         .leftTrigger()
         .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
-        .onFalse(new Shoot(index).withTimeout(1.5).andThen(new StopRevShooter(shooter)));
+        .onFalse(new IndexDummy(index).withTimeout(2).andThen(new StopRevShooter(shooter)));
 
     // robotController.leftTrigger().whileTrue(new Trap(index));
 
@@ -156,18 +154,19 @@ public class RobotContainer {
         .povRight()
         .whileTrue(
             new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
-                .alongWith(new Shoot(index)))
+                .alongWith(new RunIndex(index, -INDEX_RUN_PCT)))
         .onFalse(new StopRevShooter(shooter));
 
-    robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
-    robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
+    // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
+    // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
 
     // Ready climb
-    robotController.start().onTrue(
-        new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS)
-            .andThen(new HoldPivotAngle(pivot).alongWith(new SetHooksPos(transferHooks, TRANSFER_HOOK_POS_CLIMB))));
+    // robotController.start().onTrue(
+    //     new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS)
+    //         .andThen(new HoldPivotAngle(pivot).alongWith(new SetHooksPos(transferHooks, TRANSFER_HOOK_POS_CLIMB)))
+    //         .andThen(new HoldHooks(transferHooks)));
     // Auto Climb
-    robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_TRAP_POS));
+    // robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_TRAP_POS));
 
     // aim at amp and shoot at amp
     // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
@@ -244,17 +243,17 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("StartPosLoad", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
-    NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 19.55));
-    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12));
-    NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 11.6));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 17.75));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 10.7));
+    NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
 
     NamedCommands.registerCommand(
         "AimAndShoot",
-        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new Shoot(index)));
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new Shoot(index, shooter)));
 
-    NamedCommands.registerCommand("ShootSpeaker", new Shoot(index));
+    NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
     NamedCommands.registerCommand(
-        "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index)));
+        "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 
     NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
 
@@ -264,16 +263,16 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
-    if (allianceColor == Alliance.Red) {
-      autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Red"));
-      autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Red"));
+    
+      // autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Red"));
+      // autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Red"));
       // autoChooser.addOption(
       // "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
       // autoChooser.addOption(
       // "Comp-5 Piece Top Last Mid", Commands.print("Auto5-P1564Red")); // TODO: add
-      autoChooser.addOption(
-          "Comp 4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
-    } else {
+      // autoChooser.addOption(
+          // "Comp 4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
+    
       autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Blue"));
       autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Blue"));
       // autoChooser.addOption("Comp-5 Piece Top First Mid",
@@ -281,10 +280,10 @@ public class RobotContainer {
       // autoChooser.addOption("Comp-5 Piece Top Last Mid",
       // AutoBuilder.buildAuto("Auto5-P1564Blue"));
       autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
-    }
+    
 
-    // autoChooser.addOption("Testing-ForwardAuto",
-    // AutoBuilder.buildAuto("ForwardAuto"));
+    autoChooser.addOption("Testing-ForwardAuto",
+    AutoBuilder.buildAuto("ForwardAuto"));
     // autoChooser.addOption("Testing-StrafeAuto",
     // AutoBuilder.buildAuto("StrafeAuto"));
     // autoChooser.addOption("Testing-RotationAuto",
@@ -297,7 +296,7 @@ public class RobotContainer {
     setupAutoChooser();
     setupPipelineChooser();
     SendableChooser<DriverStation.Alliance> colorChooser = new SendableChooser<>();
-    
+
     colorChooser.addOption("Red", Alliance.Red);
     colorChooser.addOption("Blue", Alliance.Blue);
     colorChooser.setDefaultOption(allianceColor.toString(), allianceColor);

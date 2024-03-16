@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
+import static frc.robot.Constants.PivotConstants.PIVOT_ARM_INIT_POSE;
 import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.diagnosticsTab;
@@ -34,14 +35,14 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.11, 31.9052734375);
-    PIVOT_ANGLES_MAP.put(1.48, 24.4140625);
-    PIVOT_ANGLES_MAP.put(1.9, 19.90234375);
-    PIVOT_ANGLES_MAP.put(2.29, 17.662841796875);
-    PIVOT_ANGLES_MAP.put(2.65, 15.391357421875);
-    PIVOT_ANGLES_MAP.put(2.75, 14.0087890625);
-    PIVOT_ANGLES_MAP.put(2.91, 14.394287109375);
-    PIVOT_ANGLES_MAP.put(3.45, 13.201416015625);
+    PIVOT_ANGLES_MAP.put(1.11, 30.1052734375);
+    PIVOT_ANGLES_MAP.put(1.48, 22.6140625);
+    PIVOT_ANGLES_MAP.put(1.9, 18.10234375);
+    PIVOT_ANGLES_MAP.put(2.29, 15.862841796875);
+    PIVOT_ANGLES_MAP.put(2.65, 13.591357421875);
+    PIVOT_ANGLES_MAP.put(2.75, 12.2087890625);
+    PIVOT_ANGLES_MAP.put(2.91, 12.594287109375);
+    PIVOT_ANGLES_MAP.put(3.45, 11.401416015625);
 
     pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;
@@ -74,13 +75,17 @@ public class Pivot extends SubsystemBase {
 
     // sets the position of the motor acc. to through bore encoder once the encoder
     // is ready
-    new Trigger(pivotEncoder::isConnected)
-        .onTrue(
-            runOnce(
-                () -> {
-                  System.out.println("syncing pivot encoders init");
-                  pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-                }));
+    // new Trigger(pivotEncoder::isConnected)
+    // .onTrue(
+    // runOnce(
+    // () -> {
+    // System.out.println("syncing pivot encoders init");
+    // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+    // PIVOT_GEAR_RATIO);
+    // }));
+
+    pivotMotor.setPosition(PIVOT_ARM_INIT_POSE);
+    pivotFollowerMotor.setPosition(PIVOT_ARM_INIT_POSE);
 
     driverTab
         .addDouble("Pivot Angle", this::getPivotAngle)
@@ -100,29 +105,34 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (!motorConfigured
-        && pivotEncoder.isConnected()
-        && pivotMotor.getPosition().getValueAsDouble() != adjustedPivotEncoderAngle.getAsDouble()) {
-      System.out.println("syncing pivot encoders periodic");
+    // if (!motorConfigured
+    // && pivotEncoder.isConnected()
+    // && pivotMotor.getPosition().getValueAsDouble() !=
+    // pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO) {
+    // System.out.println("syncing pivot encoders periodic");
 
-      pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-      pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-      motorConfigured = true;
-    }
+    // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+    // PIVOT_GEAR_RATIO);
+    // pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+    // PIVOT_GEAR_RATIO);
+    // motorConfigured = true;
+    // }
 
     // SmartDashboard.putNumberArray(
-    //     "pivot encoders",
-    //     new double[] {
-    //       pivotMotor.getPosition().getValueAsDouble(),
-    //       adjustedPivotEncoderAngle.getAsDouble(),
-    //       pivotEncoder.getAbsolutePosition()
-    //     });
+    // "pivot encoders",
+    // new double[] {
+    // pivotMotor.getPosition().getValueAsDouble(),
+    // adjustedPivotEncoderAngle.getAsDouble(),
+    // pivotEncoder.getAbsolutePosition()
+    // });
   }
 
-  public void syncPosition() {
-    pivotMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-    pivotFollowerMotor.setPosition(adjustedPivotEncoderAngle.getAsDouble());
-  }
+  // public void syncPosition() {
+  // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+  // PIVOT_GEAR_RATIO);
+  // pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() *
+  // PIVOT_GEAR_RATIO);
+  // }
 
   /**
    * Sets the pivot angle using a duty cycle percentage.
@@ -176,8 +186,7 @@ public class Pivot extends SubsystemBase {
    * @return true if the pivot is close enough to its target position
    */
   public boolean reachedAngle() {
-    return Math.abs(targetPos - pivotMotor.getPosition().getValue())
-        < PivotConstants.PIVOT_ERROR_THRESHOLD;
+    return Math.abs(targetPos - pivotMotor.getPosition().getValue()) < PivotConstants.PIVOT_ERROR_THRESHOLD;
   }
 
   public double getPivotAngle() {

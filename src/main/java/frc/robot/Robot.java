@@ -6,7 +6,9 @@ package frc.robot;
 
 import com.ctre.phoenix6.SignalLogger;
 
+import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -17,14 +19,20 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
 
-  private NetworkTableEntry isTrappingEntry;
-
   @Override
   public void robotInit() {
+    for (int port = 5800; port <=5807; port++) {
+      PortForwarder.add(port, "limelight.local", port);
+    }
+    DataLogManager.start();
+    DriverStation.startDataLog(DataLogManager.getLog());
+
     Shuffleboard.selectTab("Driver"); // default to driver tab
 
     SignalLogger.setPath("home/lvuser/logs");
     SignalLogger.start();
+
+
     m_robotContainer = new RobotContainer();
   }
 

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.02,
-        "y": 7.64
+        "x": 8.11,
+        "y": 7.54
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.08,
-        "y": 7.64
+        "x": 8.17,
+        "y": 7.54
       },
       "isLocked": false,
       "linkedName": null
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 6.519801751656912,
+    "rotation": 16.699244233993713,
     "rotateFast": false
   },
   "reversed": false,

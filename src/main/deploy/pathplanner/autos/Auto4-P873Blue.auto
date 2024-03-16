@@ -38,7 +38,7 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -57,32 +57,25 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "4-P873-2Blue"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeNote"
-                            }
-                          }
-                        ]
+                        "pathName": "4-P873-2Blue"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimP1456/P1564-Far"
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
+                      }
+                    },
+                    {
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
@@ -101,53 +94,21 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "4-P873-4Blue"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeNote"
-                            }
-                          }
-                        ]
+                        "pathName": "4-P873-4Blue"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
-                      }
-                    },
-                    {
-                      "type": "parallel",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "4-P873-5Blue"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeNote"
-                            }
-                          }
-                        ]
+                        "name": "PivotAimP1456/P1564-Far"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "ShootSpeaker"
                       }
                     }
                   ]
