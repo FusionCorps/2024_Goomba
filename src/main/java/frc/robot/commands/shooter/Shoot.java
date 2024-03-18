@@ -1,9 +1,7 @@
 package frc.robot.commands.shooter;
 
-import static frc.robot.Constants.IndexConstants.INDEX_AMP_PCT;
 import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
-import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVVING;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +20,7 @@ public class Shoot extends Command {
 
   @Override
   public void execute() {
+    System.out.println("Trying to shoot!");
     if(mShooter.reachedSpeeds()){
       mIndex.runIndex(INDEX_RUN_PCT);
     }

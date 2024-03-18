@@ -15,7 +15,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PivotConstants;
 import java.util.function.DoubleSupplier;
 
@@ -35,14 +34,14 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.11, 30.1052734375);
-    PIVOT_ANGLES_MAP.put(1.48, 22.6140625);
-    PIVOT_ANGLES_MAP.put(1.9, 18.10234375);
-    PIVOT_ANGLES_MAP.put(2.29, 15.862841796875);
-    PIVOT_ANGLES_MAP.put(2.65, 13.591357421875);
-    PIVOT_ANGLES_MAP.put(2.75, 12.2087890625);
-    PIVOT_ANGLES_MAP.put(2.91, 12.594287109375);
-    PIVOT_ANGLES_MAP.put(3.45, 11.401416015625);
+    PIVOT_ANGLES_MAP.put(1.11, 30.6052734375);
+    PIVOT_ANGLES_MAP.put(1.48, 23.1140625);
+    PIVOT_ANGLES_MAP.put(1.9, 18.60234375);
+    PIVOT_ANGLES_MAP.put(2.29, 16.362841796875);
+    PIVOT_ANGLES_MAP.put(2.65, 14.091357421875);
+    PIVOT_ANGLES_MAP.put(2.75, 12.7087890625);
+    PIVOT_ANGLES_MAP.put(2.91, 13.094287109375);
+    PIVOT_ANGLES_MAP.put(3.45, 11.901416015625);
 
     pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;

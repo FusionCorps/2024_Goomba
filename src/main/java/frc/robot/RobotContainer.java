@@ -45,6 +45,7 @@ import frc.robot.commands.pivot.SetPivotPct;
 import frc.robot.commands.pivot.SetPivotPos;
 import frc.robot.commands.shooter.RevShooter;
 import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.shooter.ShootAuto;
 import frc.robot.commands.shooter.StopRevShooter;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.vision.AimAtTarget;
@@ -110,6 +111,8 @@ public class RobotContainer {
         .toggleOnTrue(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
                 .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)));
+
+    // robotController.rightBumper().onTrue(new SetPivotPos(pivot, 36.943115234375));
 
     // Run intake mechanism
     robotController
@@ -244,12 +247,13 @@ public class RobotContainer {
     NamedCommands.registerCommand("StartPosLoad", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
     NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 17.75));
-    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 10.7));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
     NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
+    NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
 
     NamedCommands.registerCommand(
         "AimAndShoot",
-        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new Shoot(index, shooter)));
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new ShootAuto(index)));
 
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
     NamedCommands.registerCommand(
@@ -275,11 +279,13 @@ public class RobotContainer {
     
       autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Blue"));
       autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Blue"));
+
       // autoChooser.addOption("Comp-5 Piece Top First Mid",
       // AutoBuilder.buildAuto("Auto5-P1456Blue"));
       // autoChooser.addOption("Comp-5 Piece Top Last Mid",
       // AutoBuilder.buildAuto("Auto5-P1564Blue"));
       autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
+      // autoChooser.addOption("Comp-3 Piece Center", AutoBuilder.buildAuto("Auto3-P32"));
     
 
     autoChooser.addOption("Testing-ForwardAuto",

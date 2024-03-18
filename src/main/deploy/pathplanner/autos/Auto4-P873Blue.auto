@@ -12,7 +12,7 @@
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
@@ -38,7 +38,7 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
@@ -57,9 +57,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "4-P873-2Blue"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P873-2Blue"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -75,7 +88,7 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
@@ -94,15 +107,53 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "4-P873-4Blue"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P873-4Blue"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimP1456/P1564-Far"
+                        "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P873-5Blue"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "PivotAimP1456/P1564-1"
                       }
                     },
                     {
