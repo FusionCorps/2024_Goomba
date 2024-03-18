@@ -5,16 +5,18 @@
   "pathFolders": [
     "4-P321Blue",
     "4-P321Red",
-    "4-P873Red",
     "4-P873Blue",
+    "4-P873Red",
     "5-P1456",
     "5-P1564",
+    "3-P87",
     "Old"
   ],
   "autoFolders": [
     "4 Piece Blue",
-    "5 Piece Blue",
     "4 Piece Red",
+    "5 Piece Blue",
+    "3 Piece",
     "Old"
   ],
   "defaultMaxVel": 6.0,
