@@ -78,13 +78,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimP1456/P1564-Far"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
@@ -153,13 +147,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimP1456/P1564-1"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
+                        "name": "AimAndShoot"
                       }
                     }
                   ]

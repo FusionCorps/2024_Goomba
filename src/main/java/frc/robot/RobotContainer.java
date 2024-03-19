@@ -5,6 +5,7 @@
 package frc.robot;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.PivotConstants.PIVOT_ARM_INIT_POSE;
 import static frc.robot.Constants.PivotConstants.PIVOT_CLIMB_DOWN_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
@@ -110,7 +111,7 @@ public class RobotContainer {
         .rightBumper()
         .toggleOnTrue(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index)));
+                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
     // robotController.rightBumper().onTrue(new SetPivotPos(pivot, 36.943115234375));
 
@@ -159,6 +160,8 @@ public class RobotContainer {
             new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
                 .alongWith(new RunIndex(index, -INDEX_RUN_PCT)))
         .onFalse(new StopRevShooter(shooter));
+    
+    // robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_ARM_INIT_POSE));
 
     // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
     // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
@@ -253,7 +256,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand(
         "AimAndShoot",
-        new AutoPivotAim(pivot, drivetrain.getCamera(), index).andThen(new ShootAuto(index)));
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS).andThen(new ShootAuto(index)));
 
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
     NamedCommands.registerCommand(
@@ -285,6 +288,7 @@ public class RobotContainer {
       // autoChooser.addOption("Comp-5 Piece Top Last Mid",
       // AutoBuilder.buildAuto("Auto5-P1564Blue"));
       autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
+      autoChooser.addOption("Comp 3 Piece Load Side", AutoBuilder.buildAuto("Auto3-P87"));
       // autoChooser.addOption("Comp-3 Piece Center", AutoBuilder.buildAuto("Auto3-P32"));
     
 

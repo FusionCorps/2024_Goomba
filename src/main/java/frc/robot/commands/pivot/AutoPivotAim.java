@@ -20,10 +20,11 @@ public class AutoPivotAim extends Command {
   double distanceToAprilTag = 0.0;
   double angleToSet = 0.0;
 
-  public AutoPivotAim(Pivot pivot, Cameras camera, Index index) {
+  public AutoPivotAim(Pivot pivot, Cameras camera, Index index, double defaultAngle) {
     mCamera = camera;
     mPivot = pivot;
     mIndex = index;
+    angleToSet = defaultAngle;
     addRequirements(pivot);
   }
 
@@ -36,9 +37,13 @@ public class AutoPivotAim extends Command {
   public void execute() {
     if (mCamera.hasTarget()) {
       distanceToAprilTag = mCamera.getPrimaryAprilTagPose().getZ();
-      angleToSet = PIVOT_ANGLES_MAP.get(distanceToAprilTag);
-      if (distanceToAprilTag != 0.0) mPivot.setPivotAngle(angleToSet);
+      if (distanceToAprilTag != 0.0) angleToSet = PIVOT_ANGLES_MAP.get(distanceToAprilTag);
+       
+    } else{
+      angleToSet = angleToSet;
     }
+
+    mPivot.setPivotAngle(angleToSet);
   }
 
   @Override

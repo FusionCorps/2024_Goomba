@@ -26,9 +26,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "parallel",
                       "data": {
-                        "pathName": "3-P87 1"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3-P87 1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PivotAimP1456/P1564-Far"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -134,6 +147,6 @@
       ]
     }
   },
-  "folder": "3 Piece",
+  "folder": null,
   "choreoAuto": false
 }

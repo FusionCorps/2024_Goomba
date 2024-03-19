@@ -4,6 +4,7 @@ import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
 import static frc.robot.Constants.PivotConstants.PIVOT_ARM_INIT_POSE;
 import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
+import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
@@ -34,14 +35,14 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.11, 30.6052734375);
-    PIVOT_ANGLES_MAP.put(1.48, 23.1140625);
-    PIVOT_ANGLES_MAP.put(1.9, 18.60234375);
-    PIVOT_ANGLES_MAP.put(2.29, 16.362841796875);
-    PIVOT_ANGLES_MAP.put(2.65, 14.091357421875);
-    PIVOT_ANGLES_MAP.put(2.75, 12.7087890625);
-    PIVOT_ANGLES_MAP.put(2.91, 13.094287109375);
-    PIVOT_ANGLES_MAP.put(3.45, 11.901416015625);
+    PIVOT_ANGLES_MAP.put(0.99, PIVOT_SUB_POS);
+    PIVOT_ANGLES_MAP.put(1.48, 23.2041015625);
+    PIVOT_ANGLES_MAP.put(1.85, 16.81201171875);
+    PIVOT_ANGLES_MAP.put(2.25, 13.64697265625);
+    PIVOT_ANGLES_MAP.put(2.5, 12.51416015625);
+    PIVOT_ANGLES_MAP.put(2.69, 12.00927734375);
+    PIVOT_ANGLES_MAP.put(2.97, 11.01171875);
+    // PIVOT_ANGLES_MAP.put(3.45, 11.901416015625);
 
     pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;

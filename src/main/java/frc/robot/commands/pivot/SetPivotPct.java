@@ -21,21 +21,21 @@ public class SetPivotPct extends Command {
 
   @Override
   public void initialize(){
-    IS_TRAPPING = true;
+    // IS_TRAPPING = true;
   }
 
   @Override
   public void execute() {
     mPivot.setPivotPct(pct);
-    if(IS_TRAPPING){
-    mIndex.runIndex(0.06);
-    }
+    // if(IS_TRAPPING){
+    // mIndex.runIndex(0.06);
+    // }
   }
 
   @Override
   public void end(boolean isInterrupted) {
     // mPivot.stabilizeMotors();
     mPivot.setPivotPct(0);
-    mIndex.runIndex(0);
+    // mIndex.runIndex(0);
   }
 }
