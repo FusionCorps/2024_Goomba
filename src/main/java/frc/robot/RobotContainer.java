@@ -158,74 +158,9 @@ public class RobotContainer {
         .povRight()
         .whileTrue(
             new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
-                .alongWith(new RunIndex(index, -INDEX_RUN_PCT)))
+                .alongWith(new IndexDummy(index)))
         .onFalse(new StopRevShooter(shooter));
     
-    // robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_ARM_INIT_POSE));
-
-    // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.5));
-    // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.5));
-
-    // Ready climb
-    // robotController.start().onTrue(
-    //     new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS)
-    //         .andThen(new HoldPivotAngle(pivot).alongWith(new SetHooksPos(transferHooks, TRANSFER_HOOK_POS_CLIMB)))
-    //         .andThen(new HoldHooks(transferHooks)));
-    // Auto Climb
-    // robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_TRAP_POS));
-
-    // aim at amp and shoot at amp
-    // robotController.leftBumper().onTrue(new SequentialCommandGroup(new
-    // RotateToAngle(drivetrain,
-    // 90, MaxSpeed, 0.3),
-    // new ParallelCommandGroup(new
-    // StrafeToAprilTag(drivetrain, StageAlignment.toleranceDeg)),
-    // new
-    // SetPivotPos(pivot, PivotConstants.PIVOT_AMP_POS)));
-
-    // robotController.leftBumper().whileTrue(new RevShooter(shooter, -1200,
-    // -1200));
-    // robotController.leftBumper()
-    // .onFalse(new RunIndex(index, 0.23).withTimeout(1).andThen(new
-    // RevShooter(shooter, 0, 0)));
-
-    // Continuous intake+shooting motion
-    // robotController
-    // .rightTrigger()
-    // .whileTrue(
-    // new SetPivotPos(pivot, PivotConstants.PIVOT_STOW_POS)
-    // .alongWith(new Shoot(index))
-    // .alongWith(new RunIntake(intake, INTAKE_RUN_PCT))
-    // .alongWith(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))).onFalse(new
-    // StopRevShooter(shooter));
-
-    // Move climb to upright position
-    // robotController.start().onTrue(new UpClimbPos(pivot));
-    // // Move climb to down position
-    // robotController.back().onTrue(new DownClimbPos(pivot));
-
-    // // rotate in
-    // place to aim at target
-
-    // rotate to perpendicular with wall, strafe to center on april tag, and rumble
-    // robotController
-
-    // .x()
-    // .whileTrue(
-    // drivetrain
-    // .rotateToAngleCommand(180, 2.0, 0.75)
-    // // new RotateToAngle(drivetrain, 180, 2.0, 0.75)
-    // .andThen(Commands.print("rotation finished"))
-    // .andThen(drivetrain.strafeToAprilTagCommand(2.0))
-    // // .andThen(new StrafeToAprilTag(drivetrain, 2.0))
-    // .andThen(Commands.print("strafe finished"))
-    // .andThen(
-    // Commands.runOnce(
-    // () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.2)))
-    // .andThen(new WaitCommand(0.1))
-    // .andThen(
-    // Commands.runOnce(
-    // () -> robotController.getHID().setRumble(RumbleType.kBothRumble, 0.0))));
   }
 
   private void setupPipelineChooser() {

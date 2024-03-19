@@ -326,8 +326,8 @@ public class Constants {
     public static final double SPK_LEFT_RPM = 5000;
     public static final double SPK_RIGHT_RPM = 3000;
 
-    public static final double LEFT_SHUTTLING_RPM = 3700;
-    public static final double RIGHT_SHUTTLING_RPM = 3500;
+    public static final double LEFT_SHUTTLING_RPM = 3200;
+    public static final double RIGHT_SHUTTLING_RPM = 3000;
 
     // TODO: change these
     public static final double AMP_RIGHT_SPEED = -1200;

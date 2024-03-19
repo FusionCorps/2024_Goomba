@@ -71,18 +71,8 @@ public class Pivot extends SubsystemBase {
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
 
-    // pivotMotor.setControl(new Follower(pivotFollowerMotor.getDeviceID(), false));
 
-    // sets the position of the motor acc. to through bore encoder once the encoder
-    // is ready
-    // new Trigger(pivotEncoder::isConnected)
-    // .onTrue(
-    // runOnce(
-    // () -> {
-    // System.out.println("syncing pivot encoders init");
-    // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
-    // PIVOT_GEAR_RATIO);
-    // }));
+    
 
     pivotMotor.setPosition(PIVOT_ARM_INIT_POSE);
     pivotFollowerMotor.setPosition(PIVOT_ARM_INIT_POSE);
@@ -105,34 +95,9 @@ public class Pivot extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // if (!motorConfigured
-    // && pivotEncoder.isConnected()
-    // && pivotMotor.getPosition().getValueAsDouble() !=
-    // pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO) {
-    // System.out.println("syncing pivot encoders periodic");
-
-    // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
-    // PIVOT_GEAR_RATIO);
-    // pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() *
-    // PIVOT_GEAR_RATIO);
-    // motorConfigured = true;
-    // }
-
-    // SmartDashboard.putNumberArray(
-    // "pivot encoders",
-    // new double[] {
-    // pivotMotor.getPosition().getValueAsDouble(),
-    // adjustedPivotEncoderAngle.getAsDouble(),
-    // pivotEncoder.getAbsolutePosition()
-    // });
+    
   }
 
-  // public void syncPosition() {
-  // pivotMotor.setPosition(pivotEncoder.getAbsolutePosition() *
-  // PIVOT_GEAR_RATIO);
-  // pivotFollowerMotor.setPosition(pivotEncoder.getAbsolutePosition() *
-  // PIVOT_GEAR_RATIO);
-  // }
 
   /**
    * Sets the pivot angle using a duty cycle percentage.
@@ -140,8 +105,6 @@ public class Pivot extends SubsystemBase {
    * @param pct the percentage to set the shooter to
    */
   public void setPivotPct(double pct) {
-    // pivotMotor.setPosition(pivotEncoder.getDistance() *
-    // PivotConstants.PIVOT_GEAR_RATIO);
 
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
@@ -164,22 +127,6 @@ public class Pivot extends SubsystemBase {
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
 
-    // if(Math.abs(targetPos - pivotMotor.getPosition().getValueAsDouble()) >=
-    // errorThreshold){
-    // if(targetPos - pivotMotor.getPosition().getValueAsDouble() < 0){
-    // pivotMotor.set(-0.3);
-    // pivotFollowerMotor.set(-0.3);
-    // } else{
-    // pivotMotor.set(0.3);
-    // pivotFollowerMotor.set(0.3);
-    // }
-    // } else{
-    // pivotMotor.set(0);
-    // pivotFollowerMotor.set(0);
-    // }
-
-    // System.out.println(pivotMotor.getMotorVoltage() + ", " +
-    // pivotFollowerMotor.getMotorVoltage());
   }
 
   /**
