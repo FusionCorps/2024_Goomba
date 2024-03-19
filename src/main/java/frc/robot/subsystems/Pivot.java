@@ -71,9 +71,6 @@ public class Pivot extends SubsystemBase {
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
 
-
-    
-
     pivotMotor.setPosition(PIVOT_ARM_INIT_POSE);
     pivotFollowerMotor.setPosition(PIVOT_ARM_INIT_POSE);
 
@@ -94,10 +91,7 @@ public class Pivot extends SubsystemBase {
   }
 
   @Override
-  public void periodic() {
-    
-  }
-
+  public void periodic() {}
 
   /**
    * Sets the pivot angle using a duty cycle percentage.
@@ -126,14 +120,14 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
-
   }
 
   /**
    * @return true if the pivot is close enough to its target position
    */
   public boolean reachedAngle() {
-    return Math.abs(targetPos - pivotMotor.getPosition().getValue()) < PivotConstants.PIVOT_ERROR_THRESHOLD;
+    return Math.abs(targetPos - pivotMotor.getPosition().getValue())
+        < PivotConstants.PIVOT_ERROR_THRESHOLD;
   }
 
   public double getPivotAngle() {

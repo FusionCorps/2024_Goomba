@@ -5,24 +5,23 @@ import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 
-public class Outtake extends Command{
+public class Outtake extends Command {
 
-    Index mIndex;
+  Index mIndex;
 
-    public Outtake(Index index){
-        mIndex = index;
+  public Outtake(Index index) {
+    mIndex = index;
 
-        addRequirements(mIndex);
-    }
+    addRequirements(mIndex);
+  }
 
-    @Override
-    public void execute(){
-        mIndex.runIndex(-INDEX_RUN_PCT);
-    }
+  @Override
+  public void execute() {
+    mIndex.runIndex(-INDEX_RUN_PCT);
+  }
 
-    @Override
-    public void end(boolean isInterrupted){
-        mIndex.runIndex(0);
-    }
-    
+  @Override
+  public void end(boolean isInterrupted) {
+    mIndex.runIndex(0);
+  }
 }

@@ -38,8 +38,8 @@ public class AutoPivotAim extends Command {
     if (mCamera.hasTarget()) {
       distanceToAprilTag = mCamera.getPrimaryAprilTagPose().getZ();
       if (distanceToAprilTag != 0.0) angleToSet = PIVOT_ANGLES_MAP.get(distanceToAprilTag);
-       
-    } else{
+
+    } else {
       angleToSet = angleToSet;
     }
 

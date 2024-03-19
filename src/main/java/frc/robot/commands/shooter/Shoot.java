@@ -21,7 +21,7 @@ public class Shoot extends Command {
   @Override
   public void execute() {
     System.out.println("Trying to shoot!");
-    if(mShooter.reachedSpeeds()){
+    if (mShooter.reachedSpeeds()) {
       mIndex.runIndex(INDEX_RUN_PCT);
     }
   }

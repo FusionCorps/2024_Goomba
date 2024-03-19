@@ -31,9 +31,8 @@ public class IndexDummy extends Command {
   }
 
   @Override
-  public void end(boolean isFinished){
+  public void end(boolean isFinished) {
     IS_TRAPPING = false;
     mIndex.runIndex(0);
   }
-
 }

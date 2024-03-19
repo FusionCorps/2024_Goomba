@@ -6,7 +6,6 @@ import static frc.robot.Constants.driverTab;
 
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
-
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
@@ -20,7 +19,8 @@ public class Index extends SubsystemBase {
 
   ShuffleboardTab tab = Shuffleboard.getTab("General");
 
-  public GenericEntry isTrapping = tab.add("Is Trapping", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+  public GenericEntry isTrapping =
+      tab.add("Is Trapping", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
   public Index() {
     beamBreak = new DigitalInput(1);

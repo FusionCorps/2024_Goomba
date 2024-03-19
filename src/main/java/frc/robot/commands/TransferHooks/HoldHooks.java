@@ -13,11 +13,8 @@ public class HoldHooks extends Command {
     addRequirements(mTransferHooks);
   }
 
-
   @Override
   public void execute() {
     mTransferHooks.holdAtTargetPos();
   }
-
 }
-

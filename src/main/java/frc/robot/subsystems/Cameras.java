@@ -37,12 +37,12 @@ public class Cameras extends SubsystemBase {
         .getEntry("camerapose_robotspace_set")
         .setDoubleArray(
             new double[] {
-                -Units.inchesToMeters(16), // forward
-                0.0, // right
-                Units.inchesToMeters(18), // up
-                180,
-                32.39,
-                0.0 // roll, pitch, yaw
+              -Units.inchesToMeters(16), // forward
+              0.0, // right
+              Units.inchesToMeters(18), // up
+              180,
+              32.39,
+              0.0 // roll, pitch, yaw
             });
 
     // setPriorityID(allianceColor == Alliance.Blue ? 7 : 4);
@@ -70,14 +70,12 @@ public class Cameras extends SubsystemBase {
       fidID = (int) limelightTable.getEntry("id").getDouble(0);
       pipelineNum = (int) limelightTable.getEntry("getpipe").getDouble(0);
       // update apriltag pose and distances to apriltag
-      if (pipelineNum == PIPELINE.APRILTAG_3D.value)
-        updatePrimaryAprilTagPose();
+      if (pipelineNum == PIPELINE.APRILTAG_3D.value) updatePrimaryAprilTagPose();
     }
   }
 
   /**
-   * Gets the tx value from the limelight. tx is the horizontal offset from the
-   * crosshair to the
+   * Gets the tx value from the limelight. tx is the horizontal offset from the crosshair to the
    * target, in degrees. tx > 0 means the target is to the left of the crosshair.
    *
    * @return tx (degrees)
@@ -88,15 +86,14 @@ public class Cameras extends SubsystemBase {
 
   public double getID() {
     return (hasTarget
-        && (pipelineNum == PIPELINE.APRILTAG_3D.value
-            || pipelineNum == PIPELINE.APRILTAG_2D.value))
-                ? fidID
-                : 0;
+            && (pipelineNum == PIPELINE.APRILTAG_3D.value
+                || pipelineNum == PIPELINE.APRILTAG_2D.value))
+        ? fidID
+        : 0;
   }
 
   /**
-   * Returns the ty value from the limelight. ty is the vertical offset from the
-   * crosshair to the
+   * Returns the ty value from the limelight. ty is the vertical offset from the crosshair to the
    * target, in degrees. ty > 0 means the target is above the crosshair.
    *
    * @return ty (degrees)
@@ -106,8 +103,7 @@ public class Cameras extends SubsystemBase {
   }
 
   /**
-   * Returns the tv value from the limelight. tv is 1 if the limelight has a valid
-   * target, 0
+   * Returns the tv value from the limelight. tv is 1 if the limelight has a valid target, 0
    * otherwise.
    *
    * @return tv (0 or 1)
@@ -151,16 +147,17 @@ public class Cameras extends SubsystemBase {
     try {
       // get latest apriltag pose results, if on correct pipeline and target seen
       if (hasTarget() && getPipeline() == PIPELINE.APRILTAG_3D.value) {
-        double[] dataPose = limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
-        if (dataPose.length < 6)
-          aprilTagTargetPose = new Pose3d();
+        double[] dataPose =
+            limelightTable.getEntry("targetpose_robotspace").getDoubleArray(new double[0]);
+        if (dataPose.length < 6) aprilTagTargetPose = new Pose3d();
         else {
-          aprilTagTargetPose = new Pose3d(
-              new Translation3d(dataPose[0], dataPose[1], dataPose[2]),
-              new Rotation3d(
-                  Units.degreesToRadians(dataPose[3]),
-                  Units.degreesToRadians(dataPose[4]),
-                  Units.degreesToRadians(dataPose[5])));
+          aprilTagTargetPose =
+              new Pose3d(
+                  new Translation3d(dataPose[0], dataPose[1], dataPose[2]),
+                  new Rotation3d(
+                      Units.degreesToRadians(dataPose[3]),
+                      Units.degreesToRadians(dataPose[4]),
+                      Units.degreesToRadians(dataPose[5])));
         }
       }
     } catch (Exception e) {

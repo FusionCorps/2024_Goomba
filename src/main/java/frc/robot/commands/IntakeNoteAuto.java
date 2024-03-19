@@ -17,19 +17,18 @@ import frc.robot.subsystems.Pivot;
 
 public class IntakeNoteAuto extends ParallelCommandGroup {
 
-    public IntakeNoteAuto(Intake intake, Index index, Pivot pivot) {
-      addCommands(
-          Commands.runOnce(
-                  () -> {
-                    IS_AMP = false;
-                    IS_SHUTTLING = false;
-                  })
-              .alongWith(
-                  new SetPivotPos(pivot, PIVOT_STOW_POS)
-                      .alongWith(
-                          new RunIntake(intake, INTAKE_RUN_PCT)
-                              .alongWith(new RunIndex(index, INDEX_RUN_PCT))
-                              .until(() -> index.beamBroken())))                
-              );
-    }
+  public IntakeNoteAuto(Intake intake, Index index, Pivot pivot) {
+    addCommands(
+        Commands.runOnce(
+                () -> {
+                  IS_AMP = false;
+                  IS_SHUTTLING = false;
+                })
+            .alongWith(
+                new SetPivotPos(pivot, PIVOT_STOW_POS)
+                    .alongWith(
+                        new RunIntake(intake, INTAKE_RUN_PCT)
+                            .alongWith(new RunIndex(index, INDEX_RUN_PCT))
+                            .until(() -> index.beamBroken()))));
   }
+}

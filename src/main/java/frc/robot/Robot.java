@@ -5,7 +5,6 @@
 package frc.robot;
 
 import com.ctre.phoenix6.SignalLogger;
-
 import edu.wpi.first.net.PortForwarder;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -20,7 +19,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    for (int port = 5800; port <=5807; port++) {
+    for (int port = 5800; port <= 5807; port++) {
       PortForwarder.add(port, "limelight.local", port);
     }
     DataLogManager.start();
@@ -30,7 +29,6 @@ public class Robot extends TimedRobot {
 
     SignalLogger.setPath("home/lvuser/logs");
     SignalLogger.start();
-
 
     m_robotContainer = new RobotContainer();
   }

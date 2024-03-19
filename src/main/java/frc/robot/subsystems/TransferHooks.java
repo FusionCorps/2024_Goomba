@@ -46,7 +46,7 @@ public class TransferHooks extends SubsystemBase {
     targetPosition = 0;
   }
 
-  public double getPosition(){
+  public double getPosition() {
     return transferHookMotor.getPosition().getValueAsDouble();
   }
 
