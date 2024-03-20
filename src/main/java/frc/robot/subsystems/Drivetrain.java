@@ -118,8 +118,9 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
       LimelightHelpers.PoseEstimate limelightMeasurement =
           LimelightHelpers.getBotPoseEstimate_wpiBlue(LIMELIGHT_NAME);
-
-      addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds);
+      if (limelightMeasurement.tagCount >= 2) {
+        addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds);
+      }
     }
   }
 
@@ -310,8 +311,11 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     public DriveTelemetry(Drivetrain drivetrain) {
       PathPlannerLogging.setLogActivePathCallback(
           (poses) -> {
-            field2d.getObject("autoTrajectory").setPoses(poses);
+            field2d.getObject("path").setPoses(poses);
           });
+      PathPlannerLogging.setLogCurrentPoseCallback((pose) -> field2d.setRobotPose(pose));
+      PathPlannerLogging.setLogTargetPoseCallback(
+          (pose) -> field2d.getObject("target").setPose(pose));
 
       // add diagnostics telemetry to shuffleboard
       diagnosticsTab.add(field2d);

@@ -1,6 +1,7 @@
 package frc.robot.commands.pivot;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
+import static frc.robot.Constants.diagnosticsTab;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -30,7 +31,7 @@ public class AutoPivotAim extends Command {
 
   @Override
   public void initialize() {
-    // diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO: might crash
+    diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO: might crash
   }
 
   @Override
@@ -38,11 +39,7 @@ public class AutoPivotAim extends Command {
     if (mCamera.hasTarget()) {
       distanceToAprilTag = mCamera.getPrimaryAprilTagPose().getZ();
       if (distanceToAprilTag != 0.0) angleToSet = PIVOT_ANGLES_MAP.get(distanceToAprilTag);
-
-    } else {
-      angleToSet = angleToSet;
     }
-
     mPivot.setPivotAngle(angleToSet);
   }
 

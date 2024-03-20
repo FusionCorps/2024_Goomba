@@ -18,12 +18,18 @@
       "/SmartDashboard/Pipeline Chooser": "String Chooser"
     },
     "windows": {
-      "/Shuffleboard/Driver/Alliance Color Chooser": {
+      "/Shuffleboard/Diagnostics/Field": {
+        "bottom": 1476,
+        "height": 8.210550308227539,
+        "left": 150,
+        "right": 2961,
+        "top": 79,
+        "width": 16.541748046875,
         "window": {
           "visible": true
         }
       },
-      "/Shuffleboard/Driver/Pipeline Chooser": {
+      "/Shuffleboard/Driver/Auto Chooser": {
         "window": {
           "visible": true
         }
@@ -54,10 +60,7 @@
         "left": 150,
         "right": 2961,
         "top": 79,
-        "width": 16.541748046875,
-        "window": {
-          "visible": true
-        }
+        "width": 16.541748046875
       }
     }
   },
