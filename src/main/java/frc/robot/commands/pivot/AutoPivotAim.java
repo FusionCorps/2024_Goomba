@@ -10,7 +10,8 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
 
 /**
- * Aims the pivot using a manually tuned look-up table, relating depth distance to speaker apriltag
+ * Aims the pivot using a manually tuned look-up table, relating depth distance
+ * to speaker apriltag
  * with pivot angles for shooting.
  */
 public class AutoPivotAim extends Command {
@@ -31,14 +32,16 @@ public class AutoPivotAim extends Command {
 
   @Override
   public void initialize() {
-    diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO: might crash
+    // diagnosticsTab.addDouble("AutoPivotAim angle", () -> angleToSet); // TODO:
+    // might crash
   }
 
   @Override
   public void execute() {
     if (mCamera.hasTarget()) {
       distanceToAprilTag = mCamera.getPrimaryAprilTagPose().getZ();
-      if (distanceToAprilTag != 0.0) angleToSet = PIVOT_ANGLES_MAP.get(distanceToAprilTag);
+      if (distanceToAprilTag != 0.0)
+        angleToSet = PIVOT_ANGLES_MAP.get(distanceToAprilTag);
     }
     mPivot.setPivotAngle(angleToSet);
   }
@@ -46,8 +49,7 @@ public class AutoPivotAim extends Command {
   @Override
   public boolean isFinished() {
     if (DriverStation.isAutonomous()) {
-      return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag))
-          < errorThreshold;
+      return Math.abs(mPivot.getPivotAngle() - PIVOT_ANGLES_MAP.get(distanceToAprilTag)) < errorThreshold;
     } else {
       return !mIndex.beamBroken();
     }

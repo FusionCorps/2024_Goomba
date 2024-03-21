@@ -40,9 +40,9 @@ public class Pivot extends SubsystemBase {
     PIVOT_ANGLES_MAP.put(1.85, 16.81201171875);
     PIVOT_ANGLES_MAP.put(2.25, 13.64697265625);
     PIVOT_ANGLES_MAP.put(2.5, 12.51416015625);
-    PIVOT_ANGLES_MAP.put(2.69, 12.00927734375);
-    PIVOT_ANGLES_MAP.put(2.97, 11.01171875);
-    // PIVOT_ANGLES_MAP.put(3.45, 11.901416015625);
+    PIVOT_ANGLES_MAP.put(2.63, 10.0927734375);
+    PIVOT_ANGLES_MAP.put(3.17, 9.45263671875);
+    PIVOT_ANGLES_MAP.put(3.5, 8.953125);
 
     pivotEncoder = new DutyCycleEncoder(2);
     adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;
