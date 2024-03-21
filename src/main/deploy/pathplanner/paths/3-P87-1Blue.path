@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.11,
-        "y": 2.42
+        "x": 1.41,
+        "y": 1.98
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.956303997593832,
-        "y": 1.2790688470895355
+        "x": 2.386743483232002,
+        "y": 2.2590695666377165
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.31,
-        "y": 2.88
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": {
-        "x": 5.184212141512102,
-        "y": 1.944882436620397
+        "x": 2.4330514383408373,
+        "y": 2.4651145052998324
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [],
@@ -39,11 +39,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -37.51999999999998,
+    "rotation": -37.51911382047637,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3-P87",
+  "folder": "3-P87Blue",
   "previewStartingState": {
     "rotation": 0,
     "velocity": 0

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5,
-        "y": 2.6
+        "x": 8.32,
+        "y": 0.69
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.9901960145800635,
-        "y": 0.8068966565283563
+        "x": 8.38,
+        "y": 0.6899999999999996
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.001290988336962,
-        "y": 2.88
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": {
-        "x": 7.941290988336961,
-        "y": 2.88
+        "x": 3.370957783388655,
+        "y": 2.8779049059514548
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [],
@@ -33,20 +33,20 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.35,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -0.9391909457356618,
+    "rotation": -36.720734073040845,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "4-P873Blue",
   "previewStartingState": {
-    "rotation": -40.0,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

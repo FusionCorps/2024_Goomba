@@ -210,7 +210,7 @@ public class RobotContainer {
     // autoChooser.addOption("Comp-5 Piece Top Last Mid",
     // AutoBuilder.buildAuto("Auto5-P1564Blue"));
     autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
-    autoChooser.addOption("Comp 3 Piece Load Side", AutoBuilder.buildAuto("Auto3-P87"));
+    autoChooser.addOption("Comp 3 Piece Load Side", AutoBuilder.buildAuto("Auto3-P87Blue"));
     // autoChooser.addOption("Comp-3 Piece Center", AutoBuilder.buildAuto("Auto3-P32"));
 
     autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));

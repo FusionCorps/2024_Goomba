@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.31,
-        "y": 2.88
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7830503590185653,
-        "y": 1.380929354040011
+        "x": 3.7840081424072203,
+        "y": 1.3788342599914658
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     },
     {
       "anchor": {
@@ -43,7 +43,7 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3-P87",
+  "folder": "3-P87Blue",
   "previewStartingState": {
     "rotation": -39.139999999999986,
     "velocity": 0

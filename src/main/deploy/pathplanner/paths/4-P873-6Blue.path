@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.03,
-        "y": 0.78
+        "x": 1.25,
+        "y": 4.41
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.136537145595539,
-        "y": 1.0581387735013432
+        "x": 1.3099999999999998,
+        "y": 4.41
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.31,
-        "y": 2.88
+        "x": 2.142519612674553,
+        "y": 4.958321483594535
       },
       "prevControl": {
-        "x": 4.019301815204197,
-        "y": 2.1183726410512316
+        "x": 1.136822330624718,
+        "y": 5.6482765956984915
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,20 +33,20 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.3,
+    "maxAcceleration": 1.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -37.51999999999998,
+    "rotation": -18.97040780848663,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3-P87",
+  "folder": "4-P873Blue",
   "previewStartingState": {
-    "rotation": 0,
+    "rotation": -44.80000000000001,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
