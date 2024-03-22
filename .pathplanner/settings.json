@@ -4,18 +4,20 @@
   "holonomicMode": true,
   "pathFolders": [
     "3-P87Blue",
+    "3-P87Red",
     "4-P321Blue",
     "4-P321Red",
     "4-P873Blue",
     "4-P873Red",
-    "5-P1456",
-    "5-P1564",
-    "Old"
+    "5-P1456Blue",
+    "5-P1564Blue",
+    "Old",
+    "P-1456Red"
   ],
   "autoFolders": [
     "3 Piece",
     "4 Piece",
-    "5 Piece Blue",
+    "5 Piece",
     "Old"
   ],
   "defaultMaxVel": 6.0,

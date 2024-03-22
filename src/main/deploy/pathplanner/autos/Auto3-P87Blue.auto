@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterLoadSide"
+                  "name": "RevShooterLoad"
                 }
               },
               {
@@ -32,7 +32,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87-1Blue"
+                              "pathName": "3-P87Blue-1"
                             }
                           },
                           {
@@ -57,7 +57,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87-2Blue"
+                              "pathName": "3-P87Blue-2"
                             }
                           },
                           {
@@ -76,7 +76,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87-3Blue"
+                              "pathName": "3-P87Blue-3"
                             }
                           },
                           {
@@ -101,7 +101,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87-4Blue"
+                              "pathName": "3-P87Blue-4"
                             }
                           },
                           {
@@ -120,7 +120,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87-5Blue"
+                              "pathName": "3-P87Blue-5"
                             }
                           },
                           {

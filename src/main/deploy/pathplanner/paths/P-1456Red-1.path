@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 15.8,
+        "y": 6.7
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 15.860000000000001,
+        "y": 6.7
+      },
+      "isLocked": false,
+      "linkedName": "AmpSideRed"
+    },
+    {
+      "anchor": {
+        "x": 14.0,
+        "y": 6.9
+      },
+      "prevControl": {
+        "x": 14.828729448428481,
+        "y": 6.41251208916327
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.3,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 157.69379494509255,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "P-1456Red",
+  "previewStartingState": {
+    "rotation": 120.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

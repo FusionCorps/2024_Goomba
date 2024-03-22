@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterAmpSide"
+                  "name": "RevShooterAmp"
                 }
               },
               {
@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosAmp"
+                        "name": "PivotAimAmpStart"
                       }
                     },
                     {
@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-1"
+                              "pathName": "5-P1456Blue-1"
                             }
                           },
                           {
@@ -75,7 +75,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-2"
+                              "pathName": "5-P1456Blue-2"
                             }
                           },
                           {
@@ -90,7 +90,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5-P1456-3"
+                        "pathName": "5-P1456Blue-3"
                       }
                     },
                     {
@@ -106,7 +106,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-4"
+                              "pathName": "5-P1456Blue-4"
                             }
                           },
                           {
@@ -121,7 +121,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5-P1456-5"
+                        "pathName": "5-P1456Blue-5"
                       }
                     },
                     {
@@ -137,7 +137,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1456-6"
+                              "pathName": "5-P1456Blue-6"
                             }
                           },
                           {
@@ -152,7 +152,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "5-P1456-7"
+                        "pathName": "5-P1456Blue-7"
                       }
                     },
                     {
@@ -170,6 +170,6 @@
       ]
     }
   },
-  "folder": "5 Piece Blue",
+  "folder": "5 Piece",
   "choreoAuto": false
 }

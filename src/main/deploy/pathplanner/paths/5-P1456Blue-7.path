@@ -1,0 +1,52 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.18,
+        "y": 4.12
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.400841096269087,
+        "y": 7.54814193201036
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.650765945406534,
+        "y": 6.548726487766366
+      },
+      "prevControl": {
+        "x": 5.590765945406535,
+        "y": 6.548726487766366
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "AmpSide Far Shoot Blue"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 5.0,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "5-P1456Blue",
+  "previewStartingState": {
+    "rotation": 0.0,
+    "velocity": 0
+  },
+  "useDefaultConstraints": false
+}

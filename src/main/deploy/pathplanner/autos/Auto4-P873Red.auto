@@ -5,7 +5,7 @@
       "x": 15.8,
       "y": 4.44
     },
-    "rotation": -60.0
+    "rotation": -120.0
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterLoadSide"
+                  "name": "RevShooterLoad"
                 }
               },
               {
@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosLoad"
+                        "name": "PivotAimLoadStart"
                       }
                     },
                     {
@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-1Red"
+                              "pathName": "4-P873Red-1"
                             }
                           },
                           {
@@ -63,7 +63,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-2Red"
+                              "pathName": "4-P873Red-2"
                             }
                           },
                           {
@@ -88,7 +88,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-3Red"
+                              "pathName": "4-P873Red-3"
                             }
                           },
                           {
@@ -107,7 +107,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-4Red"
+                              "pathName": "4-P873Red-4"
                             }
                           },
                           {
@@ -132,7 +132,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-5Red"
+                              "pathName": "4-P873Red-5"
                             }
                           },
                           {

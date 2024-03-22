@@ -4,13 +4,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.IndexConstants;
 import frc.robot.subsystems.Index;
 
+// runs index, regardless of shoot speeds - used in auto
 public class ShootAuto extends Command {
-
   Index mIndex;
 
   public ShootAuto(Index index) {
     mIndex = index;
-
     addRequirements(mIndex);
   }
 

@@ -63,20 +63,20 @@ public class RobotContainer {
    * Configures the bindings for the robot's subsystems and commands.
    *
    * <ul>
-   *   <li>Left/Right sticks - field-centric swerve drive
-   *   <li>B: reset gyro
-   *   <li>RB: aim drivetrain + pivot at speaker
-   *   <li>RT: intake note + stow pivot
-   *   <li>LT: rev shooter on hold + shoot note on release
-   *   <li>Y - manually stop revving shooter
-   *   <li>A: stow pivot
-   *   <li>POV up/down - manually move pivot
-   *   <li>LB: aim pivot at amp
-   *   <li>X: aim pivot for shuttling
-   *   <li>POV left - outtake thru intake
-   *   <li>POV right - outtake thru shooter
-   *   <li>Start - Aims pivot for climbing
-   *   <li>Back - Runs climb routine
+   * <li>Left/Right sticks - field-centric swerve drive
+   * <li>B: reset gyro
+   * <li>RB: aim drivetrain + pivot at speaker
+   * <li>RT: intake note + stow pivot
+   * <li>LT: rev shooter on hold + shoot note on release
+   * <li>Y - manually stop revving shooter
+   * <li>A: stow pivot
+   * <li>POV up/down - manually move pivot
+   * <li>LB: aim pivot at amp
+   * <li>X: aim pivot for shuttling
+   * <li>POV left - outtake thru intake
+   * <li>POV right - outtake thru shooter
+   * <li>Start - Aims pivot for climbing
+   * <li>Back - Runs climb routine
    * </ul>
    */
   private void configureBindings() {
@@ -102,7 +102,8 @@ public class RobotContainer {
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
                 .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
-    // robotController.rightBumper().onTrue(new SetPivotPos(pivot, 36.943115234375));
+    // robotController.rightBumper().onTrue(new SetPivotPos(pivot,
+    // 36.943115234375));
 
     // Run intake mechanism
     robotController
@@ -165,12 +166,12 @@ public class RobotContainer {
   // method that configures and initializes everything necessary for auton
   private void setupAutoChooser() {
     NamedCommands.registerCommand(
-        "RevShooterLoadSide", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+        "RevShooterLoad", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
     NamedCommands.registerCommand(
-        "RevShooterAmpSide", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
+        "RevShooterAmp", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
 
-    NamedCommands.registerCommand("StartPosLoad", new SetPivotPos(pivot, 33.84));
-    NamedCommands.registerCommand("StartPosAmp", new SetPivotPos(pivot, 36.943115234375));
+    NamedCommands.registerCommand("PivotAimLoadStart", new SetPivotPos(pivot, 33.84));
+    NamedCommands.registerCommand("PivotAimAmpStart", new SetPivotPos(pivot, 36.943115234375));
     NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 17.75));
     NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
     NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
@@ -193,8 +194,10 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
-    // autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Red"));
-    // autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Red"));
+    // autoChooser.addOption("Comp-4 Piece load side",
+    // AutoBuilder.buildAuto("Auto4-P873Red"));
+    // autoChooser.addOption("Comp-4 Piece center",
+    // AutoBuilder.buildAuto("Auto4-P321Red"));
     // autoChooser.addOption(
     // "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
     // autoChooser.addOption(
@@ -211,7 +214,8 @@ public class RobotContainer {
     // AutoBuilder.buildAuto("Auto5-P1564Blue"));
     autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
     autoChooser.addOption("Comp 3 Piece Load Side", AutoBuilder.buildAuto("Auto3-P87Blue"));
-    // autoChooser.addOption("Comp-3 Piece Center", AutoBuilder.buildAuto("Auto3-P32"));
+    // autoChooser.addOption("Comp-3 Piece Center",
+    // AutoBuilder.buildAuto("Auto3-P32"));
 
     autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
     // autoChooser.addOption("Testing-StrafeAuto",
@@ -225,6 +229,11 @@ public class RobotContainer {
   public RobotContainer() {
     setupAutoChooser();
     setupPipelineChooser();
+    setupAllianceColorChooser();
+    configureBindings();
+  }
+
+  private void setupAllianceColorChooser() {
     SendableChooser<DriverStation.Alliance> colorChooser = new SendableChooser<>();
 
     colorChooser.addOption("Red", Alliance.Red);
@@ -236,7 +245,6 @@ public class RobotContainer {
           drivetrain.getCamera().setPriorityID(color == Alliance.Blue ? 7 : 4);
         });
     driverTab.add("Alliance Color Chooser", colorChooser).withSize(2, 1).withPosition(4, 4);
-    configureBindings();
   }
 
   public Command getAutonomousCommand() {

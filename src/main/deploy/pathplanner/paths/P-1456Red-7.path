@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.650765945406534,
-        "y": 6.548726487766366
+        "x": 8.57,
+        "y": 4.42
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.338302152525964,
-        "y": 6.335095472374233
+        "x": 9.615084301393674,
+        "y": 5.4143935068496925
       },
       "isLocked": false,
-      "linkedName": "5-P1456/P1564 Far Shoot Blue"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.95,
-        "y": 4.45
+        "x": 12.25,
+        "y": 6.35
       },
       "prevControl": {
-        "x": 7.890000000000001,
-        "y": 4.45
+        "x": 9.91913231689711,
+        "y": 6.794303731057604
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpSide Far Shoot Red"
     }
   ],
   "rotationTargets": [],
@@ -39,14 +39,14 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": 170.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1564",
+  "folder": "P-1456Red",
   "previewStartingState": {
-    "rotation": 12.154941697222297,
-    "velocity": 0
+    "rotation": 157.69,
+    "velocity": 0.0
   },
   "useDefaultConstraints": true
 }

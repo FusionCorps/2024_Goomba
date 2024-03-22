@@ -3,22 +3,22 @@
   "startingPose": {
     "position": {
       "x": 15.8,
-      "y": 4.44
+      "y": 6.7
     },
-    "rotation": -120.0
+    "rotation": 120.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterLoad"
+                  "name": "RevShooterAmp"
                 }
               },
               {
@@ -28,7 +28,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimLoadStart"
+                        "name": "PivotAimAmpStart"
                       }
                     },
                     {
@@ -38,13 +38,13 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P321Blue-1"
+                              "pathName": "P-1456Red-1"
                             }
                           },
                           {
@@ -69,7 +69,26 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P321Blue-2"
+                              "pathName": "P-1456Red-2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "P-1456Red-3"
                             }
                           },
                           {
@@ -94,7 +113,26 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P321Blue-3"
+                              "pathName": "P-1456Red-6"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "P-1456Red-7"
                             }
                           },
                           {

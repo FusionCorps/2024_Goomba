@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterLoadSide"
+                  "name": "RevShooterLoad"
                 }
               },
               {
@@ -28,19 +28,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "StartPosLoad"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "4-P873-1Blue"
+                        "name": "PivotAimLoadStart"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -50,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-2Blue"
+                              "pathName": "4-P873Blue-1"
                             }
                           },
                           {
@@ -69,7 +63,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-3Blue"
+                              "pathName": "4-P873Blue-2"
                             }
                           },
                           {
@@ -94,7 +88,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-4Blue"
+                              "pathName": "4-P873Blue-3"
                             }
                           },
                           {
@@ -113,7 +107,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-5Blue"
+                              "pathName": "4-P873Blue-4"
                             }
                           },
                           {
@@ -138,7 +132,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P873-6Blue"
+                              "pathName": "4-P873Blue-5"
                             }
                           },
                           {

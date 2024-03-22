@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.7,
-        "y": 6.7
+        "x": 1.41,
+        "y": 1.98
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.8104687641854593,
-        "y": 6.653131544303899
+        "x": 2.386743483232002,
+        "y": 2.2590695666377165
       },
       "isLocked": false,
-      "linkedName": "AmpSideBlue"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 2.8441688792209487,
-        "y": 6.817692039942485
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": {
-        "x": 2.8291332684944557,
-        "y": 6.801958409045023
+        "x": 2.4330514383408373,
+        "y": 2.4651145052998324
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [],
@@ -33,19 +33,19 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.0,
-    "maxAcceleration": 3.0,
+    "maxAcceleration": 3.3,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 20.92450174492119,
+    "rotation": -37.51911382047637,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1456",
+  "folder": "3-P87Blue",
   "previewStartingState": {
-    "rotation": 60.0,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": false
