@@ -172,7 +172,7 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("PivotAimLoadStart", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("PivotAimAmpStart", new SetPivotPos(pivot, 36.943115234375));
-    NamedCommands.registerCommand("PivotAimP1456/P1564-1", new SetPivotPos(pivot, 17.75));
+    NamedCommands.registerCommand("PivotAim Note 1", new SetPivotPos(pivot, 17.75));
     NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
     NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
     NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
