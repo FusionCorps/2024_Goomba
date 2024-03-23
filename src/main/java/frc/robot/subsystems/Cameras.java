@@ -46,10 +46,10 @@ public class Cameras extends SubsystemBase {
             });
 
     // setPriorityID(allianceColor == Alliance.Blue ? 7 : 4);
-    setPriorityID(7);
+    setPriorityID(4);
 
     driverTab
-        .add("LL", new HttpCamera("limelight", "http://limelight.local:5800/stream.mjpg"))
+        .add("LL", new HttpCamera("limelight", "http://10.66.72.11:5801/stream.mjpg"))
         .withSize(4, 4)
         .withPosition(0, 0)
         .withProperties(Map.of("Show Crosshair", false, "Show Controls", false));

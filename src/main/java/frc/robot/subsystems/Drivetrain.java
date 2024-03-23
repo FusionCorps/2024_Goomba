@@ -70,7 +70,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       double OdometryUpdateFrequency,
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
-
+        
     for (int i = 0; i < 4; i++) {
       SwerveModule module = getModule(i);
       module
@@ -138,6 +138,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
             DrivetrainConstants.DRIVEBASE_RADIUS,
             new ReplanningConfig()),
         this::isAllianceRed,
+        // () -> false,
         this);
   }
 
@@ -145,7 +146,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
    * @return true if the robot is on the red alliance, false if on the blue alliance or if the
    *     alliance color is unknown
    */
-  private boolean isAllianceRed() {
+  public boolean isAllianceRed() {
     // Boolean supplier that controls when the path will be mirrored for the red
     // alliance
     // This will flip the path being followed to the red side of the field.

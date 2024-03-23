@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.11,
-        "y": 2.42
+        "x": 8.09,
+        "y": 2.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.956303997593832,
-        "y": 1.2790688470895355
+        "x": 6.936303997593832,
+        "y": 1.4590688470895357
       },
       "isLocked": false,
       "linkedName": null
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LoadSide Far Shoot Blue"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -39,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -37.51999999999998,
+    "rotation": -42.17063673800843,
     "rotateFast": false
   },
   "reversed": false,

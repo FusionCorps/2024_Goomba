@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
@@ -194,34 +195,33 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
-    // autoChooser.addOption("Comp-4 Piece load side",
-    // AutoBuilder.buildAuto("Auto4-P873Red"));
-    // autoChooser.addOption("Comp-4 Piece center",
-    // AutoBuilder.buildAuto("Auto4-P321Red"));
-    // autoChooser.addOption(
-    // "Comp-5 Piece Top First Mid", Commands.print("Auto5-P1456Red")); // TODO: add
-    // autoChooser.addOption(
-    // "Comp-5 Piece Top Last Mid", Commands.print("Auto5-P1564Red")); // TODO: add
-    // autoChooser.addOption(
-    // "Comp 4 Piece Amp Side Mid", Commands.print("Auto4-P146Red")); // TODO: add
+    autoChooser.addOption("3 Piece Load Side Red", AutoBuilder.buildAuto("Auto3-P87Blue"));
+    autoChooser.addOption("4 Piece Load Side Far Blue", AutoBuilder.buildAuto("Auto4-P873Blue"));
+    autoChooser.addOption("4 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto4-P146Blue"));
+    autoChooser.addOption("4 Piece Load Side Close Blue", AutoBuilder.buildAuto("Auto4-P321Blue"));
 
-    autoChooser.addOption("Comp-4 Piece load side", AutoBuilder.buildAuto("Auto4-P873Blue"));
-    autoChooser.addOption("Comp-4 Piece center", AutoBuilder.buildAuto("Auto4-P321Blue"));
+    autoChooser.addOption("3 Piece Load Side Blue", AutoBuilder.buildAuto("Auto3-P87Red"));
+    // autoChooser.addOption("4 Piece Load Side Red", AutoBuilder.buildAuto("Auto4-P873Red"));
+    // autoChooser.addOption("4 Piece Amp Side Mid Red", AutoBuilder.buildAuto("Auto4-P146Red"));
 
-    // autoChooser.addOption("Comp-5 Piece Top First Mid",
-    // AutoBuilder.buildAuto("Auto5-P1456Blue"));
-    // autoChooser.addOption("Comp-5 Piece Top Last Mid",
-    // AutoBuilder.buildAuto("Auto5-P1564Blue"));
-    autoChooser.addOption("Comp 4 Piece Amp Side Mid", AutoBuilder.buildAuto("Auto4-P146Blue"));
-    autoChooser.addOption("Comp 3 Piece Load Side", AutoBuilder.buildAuto("Auto3-P87Blue"));
-    // autoChooser.addOption("Comp-3 Piece Center",
-    // AutoBuilder.buildAuto("Auto3-P32"));
+    // TODO: test using conditional commands
+    // autoChooser.addOption("3 Piece Load Side", new ConditionalCommand(
+    //   AutoBuilder.buildAuto("Auto3-P87Red"), 
+    //   AutoBuilder.buildAuto("Auto3-P87Blue"), 
+    //   drivetrain::isAllianceRed));
 
-    autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
-    // autoChooser.addOption("Testing-StrafeAuto",
-    // AutoBuilder.buildAuto("StrafeAuto"));
-    // autoChooser.addOption("Testing-RotationAuto",
-    // AutoBuilder.buildAuto("RotationAuto"));
+    // autoChooser.addOption("4 Piece Load Side", new ConditionalCommand(
+    //   AutoBui~lder.buildAuto("Auto4-P873Red"), 
+    //   AutoBuilder.buildAuto("Auto4-P873Blue"), 
+    //   drivetrain::isAllianceRed));
+
+    // autoChooser.addOption("4 Piece Amp Side Mid", new ConditionalCommand(
+    //   AutoBuilder.buildAuto("Auto4-P146Red"), 
+    //   AutoBuilder.buildAuto("Auto4-P146Red"), 
+    //   drivetrain::isAllianceRed));
+
+    // autoChooser.addOption("Testing-ForwardAuto",
+    // AutoBuilder.buildAuto("ForwardAuto"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }

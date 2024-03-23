@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.8,
-      "y": 4.4
+      "x": 1.41,
+      "y": 1.98
     },
-    "rotation": -120.0
+    "rotation": 0.0
   },
   "command": {
     "type": "sequential",
@@ -32,7 +32,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-1"
+                              "pathName": "Copy of 3-P87Blue-1"
                             }
                           },
                           {
@@ -57,7 +57,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-2"
+                              "pathName": "3-P87Blue-2"
                             }
                           },
                           {
@@ -76,7 +76,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-3"
+                              "pathName": "Copy of 3-P87Blue-3"
                             }
                           },
                           {
@@ -101,7 +101,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-4"
+                              "pathName": "3-P87Blue-4"
                             }
                           },
                           {
@@ -120,7 +120,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-5"
+                              "pathName": "Copy of 3-P87Blue-5"
                             }
                           },
                           {
