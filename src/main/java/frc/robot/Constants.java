@@ -35,10 +35,12 @@ public class Constants {
     // public static final double toTargetRotKI = 0;
     // public static final double toTargetRotKD = 0.0;
 
+    // used in rotating to angle
     public static final double toAngleRotKP = 0.25;
     public static final double toAngleRotKI = 0.0;
     public static final double toAngleRotKD = 0.0;
 
+    // used in strafing to center on april tag
     public static final double strKP = 0.25;
     public static final double strKI = 0;
     public static final double strKD = 0.0;
@@ -75,7 +77,8 @@ public class Constants {
             .withKS(0.22875)
             .withKV(0.1115)
             .withKA(0.016661);
-    // pathplanner pids
+
+    // autonomous pathplanner pids
     public static final PIDConstants AUTO_DRIVE_PID = new PIDConstants(11.8, 0.8, 0.05);
     public static final PIDConstants AUTO_STEER_PID = new PIDConstants(8, 0, 0.15);
 
