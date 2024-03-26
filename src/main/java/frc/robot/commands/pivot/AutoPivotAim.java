@@ -21,7 +21,12 @@ public class AutoPivotAim extends Command {
   double errorThreshold = 0.2;
   double distanceToAprilTag = 0.0;
   double angleToSet = 0.0;
-
+/**
+ * @param pivot
+ * @param camera
+ * @param index
+ * @param defaultAngle
+ */
   public AutoPivotAim(Pivot pivot, Cameras camera, Index index, double defaultAngle) {
     mCamera = camera;
     mPivot = pivot;

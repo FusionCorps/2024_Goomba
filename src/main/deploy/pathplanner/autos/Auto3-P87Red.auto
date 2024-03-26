@@ -38,7 +38,26 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "PivotAimP1456/P1564-Far"
+                              "name": "AutoPivotAim"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AimAtTarget"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoPivotAim"
                             }
                           }
                         ]
@@ -47,7 +66,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -89,9 +108,28 @@
                       }
                     },
                     {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AimAtTarget"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoPivotAim"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -135,7 +173,26 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "ShootAuto"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AimAtTarget"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "AutoPivotAim"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

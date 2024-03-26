@@ -22,8 +22,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.index.IndexDummy;
@@ -177,6 +179,8 @@ public class RobotContainer {
     NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
     NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
     NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
+    NamedCommands.registerCommand("AimAtTarget", new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken()).withTimeout(.2));
+    NamedCommands.registerCommand("AutoPivotAim", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
 
     NamedCommands.registerCommand(
         "AimAndShoot",
@@ -188,6 +192,9 @@ public class RobotContainer {
         "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 
     NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
+    NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
+      IntakeConstants.IS_INTAKING = false;
+    }));
 
     System.out.println(AutoBuilder.getAllAutoNames());
     // if this throws an error, make sure all autos are complete
@@ -201,24 +208,26 @@ public class RobotContainer {
     autoChooser.addOption("4 Piece Load Side Close Blue", AutoBuilder.buildAuto("Auto4-P321Blue"));
 
     autoChooser.addOption("3 Piece Load Side Blue", AutoBuilder.buildAuto("Auto3-P87Red"));
-    // autoChooser.addOption("4 Piece Load Side Red", AutoBuilder.buildAuto("Auto4-P873Red"));
-    // autoChooser.addOption("4 Piece Amp Side Mid Red", AutoBuilder.buildAuto("Auto4-P146Red"));
+    // autoChooser.addOption("4 Piece Load Side Red",
+    // AutoBuilder.buildAuto("Auto4-P873Red"));
+    // autoChooser.addOption("4 Piece Amp Side Mid Red",
+    // AutoBuilder.buildAuto("Auto4-P146Red"));
 
     // TODO: test using conditional commands
     // autoChooser.addOption("3 Piece Load Side", new ConditionalCommand(
-    //   AutoBuilder.buildAuto("Auto3-P87Red"), 
-    //   AutoBuilder.buildAuto("Auto3-P87Blue"), 
-    //   drivetrain::isAllianceRed));
+    // AutoBuilder.buildAuto("Auto3-P87Red"),
+    // AutoBuilder.buildAuto("Auto3-P87Blue"),
+    // drivetrain::isAllianceRed));
 
     // autoChooser.addOption("4 Piece Load Side", new ConditionalCommand(
-    //   AutoBui~lder.buildAuto("Auto4-P873Red"), 
-    //   AutoBuilder.buildAuto("Auto4-P873Blue"), 
-    //   drivetrain::isAllianceRed));
+    // AutoBui~lder.buildAuto("Auto4-P873Red"),
+    // AutoBuilder.buildAuto("Auto4-P873Blue"),
+    // drivetrain::isAllianceRed));
 
     // autoChooser.addOption("4 Piece Amp Side Mid", new ConditionalCommand(
-    //   AutoBuilder.buildAuto("Auto4-P146Red"), 
-    //   AutoBuilder.buildAuto("Auto4-P146Red"), 
-    //   drivetrain::isAllianceRed));
+    // AutoBuilder.buildAuto("Auto4-P146Red"),
+    // AutoBuilder.buildAuto("Auto4-P146Red"),
+    // drivetrain::isAllianceRed));
 
     // autoChooser.addOption("Testing-ForwardAuto",
     // AutoBuilder.buildAuto("ForwardAuto"));
