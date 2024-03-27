@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.650765945406534,
-        "y": 6.548726487766366
+        "x": 3.31,
+        "y": 2.88
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.510947335057061,
-        "y": 6.617452975532732
+        "x": 4.036972632349823,
+        "y": 3.601799568271502
       },
       "isLocked": false,
-      "linkedName": "AmpSide Far Shoot Blue"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.176703304973561,
-        "y": 4.116342363738859
+        "x": 8.23517407718576,
+        "y": 4.128036518181299
       },
       "prevControl": {
-        "x": 8.11670330497356,
-        "y": 4.116342363738859
+        "x": 7.235174077185761,
+        "y": 4.128036518181299
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,13 +39,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -45.0,
+    "rotation": 0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1456Blue",
+  "folder": "4-P876Blue",
   "previewStartingState": {
-    "rotation": 16.7,
+    "rotation": 0,
     "velocity": 0
   },
   "useDefaultConstraints": true
