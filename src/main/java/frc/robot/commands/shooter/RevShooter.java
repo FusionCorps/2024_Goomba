@@ -42,7 +42,12 @@ public class RevShooter extends Command {
         "Shooter Consts", IS_AMP + ", " + IS_SHUTTLING + ", " + IS_TRAPPING + ", " + IS_TRAPPING);
 
     HAS_STOPPED_REVVING = false;
-    if (IS_TRAPPING) {
+
+    if(mShooter.isOuttaking.getBoolean(true)){
+      mShooter.setRPMs(-1000, -1000);
+    } else if(mShooter.isShooting.getBoolean(true)){
+      mShooter.setRPMs(2000, 2000);
+    } else if (IS_TRAPPING) {
       mShooter.setRPMs(0, 0);
     } else if (IS_SHUTTLING) {
       mShooter.setRPMs(LEFT_SHUTTLING_RPM, RIGHT_SHUTTLING_RPM);

@@ -19,10 +19,14 @@ public class IndexDummy extends Command {
 
   @Override
   public void execute() {
-    if (HAS_STOPPED_REVVING) {
+    if(mIndex.isOuttaking.getBoolean(true)){
+      mIndex.runIndex(-INDEX_RUN_PCT);
+    } else if(mIndex.isIndexing.getBoolean(true)){
+      mIndex.runIndex(INDEX_RUN_PCT);
+    }else if (HAS_STOPPED_REVVING) {
       mIndex.runIndex(0.0);
     } else if (IS_TRAPPING) {
-      mIndex.runIndex(-0.18);
+      mIndex.runIndex(-0.22);
     } else if (IS_AMP) {
       mIndex.runIndex(INDEX_AMP_PCT);
     } else {
@@ -32,7 +36,6 @@ public class IndexDummy extends Command {
 
   @Override
   public void end(boolean isFinished) {
-    IS_TRAPPING = false;
     mIndex.runIndex(0);
   }
 }

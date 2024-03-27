@@ -253,7 +253,7 @@ public class Constants {
     public static final double TRANSFER_HOOK_kD = 0.01;
     public static final double TRANSFER_HOOK_kI = 0;
 
-    public static final double TRANSFER_HOOK_POS_CLIMB = 78.98583984375;
+    public static final double TRANSFER_HOOK_POS_CLIMB = 85.0078125;
 
     // motion magic constraints
     public static final double TRANSFER_HOOK_CRUISE_VELOCITY = 2000;
@@ -315,11 +315,11 @@ public class Constants {
 
     public static final double PIVOT_READY_CLIMB_POS = 7.34228515625;
 
-    public static final double PIVOT_TRAP_POS = -78.76025390625;
+    public static final double PIVOT_TRAP_POS = -80.701171875;
 
     // TODO: Change these values
     public static final double PIVOT_CLIMB_UP_POS = -12.61279296875;
-    public static final double PIVOT_CLIMB_DOWN_POS = 24.215576171875;
+    public static final double PIVOT_CLIMB_DOWN_POS = 21.2255859375;
 
     // maps Z distances to april tag (meters) with pivot angles (rotations)
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
@@ -404,7 +404,7 @@ public class Constants {
     public static final double INDEX_RUN_PCT = .28;
     public static final double INDEX_AMP_PCT = .30;
 
-    public static boolean IS_TRAPPING = false;
+    public static boolean IS_TRAPPING = true;
   }
 
   public static DriverStation.Alliance allianceColor =

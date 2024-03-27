@@ -20,8 +20,13 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
+
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
@@ -33,7 +38,18 @@ public class Shooter extends SubsystemBase {
   private SparkPIDController leftController, rightController;
   double leftRPM, rightRPM;
 
+  ShuffleboardTab tab = Shuffleboard.getTab("General");
+
+  public GenericEntry isOuttaking =
+      tab.add("Shoot Out", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+
+  public GenericEntry isShooting =  tab.add("Shoot In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+
   public Shooter() {
+
+    isOuttaking.setBoolean(false);
+    isShooting.setBoolean(false);
+    
     leftMotor = new CANSparkFlex(SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
     rightMotor = new CANSparkFlex(SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
     rightMotor.setInverted(false);

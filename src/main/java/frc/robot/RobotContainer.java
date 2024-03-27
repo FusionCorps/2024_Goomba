@@ -5,8 +5,10 @@
 package frc.robot;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
+import static frc.robot.Constants.PivotConstants.PIVOT_CLIMB_DOWN_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
+import static frc.robot.Constants.PivotConstants.PIVOT_TRAP_POS;
 import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import static frc.robot.Constants.ShooterConstants.SHOOTER_OUTTAKE_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
@@ -27,11 +29,16 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
+import frc.robot.Constants.TransferHookConstants;
 import frc.robot.commands.IntakeNote;
+import frc.robot.commands.TransferHooks.HoldHooks;
+import frc.robot.commands.TransferHooks.SetHooksPct;
+import frc.robot.commands.TransferHooks.SetHooksPos;
 import frc.robot.commands.index.IndexDummy;
 import frc.robot.commands.index.Outtake;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
+import frc.robot.commands.pivot.HoldPivotAngle;
 import frc.robot.commands.pivot.SetAngleAmp;
 import frc.robot.commands.pivot.SetAngleShuttle;
 import frc.robot.commands.pivot.SetPivotPct;
@@ -152,6 +159,18 @@ public class RobotContainer {
             new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
                 .alongWith(new IndexDummy(index)))
         .onFalse(new StopRevShooter(shooter));
+
+    // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.3));
+
+    robotController.start()
+        .onTrue(new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS)
+            .andThen(new HoldPivotAngle(pivot)
+                .alongWith(new SetHooksPos(transferHooks, TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
+            .andThen(new HoldHooks(transferHooks)));
+
+    // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.3));
+
+    robotController.back().onTrue(new SetPivotPos(pivot, PIVOT_TRAP_POS));
   }
 
   private void setupPipelineChooser() {

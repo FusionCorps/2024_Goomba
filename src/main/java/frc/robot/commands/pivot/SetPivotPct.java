@@ -1,5 +1,7 @@
 package frc.robot.commands.pivot;
 
+import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
@@ -19,21 +21,20 @@ public class SetPivotPct extends Command {
 
   @Override
   public void initialize() {
-    // IS_TRAPPING = true;
+    IS_TRAPPING = true;
   }
 
   @Override
   public void execute() {
     mPivot.setPivotPct(pct);
-    // if(IS_TRAPPING){
-    // mIndex.runIndex(0.06);
-    // }
+    mIndex.runIndex(0.06);
+    
   }
 
   @Override
   public void end(boolean isInterrupted) {
     // mPivot.stabilizeMotors();
     mPivot.setPivotPct(0);
-    // mIndex.runIndex(0);
+    mIndex.runIndex(0);
   }
 }

@@ -19,8 +19,10 @@ public class Index extends SubsystemBase {
 
   ShuffleboardTab tab = Shuffleboard.getTab("General");
 
-  public GenericEntry isTrapping =
-      tab.add("Is Trapping", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+  public GenericEntry isOuttaking =
+      tab.add("Index Out", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+
+  public GenericEntry isIndexing =  tab.add("Index In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
   public Index() {
     beamBreak = new DigitalInput(1);
@@ -28,7 +30,8 @@ public class Index extends SubsystemBase {
     indexMotor = new CANSparkFlex(INDEX_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
     indexMotor.setIdleMode(IdleMode.kBrake);
 
-    isTrapping.setBoolean(false);
+    isOuttaking.setBoolean(false);
+    isIndexing.setBoolean(false);
 
     driverTab.addBoolean("Note Ready", this::beamBroken).withSize(2, 2).withPosition(6, 0);
 
