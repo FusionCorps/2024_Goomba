@@ -404,7 +404,7 @@ public class Constants {
     public static final double INDEX_RUN_PCT = .28;
     public static final double INDEX_AMP_PCT = .30;
 
-    public static boolean IS_TRAPPING = true;
+    public static boolean IS_TRAPPING = false;
   }
 
   public static DriverStation.Alliance allianceColor =
