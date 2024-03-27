@@ -20,15 +20,37 @@
         "y": 7.54
       },
       "prevControl": {
-        "x": 8.049999999999999,
-        "y": 7.54
+        "x": 7.500635001270004,
+        "y": 7.982356733944237
+      },
+      "nextControl": {
+        "x": 8.519890064134287,
+        "y": 7.2424482364026
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.6456497528379685,
+        "y": 6.186573142377054
+      },
+      "prevControl": {
+        "x": 5.585649752837968,
+        "y": 6.186573142377054
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpSide Far Shoot Blue"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 5.0,
     "rotateFast": false
   },
   "reversed": false,

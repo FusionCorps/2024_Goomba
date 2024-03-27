@@ -17,15 +17,31 @@
     {
       "anchor": {
         "x": 8.18,
-        "y": 0.7848831561685794
+        "y": 0.78
       },
       "prevControl": {
-        "x": 7.12746802796614,
-        "y": 0.6532338005293594
+        "x": 8.122252398350952,
+        "y": 1.460307535999688
+      },
+      "nextControl": {
+        "x": 8.219307977892461,
+        "y": 0.31692425621989484
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
+      },
+      "prevControl": {
+        "x": 3.250957783388655,
+        "y": 2.8779049059514548
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [],
@@ -39,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": -30.0,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "3-P87Blue",
   "previewStartingState": {
-    "rotation": -37.94999999999999,
+    "rotation": -30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

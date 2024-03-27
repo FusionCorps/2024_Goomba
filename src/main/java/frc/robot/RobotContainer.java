@@ -21,11 +21,11 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.IntakeConstants;
+import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.index.IndexDummy;
@@ -66,20 +66,20 @@ public class RobotContainer {
    * Configures the bindings for the robot's subsystems and commands.
    *
    * <ul>
-   * <li>Left/Right sticks - field-centric swerve drive
-   * <li>B: reset gyro
-   * <li>RB: aim drivetrain + pivot at speaker
-   * <li>RT: intake note + stow pivot
-   * <li>LT: rev shooter on hold + shoot note on release
-   * <li>Y - manually stop revving shooter
-   * <li>A: stow pivot
-   * <li>POV up/down - manually move pivot
-   * <li>LB: aim pivot at amp
-   * <li>X: aim pivot for shuttling
-   * <li>POV left - outtake thru intake
-   * <li>POV right - outtake thru shooter
-   * <li>Start - Aims pivot for climbing
-   * <li>Back - Runs climb routine
+   *   <li>Left/Right sticks - field-centric swerve drive
+   *   <li>B: reset gyro
+   *   <li>RB: aim drivetrain + pivot at speaker
+   *   <li>RT: intake note + stow pivot
+   *   <li>LT: rev shooter on hold + shoot note on release
+   *   <li>Y - manually stop revving shooter
+   *   <li>A: stow pivot
+   *   <li>POV up/down - manually move pivot
+   *   <li>LB: aim pivot at amp
+   *   <li>X: aim pivot for shuttling
+   *   <li>POV left - outtake thru intake
+   *   <li>POV right - outtake thru shooter
+   *   <li>Start - Aims pivot for climbing
+   *   <li>Back - Runs climb routine
    * </ul>
    */
   private void configureBindings() {
@@ -179,22 +179,32 @@ public class RobotContainer {
     NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
     NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
     NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
-    NamedCommands.registerCommand("AimAtTarget", new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken()).withTimeout(.2));
-    NamedCommands.registerCommand("AutoPivotAim", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
+    NamedCommands.registerCommand(
+        "AimAtTarget",
+        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+            .withTimeout(.2));
+    NamedCommands.registerCommand(
+        "AutoPivotAim", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
 
     NamedCommands.registerCommand(
         "AimAndShoot",
-        new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
-            .andThen(new ShootAuto(index)));
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.2),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
+                .andThen(new ShootAuto(index))));
 
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
     NamedCommands.registerCommand(
         "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 
     NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
-    NamedCommands.registerCommand("StopIntake", new InstantCommand(() -> {
-      IntakeConstants.IS_INTAKING = false;
-    }));
+    NamedCommands.registerCommand(
+        "StopIntake",
+        new InstantCommand(
+            () -> {
+              IntakeConstants.IS_INTAKING = false;
+            }));
 
     System.out.println(AutoBuilder.getAllAutoNames());
     // if this throws an error, make sure all autos are complete

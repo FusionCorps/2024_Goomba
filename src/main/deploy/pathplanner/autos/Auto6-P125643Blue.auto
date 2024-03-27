@@ -2,23 +2,23 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 15.8,
-      "y": 4.44
+      "x": 1.36,
+      "y": 6.39
     },
-    "rotation": -120.0
+    "rotation": 28.5
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterLoad"
+                  "name": "RevShooterAmp"
                 }
               },
               {
@@ -28,23 +28,17 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "PivotAimLoadStart"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootSpeaker"
-                      }
-                    },
-                    {
-                      "type": "race",
+                      "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P321Red-1"
+                              "pathName": "6-P125643Blue-1"
                             }
                           },
                           {
@@ -63,13 +57,13 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P321Red-2"
+                              "pathName": "6-P125643Blue-2"
                             }
                           },
                           {
@@ -88,13 +82,63 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P321Red-3"
+                              "pathName": "6-P125643Blue-3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "6-P125643Blue-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "6-P125643Blue-5"
                             }
                           },
                           {
@@ -121,6 +165,6 @@
       ]
     }
   },
-  "folder": "4 Piece",
+  "folder": null,
   "choreoAuto": false
 }

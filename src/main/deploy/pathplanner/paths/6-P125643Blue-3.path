@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.6456497528379685,
-        "y": 6.186573142377054
+        "x": 2.8,
+        "y": 5.48
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.287001035540534,
-        "y": 6.44311365545808
-      },
-      "isLocked": false,
-      "linkedName": "AmpSide Far Shoot Blue"
-    },
-    {
-      "anchor": {
-        "x": 8.013716027432057,
-        "y": 4.213184580215315
-      },
-      "prevControl": {
-        "x": 8.068385333368669,
-        "y": 4.475597248711053
-      },
-      "nextControl": {
-        "x": 7.915046599323969,
-        "y": 3.7395713252964975
+        "x": 4.475945499679871,
+        "y": 6.522935956000301
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.869600046892403,
-        "y": 4.963072233836776
+        "x": 8.141437338509483,
+        "y": 6.031080821077477
       },
       "prevControl": {
-        "x": 3.809951379108236,
-        "y": 4.969555784682881
+        "x": 8.034234947343451,
+        "y": 6.234765364292939
+      },
+      "nextControl": {
+        "x": 8.375654069425114,
+        "y": 5.58606903233778
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.8695350486278715,
+        "y": 6.031080821077477
+      },
+      "prevControl": {
+        "x": 5.809535048627871,
+        "y": 6.031080821077477
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -23.702645950966346,
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -27.299572211332773,
       "rotateFast": false
     }
   ],
@@ -61,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -3.900493742381886,
+    "rotation": 4.085616779974803,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1456Blue",
+  "folder": "6-P12563Blue",
   "previewStartingState": {
-    "rotation": 6.0,
+    "rotation": 0.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.6456497528379685,
-        "y": 6.186573142377054
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.287001035540534,
-        "y": 6.44311365545808
+        "x": 4.284011644946369,
+        "y": 4.045446552431566
       },
       "isLocked": false,
-      "linkedName": "AmpSide Far Shoot Blue"
+      "linkedName": "LoadSide Far Shoot Blue"
     },
     {
       "anchor": {
-        "x": 8.013716027432057,
-        "y": 4.213184580215315
+        "x": 8.023582970242865,
+        "y": 4.25265235145855
       },
       "prevControl": {
-        "x": 8.068385333368669,
-        "y": 4.475597248711053
+        "x": 7.835793745636543,
+        "y": 4.011209062678993
       },
       "nextControl": {
-        "x": 7.915046599323969,
-        "y": 3.7395713252964975
+        "x": 8.299857368945508,
+        "y": 4.6078622926476624
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.869600046892403,
-        "y": 4.963072233836776
+        "x": 3.5143901057032894,
+        "y": 4.874269748539498
       },
       "prevControl": {
-        "x": 3.809951379108236,
-        "y": 4.969555784682881
+        "x": 4.274144702135559,
+        "y": 4.371055665188254
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -23.702645950966346,
+      "rotationDegrees": -14.931417178137526,
       "rotateFast": false
     }
   ],
@@ -61,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -3.900493742381886,
+    "rotation": -12.425942865427551,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "5-P1456Blue",
+  "folder": "4-P876Red",
   "previewStartingState": {
-    "rotation": 6.0,
+    "rotation": -30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

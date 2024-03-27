@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 14.0,
-        "y": 5.55
+        "x": 2.6,
+        "y": 5.53
       },
       "prevControl": null,
       "nextControl": {
-        "x": 15.098180965592704,
-        "y": 6.81805748226881
+        "x": 2.66,
+        "y": 5.53
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 14.0,
-        "y": 6.857525253512046
+        "x": 2.7272273347965497,
+        "y": 6.946327738809324
       },
       "prevControl": {
-        "x": 13.949999999999989,
-        "y": 6.857525253512046
+        "x": 1.835204152003745,
+        "y": 6.980631469866928
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,21 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 6.22,
-    "maxAcceleration": 4.3,
+    "maxVelocity": 6.0,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 153.85156958325007,
+    "rotation": 27.006543548774104,
     "rotateFast": false
   },
   "reversed": false,
   "folder": "4-P321Red",
   "previewStartingState": {
-    "rotation": 180.0,
+    "rotation": 0,
     "velocity": 0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

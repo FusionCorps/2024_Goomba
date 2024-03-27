@@ -16,19 +16,41 @@
     },
     {
       "anchor": {
-        "x": 7.85,
-        "y": 5.8
+        "x": 7.964381313378012,
+        "y": 5.959633457728454
       },
       "prevControl": {
-        "x": 7.79,
-        "y": 5.8
+        "x": 7.378209687188608,
+        "y": 6.4843437994568305
+      },
+      "nextControl": {
+        "x": 8.50829633659515,
+        "y": 5.472749028403914
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.6456497528379685,
+        "y": 6.186573142377054
+      },
+      "prevControl": {
+        "x": 5.585649752837969,
+        "y": 6.186573142377054
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpSide Far Shoot Blue"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": -25.97439396243121,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -39,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0,
+    "rotation": 8.0,
     "rotateFast": false
   },
   "reversed": false,

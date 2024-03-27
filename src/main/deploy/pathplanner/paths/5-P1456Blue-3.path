@@ -3,32 +3,54 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.11,
-        "y": 7.54
+        "x": 5.6456497528379685,
+        "y": 6.186573142377054
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.17,
-        "y": 7.54
+        "x": 5.705649752837969,
+        "y": 6.186573142377054
+      },
+      "isLocked": false,
+      "linkedName": "AmpSide Far Shoot Blue"
+    },
+    {
+      "anchor": {
+        "x": 7.924913542134778,
+        "y": 5.791895429944707
+      },
+      "prevControl": {
+        "x": 7.600060320732457,
+        "y": 6.090599948873979
+      },
+      "nextControl": {
+        "x": 8.266234540161392,
+        "y": 5.478048689943534
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.650765945406534,
-        "y": 6.548726487766366
+        "x": 5.6456497528379685,
+        "y": 6.186573142377054
       },
       "prevControl": {
-        "x": 5.710765945406534,
-        "y": 6.548726487766366
+        "x": 5.142435669486725,
+        "y": 6.383911998593228
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "AmpSide Far Shoot Blue"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -45,7 +67,7 @@
   "reversed": false,
   "folder": "5-P1456Blue",
   "previewStartingState": {
-    "rotation": 0.0,
+    "rotation": 6.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
