@@ -22,7 +22,8 @@ public class Index extends SubsystemBase {
   public GenericEntry isOuttaking =
       tab.add("Index Out", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
-  public GenericEntry isIndexing =  tab.add("Index In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+  public GenericEntry isIndexing =
+      tab.add("Index In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
   public Index() {
     beamBreak = new DigitalInput(1);

@@ -5,7 +5,8 @@
 package frc.robot;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
-import static frc.robot.Constants.PivotConstants.PIVOT_CLIMB_DOWN_POS;
+import static frc.robot.Constants.LimelightConstants.BLUE_SPK_TAG_ID;
+import static frc.robot.Constants.LimelightConstants.RED_SPK_TAG_ID;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_TRAP_POS;
@@ -29,16 +30,12 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
-import frc.robot.Constants.TransferHookConstants;
+import frc.robot.commands.Climb;
 import frc.robot.commands.IntakeNote;
-import frc.robot.commands.TransferHooks.HoldHooks;
-import frc.robot.commands.TransferHooks.SetHooksPct;
-import frc.robot.commands.TransferHooks.SetHooksPos;
 import frc.robot.commands.index.IndexDummy;
 import frc.robot.commands.index.Outtake;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
-import frc.robot.commands.pivot.HoldPivotAngle;
 import frc.robot.commands.pivot.SetAngleAmp;
 import frc.robot.commands.pivot.SetAngleShuttle;
 import frc.robot.commands.pivot.SetPivotPct;
@@ -162,11 +159,7 @@ public class RobotContainer {
 
     // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.3));
 
-    robotController.start()
-        .onTrue(new SetPivotPos(pivot, PIVOT_CLIMB_DOWN_POS)
-            .andThen(new HoldPivotAngle(pivot)
-                .alongWith(new SetHooksPos(transferHooks, TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
-            .andThen(new HoldHooks(transferHooks)));
+    robotController.start().onTrue(new Climb(pivot, transferHooks, index));
 
     // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.3));
 
@@ -231,16 +224,13 @@ public class RobotContainer {
     autoChooser = new SendableChooser<>();
     autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
-    autoChooser.addOption("3 Piece Load Side Red", AutoBuilder.buildAuto("Auto3-P87Blue"));
+    autoChooser.addOption("3 Piece Load Side Blue", AutoBuilder.buildAuto("Auto3-P87Blue"));
     autoChooser.addOption("4 Piece Load Side Far Blue", AutoBuilder.buildAuto("Auto4-P873Blue"));
     autoChooser.addOption("4 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto4-P146Blue"));
     autoChooser.addOption("4 Piece Load Side Close Blue", AutoBuilder.buildAuto("Auto4-P321Blue"));
-
-    autoChooser.addOption("3 Piece Load Side Blue", AutoBuilder.buildAuto("Auto3-P87Red"));
-    // autoChooser.addOption("4 Piece Load Side Red",
-    // AutoBuilder.buildAuto("Auto4-P873Red"));
-    // autoChooser.addOption("4 Piece Amp Side Mid Red",
-    // AutoBuilder.buildAuto("Auto4-P146Red"));
+    autoChooser.addOption("4 Piece Load Side Far Blue", AutoBuilder.buildAuto("Auto4-P876Blue"));
+    autoChooser.addOption("5 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto5-P1456Blue"));
+    autoChooser.addOption("6 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto6-P125643Blue"));
 
     // TODO: test using conditional commands
     // autoChooser.addOption("3 Piece Load Side", new ConditionalCommand(
@@ -258,8 +248,7 @@ public class RobotContainer {
     // AutoBuilder.buildAuto("Auto4-P146Red"),
     // drivetrain::isAllianceRed));
 
-    // autoChooser.addOption("Testing-ForwardAuto",
-    // AutoBuilder.buildAuto("ForwardAuto"));
+    autoChooser.addOption("Testing-ForwardAuto", AutoBuilder.buildAuto("ForwardAuto"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }
@@ -280,7 +269,9 @@ public class RobotContainer {
     colorChooser.onChange(
         color -> {
           allianceColor = color;
-          drivetrain.getCamera().setPriorityID(color == Alliance.Blue ? 7 : 4);
+          drivetrain
+              .getCamera()
+              .setPriorityID(color == Alliance.Blue ? BLUE_SPK_TAG_ID : RED_SPK_TAG_ID);
         });
     driverTab.add("Alliance Color Chooser", colorChooser).withSize(2, 1).withPosition(4, 4);
   }

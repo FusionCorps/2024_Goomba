@@ -28,7 +28,6 @@ public class SetPivotPct extends Command {
   public void execute() {
     mPivot.setPivotPct(pct);
     mIndex.runIndex(0.06);
-    
   }
 
   @Override

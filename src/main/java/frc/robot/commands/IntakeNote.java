@@ -21,12 +21,11 @@ public class IntakeNote extends ParallelCommandGroup {
   public IntakeNote(Intake intake, Index index, Pivot pivot) {
     addCommands(
         Commands.runOnce(
-            () -> {
-              IS_AMP = false;
-              IS_SHUTTLING = false;
-              IS_INTAKING = true;
-
-            })
+                () -> {
+                  IS_AMP = false;
+                  IS_SHUTTLING = false;
+                  IS_INTAKING = true;
+                })
             .alongWith(
                 new SetPivotPos(pivot, PIVOT_STOW_POS)
                     .alongWith(

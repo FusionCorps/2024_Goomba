@@ -4,7 +4,6 @@ import static frc.robot.Constants.IntakeConstants.INTAKE_MOTOR_ID;
 import static frc.robot.Constants.diagnosticsTab;
 
 import com.revrobotics.CANSparkFlex;
-
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -19,7 +18,8 @@ public class Intake extends SubsystemBase {
   public GenericEntry isOuttaking =
       tab.add("Intake Out", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
-  public GenericEntry isIntaking =  tab.add("Intake In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+  public GenericEntry isIntaking =
+      tab.add("Intake In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
   public Intake() {
     intakeMotor = new CANSparkFlex(INTAKE_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);

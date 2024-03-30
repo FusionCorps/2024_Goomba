@@ -397,6 +397,9 @@ public class Constants {
     public static final double trapTargetHeightMeters = Units.inchesToMeters(52);
 
     public static final ShuffleboardTab limelightTab = Shuffleboard.getTab("Limelight");
+
+    public static final int RED_SPK_TAG_ID = 4;
+    public static final int BLUE_SPK_TAG_ID = 7;
   }
 
   public static class IndexConstants {

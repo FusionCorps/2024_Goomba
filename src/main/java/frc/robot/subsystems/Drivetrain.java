@@ -70,7 +70,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       double OdometryUpdateFrequency,
       SwerveModuleConstants... modules) {
     super(driveTrainConstants, OdometryUpdateFrequency, modules);
-        
+
     for (int i = 0; i < 4; i++) {
       SwerveModule module = getModule(i);
       module

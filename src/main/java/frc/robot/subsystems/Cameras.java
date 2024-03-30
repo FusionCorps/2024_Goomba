@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.LimelightConstants.BLUE_SPK_TAG_ID;
+import static frc.robot.Constants.LimelightConstants.RED_SPK_TAG_ID;
+import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
@@ -10,6 +13,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import java.util.Map;
@@ -45,8 +49,7 @@ public class Cameras extends SubsystemBase {
               0.0 // roll, pitch, yaw
             });
 
-    // setPriorityID(allianceColor == Alliance.Blue ? 7 : 4);
-    setPriorityID(7);
+    setPriorityID(allianceColor == Alliance.Blue ? BLUE_SPK_TAG_ID : RED_SPK_TAG_ID);
 
     driverTab
         .add("LL", new HttpCamera("limelight", "http://10.66.72.11:5801/stream.mjpg"))

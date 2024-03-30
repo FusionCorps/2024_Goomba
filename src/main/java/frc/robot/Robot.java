@@ -55,6 +55,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    if (DriverStation.getAlliance().isPresent()) {
+      Constants.allianceColor = DriverStation.getAlliance().get();
+    }
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
     System.out.println("Starting autonomous command: " + m_autonomousCommand.getName());
 

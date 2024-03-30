@@ -33,14 +33,13 @@ public class RunIntake extends Command {
 
   @Override
   public void execute() {
-    if(mIntake.isOuttaking.getBoolean(true)){
+    if (mIntake.isOuttaking.getBoolean(true)) {
       mIntake.runIntake(-speed);
-    } else if(mIntake.isIntaking.getBoolean(true)){
+    } else if (mIntake.isIntaking.getBoolean(true)) {
       mIntake.runIntake(speed);
-    }else{
+    } else {
       mIntake.runIntake(speed);
     }
-    
   }
 
   @Override

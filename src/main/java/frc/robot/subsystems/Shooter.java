@@ -20,7 +20,6 @@ import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkFlex;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 import com.revrobotics.SparkPIDController;
-
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -43,13 +42,14 @@ public class Shooter extends SubsystemBase {
   public GenericEntry isOuttaking =
       tab.add("Shoot Out", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
-  public GenericEntry isShooting =  tab.add("Shoot In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
+  public GenericEntry isShooting =
+      tab.add("Shoot In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
   public Shooter() {
 
     isOuttaking.setBoolean(false);
     isShooting.setBoolean(false);
-    
+
     leftMotor = new CANSparkFlex(SHOOTER_MOTOR_BOTTOM_ID, MotorType.kBrushless);
     rightMotor = new CANSparkFlex(SHOOTER_MOTOR_TOP_ID, MotorType.kBrushless);
     rightMotor.setInverted(false);

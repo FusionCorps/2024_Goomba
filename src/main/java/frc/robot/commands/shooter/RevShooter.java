@@ -43,9 +43,9 @@ public class RevShooter extends Command {
 
     HAS_STOPPED_REVVING = false;
 
-    if(mShooter.isOuttaking.getBoolean(true)){
+    if (mShooter.isOuttaking.getBoolean(true)) {
       mShooter.setRPMs(-1000, -1000);
-    } else if(mShooter.isShooting.getBoolean(true)){
+    } else if (mShooter.isShooting.getBoolean(true)) {
       mShooter.setRPMs(2000, 2000);
     } else if (IS_TRAPPING) {
       mShooter.setRPMs(0, 0);
