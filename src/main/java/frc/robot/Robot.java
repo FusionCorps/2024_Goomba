@@ -38,15 +38,6 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
   }
 
-  // @Override
-  // public void driverStationConnected() {
-  //   try {
-  //     Constants.allianceColor = DriverStation.getAlliance().get();
-  //   } catch (Exception e) {
-  //     System.err.println("Alliance not found");
-  //   }
-  // }
-
   @Override
   public void disabledInit() {}
 

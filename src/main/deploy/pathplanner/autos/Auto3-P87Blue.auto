@@ -38,7 +38,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "PivotAim Note 1"
+                              "name": "PivotAimLoadStage"
                             }
                           }
                         ]
@@ -47,7 +47,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -72,7 +78,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -97,7 +109,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     }
                   ]

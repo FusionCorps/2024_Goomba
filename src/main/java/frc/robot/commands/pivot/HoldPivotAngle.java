@@ -7,13 +7,7 @@ public class HoldPivotAngle extends Command {
 
   Pivot mPivot;
 
-  public 
-  
-  
-  
-  
-  
-  HoldPivotAngle(Pivot pivot) {
+  public HoldPivotAngle(Pivot pivot) {
     mPivot = pivot;
     addRequirements(mPivot);
   }

@@ -32,10 +32,8 @@ import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.Constants.TransferHookConstants;
-import frc.robot.commands.Climb;
 import frc.robot.commands.IntakeNote;
 import frc.robot.commands.TransferHooks.HoldHooks;
-import frc.robot.commands.TransferHooks.SetHooksPct;
 import frc.robot.commands.TransferHooks.SetHooksPos;
 import frc.robot.commands.index.IndexDummy;
 import frc.robot.commands.index.Outtake;
@@ -69,7 +67,6 @@ public class RobotContainer {
   Index index = new Index();
   TransferHooks transferHooks = new TransferHooks();
   Pivot pivot = new Pivot();
-  
 
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
@@ -78,20 +75,20 @@ public class RobotContainer {
    * Configures the bindings for the robot's subsystems and commands.
    *
    * <ul>
-   * <li>Left/Right sticks - field-centric swerve drive
-   * <li>B: reset gyro
-   * <li>RB: aim drivetrain + pivot at speaker
-   * <li>RT: intake note + stow pivot
-   * <li>LT: rev shooter on hold + shoot note on release
-   * <li>Y - manually stop revving shooter
-   * <li>A: stow pivot
-   * <li>POV up/down - manually move pivot
-   * <li>LB: aim pivot at amp
-   * <li>X: aim pivot for shuttling
-   * <li>POV left - outtake thru intake
-   * <li>POV right - outtake thru shooter
-   * <li>Start - Aims pivot for climbing
-   * <li>Back - Runs climb routine
+   *   <li>Left/Right sticks - field-centric swerve drive
+   *   <li>B: reset gyro
+   *   <li>RB: aim drivetrain + pivot at speaker
+   *   <li>RT: intake note + stow pivot
+   *   <li>LT: rev shooter on hold + shoot note on release
+   *   <li>Y - manually stop revving shooter
+   *   <li>A: stow pivot
+   *   <li>POV up/down - manually move pivot
+   *   <li>LB: aim pivot at amp
+   *   <li>X: aim pivot for shuttling
+   *   <li>POV left - outtake thru intake
+   *   <li>POV right - outtake thru shooter
+   *   <li>Start - Aims pivot for climbing
+   *   <li>Back - Runs climb routine
    * </ul>
    */
   private void configureBindings() {
@@ -169,11 +166,16 @@ public class RobotContainer {
 
     // robotController.start().onTrue(new Climb(pivot, transferHooks, index));
 
-    robotController.start()
-        .onTrue(new TrapPivot(pivot, PIVOT_CLIMB_DOWN_POS)
-            .andThen(new HoldPivotAngle(pivot)
-                .alongWith(new SetHooksPos(transferHooks, TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
-            .andThen(new HoldHooks(transferHooks)));
+    robotController
+        .start()
+        .onTrue(
+            new TrapPivot(pivot, PIVOT_CLIMB_DOWN_POS)
+                .andThen(
+                    new HoldPivotAngle(pivot)
+                        .alongWith(
+                            new SetHooksPos(
+                                transferHooks, TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
+                .andThen(new HoldHooks(transferHooks)));
 
     // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.3));
 
@@ -199,36 +201,41 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "RevShooterAmp", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
 
+    // hardcoded manual aiming angles
     NamedCommands.registerCommand("PivotAimLoadStart", new SetPivotPos(pivot, 33.84));
     NamedCommands.registerCommand("PivotAimAmpStart", new SetPivotPos(pivot, 36.943115234375));
-    NamedCommands.registerCommand("PivotAim Note 1", new SetPivotPos(pivot, 17.75));
+    NamedCommands.registerCommand("PivotAimLoadStage", new SetPivotPos(pivot, 17.75));
     NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
     NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
-    NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
+
+    NamedCommands.registerCommand(
+        "AimPivot", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
+
+    NamedCommands.registerCommand(
+        "AimSwerveAndPivot",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.2),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
+
+    NamedCommands.registerCommand(
+        "AimSwerveAndPivotLong",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.26),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
+
+    NamedCommands.registerCommand(
+        "AimPivotAndShoot",
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
+            .andThen(new ShootAuto(index)));
     NamedCommands.registerCommand(
         "AimAtTarget",
         new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
             .withTimeout(.2));
-    NamedCommands.registerCommand(
-        "AutoPivotAim", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS).andThen(new ShootAuto(index)));
-
-    NamedCommands.registerCommand("Aim Pivot", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
-
-    NamedCommands.registerCommand(
-        "Aim",
-        new ParallelDeadlineGroup(
-            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.2),
-            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
-                ));
-
-    NamedCommands.registerCommand("AimLong", new ParallelDeadlineGroup(
-      new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-          .withTimeout(0.26),
-      new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
-          ));
 
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
+    NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
     NamedCommands.registerCommand(
         "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 

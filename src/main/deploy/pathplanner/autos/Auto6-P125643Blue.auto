@@ -28,13 +28,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Aim Pivot"
+                        "name": "AimPivot"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "ShootSpeaker"
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -59,7 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Aim"
+                        "name": "AimSwerveAndPivot"
                       }
                     },
                     {
@@ -90,7 +90,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Aim"
+                        "name": "AimSwerveAndPivot"
                       }
                     },
                     {
@@ -121,7 +121,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimLong"
+                        "name": "AimSwerveAndPivotLong"
                       }
                     },
                     {
@@ -152,7 +152,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Aim"
+                        "name": "AimSwerveAndPivot"
                       }
                     },
                     {
@@ -183,7 +183,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "Aim"
+                        "name": "AimSwerveAndPivot"
                       }
                     },
                     {

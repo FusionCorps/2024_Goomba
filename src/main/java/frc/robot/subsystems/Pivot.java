@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.PivotConstants.PIVOT_ANGLES_MAP;
 import static frc.robot.Constants.PivotConstants.PIVOT_ARM_INIT_POSE;
-import static frc.robot.Constants.PivotConstants.PIVOT_GEAR_RATIO;
 import static frc.robot.Constants.PivotConstants.PIVOT_STOW_POS;
 import static frc.robot.Constants.PivotConstants.PIVOT_SUB_POS;
 import static frc.robot.Constants.diagnosticsTab;
@@ -13,11 +12,9 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PivotConstants;
-import java.util.function.DoubleSupplier;
 
 public class Pivot extends SubsystemBase {
   private TalonFX pivotMotor, pivotFollowerMotor;
@@ -28,9 +25,6 @@ public class Pivot extends SubsystemBase {
 
   // the target position of the pivot
   private double targetPos;
-
-  private DutyCycleEncoder pivotEncoder; // through bore encoder
-  private DoubleSupplier adjustedPivotEncoderAngle;
 
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
@@ -43,8 +37,6 @@ public class Pivot extends SubsystemBase {
     PIVOT_ANGLES_MAP.put(3.33, 10.59765625);
     PIVOT_ANGLES_MAP.put(3.82, 8.6);
     PIVOT_ANGLES_MAP.put(4.00, 8.2);
-
-   
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
@@ -81,14 +73,12 @@ public class Pivot extends SubsystemBase {
 
     diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
     diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
-    // diagnosticsTab.addDouble("Pivot Encoder Pos", () -> adjustedPivotEncoderAngle.getAsDouble());
     diagnosticsTab.addDouble(
         "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
     diagnosticsTab.addDouble(
         "Follower Pivot Motor Voltage",
         () -> pivotFollowerMotor.getMotorVoltage().getValueAsDouble());
   }
-
 
   @Override
   public void periodic() {}
@@ -131,7 +121,6 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
-
 
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
