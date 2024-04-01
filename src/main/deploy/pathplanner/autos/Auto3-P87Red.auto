@@ -26,9 +26,22 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "3-P87Red-1"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3-P87Red-1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PivotAim Note 1"
+                            }
+                          }
+                        ]
                       }
                     },
                     {

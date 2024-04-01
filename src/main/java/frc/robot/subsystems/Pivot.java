@@ -35,17 +35,16 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.1, PIVOT_SUB_POS);
-    PIVOT_ANGLES_MAP.put(1.48, 23.2041015625);
-    PIVOT_ANGLES_MAP.put(1.85, 16.81201171875);
-    PIVOT_ANGLES_MAP.put(2.25, 13.64697265625);
-    PIVOT_ANGLES_MAP.put(2.5, 12.51416015625);
-    PIVOT_ANGLES_MAP.put(2.63, 10.0927734375);
-    PIVOT_ANGLES_MAP.put(3.17, 9.45263671875);
-    PIVOT_ANGLES_MAP.put(3.5, 8.953125);
+    PIVOT_ANGLES_MAP.put(1.05, PIVOT_SUB_POS);
+    PIVOT_ANGLES_MAP.put(1.43, 21.68115234375);
+    PIVOT_ANGLES_MAP.put(1.84, 17.3193359375);
+    PIVOT_ANGLES_MAP.put(2.39, 13.03662109375);
+    PIVOT_ANGLES_MAP.put(2.86, 10.72802734375);
+    PIVOT_ANGLES_MAP.put(3.33, 10.59765625);
+    PIVOT_ANGLES_MAP.put(3.82, 8.6);
+    PIVOT_ANGLES_MAP.put(4.00, 8.2);
 
-    pivotEncoder = new DutyCycleEncoder(2);
-    adjustedPivotEncoderAngle = () -> pivotEncoder.getAbsolutePosition() * PIVOT_GEAR_RATIO;
+   
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
@@ -82,13 +81,14 @@ public class Pivot extends SubsystemBase {
 
     diagnosticsTab.addDouble("Pivot Stow Pos", () -> PIVOT_STOW_POS);
     diagnosticsTab.addDouble("Pivot Motor Pos", () -> pivotMotor.getPosition().getValueAsDouble());
-    diagnosticsTab.addDouble("Pivot Encoder Pos", () -> adjustedPivotEncoderAngle.getAsDouble());
+    // diagnosticsTab.addDouble("Pivot Encoder Pos", () -> adjustedPivotEncoderAngle.getAsDouble());
     diagnosticsTab.addDouble(
         "Main Pivot Motor Voltage", () -> pivotMotor.getMotorVoltage().getValueAsDouble());
     diagnosticsTab.addDouble(
         "Follower Pivot Motor Voltage",
         () -> pivotFollowerMotor.getMotorVoltage().getValueAsDouble());
   }
+
 
   @Override
   public void periodic() {}
@@ -117,6 +117,21 @@ public class Pivot extends SubsystemBase {
    */
   public void setPivotAngle(double pos) {
     targetPos = pos;
+
+    pivotMotor.setControl(positionReq.withPosition(targetPos));
+    pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));
+  }
+
+  public void setPivotAngle(double pos, double vel, double accel, double jerk) {
+    targetPos = pos;
+
+    pivotConfigs.MotionMagic.MotionMagicCruiseVelocity = vel;
+    pivotConfigs.MotionMagic.MotionMagicAcceleration = accel;
+    pivotConfigs.MotionMagic.MotionMagicJerk = jerk;
+
+    pivotMotor.getConfigurator().apply(pivotConfigs);
+    pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
+
 
     pivotMotor.setControl(positionReq.withPosition(targetPos));
     pivotFollowerMotor.setControl(positionReq.withPosition(targetPos));

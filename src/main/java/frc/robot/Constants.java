@@ -253,7 +253,7 @@ public class Constants {
     public static final double TRANSFER_HOOK_kD = 0.01;
     public static final double TRANSFER_HOOK_kI = 0;
 
-    public static final double TRANSFER_HOOK_POS_CLIMB = 85.0078125;
+    public static final double TRANSFER_HOOK_POS_CLIMB = 87.28515625;
 
     // motion magic constraints
     public static final double TRANSFER_HOOK_CRUISE_VELOCITY = 2000;
@@ -315,11 +315,11 @@ public class Constants {
 
     public static final double PIVOT_READY_CLIMB_POS = 7.34228515625;
 
-    public static final double PIVOT_TRAP_POS = -80.701171875;
+    public static final double PIVOT_TRAP_POS = -78;
 
     // TODO: Change these values
     public static final double PIVOT_CLIMB_UP_POS = -12.61279296875;
-    public static final double PIVOT_CLIMB_DOWN_POS = 21.2255859375;
+    public static final double PIVOT_CLIMB_DOWN_POS = 22.4453125;
 
     // maps Z distances to april tag (meters) with pivot angles (rotations)
     public static final InterpolatingDoubleTreeMap PIVOT_ANGLES_MAP =
@@ -341,8 +341,8 @@ public class Constants {
     public static final double SPK_LEFT_RPM = 5000;
     public static final double SPK_RIGHT_RPM = 3000;
 
-    public static final double LEFT_SHUTTLING_RPM = 3200;
-    public static final double RIGHT_SHUTTLING_RPM = 3000;
+    public static final double LEFT_SHUTTLING_RPM = 2900;
+    public static final double RIGHT_SHUTTLING_RPM = 2900;
 
     // TODO: change these
     public static final double AMP_RIGHT_SPEED = -1200;
