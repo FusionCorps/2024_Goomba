@@ -212,13 +212,21 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "AutoPivotAim", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS).andThen(new ShootAuto(index)));
 
+    NamedCommands.registerCommand("Aim Pivot", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
+
     NamedCommands.registerCommand(
-        "AimAndShoot",
+        "Aim",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.3),
+                .withTimeout(0.2),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
-                .andThen(new ShootAuto(index))));
+                ));
+
+    NamedCommands.registerCommand("AimLong", new ParallelDeadlineGroup(
+      new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+          .withTimeout(0.26),
+      new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
+          ));
 
     NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
     NamedCommands.registerCommand(

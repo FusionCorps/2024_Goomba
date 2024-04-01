@@ -15,6 +15,7 @@ public class ShootAuto extends Command {
 
   @Override
   public void execute() {
+    System.out.println("I am here");
     mIndex.runIndex(IndexConstants.INDEX_RUN_PCT);
   }
 

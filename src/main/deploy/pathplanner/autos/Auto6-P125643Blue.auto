@@ -28,7 +28,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AutoPivotAim"
+                        "name": "Aim Pivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -53,7 +59,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "Aim"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -78,7 +90,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "Aim"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -103,7 +121,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimLong"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -128,11 +152,17 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "Aim"
                       }
                     },
                     {
-                      "type": "deadline",
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
+                      }
+                    },
+                    {
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
@@ -153,7 +183,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "Aim"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     }
                   ]
