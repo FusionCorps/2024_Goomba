@@ -24,16 +24,10 @@ public class Constants {
   }
 
   public class AimingPIDS {
-
-    // TODO: tune these better
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget
     public static final double toTargetRotKP = 0.23;
     public static final double toTargetRotKI = 0;
     public static final double toTargetRotKD = 0.015;
-
-    // public static final double toTargetRotKP = 0.01;
-    // public static final double toTargetRotKI = 0;
-    // public static final double toTargetRotKD = 0.0;
 
     // used in rotating to angle
     public static final double toAngleRotKP = 0.25;
@@ -46,20 +40,13 @@ public class Constants {
     public static final double strKD = 0.0;
   }
 
-  public class CobraConstants {
-    public static final double cbrKP = 0.1;
-    public static final double cbrKI = 0;
-    public static final double cbrKD = 0.1;
-    public static final int cbrMotorID = -1;
-  }
-
   public class StageAlignment {
     public static final double toleranceDeg = 1.5;
-    public static final double runTime = 2;
+    public static final double runTime = 2.0;
   }
 
   public class DrivetrainConstants {
-    // TODO: slip current, couple ratio
+    // TODO: find slip current, validate coupling ratio
 
     // Both sets of gains need to be tuned to your individual robot.
 
@@ -344,7 +331,6 @@ public class Constants {
     public static final double LEFT_SHUTTLING_RPM = 2900;
     public static final double RIGHT_SHUTTLING_RPM = 2900;
 
-    // TODO: change these
     public static final double AMP_RIGHT_SPEED = -1200;
     public static final double AMP_LEFT_SPEED = -1200;
 
@@ -400,6 +386,13 @@ public class Constants {
 
     public static final int RED_SPK_TAG_ID = 4;
     public static final int BLUE_SPK_TAG_ID = 7;
+
+    public static final double MAX_TAG_DIST_ODO = 3.0;
+    public static final double SINGLE_TAG_DIST_ODO = 1.0;
+    public static final double MULTI_TAG_XY_STD_DEV =
+        0.8; // TODO: tune based on empirical discrepancy
+    public static final double SINGLE_TAG_XY_STD_DEV =
+        1.5; // TODO: tune based on empirical discrepancy
   }
 
   public static class IndexConstants {
@@ -410,9 +403,8 @@ public class Constants {
     public static boolean IS_TRAPPING = false;
   }
 
-  public static DriverStation.Alliance allianceColor =
-      Alliance.Red; // TODO: change manually pre-match, until better
-  // solution found
+  // TODO: change manually pre-match as fallback if FMS doesn't send alliance color
+  public static DriverStation.Alliance allianceColor = Alliance.Red;
 
   public static ShuffleboardTab diagnosticsTab = Shuffleboard.getTab("Diagnostics");
   public static ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");

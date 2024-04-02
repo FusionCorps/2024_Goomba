@@ -1,7 +1,10 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
-import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
+import static frc.robot.Constants.LimelightConstants.MAX_TAG_DIST_ODO;
+import static frc.robot.Constants.LimelightConstants.MULTI_TAG_XY_STD_DEV;
+import static frc.robot.Constants.LimelightConstants.SINGLE_TAG_DIST_ODO;
+import static frc.robot.Constants.LimelightConstants.SINGLE_TAG_XY_STD_DEV;
 import static frc.robot.Constants.diagnosticsTab;
 
 import com.ctre.phoenix6.Utils;
@@ -46,7 +49,7 @@ import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.RotateToAngle;
-import frc.robot.util.LimelightHelpers;
+import frc.robot.subsystems.Cameras.BotPose;
 
 /**
  * This class represents a command-based swerve drivetrain subsystem. It extends the
@@ -81,16 +84,12 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
                   .withStatorCurrentLimitEnable(true)
                   .withStatorCurrentLimit(70)
                   .withSupplyCurrentThreshold(80)
-                  .withSupplyTimeThreshold(0.75)); // per 2023-Ignition code, TODO: test this
+                  .withSupplyTimeThreshold(0.75));
     }
 
     getDaqThread().setThreadPriority(99);
     mCamera = camera;
     configPathPlanner();
-
-    // vision measurement std filter, per LL docs (fully trusts internal rotation
-    // measurements)
-    setVisionMeasurementStdDevs(VecBuilder.fill(.7, .7, 9999999));
 
     if (Utils.isSimulation()) startSimThread();
 
@@ -100,7 +99,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   @Override
   public void periodic() {
     // updates the odometry from aprilTag data
-    // updateOdometryFromAprilTags(1.0);
+    // updateOdometryFromAprilTags();
   }
 
   /**
@@ -110,17 +109,25 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
    * @param maxDist the maximum distance to the target in meters required for odometry to be
    *     updated, recommended <= 1.0
    */
-  private void updateOdometryFromAprilTags(double maxDist) {
+  private void updateOdometryFromAprilTags() {
     if (RobotBase.isReal()
         && mCamera.hasTarget()
-        && mCamera.getPipeline() == PIPELINE.APRILTAG_3D.value
-        && mCamera.getPrimaryAprilTagPose().getZ() < maxDist) {
+        && mCamera.getPipeline() == PIPELINE.APRILTAG_3D.value) {
+      BotPose llBotposeData = mCamera.getBotPoseBlue();
 
-      LimelightHelpers.PoseEstimate limelightMeasurement =
-          LimelightHelpers.getBotPoseEstimate_wpiBlue(LIMELIGHT_NAME);
-      if (limelightMeasurement.tagCount >= 2) {
-        addVisionMeasurement(limelightMeasurement.pose, limelightMeasurement.timestampSeconds);
-      }
+      double xyStdDevs = 0.0;
+      double headingStdDevs = 999999; // mostly trust gyro over ll heading
+
+      if (llBotposeData.avgTagDist() > MAX_TAG_DIST_ODO) return; // generally too far
+      if (llBotposeData.tagCount() >= 2) // multi-tag, in OK range
+      xyStdDevs = MULTI_TAG_XY_STD_DEV;
+      else if (llBotposeData.avgTagDist() >= SINGLE_TAG_DIST_ODO) return; // single-tag, too far
+      else xyStdDevs = SINGLE_TAG_XY_STD_DEV; // single-tag, in OK range
+
+      addVisionMeasurement(
+          llBotposeData.pose().toPose2d(),
+          llBotposeData.latency(),
+          VecBuilder.fill(xyStdDevs, xyStdDevs, headingStdDevs));
     }
   }
 

@@ -19,6 +19,8 @@ import frc.robot.Constants.LimelightConstants.PIPELINE;
 import java.util.Map;
 
 public class Cameras extends SubsystemBase {
+  public record BotPose(Pose3d pose, double latency, double tagCount, double avgTagDist) {}
+
   private NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
 
   // cached data
@@ -28,6 +30,7 @@ public class Cameras extends SubsystemBase {
   private int fidID = 0;
   private Pose3d aprilTagTargetPose = new Pose3d();
 
+  private BotPose botposeBlue = new BotPose(new Pose3d(), 0, 0, 0);
   private int pipelineNum = 0;
 
   // apriltag pose relative to robot space
@@ -73,8 +76,35 @@ public class Cameras extends SubsystemBase {
       fidID = (int) limelightTable.getEntry("id").getDouble(0);
       pipelineNum = (int) limelightTable.getEntry("getpipe").getDouble(0);
       // update apriltag pose and distances to apriltag
-      if (pipelineNum == PIPELINE.APRILTAG_3D.value) updatePrimaryAprilTagPose();
+      if (pipelineNum == PIPELINE.APRILTAG_3D.value) {
+        updatePrimaryAprilTagPose();
+        // TODO: test this
+        // updateBotPoseBlue();
+      }
     }
+  }
+
+  private void updateBotPoseBlue() {
+    double[] data = limelightTable.getEntry("botpose_wpiblue").getDoubleArray(new double[11]);
+    if (data.length < 11) {
+      botposeBlue = new BotPose(new Pose3d(), 0, 0, 0);
+    } else {
+      botposeBlue =
+          new BotPose(
+              new Pose3d(
+                  new Translation3d(data[0], data[1], data[2]),
+                  new Rotation3d(
+                      Units.degreesToRadians(data[3]),
+                      Units.degreesToRadians(data[4]),
+                      Units.degreesToRadians(data[5]))),
+              data[6],
+              data[7],
+              data[9]);
+    }
+  }
+
+  public BotPose getBotPoseBlue() {
+    return botposeBlue;
   }
 
   /**
