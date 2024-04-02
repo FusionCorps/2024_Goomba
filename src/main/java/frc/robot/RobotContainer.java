@@ -215,14 +215,14 @@ public class RobotContainer {
         "AimSwerveAndPivot",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.2),
+                .withTimeout(0.13),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
     NamedCommands.registerCommand(
         "AimSwerveAndPivotLong",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.26),
+                .withTimeout(0.27),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
     NamedCommands.registerCommand(
