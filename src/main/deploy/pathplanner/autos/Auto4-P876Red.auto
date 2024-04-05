@@ -26,34 +26,15 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "deadline",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "3-P87Red-1"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PivotAimLoadStage"
-                            }
-                          }
-                        ]
+                        "pathName": "3-P87Red-1"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootAuto"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
@@ -78,13 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootAuto"
+                        "name": "AimAndShoot"
                       }
                     },
                     {
@@ -109,13 +84,32 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
+                        "name": "AimAndShoot"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P876Red-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "ShootAuto"
+                        "name": "AimAndShoot"
                       }
                     }
                   ]
@@ -127,6 +121,6 @@
       ]
     }
   },
-  "folder": "3 Piece",
+  "folder": "4 Piece",
   "choreoAuto": false
 }

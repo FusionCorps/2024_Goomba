@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.310957783388655,
-        "y": 2.8779049059514548
+        "x": 5.6456497528379685,
+        "y": 6.186573142377054
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.284011644946369,
-        "y": 4.045446552431566
+        "x": 6.287001035540534,
+        "y": 6.44311365545808
       },
       "isLocked": false,
-      "linkedName": "LoadSide Far Shoot Blue"
+      "linkedName": "AmpSide Far Shoot Blue"
     },
     {
       "anchor": {
-        "x": 8.023582970242865,
-        "y": 4.25265235145855
+        "x": 8.013716027432057,
+        "y": 4.213184580215315
       },
       "prevControl": {
-        "x": 7.835793745636543,
-        "y": 4.011209062678993
+        "x": 8.068385333368669,
+        "y": 4.475597248711053
       },
       "nextControl": {
-        "x": 8.299857368945508,
-        "y": 4.6078622926476624
+        "x": 7.915046599323969,
+        "y": 3.7395713252964975
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.11,
-        "y": 4.97
+        "x": 3.869600046892403,
+        "y": 4.963072233836776
       },
       "prevControl": {
-        "x": 4.49304465560498,
-        "y": 4.2332839081632585
+        "x": 3.809951379108236,
+        "y": 4.969555784682881
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -14.931417178137526,
+      "rotationDegrees": -23.702645950966346,
       "rotateFast": false
     }
   ],
@@ -61,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -6.430000000000007,
+    "rotation": -3.900493742381886,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "4-P876Blue",
+  "folder": "5-P1456Red",
   "previewStartingState": {
-    "rotation": -30.0,
+    "rotation": 6.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3576779647621067,
-        "y": 6.386091632040746
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1806215367066955,
-        "y": 6.90939356201109
+        "x": 1.5229435719445887,
+        "y": 7.223301929970344
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpSideBlueStart"
     },
     {
       "anchor": {
@@ -65,9 +65,9 @@
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "6-P12563Blue",
+  "folder": "6-P125643Blue",
   "previewStartingState": {
-    "rotation": 28.49563861824506,
+    "rotation": 60.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

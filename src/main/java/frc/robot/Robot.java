@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
       PortForwarder.add(port, "limelight.local", port);
     }
     DataLogManager.start();
-    DriverStation.startDataLog(DataLogManager.getLog());
+    DriverStation.startDataLog(DataLogManager.getLog(), false);
 
     Shuffleboard.selectTab("Driver"); // default to driver tab
 

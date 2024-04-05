@@ -2,10 +2,10 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.41,
-      "y": 1.98
+      "x": 1.36,
+      "y": 6.39
     },
-    "rotation": 0
+    "rotation": 28.5
   },
   "command": {
     "type": "sequential",
@@ -18,7 +18,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "RevShooterLoad"
+                  "name": "RevShooterAmp"
                 }
               },
               {
@@ -26,19 +26,31 @@
                 "data": {
                   "commands": [
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "AimPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
+                      }
+                    },
+                    {
                       "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-1"
+                              "pathName": "6-P125643Red-1"
                             }
                           },
                           {
                             "type": "named",
                             "data": {
-                              "name": "PivotAimLoadStage"
+                              "name": "IntakeNote"
                             }
                           }
                         ]
@@ -47,7 +59,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
+                        "name": "AimSwerveAndPivot"
                       }
                     },
                     {
@@ -63,7 +75,38 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-2"
+                              "pathName": "6-P125643Red-2"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimSwerveAndPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "6-P125643Red-3"
                             }
                           },
                           {
@@ -94,7 +137,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-3"
+                              "pathName": "6-P125643Red-4"
                             }
                           },
                           {
@@ -109,7 +152,38 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
+                        "name": "AimSwerveAndPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "6-P125643Red-5"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimSwerveAndPivot"
                       }
                     },
                     {
@@ -127,6 +201,6 @@
       ]
     }
   },
-  "folder": "3 Piece",
+  "folder": null,
   "choreoAuto": false
 }
