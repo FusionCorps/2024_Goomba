@@ -1,14 +1,18 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.diagnosticsTab;
+import static frc.robot.Constants.driverTab;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TransferHookConstants;
+import frc.robot.commands.TransferHooks.SetHooksPos;
 
 public class TransferHooks extends SubsystemBase {
 
@@ -44,6 +48,8 @@ public class TransferHooks extends SubsystemBase {
         "TransferHooks Angle", () -> transferHookMotor.getPosition().getValueAsDouble());
 
     targetPosition = 0;
+
+    driverTab.add("Go to zero transfer hooks", new SetHooksPos(this, 0.0).alongWith(Commands.print(getName()))).withPosition(8, 0);
   }
 
   public double getPosition() {

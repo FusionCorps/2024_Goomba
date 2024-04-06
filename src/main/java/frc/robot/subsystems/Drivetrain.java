@@ -82,9 +82,11 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
           .apply(
               new CurrentLimitsConfigs()
                   .withStatorCurrentLimitEnable(true)
+                  .withSupplyCurrentLimitEnable(true)
                   .withStatorCurrentLimit(70)
+                  .withSupplyCurrentLimit(60)
                   .withSupplyCurrentThreshold(80)
-                  .withSupplyTimeThreshold(0.75));
+                  .withSupplyTimeThreshold(0.5));
     }
 
     getDaqThread().setThreadPriority(99);
@@ -98,7 +100,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
   @Override
   public void periodic() {
-    // updates the odometry from aprilTag data
+    // TODO: updates the odometry from aprilTag data
     // updateOdometryFromAprilTags();
   }
 

@@ -17,6 +17,7 @@ public class TrapPivot extends Command {
 
   @Override
   public void execute() {
+    System.out.println("I'm moving the pivot");
     mPivot.setPivotAngle(angle, 500, 100, 1000);
   }
 

@@ -15,6 +15,12 @@ public class HoldHooks extends Command {
 
   @Override
   public void execute() {
+    System.out.println("I'm here");
     mTransferHooks.holdAtTargetPos();
+  }
+
+  @Override
+  public boolean isFinished(){
+    return true;
   }
 }

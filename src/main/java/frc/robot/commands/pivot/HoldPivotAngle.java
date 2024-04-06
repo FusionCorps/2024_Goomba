@@ -14,6 +14,12 @@ public class HoldPivotAngle extends Command {
 
   @Override
   public void execute() {
+    System.out.println("holding pivot");
     mPivot.holdPivotPos();
+  }
+
+  @Override
+  public boolean isFinished(){
+    return true;
   }
 }

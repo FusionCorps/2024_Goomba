@@ -176,9 +176,9 @@ public class RobotContainer {
                                                         new SetHooksPos(
                                                                 transferHooks,
                                                                 TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
-                                .andThen(new HoldHooks(transferHooks)));
+                                .andThen(new HoldHooks(transferHooks).alongWith(new TrapPivot(pivot, PIVOT_TRAP_POS))));
 
-        // robotController.back().whileTrue(new SetHooksPct(transferHooks, -0.3));
+        //  xx().whileTrue(new SetHooksPct(transferHooks, -0.3));
 
         robotController.back().onTrue(new TrapPivot(pivot, PIVOT_TRAP_POS));
     }
@@ -223,7 +223,14 @@ public class RobotContainer {
                 "AimSwerveAndPivotLong",
                 new ParallelDeadlineGroup(
                         new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                                .withTimeout(0.32),
+                                .withTimeout(0.5),
+                        new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
+
+        NamedCommands.registerCommand(
+                "AimSwerveAndPivotLongLast",
+                new ParallelDeadlineGroup(
+                        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                                .withTimeout(0.6),
                         new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
         NamedCommands.registerCommand(
