@@ -147,7 +147,7 @@ public class Constants {
     private static final int kBackLeftDriveMotorId = 16;
     private static final int kBackLeftSteerMotorId = 17;
     private static final int kBackLeftEncoderId = 18;
-    private static final double kBackLeftEncoderOffset = 0.44873046875;
+    private static final double kBackLeftEncoderOffset = -0.350341796875;
 
     private static final double kBackLeftXPosInches = -9.75;
     private static final double kBackLeftYPosInches = 9.75;
