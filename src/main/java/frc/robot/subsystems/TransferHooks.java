@@ -8,7 +8,6 @@ import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TransferHookConstants;
@@ -49,7 +48,11 @@ public class TransferHooks extends SubsystemBase {
 
     targetPosition = 0;
 
-    driverTab.add("Go to zero transfer hooks", new SetHooksPos(this, 0.0).alongWith(Commands.print(getName()))).withPosition(8, 0);
+    driverTab
+        .add(
+            "Go to zero transfer hooks",
+            new SetHooksPos(this, 0.0).alongWith(Commands.print(getName())))
+        .withPosition(8, 0);
   }
 
   public double getPosition() {
