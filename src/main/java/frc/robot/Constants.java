@@ -131,7 +131,7 @@ public class Constants {
     private static final int kFrontLeftDriveMotorId = 10;
     private static final int kFrontLeftSteerMotorId = 11;
     private static final int kFrontLeftEncoderId = 12;
-    private static final double kFrontLeftEncoderOffset = 0.49462890625; // TODO: recalibrate ASAP
+    private static final double kFrontLeftEncoderOffset = 0.49462890625;
 
     private static final double kFrontLeftXPosInches = 9.75;
     private static final double kFrontLeftYPosInches = 9.75;
@@ -392,7 +392,7 @@ public class Constants {
     public static final double MULTI_TAG_XY_STD_DEV =
         0.8; // TODO: tune based on empirical discrepancy
     public static final double SINGLE_TAG_XY_STD_DEV =
-        1.5; // TODO: tune based on empirical discrepancy
+        1.5; // TODO: tune based on empirical discrepancy, should be higher b/c more uncertain
   }
 
   public static class IndexConstants {
