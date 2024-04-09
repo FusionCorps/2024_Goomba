@@ -291,8 +291,8 @@ public class Constants {
 
     // motion magic constraints
     public static final double PIVOT_CRUISE_VELOCITY = 2000;
-    public static final double PIVOT_ACCELERATION = 700;
-    public static final double PIVOT_JERK = 10000;
+    public static final double PIVOT_ACCELERATION = 1300;
+    public static final double PIVOT_JERK = 15000;
 
     public static final double PIVOT_AMP_POS = -62; // empirical testing
 
