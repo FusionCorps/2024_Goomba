@@ -2,7 +2,6 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.LimelightConstants.BLUE_SPK_TAG_ID;
 import static frc.robot.Constants.LimelightConstants.RED_SPK_TAG_ID;
-import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.diagnosticsTab;
 import static frc.robot.Constants.driverTab;
 
@@ -16,6 +15,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
+import frc.robot.util.UtilFunctions;
 import java.util.Map;
 
 public class Cameras extends SubsystemBase {
@@ -52,7 +52,8 @@ public class Cameras extends SubsystemBase {
               0.0 // roll, pitch, yaw
             });
 
-    setPriorityID(allianceColor == Alliance.Blue ? BLUE_SPK_TAG_ID : RED_SPK_TAG_ID);
+    setPriorityID(
+        UtilFunctions.getAllianceColor() == Alliance.Blue ? BLUE_SPK_TAG_ID : RED_SPK_TAG_ID);
 
     driverTab
         .add("LL", new HttpCamera("limelight", "http://10.66.72.11:5801/stream.mjpg"))
@@ -86,7 +87,7 @@ public class Cameras extends SubsystemBase {
 
   // TODO: use megatag 2, empirically figure out std devs
   private void updateBotPoseBlue() {
-    double[] data = limelightTable.getEntry("botpose_wpiblue").getDoubleArray(new double[11]);
+    double[] data = limelightTable.getEntry("botpose_orb_wpiblue").getDoubleArray(new double[11]);
     if (data.length < 11) {
       System.err.println("couldn't get latest botpose results");
       botposeBlue = new BotPose(new Pose3d(), 0, 0, 0);

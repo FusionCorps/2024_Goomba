@@ -1,7 +1,5 @@
 package frc.robot.commands.swerve.vision;
 
-import static frc.robot.Constants.allianceColor;
-
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.util.Units;
@@ -9,6 +7,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.AimingPIDS;
 import frc.robot.subsystems.Drivetrain;
+import frc.robot.util.UtilFunctions;
 
 // rotates to a desired angle in place - angle is measured counterclockwise
 public class RotateToAngle extends Command {
@@ -30,7 +29,9 @@ public class RotateToAngle extends Command {
         new SwerveRequest.FieldCentricFacingAngle()
             .withTargetDirection(
                 Rotation2d.fromDegrees(
-                    allianceColor == Alliance.Blue ? desiredHeadingDeg : -desiredHeadingDeg));
+                    UtilFunctions.getAllianceColor() == Alliance.Blue
+                        ? desiredHeadingDeg
+                        : -desiredHeadingDeg));
     // setup PID controller - notice that this controller uses radians units, and uses a continuous
     // input range
     rotReq.HeadingController.setPID(

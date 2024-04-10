@@ -403,9 +403,8 @@ public class Constants {
     public static boolean IS_TRAPPING = false;
   }
 
-  // TODO: change manually pre-match as fallback if FMS doesn't send alliance
-  // color
-  public static DriverStation.Alliance allianceColor = Alliance.Red;
+  // TODO: change manually pre-match as fallback if FMS doesn't send alliance color
+  public static DriverStation.Alliance allianceColor = Alliance.Blue;
 
   public static ShuffleboardTab diagnosticsTab = Shuffleboard.getTab("Diagnostics");
   public static ShuffleboardTab driverTab = Shuffleboard.getTab("Driver");

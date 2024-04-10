@@ -30,6 +30,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotController;
@@ -50,6 +51,7 @@ import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.RotateToAngle;
 import frc.robot.subsystems.Cameras.BotPose;
+import frc.robot.util.UtilFunctions;
 
 /**
  * This class represents a command-based swerve drivetrain subsystem. It extends the
@@ -64,6 +66,13 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   private static final double kSimLoopPeriod = 0.005; // 5 ms
   private Notifier m_simNotifier = null;
   private double m_lastSimTime;
+
+  /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
+  private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
+  /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
+  private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
+  /* Keep track if we've ever applied the operator perspective before or not */
+  private boolean hasAppliedOperatorPerspective = false;
 
   public DriveTelemetry driveTelemetry = new DriveTelemetry(this);
 
@@ -100,6 +109,15 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
   @Override
   public void periodic() {
+    // If the robot is disabled or the operator perspective has not been applied yet, apply correct
+    // heading for field-centric driving
+    if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+      this.setOperatorPerspectiveForward(
+          UtilFunctions.getAllianceColor() == Alliance.Red
+              ? RedAlliancePerspectiveRotation
+              : BlueAlliancePerspectiveRotation);
+      hasAppliedOperatorPerspective = true;
+    }
     // TODO: updates the odometry from aprilTag data
     // updateOdometryFromAprilTags();
   }
@@ -146,25 +164,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
             DrivetrainConstants.MaxSpeed,
             DrivetrainConstants.DRIVEBASE_RADIUS,
             new ReplanningConfig()),
-        this::isAllianceRed,
-        // () -> false,
+        () -> UtilFunctions.getAllianceColor() == Alliance.Red,
         this);
-  }
-
-  /**
-   * @return true if the robot is on the red alliance, false if on the blue alliance or if the
-   *     alliance color is unknown
-   */
-  public boolean isAllianceRed() {
-    // Boolean supplier that controls when the path will be mirrored for the red
-    // alliance
-    // This will flip the path being followed to the red side of the field.
-    // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-
-    if (Constants.allianceColor != null) {
-      return Constants.allianceColor == DriverStation.Alliance.Red;
-    }
-    return false;
   }
 
   /**
@@ -309,7 +310,6 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
               .getRoot("RootDirection", 0.5, 0.5)
               .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
         };
-
     private DoubleEntry odometryFrequency =
         driveTable.getDoubleTopic("Odometry Frequency").getEntry(0.0);
     private DoubleEntry robotSpeed = driveTable.getDoubleTopic("Robot Speed").getEntry(0.0);
