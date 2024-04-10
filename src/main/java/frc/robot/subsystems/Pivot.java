@@ -33,9 +33,9 @@ public class Pivot extends SubsystemBase {
     PIVOT_ANGLES_MAP.put(1.43, 21.68115234375);
     PIVOT_ANGLES_MAP.put(1.84, 17.3193359375);
     PIVOT_ANGLES_MAP.put(2.39, 13.03662109375);
-    PIVOT_ANGLES_MAP.put(2.86, 10.72802734375);
-    PIVOT_ANGLES_MAP.put(3.33, 10.59765625);
-    PIVOT_ANGLES_MAP.put(3.82, 8.6);
+    PIVOT_ANGLES_MAP.put(2.82, 11.22265625);
+    PIVOT_ANGLES_MAP.put(3.30, 9.7099609375);
+    PIVOT_ANGLES_MAP.put(3.46, 9.29541015625);
     PIVOT_ANGLES_MAP.put(4.00, 8.2);
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
@@ -92,7 +92,19 @@ public class Pivot extends SubsystemBase {
 
     pivotMotor.set(pct);
     pivotFollowerMotor.set(pct);
+
+    targetPos = pivotMotor.getPosition().getValueAsDouble();
+
   }
+
+  /**
+   * Sets targetpos to current pivot angle
+   */
+
+   public void setTargetPos(){
+
+    targetPos = pivotMotor.getPosition().getValueAsDouble();
+   }
 
   /** Zeroes the pivot angle at the current angle. */
   public void resetPivotAngle() {

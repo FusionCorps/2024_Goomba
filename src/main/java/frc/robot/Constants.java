@@ -128,19 +128,19 @@ public class Constants {
             .withSteerMotorInverted(kSteerMotorReversed);
 
     // Front Left
-    private static final int kFrontLeftDriveMotorId = 10;
-    private static final int kFrontLeftSteerMotorId = 11;
-    private static final int kFrontLeftEncoderId = 12;
-    private static final double kFrontLeftEncoderOffset = 0.49462890625;
+    private static final int kFrontLeftDriveMotorId = 13;
+    private static final int kFrontLeftSteerMotorId = 14;
+    private static final int kFrontLeftEncoderId = 15;
+    private static final double kFrontLeftEncoderOffset = 0.214111328125;
 
     private static final double kFrontLeftXPosInches = 9.75;
     private static final double kFrontLeftYPosInches = 9.75;
 
     // Front Right
-    private static final int kFrontRightDriveMotorId = 13;
-    private static final int kFrontRightSteerMotorId = 14;
-    private static final int kFrontRightEncoderId = 15;
-    private static final double kFrontRightEncoderOffset = 0.465576171875;
+    private static final int kFrontRightDriveMotorId = 19;
+    private static final int kFrontRightSteerMotorId = 20;
+    private static final int kFrontRightEncoderId = 21;
+    private static final double kFrontRightEncoderOffset = 0.267822265625;
 
     private static final double kFrontRightXPosInches = 9.75;
     private static final double kFrontRightYPosInches = -9.75;
@@ -149,16 +149,16 @@ public class Constants {
     private static final int kBackLeftDriveMotorId = 16;
     private static final int kBackLeftSteerMotorId = 17;
     private static final int kBackLeftEncoderId = 18;
-    private static final double kBackLeftEncoderOffset = -0.350341796875;
+    private static final double kBackLeftEncoderOffset = -0.356689453125;
 
     private static final double kBackLeftXPosInches = -9.75;
     private static final double kBackLeftYPosInches = 9.75;
 
     // Back Right
-    private static final int kBackRightDriveMotorId = 19;
-    private static final int kBackRightSteerMotorId = 20;
-    private static final int kBackRightEncoderId = 21;
-    private static final double kBackRightEncoderOffset = 0.362548828125;
+    private static final int kBackRightDriveMotorId = 10;
+    private static final int kBackRightSteerMotorId = 11;
+    private static final int kBackRightEncoderId = 12;
+    private static final double kBackRightEncoderOffset = -0.326171875;
 
     private static final double kBackRightXPosInches = -9.75;
     private static final double kBackRightYPosInches = -9.75;
@@ -171,7 +171,7 @@ public class Constants {
             kFrontLeftEncoderOffset,
             Units.inchesToMeters(kFrontLeftXPosInches),
             Units.inchesToMeters(kFrontLeftYPosInches),
-            kInvertRightSide);
+            kInvertLeftSide);
     private static final SwerveModuleConstants FrontRight =
         ConstantCreator.createModuleConstants(
             kFrontRightSteerMotorId,
@@ -290,9 +290,9 @@ public class Constants {
     public static final double PIVOT_kI = 0;
 
     // motion magic constraints
-    public static final double PIVOT_CRUISE_VELOCITY = 2000;
-    public static final double PIVOT_ACCELERATION = 1300;
-    public static final double PIVOT_JERK = 15000;
+    public static final double PIVOT_CRUISE_VELOCITY = 2500;
+    public static final double PIVOT_ACCELERATION = 2000;
+    public static final double PIVOT_JERK = 50000;
 
     public static final double PIVOT_AMP_POS = -62; // empirical testing
 

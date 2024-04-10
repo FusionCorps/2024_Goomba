@@ -104,7 +104,7 @@ public class RobotContainer {
             drivetrain.runOnce(
                 () -> {
                   drivetrain.seedFieldRelative();
-                  drivetrain.resetGyro();
+                //   drivetrain.resetGyro();
                 }));
 
     // Aims in-place at april tag
@@ -138,7 +138,10 @@ public class RobotContainer {
 
     // Move pivot up/down
     robotController.povUp().whileTrue(new SetPivotPct(pivot, index, -.4));
+    robotController.povUp().onFalse(new HoldPivotAngle(pivot));
+
     robotController.povDown().whileTrue(new SetPivotPct(pivot, index, .35));
+    robotController.povDown().onFalse(new HoldPivotAngle(pivot));
 
     // Sets pivot to angle for Amp scoring
     robotController.leftBumper().onTrue(new SetAngleAmp(pivot));

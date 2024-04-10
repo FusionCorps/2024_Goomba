@@ -54,9 +54,12 @@ import frc.robot.subsystems.Cameras.BotPose;
 import frc.robot.util.UtilFunctions;
 
 /**
- * This class represents a command-based swerve drivetrain subsystem. It extends the
- * SwerveDrivetrain class and implements the Subsystem interface. It provides methods for
- * controlling the swerve drivetrain, updating odometry, and executing various commands related to
+ * This class represents a command-based swerve drivetrain subsystem. It extends
+ * the
+ * SwerveDrivetrain class and implements the Subsystem interface. It provides
+ * methods for
+ * controlling the swerve drivetrain, updating odometry, and executing various
+ * commands related to
  * the drivetrain.
  */
 public class Drivetrain extends SwerveDrivetrain implements Subsystem {
@@ -68,9 +71,9 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   private double m_lastSimTime;
 
   /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
-  private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
+  private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
-  private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
+  private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
 
@@ -102,32 +105,37 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     mCamera = camera;
     configPathPlanner();
 
-    if (Utils.isSimulation()) startSimThread();
+    if (Utils.isSimulation())
+      startSimThread();
 
     registerTelemetry(driveTelemetry::telemeterize);
   }
 
   @Override
   public void periodic() {
-    // If the robot is disabled or the operator perspective has not been applied yet, apply correct
+    // If the robot is disabled or the operator perspective has not been applied
+    // yet, apply correct
     // heading for field-centric driving
-    if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-      this.setOperatorPerspectiveForward(
-          UtilFunctions.getAllianceColor() == Alliance.Red
-              ? RedAlliancePerspectiveRotation
-              : BlueAlliancePerspectiveRotation);
-      hasAppliedOperatorPerspective = true;
+    // if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+    // this.setOperatorPerspectiveForward(
+    // UtilFunctions.getAllianceColor() == Alliance.Red
+    // ? RedAlliancePerspectiveRotation
+    // : BlueAlliancePerspectiveRotation);
+    // hasAppliedOperatorPerspective = true;
+    // }
+
+  // TODO: updates the odometry from aprilTag data
+  // updateOdometryFromAprilTags();
     }
-    // TODO: updates the odometry from aprilTag data
-    // updateOdometryFromAprilTags();
-  }
 
   /**
-   * Updates the odometry from the latest april tag data. If the robot is real and the limelight
+   * Updates the odometry from the latest april tag data. If the robot is real and
+   * the limelight
    * detects a target, the robot's position and orientation will be updated.
    *
-   * @param maxDist the maximum distance to the target in meters required for odometry to be
-   *     updated, recommended <= 1.0
+   * @param maxDist the maximum distance to the target in meters required for
+   *                odometry to be
+   *                updated, recommended <= 1.0
    */
   private void updateOdometryFromAprilTags() {
     if (RobotBase.isReal()
@@ -138,11 +146,14 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
       double xyStdDevs = 0.0;
       double headingStdDevs = 999999; // mostly trust gyro over ll heading
 
-      if (llBotposeData.avgTagDist() > MAX_TAG_DIST_ODO) return; // generally too far
+      if (llBotposeData.avgTagDist() > MAX_TAG_DIST_ODO)
+        return; // generally too far
       if (llBotposeData.tagCount() >= 2) // multi-tag, in OK range
-      xyStdDevs = MULTI_TAG_XY_STD_DEV;
-      else if (llBotposeData.avgTagDist() >= SINGLE_TAG_DIST_ODO) return; // single-tag, too far
-      else xyStdDevs = SINGLE_TAG_XY_STD_DEV; // single-tag, in OK range
+        xyStdDevs = MULTI_TAG_XY_STD_DEV;
+      else if (llBotposeData.avgTagDist() >= SINGLE_TAG_DIST_ODO)
+        return; // single-tag, too far
+      else
+        xyStdDevs = SINGLE_TAG_XY_STD_DEV; // single-tag, in OK range
 
       addVisionMeasurement(
           llBotposeData.pose().toPose2d(),
@@ -169,16 +180,16 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   }
 
   /**
-   * Drives the robot relative to its current orientation using the specified speeds.
+   * Drives the robot relative to its current orientation using the specified
+   * speeds.
    *
    * @param speeds The desired chassis speeds in meters per second.
    */
   private void driveRobotRelative(ChassisSpeeds speeds) {
-    SwerveRequest request =
-        new SwerveRequest.RobotCentric()
-            .withVelocityX(speeds.vxMetersPerSecond)
-            .withVelocityY(speeds.vyMetersPerSecond)
-            .withRotationalRate(speeds.omegaRadiansPerSecond);
+    SwerveRequest request = new SwerveRequest.RobotCentric()
+        .withVelocityX(speeds.vxMetersPerSecond)
+        .withVelocityY(speeds.vyMetersPerSecond)
+        .withRotationalRate(speeds.omegaRadiansPerSecond);
     setControl(request);
   }
 
@@ -220,16 +231,15 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     m_lastSimTime = Utils.getCurrentTimeSeconds();
 
     /* Run simulation at a faster rate so PID gains behave more reasonably */
-    m_simNotifier =
-        new Notifier(
-            () -> {
-              final double currentTime = Utils.getCurrentTimeSeconds();
-              double deltaTime = currentTime - m_lastSimTime;
-              m_lastSimTime = currentTime;
+    m_simNotifier = new Notifier(
+        () -> {
+          final double currentTime = Utils.getCurrentTimeSeconds();
+          double deltaTime = currentTime - m_lastSimTime;
+          m_lastSimTime = currentTime;
 
-              /* use the measured time delta, get battery voltage from WPILib */
-              updateSimState(deltaTime, RobotController.getBatteryVoltage());
-            });
+          /* use the measured time delta, get battery voltage from WPILib */
+          updateSimState(deltaTime, RobotController.getBatteryVoltage());
+        });
     m_simNotifier.startPeriodic(kSimLoopPeriod);
   }
 
@@ -261,62 +271,54 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     public Field2d field2d = new Field2d();
     // use networktables for things that cannot be displayed on shuffleboard
     private NetworkTable driveTable = NetworkTableInstance.getDefault().getTable("Drivetrain");
-    private StructArrayPublisher<SwerveModuleState> moduleStates =
-        driveTable.getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
-    private StructArrayPublisher<SwerveModuleState> desiredStates =
-        driveTable.getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
-    private StructPublisher<Pose3d> pose3D =
-        driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
-    private StructPublisher<Pose2d> pose2D =
-        driveTable.getStructTopic("2D Pose", Pose2d.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> moduleStates = driveTable
+        .getStructArrayTopic("Module States", SwerveModuleState.struct).publish();
+    private StructArrayPublisher<SwerveModuleState> desiredStates = driveTable
+        .getStructArrayTopic("Desired States", SwerveModuleState.struct).publish();
+    private StructPublisher<Pose3d> pose3D = driveTable.getStructTopic("3D Pose", Pose3d.struct).publish();
+    private StructPublisher<Pose2d> pose2D = driveTable.getStructTopic("2D Pose", Pose2d.struct).publish();
 
     /* Mechanisms to represent the swerve module states */
-    private Mechanism2d[] m_moduleMechanisms =
-        new Mechanism2d[] {
-          new Mechanism2d(1, 1),
-          new Mechanism2d(1, 1),
-          new Mechanism2d(1, 1),
-          new Mechanism2d(1, 1),
-        };
+    private Mechanism2d[] m_moduleMechanisms = new Mechanism2d[] {
+        new Mechanism2d(1, 1),
+        new Mechanism2d(1, 1),
+        new Mechanism2d(1, 1),
+        new Mechanism2d(1, 1),
+    };
     /* A direction and length changing ligament for speed representation */
-    private MechanismLigament2d[] m_moduleSpeeds =
-        new MechanismLigament2d[] {
-          m_moduleMechanisms[0]
-              .getRoot("RootSpeed", 0.5, 0.5)
-              .append(new MechanismLigament2d("Speed", 0.5, 0)),
-          m_moduleMechanisms[1]
-              .getRoot("RootSpeed", 0.5, 0.5)
-              .append(new MechanismLigament2d("Speed", 0.5, 0)),
-          m_moduleMechanisms[2]
-              .getRoot("RootSpeed", 0.5, 0.5)
-              .append(new MechanismLigament2d("Speed", 0.5, 0)),
-          m_moduleMechanisms[3]
-              .getRoot("RootSpeed", 0.5, 0.5)
-              .append(new MechanismLigament2d("Speed", 0.5, 0)),
-        };
+    private MechanismLigament2d[] m_moduleSpeeds = new MechanismLigament2d[] {
+        m_moduleMechanisms[0]
+            .getRoot("RootSpeed", 0.5, 0.5)
+            .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[1]
+            .getRoot("RootSpeed", 0.5, 0.5)
+            .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[2]
+            .getRoot("RootSpeed", 0.5, 0.5)
+            .append(new MechanismLigament2d("Speed", 0.5, 0)),
+        m_moduleMechanisms[3]
+            .getRoot("RootSpeed", 0.5, 0.5)
+            .append(new MechanismLigament2d("Speed", 0.5, 0)),
+    };
     /* A direction changing and length constant ligament for module direction */
-    private MechanismLigament2d[] m_moduleDirections =
-        new MechanismLigament2d[] {
-          m_moduleMechanisms[0]
-              .getRoot("RootDirection", 0.5, 0.5)
-              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-          m_moduleMechanisms[1]
-              .getRoot("RootDirection", 0.5, 0.5)
-              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-          m_moduleMechanisms[2]
-              .getRoot("RootDirection", 0.5, 0.5)
-              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-          m_moduleMechanisms[3]
-              .getRoot("RootDirection", 0.5, 0.5)
-              .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
-        };
-    private DoubleEntry odometryFrequency =
-        driveTable.getDoubleTopic("Odometry Frequency").getEntry(0.0);
+    private MechanismLigament2d[] m_moduleDirections = new MechanismLigament2d[] {
+        m_moduleMechanisms[0]
+            .getRoot("RootDirection", 0.5, 0.5)
+            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[1]
+            .getRoot("RootDirection", 0.5, 0.5)
+            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[2]
+            .getRoot("RootDirection", 0.5, 0.5)
+            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+        m_moduleMechanisms[3]
+            .getRoot("RootDirection", 0.5, 0.5)
+            .append(new MechanismLigament2d("Direction", 0.1, 0, 0, new Color8Bit(Color.kWhite))),
+    };
+    private DoubleEntry odometryFrequency = driveTable.getDoubleTopic("Odometry Frequency").getEntry(0.0);
     private DoubleEntry robotSpeed = driveTable.getDoubleTopic("Robot Speed").getEntry(0.0);
-    private DoubleEntry robotVelocityX =
-        driveTable.getDoubleTopic("Robot Velocity X").getEntry(0.0);
-    private DoubleEntry robotVelocityY =
-        driveTable.getDoubleTopic("Robot Velocity Y").getEntry(0.0);
+    private DoubleEntry robotVelocityX = driveTable.getDoubleTopic("Robot Velocity X").getEntry(0.0);
+    private DoubleEntry robotVelocityY = driveTable.getDoubleTopic("Robot Velocity Y").getEntry(0.0);
 
     public DriveTelemetry(Drivetrain drivetrain) {
       PathPlannerLogging.setLogActivePathCallback(
