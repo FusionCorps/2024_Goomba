@@ -1,9 +1,9 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.IntakeConstants.INTAKE_MOTOR_ID;
-import static frc.robot.Constants.diagnosticsTab;
 
-import com.revrobotics.CANSparkFlex;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Intake extends SubsystemBase {
-  private CANSparkFlex intakeMotor;
+  private TalonFX intakeMotor;
 
   ShuffleboardTab tab = Shuffleboard.getTab("General");
 
@@ -22,12 +22,20 @@ public class Intake extends SubsystemBase {
       tab.add("Intake In", false).withWidget(BuiltInWidgets.kToggleButton).getEntry();
 
   public Intake() {
-    intakeMotor = new CANSparkFlex(INTAKE_MOTOR_ID, CANSparkFlex.MotorType.kBrushless);
+    intakeMotor = new TalonFX(INTAKE_MOTOR_ID);
+    intakeMotor
+        .getConfigurator()
+        .apply(
+            new CurrentLimitsConfigs()
+                .withStatorCurrentLimitEnable(true)
+                .withStatorCurrentLimit(60)
+                .withSupplyCurrentLimitEnable(true)
+                .withSupplyCurrentLimit(60)
+                .withSupplyCurrentThreshold(80)
+                .withSupplyTimeThreshold(0.5));
 
     isOuttaking.setBoolean(false);
     isIntaking.setBoolean(false);
-
-    diagnosticsTab.addDouble("Intake Output %", () -> intakeMotor.getAppliedOutput());
   }
 
   /**
