@@ -26,15 +26,34 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "3-P87Red-1"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3-P87Red-1"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "PivotAimLoadStage"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -59,7 +78,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivotFir"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -84,7 +109,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -109,7 +140,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     }
                   ]

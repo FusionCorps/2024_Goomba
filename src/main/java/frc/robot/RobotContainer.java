@@ -17,6 +17,7 @@ import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.driverTab;
+import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -37,6 +38,7 @@ import frc.robot.commands.TransferHooks.HoldHooks;
 import frc.robot.commands.TransferHooks.SetHooksPos;
 import frc.robot.commands.index.IndexDummy;
 import frc.robot.commands.index.Outtake;
+import frc.robot.commands.index.RunIndex;
 import frc.robot.commands.intake.RunIntake;
 import frc.robot.commands.pivot.AutoPivotAim;
 import frc.robot.commands.pivot.HoldPivotAngle;
@@ -215,11 +217,13 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "AimPivot", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
 
+    NamedCommands.registerCommand("Intake", new RunIntake(intake, INTAKE_RUN_PCT));
+
     NamedCommands.registerCommand(
         "AimSwerveAndPivotFirst",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.28),
+                .withTimeout(0.34),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
     NamedCommands.registerCommand(
         "AimSwerveAndPivot",
@@ -232,14 +236,14 @@ public class RobotContainer {
         "AimSwerveAndPivotLong",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.5),
+                .withTimeout(0.3),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
     NamedCommands.registerCommand(
         "AimSwerveAndPivotLongLast",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.8),
+                .withTimeout(0.35),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
     NamedCommands.registerCommand(
@@ -256,7 +260,8 @@ public class RobotContainer {
     NamedCommands.registerCommand(
         "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 
-    NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
+    // NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
+    NamedCommands.registerCommand("IntakeNote", new RunIndex(index, INDEX_RUN_PCT));
     NamedCommands.registerCommand(
         "StopIntake",
         new InstantCommand(
@@ -291,25 +296,6 @@ public class RobotContainer {
     autoChooser.addOption("4 Piece Load Side Far Red", AutoBuilder.buildAuto("Auto4-P876Red"));
     autoChooser.addOption("5 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto5-P1456Red"));
     autoChooser.addOption("6 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto6-P125643Red"));
-
-    // TODO: test using conditional commands
-    // autoChooser.addOption("3 Piece Load Side", new ConditionalCommand(
-    // AutoBuilder.buildAuto("Auto3-P87Red"),
-    // AutoBuilder.buildAuto("Auto3-P87Blue"),
-    // drivetrain::isAllianceRed));
-
-    // autoChooser.addOption("4 Piece Load Side", new ConditionalCommand(
-    // AutoBui~lder.buildAuto("Auto4-P873Red"),
-    // AutoBuilder.buildAuto("Auto4-P873Blue"),
-    // drivetrain::isAllianceRed));
-
-    // autoChooser.addOption("4 Piece Amp Side Mid", new ConditionalCommand(
-    // AutoBuilder.buildAuto("Auto4-P146Red"),
-    // AutoBuilder.buildAuto("Auto4-P146Red"),
-    // drivetrain::isAllianceRed));
-
-    // autoChooser.addOption("Testing-ForwardAuto",
-    // AutoBuilder.buildAuto("ForwardAuto"));
 
     driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
   }

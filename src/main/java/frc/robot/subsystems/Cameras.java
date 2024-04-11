@@ -80,13 +80,14 @@ public class Cameras extends SubsystemBase {
       if (pipelineNum == PIPELINE.APRILTAG_3D.value) {
         updatePrimaryAprilTagPose();
         // TODO: test this
-        // updateBotPoseBlue();
+        updateBotPoseBlue();
       }
     }
   }
 
-  // TODO: use megatag 2, empirically figure out std devs
+  // TODO: test
   private void updateBotPoseBlue() {
+    
     double[] data = limelightTable.getEntry("botpose_orb_wpiblue").getDoubleArray(new double[11]);
     if (data.length < 11) {
       System.err.println("couldn't get latest botpose results");

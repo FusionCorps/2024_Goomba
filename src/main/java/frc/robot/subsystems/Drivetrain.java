@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.DrivetrainConstants.MaxSpeed;
+import static frc.robot.Constants.LimelightConstants.LIMELIGHT_NAME;
 import static frc.robot.Constants.LimelightConstants.MAX_TAG_DIST_ODO;
 import static frc.robot.Constants.LimelightConstants.MULTI_TAG_XY_STD_DEV;
 import static frc.robot.Constants.LimelightConstants.SINGLE_TAG_DIST_ODO;
@@ -50,6 +51,7 @@ import frc.robot.commands.swerve.manual.RunSwerveFC;
 import frc.robot.commands.swerve.manual.RunSwerveRC;
 import frc.robot.commands.swerve.vision.RotateToAngle;
 import frc.robot.subsystems.Cameras.BotPose;
+import frc.robot.util.LimelightHelpers;
 import frc.robot.util.UtilFunctions;
 
 /**
@@ -108,6 +110,8 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
   @Override
   public void periodic() {
+    // LimelightHelpers.SetRobotOrientation(LIMELIGHT_NAME, getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+
     // If the robot is disabled or the operator perspective has not been applied
     // yet, apply correct
     // heading for field-centric driving

@@ -8,36 +8,36 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.284011644946369,
-        "y": 4.045446552431566
+        "x": 4.341020647853261,
+        "y": 3.88245927489006
       },
       "isLocked": false,
       "linkedName": "LoadSide Far Shoot Blue"
     },
     {
       "anchor": {
-        "x": 8.023582970242865,
-        "y": 4.25265235145855
+        "x": 7.8726552894701225,
+        "y": 4.0695657459691
       },
       "prevControl": {
-        "x": 7.835793745636543,
-        "y": 4.011209062678993
+        "x": 7.684866064863801,
+        "y": 3.8281224571895427
       },
       "nextControl": {
-        "x": 8.299857368945508,
-        "y": 4.6078622926476624
+        "x": 8.148929688172764,
+        "y": 4.4247756871582125
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 4.107137559004462,
-        "y": 4.9700156380369735
+        "x": 3.4171824469005063,
+        "y": 5.098651336903814
       },
       "prevControl": {
-        "x": 4.656762817799139,
-        "y": 4.186507290393498
+        "x": 3.6706483834498314,
+        "y": 4.272282941030683
       },
       "nextControl": null,
       "isLocked": false,
@@ -55,7 +55,7 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.22,
-    "maxAcceleration": 4.3,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },
@@ -67,7 +67,7 @@
   "reversed": false,
   "folder": "4-P876Red",
   "previewStartingState": {
-    "rotation": -30.0,
+    "rotation": -36.30000000000001,
     "velocity": 0
   },
   "useDefaultConstraints": true

@@ -20,12 +20,12 @@
         "y": 0.78
       },
       "prevControl": {
-        "x": 8.122252398350952,
-        "y": 1.460307535999688
+        "x": 8.29222532735609,
+        "y": 1.4534675975382942
       },
       "nextControl": {
-        "x": 8.219307977892461,
-        "y": 0.31692425621989484
+        "x": 8.08315006943404,
+        "y": 0.19880062552147948
       },
       "isLocked": false,
       "linkedName": null
@@ -44,12 +44,18 @@
       "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 6.22,
-    "maxAcceleration": 4.3,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0
   },

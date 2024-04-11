@@ -22,6 +22,12 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -116,6 +122,12 @@
                       "type": "named",
                       "data": {
                         "name": "ShootAuto"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3-P87Red-4"
                       }
                     }
                   ]

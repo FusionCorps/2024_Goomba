@@ -47,7 +47,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
+                        "name": "AimSwerveAndPivotFirst"
                       }
                     },
                     {
@@ -116,6 +116,12 @@
                       "type": "named",
                       "data": {
                         "name": "ShootAuto"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "3-P87Blue-4"
                       }
                     }
                   ]

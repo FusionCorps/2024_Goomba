@@ -22,11 +22,11 @@ public class RunIndex extends Command {
 
     mIndex.runIndex(pct);
 
-    if (!DriverStation.isAutonomous()) {
+    
       if (mIndex.beamBroken()) {
         RobotContainer.robotController.getHID().setRumble(GenericHID.RumbleType.kBothRumble, 0.1);
       }
-    }
+    
   }
 
   @Override
