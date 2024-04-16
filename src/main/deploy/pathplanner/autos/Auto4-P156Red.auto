@@ -22,13 +22,25 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "PivotAimAmpStart"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
@@ -38,7 +50,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1564Blue-1"
+                              "pathName": "5-P1564Red-1"
                             }
                           },
                           {
@@ -53,7 +65,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "FastAimSwerveAndPivot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -63,7 +81,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1564Blue-2"
+                              "pathName": "5-P1564Red-2"
                             }
                           },
                           {
@@ -78,7 +96,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -88,7 +112,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1564Blue-3"
+                              "pathName": "5-P1564Red-3"
                             }
                           },
                           {
@@ -103,7 +127,13 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimAndShoot"
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     },
                     {
@@ -113,7 +143,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "5-P1564Blue-4"
+                              "pathName": "5-P1564Red-4"
                             }
                           },
                           {
@@ -123,6 +153,18 @@
                             }
                           }
                         ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     }
                   ]

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.6456497528379685,
-        "y": 6.186573142377054
+        "x": 5.34,
+        "y": 6.642279723305886
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.287001035540534,
-        "y": 6.44311365545808
+        "x": 5.981351282702565,
+        "y": 6.8988202363869116
       },
       "isLocked": false,
       "linkedName": "AmpSide Far Shoot Blue"
