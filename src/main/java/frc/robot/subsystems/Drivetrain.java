@@ -30,6 +30,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructArrayPublisher;
 import edu.wpi.first.networktables.StructPublisher;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -69,9 +70,9 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
   private double m_lastSimTime;
 
   /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
-  private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
+  private final Rotation2d BlueAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
   /* Red alliance sees forward as 180 degrees (toward blue alliance wall) */
-  private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(0);
+  private final Rotation2d RedAlliancePerspectiveRotation = Rotation2d.fromDegrees(180);
   /* Keep track if we've ever applied the operator perspective before or not */
   private boolean hasAppliedOperatorPerspective = false;
 
@@ -115,13 +116,13 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     // If the robot is disabled or the operator perspective has not been applied
     // yet, apply correct
     // heading for field-centric driving
-    // if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-    // this.setOperatorPerspectiveForward(
-    // UtilFunctions.getAllianceColor() == Alliance.Red
-    // ? RedAlliancePerspectiveRotation
-    // : BlueAlliancePerspectiveRotation);
-    // hasAppliedOperatorPerspective = true;
-    // }
+    if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+    this.setOperatorPerspectiveForward(
+    UtilFunctions.getAllianceColor() == Alliance.Red
+    ? RedAlliancePerspectiveRotation
+    : BlueAlliancePerspectiveRotation);
+    hasAppliedOperatorPerspective = true;
+    }
 
     // TODO: updates the odometry from aprilTag data
     // updateOdometryFromAprilTags();

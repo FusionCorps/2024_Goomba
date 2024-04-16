@@ -22,6 +22,12 @@
                 }
               },
               {
+                "type": "named",
+                "data": {
+                  "name": "Intake"
+                }
+              },
+              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -78,7 +84,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLong"
+                        "name": "AimSwerveAndPivotFirst"
                       }
                     },
                     {
@@ -109,7 +115,7 @@
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotLongLast"
+                        "name": "AimSwerveAndPivotFirst"
                       }
                     },
                     {
@@ -119,9 +125,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "3-P87Blue-4"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3-P87Blue-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

@@ -16,11 +16,11 @@
     },
     {
       "anchor": {
-        "x": 7.860961135027683,
+        "x": 7.8,
         "y": 4.034483282641779
       },
       "prevControl": {
-        "x": 7.9209611350276825,
+        "x": 7.859999999999999,
         "y": 4.034483282641779
       },
       "nextControl": null,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "3-P87Blue",
   "previewStartingState": {
-    "rotation": -40.06711566881184,
+    "rotation": -30.0,
     "velocity": 0
   },
   "useDefaultConstraints": true

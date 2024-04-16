@@ -22,12 +22,6 @@
                 }
               },
               {
-                "type": "named",
-                "data": {
-                  "name": "Intake"
-                }
-              },
-              {
                 "type": "sequential",
                 "data": {
                   "commands": [
@@ -38,7 +32,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-1"
+                              "pathName": "3-P87Blue-1"
                             }
                           },
                           {
@@ -69,7 +63,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-2"
+                              "pathName": "3-P87Blue-2"
                             }
                           },
                           {
@@ -100,7 +94,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-3"
+                              "pathName": "3-P87Blue-3"
                             }
                           },
                           {
@@ -125,9 +119,34 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "3-P87Red-4"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P876Blue-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     }
                   ]
@@ -139,6 +158,6 @@
       ]
     }
   },
-  "folder": "3 Piece",
+  "folder": "4 Piece",
   "choreoAuto": false
 }

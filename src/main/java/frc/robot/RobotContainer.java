@@ -140,10 +140,10 @@ public class RobotContainer {
 
     // Move pivot up/down
     robotController.povUp().whileTrue(new SetPivotPct(pivot, index, -.4));
-    robotController.povUp().onFalse(new HoldPivotAngle(pivot));
+    // robotController.povUp().onFalse(new HoldPivotAngle(pivot));
 
     robotController.povDown().whileTrue(new SetPivotPct(pivot, index, .35));
-    robotController.povDown().onFalse(new HoldPivotAngle(pivot));
+    // robotController.povDown().onFalse(new HoldPivotAngle(pivot));
 
     // Sets pivot to angle for Amp scoring
     robotController.leftBumper().onTrue(new SetAngleAmp(pivot));
@@ -219,11 +219,16 @@ public class RobotContainer {
 
     NamedCommands.registerCommand("Intake", new RunIntake(intake, INTAKE_RUN_PCT));
 
+    NamedCommands.registerCommand("FastAimSwerveAndPivot", new ParallelDeadlineGroup(
+        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+            .withTimeout(0.13),
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
+
     NamedCommands.registerCommand(
         "AimSwerveAndPivotFirst",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.34),
+                .withTimeout(0.35),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
     NamedCommands.registerCommand(
         "AimSwerveAndPivot",
@@ -243,7 +248,7 @@ public class RobotContainer {
         "AimSwerveAndPivotLongLast",
         new ParallelDeadlineGroup(
             new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                .withTimeout(0.35),
+                .withTimeout(0.3),
             new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
     NamedCommands.registerCommand(
@@ -261,7 +266,7 @@ public class RobotContainer {
         "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 
     // NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index, pivot));
-    NamedCommands.registerCommand("IntakeNote", new RunIndex(index, INDEX_RUN_PCT));
+    NamedCommands.registerCommand("IntakeNote", new SetPivotPos(pivot, PIVOT_STOW_POS).alongWith(new RunIndex(index, INDEX_RUN_PCT)));
     NamedCommands.registerCommand(
         "StopIntake",
         new InstantCommand(

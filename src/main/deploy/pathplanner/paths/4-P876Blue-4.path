@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.284011644946369,
-        "y": 4.045446552431566
+        "x": 4.247467412313741,
+        "y": 4.02278912819934
       },
       "isLocked": false,
       "linkedName": "LoadSide Far Shoot Blue"
@@ -36,8 +36,8 @@
         "y": 4.97
       },
       "prevControl": {
-        "x": 4.49304465560498,
-        "y": 4.2332839081632585
+        "x": 4.399491420065461,
+        "y": 3.332834016095383
       },
       "nextControl": null,
       "isLocked": false,
