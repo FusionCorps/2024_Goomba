@@ -2,17 +2,17 @@
   "version": 1.0,
   "startingPose": {
     "position": {
-      "x": 1.41,
-      "y": 1.98
+      "x": 0.69,
+      "y": 4.44
     },
-    "rotation": 0
+    "rotation": -60.0
   },
   "command": {
     "type": "sequential",
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -32,44 +32,25 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "deadline",
+                      "type": "named",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "3-P87Red-1"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "PivotAimLoadStage"
-                            }
-                          }
-                        ]
+                        "name": "PivotAimLoadStart"
                       }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "AimSwerveAndPivotFirst"
+                        "name": "ShootSpeaker"
                       }
                     },
                     {
-                      "type": "named",
-                      "data": {
-                        "name": "ShootAuto"
-                      }
-                    },
-                    {
-                      "type": "deadline",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-2"
+                              "pathName": "4-P321Red-1"
                             }
                           },
                           {
@@ -94,13 +75,13 @@
                       }
                     },
                     {
-                      "type": "deadline",
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-3"
+                              "pathName": "4-P321Red-2"
                             }
                           },
                           {
@@ -125,9 +106,34 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "3-P87Red-Position"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "4-P321Red-3"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "AimSwerveAndPivotFirst"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "ShootAuto"
                       }
                     }
                   ]
@@ -139,6 +145,6 @@
       ]
     }
   },
-  "folder": "3 Piece",
+  "folder": "4 Piece",
   "choreoAuto": false
 }

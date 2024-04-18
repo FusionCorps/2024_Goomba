@@ -125,9 +125,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "3-P87Red-Position"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3-P87Red-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

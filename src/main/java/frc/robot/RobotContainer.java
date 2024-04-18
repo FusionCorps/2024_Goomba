@@ -140,10 +140,10 @@ public class RobotContainer {
 
         // Move pivot up/down
         robotController.povUp().whileTrue(new SetPivotPct(pivot, index, -.4));
-        // robotController.povUp().onFalse(new HoldPivotAngle(pivot));
+        robotController.povUp().onFalse(new HoldPivotAngle(pivot));
 
         robotController.povDown().whileTrue(new SetPivotPct(pivot, index, .35));
-        // robotController.povDown().onFalse(new HoldPivotAngle(pivot));
+        robotController.povDown().onFalse(new HoldPivotAngle(pivot));
 
         // Sets pivot to angle for Amp scoring
         robotController.leftBumper().onTrue(new SetAngleAmp(pivot));
@@ -284,27 +284,31 @@ public class RobotContainer {
         autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
         autoChooser.addOption("3 Piece Load Side Blue", AutoBuilder.buildAuto("Auto3-P87Blue"));
+        autoChooser.addOption("3 Piece Load Side Blue and Intake", AutoBuilder.buildAuto("Auto3.5-P87Blue"));
         // autoChooser.addOption("4 Piece Load Side Far Blue",
         // AutoBuilder.buildAuto("Auto4-P873Blue"));
         // autoChooser.addOption("4 Piece Amp Side Far Blue",
         // AutoBuilder.buildAuto("Auto4-P146Blue"));
-        // autoChooser.addOption("4 Piece Load Side Close Blue",
-        // AutoBuilder.buildAuto("Auto4-P321Blue"));
-        autoChooser.addOption("4 Piece Load Side Far Blue", AutoBuilder.buildAuto("Auto4-P876Blue"));
-        autoChooser.addOption("5 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto5-P1456Blue"));
-        autoChooser.addOption("6 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto6-P125643Blue"));
+        autoChooser.addOption("4 Piece Load Side Close Blue",
+        AutoBuilder.buildAuto("Auto4-P321Blue"));
+        // autoChooser.addOption("4 Piece Load Side Far Blue", AutoBuilder.buildAuto("Auto4-P876Blue"));
+        autoChooser.addOption("5 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto5-P1564Blue"));
+        autoChooser.addOption("2 Piece Amp Side", AutoBuilder.buildAuto("Auto2-P1Blue"));
+
+        // autoChooser.addOption("6 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto6-P125643Blue"));
 
         autoChooser.addOption("3 Piece Load Side Red", AutoBuilder.buildAuto("Auto3-P87Red"));
+        autoChooser.addOption("3 Piece Load Side and Intake Red", AutoBuilder.buildAuto("Auto3.5-P87Red"));
         // autoChooser.addOption("4 Piece Load Side Far Red",
         // AutoBuilder.buildAuto("Auto4-P873Red"));
         // autoChooser.addOption("4 Piece Amp Side Far Red",
         // AutoBuilder.buildAuto("Auto4-P146Red"));
         autoChooser.addOption("4 Piece Load Side Close Red",
-                AutoBuilder.buildAuto("Auto4-P321Blue"));
-        autoChooser.addOption("5 Piece Amp Side Skip Far Red", AutoBuilder.buildAuto("Auto4-P156Blue"));
-        autoChooser.addOption("4 Piece Load Side Far Red", AutoBuilder.buildAuto("Auto4-P876Red"));
-        autoChooser.addOption("5 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto5-P1456Red"));
-        autoChooser.addOption("6 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto6-P125643Red"));
+                AutoBuilder.buildAuto("Auto4-P321Red"));
+        autoChooser.addOption("5 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto5-P1564Red"));
+        // autoChooser.addOption("4 Piece Load Side Far Red", AutoBuilder.buildAuto("Auto4-P876Red"));
+        // autoChooser.addOption("5 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto5-P1456Red"));
+        // autoChooser.addOption("6 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto6-P125643Red"));
 
         driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
     }

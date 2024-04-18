@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 5.0
+        "x": 0.7,
+        "y": 6.7
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0,
-        "y": 4.9399999999999995
+        "x": 1.3512182255133738,
+        "y": 6.423725601297357
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpSideBlueStart"
     },
     {
       "anchor": {
-        "x": 2.0,
-        "y": 3.0
+        "x": 2.855863033663389,
+        "y": 6.876162812154685
       },
       "prevControl": {
-        "x": 2.0,
-        "y": 2.9400000000000004
+        "x": 2.9420952292047047,
+        "y": 6.923821122855922
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,18 +32,21 @@
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.5,
-    "maxAcceleration": 0.5,
-    "maxAngularVelocity": 180.0,
-    "maxAngularAcceleration": 180.0
+    "maxVelocity": 6.22,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0,
+    "rotation": 29.931511840507714,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "Old",
-  "previewStartingState": null,
+  "folder": "5-P1564Blue",
+  "previewStartingState": {
+    "rotation": 60.0,
+    "velocity": 0
+  },
   "useDefaultConstraints": false
 }

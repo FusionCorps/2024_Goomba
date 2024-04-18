@@ -69,7 +69,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": null
+                              "pathName": "3-P87Blue-2"
                             }
                           },
                           {
@@ -125,22 +125,9 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "3-P87Blue-4"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeNote"
-                            }
-                          }
-                        ]
+                        "pathName": "3-P87Blue-Positon"
                       }
                     }
                   ]

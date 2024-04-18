@@ -218,7 +218,7 @@ public class Constants {
   public static class IntakeConstants {
     public static final int INTAKE_MOTOR_ID = 6;
 
-    public static final double INTAKE_RUN_PCT = 0.9;
+    public static final double INTAKE_RUN_PCT = 0.8;
 
     public static boolean IS_INTAKING = true;
   }

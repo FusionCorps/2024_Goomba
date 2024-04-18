@@ -116,13 +116,13 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     // If the robot is disabled or the operator perspective has not been applied
     // yet, apply correct
     // heading for field-centric driving
-    if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-    this.setOperatorPerspectiveForward(
-    UtilFunctions.getAllianceColor() == Alliance.Red
-    ? RedAlliancePerspectiveRotation
-    : BlueAlliancePerspectiveRotation);
-    hasAppliedOperatorPerspective = true;
-    }
+    // if (!hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+    // this.setOperatorPerspectiveForward(
+    // UtilFunctions.getAllianceColor() == Alliance.Red
+    // ? RedAlliancePerspectiveRotation
+    // : BlueAlliancePerspectiveRotation);
+    // hasAppliedOperatorPerspective = true;
+    // }
 
     // TODO: updates the odometry from aprilTag data
     // updateOdometryFromAprilTags();

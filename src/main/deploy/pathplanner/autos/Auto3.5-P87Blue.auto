@@ -38,7 +38,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-1"
+                              "pathName": "3-P87Blue-1"
                             }
                           },
                           {
@@ -69,7 +69,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-2"
+                              "pathName": "3-P87Blue-2"
                             }
                           },
                           {
@@ -100,7 +100,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-3"
+                              "pathName": "3-P87Blue-3"
                             }
                           },
                           {
@@ -125,9 +125,22 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "race",
                       "data": {
-                        "pathName": "3-P87Red-Position"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3-P87Blue-4"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "IntakeNote"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

@@ -3,51 +3,51 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.310957783388655,
-        "y": 2.8779049059514548
+        "x": 5.48,
+        "y": 6.53
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.803089543501024,
-        "y": -0.14032985330927936
+        "x": 6.962922212342102,
+        "y": 6.4920648970012715
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.02467929722184,
-        "y": 2.6779613673187472
+        "x": 7.6153838917364425,
+        "y": 4.385307915914978
       },
       "prevControl": {
-        "x": 7.718990006211765,
-        "y": 2.6672977873997916
+        "x": 7.584378774386417,
+        "y": 5.512932545500984
       },
       "nextControl": {
-        "x": 8.873236378951386,
-        "y": 2.707562195751172
+        "x": 7.631158682059204,
+        "y": 3.8115948125686567
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.310957783388655,
-        "y": 2.8779049059514548
+        "x": 5.34,
+        "y": 6.642279723305886
       },
       "prevControl": {
-        "x": 4.153914176774222,
-        "y": -0.28065970661855755
+        "x": 6.9223423351005575,
+        "y": 7.072329229295383
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "AmpSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": 8.325650330426635,
+      "rotationDegrees": -44.660910952496636,
       "rotateFast": false
     }
   ],
@@ -61,13 +61,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.52999999999997,
+    "rotation": 8.0,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "3-P87Red",
+  "folder": "5-P1564Blue",
   "previewStartingState": {
-    "rotation": -41.52999999999997,
+    "rotation": 12.154941697222297,
     "velocity": 0
   },
   "useDefaultConstraints": true

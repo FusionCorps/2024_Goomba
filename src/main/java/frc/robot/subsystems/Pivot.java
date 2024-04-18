@@ -29,14 +29,15 @@ public class Pivot extends SubsystemBase {
   MotionMagicVoltage positionReq = new MotionMagicVoltage(0);
 
   public Pivot() {
-    PIVOT_ANGLES_MAP.put(1.08, PIVOT_SUB_POS);
+    PIVOT_ANGLES_MAP.put(1.1, PIVOT_SUB_POS);
     PIVOT_ANGLES_MAP.put(1.43, 21.68115234375);
-    PIVOT_ANGLES_MAP.put(1.84, 17.3193359375);
-    PIVOT_ANGLES_MAP.put(2.39, 13.03662109375);
-    PIVOT_ANGLES_MAP.put(2.82, 11.22265625);
-    PIVOT_ANGLES_MAP.put(3.30, 9.7099609375);
-    PIVOT_ANGLES_MAP.put(3.46, 9.29541015625);
-    PIVOT_ANGLES_MAP.put(4.00, 8.2);
+    PIVOT_ANGLES_MAP.put(1.84, 16.1193359375);
+    PIVOT_ANGLES_MAP.put(2.39, 12.23662109375);
+    PIVOT_ANGLES_MAP.put(2.6, 11.4);
+    PIVOT_ANGLES_MAP.put(2.82, 10.32265625);
+    PIVOT_ANGLES_MAP.put(3.30, 8.5099609375);
+    PIVOT_ANGLES_MAP.put(3.46, 8.09541015625);
+    PIVOT_ANGLES_MAP.put(4.00, 7.0);
 
     pivotMotor = new TalonFX(PivotConstants.PIVOT_MOTOR_ID);
     pivotFollowerMotor = new TalonFX(PivotConstants.PIVOT_FOLLOWER_MOTOR_ID);
