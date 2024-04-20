@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 4.11,
-        "y": 4.97
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": {
-        "x": 4.399491420065461,
-        "y": 3.332834016095383
+        "x": 2.4348734737355513,
+        "y": 3.2509749349983035
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -6.430000000000007,
+    "rotation": -40.0,
     "rotateFast": false
   },
   "reversed": false,
