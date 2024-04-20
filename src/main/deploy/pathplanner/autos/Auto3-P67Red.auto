@@ -69,7 +69,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3-P87Red-3"
+                              "pathName": "4-P876Red-4"
                             }
                           },
                           {
@@ -100,7 +100,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "4-P876Red-4"
+                              "pathName": "3-P87Red-3"
                             }
                           },
                           {
@@ -133,12 +133,6 @@
                             "data": {
                               "pathName": "3-P87Red-Position2"
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "IntakeNote"
-                            }
                           }
                         ]
                       }
@@ -152,6 +146,6 @@
       ]
     }
   },
-  "folder": "4 Piece",
+  "folder": null,
   "choreoAuto": false
 }

@@ -8,49 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.57490373670206,
-        "y": -0.3625187877156368
+        "x": 2.446567628177991,
+        "y": 2.8884561472826653
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     },
     {
       "anchor": {
-        "x": 8.06,
-        "y": 2.6311847495489866
+        "x": 1.4642586550130365,
+        "y": 3.671964494926142
       },
       "prevControl": {
-        "x": 7.754310708989925,
-        "y": 2.620521169630031
-      },
-      "nextControl": {
-        "x": 8.908557081729546,
-        "y": 2.6607855779814114
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.310957783388655,
-        "y": 2.8779049059514548
-      },
-      "prevControl": {
-        "x": 4.153914176774222,
-        "y": -0.28065970661855755
+        "x": 1.5242586550130361,
+        "y": 3.671964494926142
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": 8.325650330426635,
-      "rotateFast": false
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -61,7 +39,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.52999999999997,
+    "rotation": 0.0,
     "rotateFast": false
   },
   "reversed": false,

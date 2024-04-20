@@ -297,6 +297,8 @@ public class RobotContainer {
                 autoChooser = new SendableChooser<>();
                 autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
+                autoChooser.addOption("3 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto3-P67Red"));
+
                 autoChooser.addOption("4 Piece Load SIde Far Blue", AutoBuilder.buildAuto("Auto4-P768Blue"));
                 autoChooser.addOption("4 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto4-P768Red"));
                 // autoChooser.addOption("3 Piece Load Side Blue",
@@ -317,7 +319,8 @@ public class RobotContainer {
                 // autoChooser.addOption("6 Piece Amp Side Far Blue",
                 // AutoBuilder.buildAuto("Auto6-P125643Blue"));
 
-                autoChooser.addOption("3 Piece Load Side Red", AutoBuilder.buildAuto("Auto3-P87Red"));
+                // autoChooser.addOption("3 Piece Load Side Red",
+                // AutoBuilder.buildAuto("Auto3-P87Red"));
                 autoChooser.addOption("3 Piece Load Side and Intake Red", AutoBuilder.buildAuto("Auto3.5-P87Red"));
                 // autoChooser.addOption("4 Piece Load Side Far Red",
                 // AutoBuilder.buildAuto("Auto4-P873Red"));
