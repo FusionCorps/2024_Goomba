@@ -16,38 +16,38 @@
     },
     {
       "anchor": {
-        "x": 7.8726552894701225,
-        "y": 4.0695657459691
+        "x": 8.09,
+        "y": 4.092954054853979
       },
       "prevControl": {
-        "x": 7.684866064863801,
-        "y": 3.8281224571895427
+        "x": 7.902210775393678,
+        "y": 3.851510766074422
       },
       "nextControl": {
-        "x": 8.148929688172764,
-        "y": 4.4247756871582125
+        "x": 8.36627439870264,
+        "y": 4.448163996043092
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.4171824469005063,
-        "y": 5.098651336903814
+        "x": 3.310957783388655,
+        "y": 2.8779049059514548
       },
       "prevControl": {
-        "x": 3.6706483834498314,
-        "y": 4.272282941030683
+        "x": 3.3119350569185464,
+        "y": 3.707046958253461
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LoadSide Far Shoot Blue"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1,
-      "rotationDegrees": -14.931417178137526,
+      "rotationDegrees": 0.0,
       "rotateFast": false
     }
   ],
@@ -61,7 +61,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -6.34019174590983,
+    "rotation": -37.0,
     "rotateFast": false
   },
   "reversed": false,

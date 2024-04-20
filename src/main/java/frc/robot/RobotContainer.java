@@ -298,6 +298,7 @@ public class RobotContainer {
                 autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
                 autoChooser.addOption("4 Piece Load SIde Far Blue", AutoBuilder.buildAuto("Auto4-P768Blue"));
+                autoChooser.addOption("4 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto4-P768Red"));
                 // autoChooser.addOption("3 Piece Load Side Blue",
                 // AutoBuilder.buildAuto("Auto3-P78Blue"));
                 // autoChooser.addOption("3 Piece Load Side Blue and Intake",
