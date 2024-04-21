@@ -3,6 +3,7 @@ package frc.robot.commands.TransferHooks;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TransferHooks;
 
+// sets the transfer hooks to a specific position
 public class SetHooksPos extends Command {
 
   TransferHooks mTransferHooks;

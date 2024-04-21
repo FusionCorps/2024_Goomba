@@ -3,6 +3,7 @@ package frc.robot.commands.TransferHooks;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TransferHooks;
 
+// holds transfer hooks at their current position
 public class HoldHooks extends Command {
 
   TransferHooks mTransferHooks;
@@ -15,7 +16,6 @@ public class HoldHooks extends Command {
 
   @Override
   public void execute() {
-    System.out.println("I'm here");
     mTransferHooks.holdAtTargetPos();
   }
 

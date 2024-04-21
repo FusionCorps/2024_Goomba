@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.PivotConstants;
 
+// Pivot arm used to aim at targets (speaker, amp, trap)
 public class Pivot extends SubsystemBase {
   private TalonFX pivotMotor, pivotFollowerMotor;
   private TalonFXConfiguration pivotConfigs = new TalonFXConfiguration();
@@ -95,17 +96,13 @@ public class Pivot extends SubsystemBase {
     pivotFollowerMotor.set(pct);
 
     targetPos = pivotMotor.getPosition().getValueAsDouble();
-
   }
 
-  /**
-   * Sets targetpos to current pivot angle
-   */
-
-   public void setTargetPos(){
+  /** Sets targetpos to current pivot angle */
+  public void setTargetPos() {
 
     targetPos = pivotMotor.getPosition().getValueAsDouble();
-   }
+  }
 
   /** Zeroes the pivot angle at the current angle. */
   public void resetPivotAngle() {

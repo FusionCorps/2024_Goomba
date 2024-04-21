@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.subsystems.Drivetrain;
 
-// drive forward to note
+// A command for driving to a note until it's not in vision of the camera.
+// UNUSED +
 public class DriveToNote extends Command {
   private Drivetrain mDrivetrain;
   private double tolerance = -18.3; // in degrees

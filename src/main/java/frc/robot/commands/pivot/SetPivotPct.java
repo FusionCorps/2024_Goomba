@@ -1,11 +1,10 @@
 package frc.robot.commands.pivot;
 
-import static frc.robot.Constants.IndexConstants.IS_TRAPPING;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
 
+// runs pivot motors at a certain percentage
 public class SetPivotPct extends Command {
   private Pivot mPivot;
   private Index mIndex;

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+// loads/shoots out notes
 public class Index extends SubsystemBase {
   CANSparkFlex indexMotor;
   public static DigitalInput beamBreak;

@@ -12,6 +12,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
 /** Runs the swerve drive in field centric mode, locks the robot's heading and moves more slowly */
+// UNUSED, UNTESTED
 public class RunSwerveFCWithAim extends Command {
   private Drivetrain mDrivetrain;
   private CommandXboxController controller = RobotContainer.robotController;

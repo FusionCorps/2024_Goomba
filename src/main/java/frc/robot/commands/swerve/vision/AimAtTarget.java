@@ -5,8 +5,6 @@ import static frc.robot.Constants.LimelightConstants.LIMELIGHT_TX_RANGE_DEG;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
-
-import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,8 +16,8 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 import java.util.function.BooleanSupplier;
 
-
-// aims at a target in place
+// rotationally aims at an apriltag or other target
+// only affects rotational rate
 public class AimAtTarget extends Command {
   CommandXboxController mController = RobotContainer.robotController;
   private Drivetrain mDrivetrain;
@@ -51,11 +49,11 @@ public class AimAtTarget extends Command {
               .withVelocityY(-mController.getLeftX())
               .withDeadband(DrivetrainConstants.DriveDeadband)
               .withRotationalRate(
-                  // MathUtil.clamp(pid.calculate(mDrivetrain.getCamera().getTX()), -0.75, 0.75) // AO cook -
+                  // MathUtil.clamp(pid.calculate(mDrivetrain.getCamera().getTX()), -0.75, 0.75) //
+                  // AO cook -
                   // taking out to make deg prim
                   pid.calculate(mDrivetrain.getCamera().getTX() / LIMELIGHT_TX_RANGE_DEG)
                       * MaxAngularRate);
-              
 
       mDrivetrain.setControl(req);
     }

@@ -6,6 +6,7 @@ import static frc.robot.Constants.PivotConstants.PIVOT_SHUTTLING_POS;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
+// sets pivot angle to shuttle position
 public class SetAngleShuttle extends Command {
   Pivot mPivot;
 

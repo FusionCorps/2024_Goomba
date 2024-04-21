@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.85,
-        "y": 5.62
+        "x": 5.83,
+        "y": 6.16
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.133749250119582,
-        "y": 7.348846526524962
+        "x": 6.8249561550193,
+        "y": 6.395297551993107
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.14,
-        "y": 5.87
+        "x": 7.802490362815484,
+        "y": 4.32
       },
       "prevControl": {
-        "x": 8.032797608833969,
-        "y": 6.073684543215462
+        "x": 7.930847282231745,
+        "y": 4.626940459473668
       },
       "nextControl": {
-        "x": 8.37421673091563,
-        "y": 5.424988211260302
+        "x": 7.533141122262511,
+        "y": 3.6759039899820176
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.8261782620431335,
-        "y": 6.162819391165848
+        "x": 2.1103565174320065,
+        "y": 5.1293464070523
       },
       "prevControl": {
-        "x": 5.766178262043133,
-        "y": 6.162819391165848
+        "x": 2.050356517432006,
+        "y": 5.1293464070523
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 0.0,
+      "waypointRelativePos": 1,
+      "rotationDegrees": -36.3268259521202,
       "rotateFast": false
     }
   ],
@@ -61,11 +61,11 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 6.519801751657049,
+    "rotation": -8.615648184164108,
     "rotateFast": false
   },
   "reversed": false,
-  "folder": "6-P125643Blue",
+  "folder": "6-P12563Blue",
   "previewStartingState": {
     "rotation": 0.0,
     "velocity": 0

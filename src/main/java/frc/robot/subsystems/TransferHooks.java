@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.TransferHookConstants;
 import frc.robot.commands.TransferHooks.SetHooksPos;
 
+// transfer hooks used in climb routine to hook onto chain
 public class TransferHooks extends SubsystemBase {
 
   private TalonFX transferHookMotor;

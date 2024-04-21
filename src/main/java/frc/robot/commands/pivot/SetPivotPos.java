@@ -3,8 +3,8 @@ package frc.robot.commands.pivot;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
+// sets pivot to a desired angle
 public class SetPivotPos extends Command {
-
   Pivot mPivot;
   double angle;
 

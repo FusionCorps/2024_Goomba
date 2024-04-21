@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import static frc.robot.Constants.IntakeConstants.INTAKE_RUN_PCT;
 import static frc.robot.Constants.LimelightConstants.BLUE_SPK_TAG_ID;
 import static frc.robot.Constants.LimelightConstants.RED_SPK_TAG_ID;
@@ -17,7 +18,6 @@ import static frc.robot.Constants.ShooterConstants.SPK_LEFT_RPM;
 import static frc.robot.Constants.ShooterConstants.SPK_RIGHT_RPM;
 import static frc.robot.Constants.allianceColor;
 import static frc.robot.Constants.driverTab;
-import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -61,309 +61,284 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.TransferHooks;
 
 public class RobotContainer {
-        public static CommandXboxController robotController = new CommandXboxController(0);
-        Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
+  public static CommandXboxController robotController = new CommandXboxController(0);
+  Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
 
-        Intake intake = new Intake();
-        Shooter shooter = new Shooter();
-        Index index = new Index();
-        TransferHooks transferHooks = new TransferHooks();
-        Pivot pivot = new Pivot();
+  Intake intake = new Intake();
+  Shooter shooter = new Shooter();
+  Index index = new Index();
+  TransferHooks transferHooks = new TransferHooks();
+  Pivot pivot = new Pivot();
 
-        private SendableChooser<Command> autoChooser = new SendableChooser<>();
-        private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
+  private SendableChooser<Command> autoChooser = new SendableChooser<>();
+  private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
-        /**
-         * Configures the bindings for the robot's subsystems and commands.
-         *
-         * <ul>
-         * <li>Left/Right sticks - field-centric swerve drive
-         * <li>B: reset gyro
-         * <li>RB: aim drivetrain + pivot at speaker
-         * <li>RT: intake note + stow pivot
-         * <li>LT: rev shooter on hold + shoot note on release
-         * <li>Y - manually stop revving shooter
-         * <li>A: stow pivot
-         * <li>POV up/down - manually move pivot
-         * <li>LB: aim pivot at amp
-         * <li>X: aim pivot for shuttling
-         * <li>POV left - outtake thru intake
-         * <li>POV right - outtake thru shooter
-         * <li>Start - Aims pivot for climbing
-         * <li>Back - Runs climb routine
-         * </ul>
-         */
-        private void configureBindings() {
-                // Run field-centric swerve drive
-                drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
+  /**
+   * Configures the bindings for the robot's subsystems and commands.
+   *
+   * <ul>
+   *   <li>Left/Right sticks - field-centric swerve drive
+   *   <li>B: reset gyro
+   *   <li>RB: aim drivetrain + pivot at speaker
+   *   <li>RT: intake note + stow pivot
+   *   <li>LT: rev shooter on hold + shoot note on release
+   *   <li>Y - manually stop revving shooter
+   *   <li>A: stow pivot
+   *   <li>POV up/down - manually move pivot
+   *   <li>LB: aim pivot at amp
+   *   <li>X: aim pivot for shuttling
+   *   <li>POV left - outtake thru intake
+   *   <li>POV right - outtake thru shooter
+   *   <li>Start - Aims pivot for climbing
+   *   <li>Back - Runs climb routine
+   * </ul>
+   */
+  private void configureBindings() {
+    // Run field-centric swerve drive
+    drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));
 
-                // transferHooks.setDefaultCommand(new HoldHooks(transferHooks));
+    // Reset odometry to current position, and zero gyro yaw
+    robotController
+        .b()
+        .onTrue(
+            drivetrain.runOnce(
+                () -> {
+                  drivetrain.seedFieldRelative();
+                }));
 
-                // Reset odometry to current position, and zero gyro yaw
-                robotController
-                                .b()
-                                .onTrue(
-                                                drivetrain.runOnce(
-                                                                () -> {
-                                                                        drivetrain.seedFieldRelative();
-                                                                        // drivetrain.resetGyro();
-                                                                }));
+    // Aims in-place at april tag and moves pivot angle
+    robotController
+        .rightBumper()
+        .toggleOnTrue(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .alongWith(new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
-                // Aims in-place at april tag
-                robotController
-                                .rightBumper()
-                                .toggleOnTrue(
-                                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg,
-                                                                () -> !index.beamBroken())
-                                                                .alongWith(new AutoPivotAim(pivot,
-                                                                                drivetrain.getCamera(), index,
-                                                                                PIVOT_STOW_POS)));
+    // Run intake mechanism
+    robotController
+        .rightTrigger()
+        .whileTrue(new RevShooter(shooter, 0, 0).alongWith(new IntakeNote(intake, index, pivot)));
 
-                // robotController.rightBumper().onTrue(new SetPivotPos(pivot,
-                // 36.943115234375));
+    // Shoots note at speaker (runs shooter wheels and index out) for 2 seconds
+    robotController
+        .leftTrigger()
+        .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
+        .onFalse(new IndexDummy(index).withTimeout(2).andThen(new StopRevShooter(shooter)));
 
-                // Run intake mechanism
-                robotController
-                                .rightTrigger()
-                                .whileTrue(new RevShooter(shooter, 0, 0)
-                                                .alongWith(new IntakeNote(intake, index, pivot)));
+    // Manually stop revving the shooter
+    robotController.y().onTrue(new StopRevShooter(shooter));
 
-                // Shoots note at speaker
-                robotController
-                                .leftTrigger()
-                                .onTrue(new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM))
-                                .onFalse(new IndexDummy(index).withTimeout(2).andThen(new StopRevShooter(shooter)));
+    // Set pivot angle for Subwoofer Shot
+    robotController.a().onTrue(new SetPivotPos(pivot, PIVOT_SUB_POS));
 
-                // robotController.leftTrigger().whileTrue(new Trap(index));
+    // Move pivot up/down manually
+    robotController.povUp().whileTrue(new SetPivotPct(pivot, index, -.4));
+    robotController.povUp().onFalse(new HoldPivotAngle(pivot));
 
-                // Manually stop revving the shooter
-                robotController.y().onTrue(new StopRevShooter(shooter));
+    robotController.povDown().whileTrue(new SetPivotPct(pivot, index, .35));
+    robotController.povDown().onFalse(new HoldPivotAngle(pivot));
 
-                // Set to Subwoofer Shot
-                robotController.a().onTrue(new SetPivotPos(pivot, PIVOT_SUB_POS));
+    // Sets pivot to angle for Amp scoring
+    robotController.leftBumper().onTrue(new SetAngleAmp(pivot));
 
-                // Move pivot up/down
-                robotController.povUp().whileTrue(new SetPivotPct(pivot, index, -.4));
-                robotController.povUp().onFalse(new HoldPivotAngle(pivot));
+    // Sets Pivot to angle for Shuttling
+    robotController.x().onTrue(new SetAngleShuttle(pivot));
 
-                robotController.povDown().whileTrue(new SetPivotPct(pivot, index, .35));
-                robotController.povDown().onFalse(new HoldPivotAngle(pivot));
+    // Outtake thru intake
+    robotController
+        .povLeft()
+        .whileTrue(
+            new SetPivotPos(pivot, PIVOT_STOW_POS)
+                .alongWith(new Outtake(index))
+                .alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
 
-                // Sets pivot to angle for Amp scoring
-                robotController.leftBumper().onTrue(new SetAngleAmp(pivot));
+    // Outtake thru shooter
+    robotController
+        .povRight()
+        .whileTrue(
+            new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
+                .alongWith(new IndexDummy(index)))
+        .onFalse(new StopRevShooter(shooter));
 
-                // Sets Pivot to angle for Shuttling
-                robotController.x().onTrue(new SetAngleShuttle(pivot));
+    // runs trap routine for climbing
+    robotController
+        .start()
+        .onTrue(
+            new TrapPivot(pivot, PIVOT_CLIMB_DOWN_POS)
+                .andThen(
+                    new HoldPivotAngle(pivot)
+                        .alongWith(
+                            new SetHooksPos(
+                                transferHooks, TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
+                .andThen(
+                    new HoldHooks(transferHooks).alongWith(new TrapPivot(pivot, PIVOT_TRAP_POS))));
 
-                // Outtake thru intake
-                robotController
-                                .povLeft()
-                                .whileTrue(
-                                                new SetPivotPos(pivot, PIVOT_STOW_POS)
-                                                                .alongWith(new Outtake(index))
-                                                                .alongWith(new RunIntake(intake, -INTAKE_RUN_PCT)));
+    // runs trap routine alone, without engaging hooks
+    robotController.back().onTrue(new TrapPivot(pivot, PIVOT_TRAP_POS));
+  }
 
-                // Outtake thru shooter
-                robotController
-                                .povRight()
-                                .whileTrue(
-                                                new RevShooter(shooter, SHOOTER_OUTTAKE_RPM, SHOOTER_OUTTAKE_RPM)
-                                                                .alongWith(new IndexDummy(index)))
-                                .onFalse(new StopRevShooter(shooter));
+  // sets up pipeline chooser for Limelight, unused in competition
+  private void setupPipelineChooser() {
+    pipeLineChooser.setDefaultOption("AprilTag 3D", PIPELINE.APRILTAG_3D.value);
+    pipeLineChooser.addOption("AprilTag Basic", PIPELINE.APRILTAG_2D.value);
+    pipeLineChooser.addOption("Note", PIPELINE.NOTE.value);
+    pipeLineChooser.onChange(
+        (num) -> {
+          drivetrain.getCamera().setPipeline(num);
+          System.out.println("Pipeline set to " + num);
+        });
+    driverTab.add("Pipeline Chooser", pipeLineChooser).withSize(2, 1).withPosition(4, 3);
+  }
 
-                // robotController.start().whileTrue(new SetHooksPct(transferHooks, 0.3));
+  // sets up autonomous routing chooser, registers named commands and autos from PathPlanner
+  private void setupAutoChooser() {
+    NamedCommands.registerCommand(
+        "RevShooterLoad", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
+    NamedCommands.registerCommand(
+        "RevShooterAmp", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
 
-                // robotController.start().onTrue(new Climb(pivot, transferHooks, index));
+    // hardcoded manual aiming angles
+    NamedCommands.registerCommand("PivotAimLoadStart", new SetPivotPos(pivot, 33.84));
+    NamedCommands.registerCommand("PivotAimAmpStart", new SetPivotPos(pivot, 36.943115234375));
+    NamedCommands.registerCommand("PivotAimLoadStage", new SetPivotPos(pivot, 17.75));
+    NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
+    NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
 
-                robotController
-                                .start()
-                                .onTrue(
-                                                new TrapPivot(pivot, PIVOT_CLIMB_DOWN_POS)
-                                                                .andThen(
-                                                                                new HoldPivotAngle(pivot)
-                                                                                                .alongWith(
-                                                                                                                new SetHooksPos(
-                                                                                                                                transferHooks,
-                                                                                                                                TransferHookConstants.TRANSFER_HOOK_POS_CLIMB)))
-                                                                .andThen(
-                                                                                new HoldHooks(transferHooks).alongWith(
-                                                                                                new TrapPivot(pivot,
-                                                                                                                PIVOT_TRAP_POS))));
+    NamedCommands.registerCommand(
+        "AimPivot", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
 
-                // xx().whileTrue(new SetHooksPct(transferHooks, -0.3));
+    NamedCommands.registerCommand("Intake", new RunIntake(intake, INTAKE_RUN_PCT));
 
-                robotController.back().onTrue(new TrapPivot(pivot, PIVOT_TRAP_POS));
-        }
+    NamedCommands.registerCommand(
+        "FastAimSwerveAndPivot",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.15),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
-        private void setupPipelineChooser() {
-                pipeLineChooser.setDefaultOption("AprilTag 3D", PIPELINE.APRILTAG_3D.value);
-                pipeLineChooser.addOption("AprilTag Basic", PIPELINE.APRILTAG_2D.value);
-                pipeLineChooser.addOption("Note", PIPELINE.NOTE.value);
-                pipeLineChooser.onChange(
-                                (num) -> {
-                                        drivetrain.getCamera().setPipeline(num);
-                                        System.out.println("Pipeline set to " + num);
-                                });
-                driverTab.add("Pipeline Chooser", pipeLineChooser).withSize(2, 1).withPosition(4, 3);
-        }
+    NamedCommands.registerCommand(
+        "AimSwerveAndPivotFirst",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.3),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
+    NamedCommands.registerCommand(
+        "AimSwerveAndPivot",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.2),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
-        // method that configures and initializes everything necessary for auton
-        private void setupAutoChooser() {
-                NamedCommands.registerCommand(
-                                "RevShooterLoad", new RevShooter(shooter, SPK_LEFT_RPM, SPK_RIGHT_RPM));
-                NamedCommands.registerCommand(
-                                "RevShooterAmp", new RevShooter(shooter, SPK_RIGHT_RPM, SPK_LEFT_RPM));
+    NamedCommands.registerCommand(
+        "AimSwerveAndPivotLong",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.3),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
-                // hardcoded manual aiming angles
-                NamedCommands.registerCommand("PivotAimLoadStart", new SetPivotPos(pivot, 33.84));
-                NamedCommands.registerCommand("PivotAimAmpStart", new SetPivotPos(pivot, 36.943115234375));
-                NamedCommands.registerCommand("PivotAimLoadStage", new SetPivotPos(pivot, 17.75));
-                NamedCommands.registerCommand("PivotAimP1456/P1564-Far", new SetPivotPos(pivot, 12.763));
-                NamedCommands.registerCommand("PivotAimSecondFar", new SetPivotPos(pivot, 9.8));
+    NamedCommands.registerCommand(
+        "AimSwerveAndPivotLongLast",
+        new ParallelDeadlineGroup(
+            new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+                .withTimeout(0.3),
+            new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
 
-                NamedCommands.registerCommand(
-                                "AimPivot", new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS));
+    NamedCommands.registerCommand(
+        "AimPivotAndShoot",
+        new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
+            .andThen(new ShootAuto(index)));
+    NamedCommands.registerCommand(
+        "AimAtTarget",
+        new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
+            .withTimeout(.2));
 
-                NamedCommands.registerCommand("Intake", new RunIntake(intake, INTAKE_RUN_PCT));
+    NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
+    NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
+    NamedCommands.registerCommand(
+        "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
 
-                NamedCommands.registerCommand("FastAimSwerveAndPivot", new ParallelDeadlineGroup(
-                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                                                .withTimeout(0.15),
-                                new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)));
+    NamedCommands.registerCommand(
+        "IntakeNote",
+        new SetPivotPos(pivot, PIVOT_STOW_POS).alongWith(new RunIndex(index, INDEX_RUN_PCT)));
+    NamedCommands.registerCommand(
+        "StopIntake",
+        new InstantCommand(
+            () -> {
+              IntakeConstants.IS_INTAKING = false;
+            }));
 
-                NamedCommands.registerCommand(
-                                "AimSwerveAndPivotFirst",
-                                new ParallelDeadlineGroup(
-                                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg,
-                                                                () -> !index.beamBroken())
-                                                                .withTimeout(0.3),
-                                                new AutoPivotAim(pivot, drivetrain.getCamera(), index,
-                                                                PIVOT_STOW_POS)));
-                NamedCommands.registerCommand(
-                                "AimSwerveAndPivot",
-                                new ParallelDeadlineGroup(
-                                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg,
-                                                                () -> !index.beamBroken())
-                                                                .withTimeout(0.2),
-                                                new AutoPivotAim(pivot, drivetrain.getCamera(), index,
-                                                                PIVOT_STOW_POS)));
+    System.out.println(AutoBuilder.getAllAutoNames());
+    // if this throws an error, make sure all autos are complete
+    // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
+    autoChooser = new SendableChooser<>();
+    // TODO: clean up auto names in PathPlanner
+    autoChooser.setDefaultOption("Do Nothing", Commands.none());
 
-                NamedCommands.registerCommand(
-                                "AimSwerveAndPivotLong",
-                                new ParallelDeadlineGroup(
-                                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg,
-                                                                () -> !index.beamBroken())
-                                                                .withTimeout(0.3),
-                                                new AutoPivotAim(pivot, drivetrain.getCamera(), index,
-                                                                PIVOT_STOW_POS)));
+    autoChooser.addOption("3 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto3-P67Red"));
 
-                NamedCommands.registerCommand(
-                                "AimSwerveAndPivotLongLast",
-                                new ParallelDeadlineGroup(
-                                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg,
-                                                                () -> !index.beamBroken())
-                                                                .withTimeout(0.3),
-                                                new AutoPivotAim(pivot, drivetrain.getCamera(), index,
-                                                                PIVOT_STOW_POS)));
+    autoChooser.addOption("4 Piece Load SIde Far Blue", AutoBuilder.buildAuto("Auto4-P768Blue"));
+    autoChooser.addOption("4 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto4-P768Red"));
+    // autoChooser.addOption("3 Piece Load Side Blue",
+    // AutoBuilder.buildAuto("Auto3-P78Blue"));
+    // autoChooser.addOption("3 Piece Load Side Blue and Intake",
+    // AutoBuilder.buildAuto("Auto3.5-P87Blue"));
+    // autoChooser.addOption("4 Piece Load Side Far Blue",
+    // AutoBuilder.buildAuto("Auto4-P873Blue"));
+    // autoChooser.addOption("4 Piece Amp Side Far Blue",
+    // AutoBuilder.buildAuto("Auto4-P146Blue"));
+    autoChooser.addOption("4 Piece Load Side Close Blue", AutoBuilder.buildAuto("Auto4-P321Blue"));
+    // autoChooser.addOption("4 Piece Load Side Far Blue",
+    // AutoBuilder.buildAuto("Auto4-P876Blue"));
+    autoChooser.addOption("5 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto5-P1564Blue"));
+    autoChooser.addOption("2 Piece Amp Side", AutoBuilder.buildAuto("Auto2-P1Blue"));
 
-                NamedCommands.registerCommand(
-                                "AimPivotAndShoot",
-                                new AutoPivotAim(pivot, drivetrain.getCamera(), index, PIVOT_STOW_POS)
-                                                .andThen(new ShootAuto(index)));
-                NamedCommands.registerCommand(
-                                "AimAtTarget",
-                                new AimAtTarget(drivetrain, StageAlignment.toleranceDeg, () -> !index.beamBroken())
-                                                .withTimeout(.2));
+    // autoChooser.addOption("6 Piece Amp Side Far Blue",
+    // AutoBuilder.buildAuto("Auto6-P125643Blue"));
 
-                NamedCommands.registerCommand("ShootSpeaker", new Shoot(index, shooter));
-                NamedCommands.registerCommand("ShootAuto", new ShootAuto(index));
-                NamedCommands.registerCommand(
-                                "ShootAmp", Commands.runOnce(() -> IS_AMP = true).andThen(new Shoot(index, shooter)));
+    // autoChooser.addOption("3 Piece Load Side Red",
+    // AutoBuilder.buildAuto("Auto3-P87Red"));
+    autoChooser.addOption(
+        "3 Piece Load Side and Intake Red", AutoBuilder.buildAuto("Auto3.5-P87Red"));
+    // autoChooser.addOption("4 Piece Load Side Far Red",
+    // AutoBuilder.buildAuto("Auto4-P873Red"));
+    // autoChooser.addOption("4 Piece Amp Side Far Red",
+    // AutoBuilder.buildAuto("Auto4-P146Red"));
+    autoChooser.addOption("4 Piece Load Side Close Red", AutoBuilder.buildAuto("Auto4-P321Red"));
+    autoChooser.addOption("5 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto5-P1564Red"));
+    // autoChooser.addOption("4 Piece Load Side Far Red",
+    // AutoBuilder.buildAuto("Auto4-P876Red"));
+    // autoChooser.addOption("5 Piece Amp Side Far Red",
+    // AutoBuilder.buildAuto("Auto5-P1456Red"));
+    // autoChooser.addOption("6 Piece Amp Side Far Red",
+    // AutoBuilder.buildAuto("Auto6-P125643Red"));
 
-                // NamedCommands.registerCommand("IntakeNote", new IntakeNote(intake, index,
-                // pivot));
-                NamedCommands.registerCommand("IntakeNote",
-                                new SetPivotPos(pivot, PIVOT_STOW_POS).alongWith(new RunIndex(index, INDEX_RUN_PCT)));
-                NamedCommands.registerCommand(
-                                "StopIntake",
-                                new InstantCommand(
-                                                () -> {
-                                                        IntakeConstants.IS_INTAKING = false;
-                                                }));
+    driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
+  }
 
-                System.out.println(AutoBuilder.getAllAutoNames());
-                // if this throws an error, make sure all autos are complete
-                // can verify what paths/autos are on rio: ftp://roboRIO-6672-frc.local
-                autoChooser = new SendableChooser<>();
-                autoChooser.setDefaultOption("Do Nothing", Commands.none());
+  public RobotContainer() {
+    setupAutoChooser();
+    setupPipelineChooser();
+    setupAllianceColorChooser();
+    configureBindings();
+  }
 
-                autoChooser.addOption("3 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto3-P67Red"));
+  // sets up alliance color chooser for competition - changes alliance color for auton
+  private void setupAllianceColorChooser() {
+    SendableChooser<DriverStation.Alliance> colorChooser = new SendableChooser<>();
 
-                autoChooser.addOption("4 Piece Load SIde Far Blue", AutoBuilder.buildAuto("Auto4-P768Blue"));
-                autoChooser.addOption("4 Piece Load SIde Far Red", AutoBuilder.buildAuto("Auto4-P768Red"));
-                // autoChooser.addOption("3 Piece Load Side Blue",
-                // AutoBuilder.buildAuto("Auto3-P78Blue"));
-                // autoChooser.addOption("3 Piece Load Side Blue and Intake",
-                // AutoBuilder.buildAuto("Auto3.5-P87Blue"));
-                // autoChooser.addOption("4 Piece Load Side Far Blue",
-                // AutoBuilder.buildAuto("Auto4-P873Blue"));
-                // autoChooser.addOption("4 Piece Amp Side Far Blue",
-                // AutoBuilder.buildAuto("Auto4-P146Blue"));
-                autoChooser.addOption("4 Piece Load Side Close Blue",
-                                AutoBuilder.buildAuto("Auto4-P321Blue"));
-                // autoChooser.addOption("4 Piece Load Side Far Blue",
-                // AutoBuilder.buildAuto("Auto4-P876Blue"));
-                autoChooser.addOption("5 Piece Amp Side Far Blue", AutoBuilder.buildAuto("Auto5-P1564Blue"));
-                autoChooser.addOption("2 Piece Amp Side", AutoBuilder.buildAuto("Auto2-P1Blue"));
+    colorChooser.addOption("Red", Alliance.Red);
+    colorChooser.addOption("Blue", Alliance.Blue);
+    colorChooser.setDefaultOption(allianceColor.toString(), allianceColor);
+    colorChooser.onChange(
+        color -> {
+          allianceColor = color;
+          drivetrain
+              .getCamera()
+              .setPriorityID(color == Alliance.Blue ? BLUE_SPK_TAG_ID : RED_SPK_TAG_ID);
+        });
+    driverTab.add("Alliance Color Chooser", colorChooser).withSize(2, 1).withPosition(4, 4);
+  }
 
-                // autoChooser.addOption("6 Piece Amp Side Far Blue",
-                // AutoBuilder.buildAuto("Auto6-P125643Blue"));
-
-                // autoChooser.addOption("3 Piece Load Side Red",
-                // AutoBuilder.buildAuto("Auto3-P87Red"));
-                autoChooser.addOption("3 Piece Load Side and Intake Red", AutoBuilder.buildAuto("Auto3.5-P87Red"));
-                // autoChooser.addOption("4 Piece Load Side Far Red",
-                // AutoBuilder.buildAuto("Auto4-P873Red"));
-                // autoChooser.addOption("4 Piece Amp Side Far Red",
-                // AutoBuilder.buildAuto("Auto4-P146Red"));
-                autoChooser.addOption("4 Piece Load Side Close Red",
-                                AutoBuilder.buildAuto("Auto4-P321Red"));
-                autoChooser.addOption("5 Piece Amp Side Far Red", AutoBuilder.buildAuto("Auto5-P1564Red"));
-                // autoChooser.addOption("4 Piece Load Side Far Red",
-                // AutoBuilder.buildAuto("Auto4-P876Red"));
-                // autoChooser.addOption("5 Piece Amp Side Far Red",
-                // AutoBuilder.buildAuto("Auto5-P1456Red"));
-                // autoChooser.addOption("6 Piece Amp Side Far Red",
-                // AutoBuilder.buildAuto("Auto6-P125643Red"));
-
-                driverTab.add("Auto Chooser", autoChooser).withSize(2, 1).withPosition(4, 2);
-        }
-
-        public RobotContainer() {
-                setupAutoChooser();
-                setupPipelineChooser();
-                setupAllianceColorChooser();
-                configureBindings();
-        }
-
-        private void setupAllianceColorChooser() {
-                SendableChooser<DriverStation.Alliance> colorChooser = new SendableChooser<>();
-
-                colorChooser.addOption("Red", Alliance.Red);
-                colorChooser.addOption("Blue", Alliance.Blue);
-                colorChooser.setDefaultOption(allianceColor.toString(), allianceColor);
-                colorChooser.onChange(
-                                color -> {
-                                        allianceColor = color;
-                                        drivetrain
-                                                        .getCamera()
-                                                        .setPriorityID(color == Alliance.Blue ? BLUE_SPK_TAG_ID
-                                                                        : RED_SPK_TAG_ID);
-                                });
-                driverTab.add("Alliance Color Chooser", colorChooser).withSize(2, 1).withPosition(4, 4);
-        }
-
-        public Command getAutonomousCommand() {
-                return autoChooser.getSelected();
-        }
+  public Command getAutonomousCommand() {
+    return autoChooser.getSelected();
+  }
 }

@@ -12,9 +12,9 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 
-/* Routine for automatically scoring at amp
- * Specifically, it moves pivot to amp position and revs shooter, then moves forward for 1/4 second and runs the index
- */
+// Routine for automatically scoring at amp
+// moves pivot to amp position and revs shooter, then moves forward for 1/4 s and runs  index
+// unused
 public class AutoScoreAmp extends SequentialCommandGroup {
   public AutoScoreAmp(Drivetrain drivetrain, Shooter shooter, Pivot pivot, Index index) {
     addCommands(

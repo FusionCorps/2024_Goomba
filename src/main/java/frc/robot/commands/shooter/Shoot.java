@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Shooter;
 
-/** RUns the index to shoot notes, only after shooter has revved up */
+// Runs index to shoot notes, only after shooter has revved up
 public class Shoot extends Command {
   public Index mIndex;
   public Shooter mShooter;

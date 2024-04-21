@@ -3,8 +3,8 @@ package frc.robot.commands.pivot;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
+// sets pivot angle to trap position
 public class TrapPivot extends Command {
-
   Pivot mPivot;
   double angle;
 
@@ -17,7 +17,6 @@ public class TrapPivot extends Command {
 
   @Override
   public void execute() {
-    System.out.println("I'm moving the pivot");
     mPivot.setPivotAngle(angle, 500, 100, 1000);
   }
 

@@ -5,8 +5,8 @@ import static frc.robot.Constants.ShooterConstants.HAS_STOPPED_REVVING;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
 
+// stops revving the shooter wheels
 public class StopRevShooter extends Command {
-
   Shooter mShooter;
 
   public StopRevShooter(Shooter shooter) {

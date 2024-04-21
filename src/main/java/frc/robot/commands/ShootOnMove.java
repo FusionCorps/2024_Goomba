@@ -15,6 +15,7 @@ import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Pivot;
 import frc.robot.subsystems.Shooter;
 
+// unused
 public class ShootOnMove extends Command {
   CommandXboxController controller = RobotContainer.robotController;
   Drivetrain mDrivetrain;

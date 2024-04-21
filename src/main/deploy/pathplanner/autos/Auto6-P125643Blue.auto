@@ -44,7 +44,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "6-P125643Blue-1"
+                              "pathName": "6-P12563Blue-1"
                             }
                           },
                           {
@@ -75,7 +75,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "6-P125643Blue-2"
+                              "pathName": "6-P12563Blue-2"
                             }
                           },
                           {
@@ -106,7 +106,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "6-P125643Blue-3"
+                              "pathName": "6-P12563Blue-3"
                             }
                           },
                           {
@@ -137,7 +137,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "6-P125643Blue-4"
+                              "pathName": "6-P12563Blue-4"
                             }
                           },
                           {
@@ -168,7 +168,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "6-P125643Blue-5"
+                              "pathName": "6-P12563Blue-5"
                             }
                           },
                           {
@@ -201,6 +201,6 @@
       ]
     }
   },
-  "folder": null,
+  "folder": "6 Piece",
   "choreoAuto": false
 }

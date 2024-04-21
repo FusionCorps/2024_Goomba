@@ -6,8 +6,8 @@ import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Pivot;
 
+// sets pivot angle to amp position
 public class SetAngleAmp extends Command {
-
   Pivot mPivot;
 
   public SetAngleAmp(Pivot pivot) {

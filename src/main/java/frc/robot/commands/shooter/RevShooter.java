@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Shooter;
 
-/** Runs the shooter at given RPMS. */
+/** Runs the shooter at given RPMS (or preset if in certain situations). */
 public class RevShooter extends Command {
   private Shooter mShooter;
 

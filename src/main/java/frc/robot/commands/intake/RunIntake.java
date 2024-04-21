@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Intake;
 
+// runs intake out or in
 public class RunIntake extends Command {
   private Intake mIntake;
 

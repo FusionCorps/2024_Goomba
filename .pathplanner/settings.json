@@ -8,22 +8,20 @@
     "4-P321Blue",
     "4-P321Red",
     "4-P873Blue",
-    "4-P873Red",
     "4-P876Blue",
     "4-P876Red",
     "5-P1456Blue",
     "5-P1456Red",
+    "5-P1564Blue",
     "5-P1564Red",
     "6-P12563Red",
-    "6-P125643Blue",
-    "New Folder",
-    "5-P1564Blue"
+    "6-P12563Blue"
   ],
   "autoFolders": [
     "3 Piece",
     "4 Piece",
     "5 Piece",
-    "Old"
+    "6 Piece"
   ],
   "defaultMaxVel": 6.22,
   "defaultMaxAccel": 4.5,

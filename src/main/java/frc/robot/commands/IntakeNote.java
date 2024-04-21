@@ -17,7 +17,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 
 public class IntakeNote extends ParallelCommandGroup {
-
   public IntakeNote(Intake intake, Index index, Pivot pivot) {
     addCommands(
         Commands.runOnce(

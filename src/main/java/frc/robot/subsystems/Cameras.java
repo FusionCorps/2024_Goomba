@@ -87,7 +87,7 @@ public class Cameras extends SubsystemBase {
 
   // TODO: test
   private void updateBotPoseBlue() {
-    
+
     double[] data = limelightTable.getEntry("botpose_orb_wpiblue").getDoubleArray(new double[11]);
     if (data.length < 11) {
       System.err.println("couldn't get latest botpose results");

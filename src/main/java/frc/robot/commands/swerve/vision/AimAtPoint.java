@@ -13,6 +13,8 @@ import frc.robot.Constants.AimingPIDS;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
+// much like AimAtTarget, but aims at a general position instead of a target
+// UNUSED, UNTESTED
 public class AimAtPoint extends Command {
   CommandXboxController controller = RobotContainer.robotController;
   Drivetrain mDrivetrain;

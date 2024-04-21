@@ -3,6 +3,7 @@ package frc.robot.commands.TransferHooks;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TransferHooks;
 
+// sets the transfer hooks motor to a specific percentage output
 public class SetHooksPct extends Command {
 
   TransferHooks mTransferHooks;
