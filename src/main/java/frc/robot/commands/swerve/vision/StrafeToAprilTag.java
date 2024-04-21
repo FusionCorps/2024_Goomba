@@ -33,7 +33,6 @@ public class StrafeToAprilTag extends Command {
     // if target detected, strafe toward it
     ShooterConstants.IS_AMP = true;
     if (mDrivetrain.getCamera().hasTarget()) {
-      System.out.println("Strafe error: " + strPID.getPositionError());
       double tx = mDrivetrain.getCamera().getTX();
       // normalize tx to be between -1 and 1, then scale by max angular rate
       // set strafe velocity to velY * scaling factor

@@ -43,7 +43,6 @@ public class RotateToAngle extends Command {
 
   @Override
   public void execute() {
-    // System.out.println("Error: " + rotReq.HeadingController.getPositionError()*180/Math.PI);
     mDrivetrain.setControl(rotReq);
   }
 

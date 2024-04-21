@@ -23,7 +23,6 @@ public class DriveToNote extends Command {
 
   @Override
   public void execute() {
-    System.out.println("running DriveToNote");
     if (mDrivetrain.getCamera().hasTarget()
         && mDrivetrain.getCamera().getPipeline() == PIPELINE.NOTE.value) {
       double ty = mDrivetrain.getCamera().getTY();

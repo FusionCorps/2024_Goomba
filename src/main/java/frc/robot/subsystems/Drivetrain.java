@@ -108,9 +108,7 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
 
   @Override
   public void periodic() {
-    // LimelightHelpers.SetRobotOrientation(LIMELIGHT_NAME, getPose().getRotation().getDegrees(), 0,
-    // 0, 0, 0, 0);
-
+    // TODO: test
     // If the robot is disabled or the operator perspective has not been applied
     // yet, apply correct
     // heading for field-centric driving
@@ -123,6 +121,9 @@ public class Drivetrain extends SwerveDrivetrain implements Subsystem {
     // }
 
     // TODO: updates the odometry from aprilTag data
+    // LimelightHelpers.SetRobotOrientation(
+    //    LIMELIGHT_NAME, getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+
     // updateOdometryFromAprilTags();
   }
 
