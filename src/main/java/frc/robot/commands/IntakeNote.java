@@ -16,6 +16,7 @@ import frc.robot.subsystems.Index;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pivot;
 
+// general intaking command
 public class IntakeNote extends ParallelCommandGroup {
   public IntakeNote(Intake intake, Index index, Pivot pivot) {
     addCommands(

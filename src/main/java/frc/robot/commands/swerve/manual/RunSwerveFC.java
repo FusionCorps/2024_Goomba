@@ -12,7 +12,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
 /**
- * Field-centric Movement, open-loop movement
+ * Field-centric Movement
  *
  * <p>Drive forward with negative Y (left joystick) Drive left with negative X (left joystick)
  * Rotate counterclockwise with negative X (right joystick)

@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
-/** Runs the swerve drive in field centric mode, locks the robot's heading and moves more slowly */
 // UNUSED, UNTESTED
+/** Runs the swerve drive in field centric mode, locks the robot's heading and moves more slowly */
 public class RunSwerveFCWithAim extends Command {
   private Drivetrain mDrivetrain;
   private CommandXboxController controller = RobotContainer.robotController;

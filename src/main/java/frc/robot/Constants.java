@@ -18,10 +18,6 @@ import frc.robot.subsystems.Cameras;
 import frc.robot.subsystems.Drivetrain;
 
 public class Constants {
-  public class TarsArmConstants {
-    public static final double ARM_POS_1 = 25; // 25;
-    public static final double ARM_POS_2 = -25; // -25;
-  }
 
   public class AimingPIDS {
     // constants for PIDS in RotateToAngle, MoveToTarget, and AimToTarget

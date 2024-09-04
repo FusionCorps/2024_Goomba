@@ -85,7 +85,7 @@ public class Cameras extends SubsystemBase {
     }
   }
 
-  // TODO: test
+  // This is untested.
   private void updateBotPoseBlue() {
 
     double[] data = limelightTable.getEntry("botpose_orb_wpiblue").getDoubleArray(new double[11]);

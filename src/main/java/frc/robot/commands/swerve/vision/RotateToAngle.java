@@ -9,8 +9,8 @@ import frc.robot.Constants.AimingPIDS;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.util.UtilFunctions;
 
-// rotates to a desired angle in place - angle is measured counterclockwise
 // UNUSED, WELL-TESTED, PID could be be tuned better
+// rotates to a desired angle in place - angle is measured counterclockwise
 public class RotateToAngle extends Command {
   private Drivetrain mDrivetrain;
 

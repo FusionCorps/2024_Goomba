@@ -48,12 +48,6 @@ public class TransferHooks extends SubsystemBase {
         "TransferHooks Angle", () -> transferHookMotor.getPosition().getValueAsDouble());
 
     targetPosition = 0;
-
-    driverTab
-        .add(
-            "Go to zero transfer hooks",
-            new SetHooksPos(this, 0.0).alongWith(Commands.print(getName())))
-        .withPosition(8, 0);
   }
 
   public double getPosition() {

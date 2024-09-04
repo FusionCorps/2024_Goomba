@@ -62,8 +62,8 @@ import frc.robot.subsystems.TransferHooks;
 
 public class RobotContainer {
   public static CommandXboxController robotController = new CommandXboxController(0);
-  Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
 
+  Drivetrain drivetrain = Constants.DrivetrainConstants.DriveTrain;
   Intake intake = new Intake();
   Shooter shooter = new Shooter();
   Index index = new Index();
@@ -75,23 +75,6 @@ public class RobotContainer {
 
   /**
    * Configures the bindings for the robot's subsystems and commands.
-   *
-   * <ul>
-   *   <li>Left/Right sticks - field-centric swerve drive
-   *   <li>B: reset gyro
-   *   <li>RB: aim drivetrain + pivot at speaker
-   *   <li>RT: intake note + stow pivot
-   *   <li>LT: rev shooter on hold + shoot note on release
-   *   <li>Y - manually stop revving shooter
-   *   <li>A: stow pivot
-   *   <li>POV up/down - manually move pivot
-   *   <li>LB: aim pivot at amp
-   *   <li>X: aim pivot for shuttling
-   *   <li>POV left - outtake thru intake
-   *   <li>POV right - outtake thru shooter
-   *   <li>Start - Aims pivot for climbing
-   *   <li>Back - Runs climb routine
-   * </ul>
    */
   private void configureBindings() {
     // Run field-centric swerve drive
@@ -174,19 +157,6 @@ public class RobotContainer {
 
     // runs trap routine alone, without engaging hooks
     robotController.back().onTrue(new TrapPivot(pivot, PIVOT_TRAP_POS));
-  }
-
-  // sets up pipeline chooser for Limelight, unused in competition
-  private void setupPipelineChooser() {
-    pipeLineChooser.setDefaultOption("AprilTag 3D", PIPELINE.APRILTAG_3D.value);
-    pipeLineChooser.addOption("AprilTag Basic", PIPELINE.APRILTAG_2D.value);
-    pipeLineChooser.addOption("Note", PIPELINE.NOTE.value);
-    pipeLineChooser.onChange(
-        (num) -> {
-          drivetrain.getCamera().setPipeline(num);
-          System.out.println("Pipeline set to " + num);
-        });
-    driverTab.add("Pipeline Chooser", pipeLineChooser).withSize(2, 1).withPosition(4, 3);
   }
 
   // sets up autonomous routing chooser, registers named commands and autos from PathPlanner
@@ -316,7 +286,6 @@ public class RobotContainer {
 
   public RobotContainer() {
     setupAutoChooser();
-    setupPipelineChooser();
     setupAllianceColorChooser();
     configureBindings();
   }

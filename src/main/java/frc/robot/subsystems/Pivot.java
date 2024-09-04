@@ -55,12 +55,6 @@ public class Pivot extends SubsystemBase {
     pivotConfigs.MotionMagic.MotionMagicAcceleration = PivotConstants.PIVOT_ACCELERATION;
     pivotConfigs.MotionMagic.MotionMagicJerk = PivotConstants.PIVOT_JERK;
 
-    // TODO: Set the soft limits for the pivot motor
-    // pivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-    // pivotConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0;
-    // pivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-    // pivotConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
-
     pivotMotor.getConfigurator().apply(pivotConfigs);
     pivotFollowerMotor.getConfigurator().apply(pivotConfigs);
 

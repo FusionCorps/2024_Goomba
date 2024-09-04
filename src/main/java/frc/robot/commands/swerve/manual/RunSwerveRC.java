@@ -12,7 +12,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.Drivetrain;
 
 /**
- * Robot-centric Movement, open-loop.
+ * Robot-centric Movement. Generally unused in favor of Field-Centric mode.
  *
  * <p>Drive forward with negative Y (left joystick). Drive left with negative X (left joystick).
  * Rotate counterclockwise with negative X (right joystick).

@@ -10,8 +10,8 @@ import frc.robot.Constants.AimingPIDS;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Drivetrain;
 
-// horizontally strafes to align with a target
 // UNUSED, UNTESTED
+// horizontally strafes to align with a target
 public class StrafeToAprilTag extends Command {
   private final Drivetrain mDrivetrain;
   private double tx;

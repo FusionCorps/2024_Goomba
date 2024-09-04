@@ -5,6 +5,7 @@ import static frc.robot.Constants.IndexConstants.INDEX_RUN_PCT;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 
+// Outtakes via running the index backward
 public class Outtake extends Command {
 
   Index mIndex;

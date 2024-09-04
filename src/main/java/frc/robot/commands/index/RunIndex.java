@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.Index;
 
-// runs the index at a certain percentage until the beam-break sensor is broken (note loaded)
+// Runs the index at a certain percentage until the beam-break sensor is broken (note loaded)
 public class RunIndex extends Command {
   Index mIndex;
   double pct;
