@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.IntakeConstants;
-import frc.robot.Constants.LimelightConstants.PIPELINE;
 import frc.robot.Constants.StageAlignment;
 import frc.robot.Constants.TransferHookConstants;
 import frc.robot.commands.IntakeNote;
@@ -73,9 +72,7 @@ public class RobotContainer {
   private SendableChooser<Command> autoChooser = new SendableChooser<>();
   private SendableChooser<Integer> pipeLineChooser = new SendableChooser<>();
 
-  /**
-   * Configures the bindings for the robot's subsystems and commands.
-   */
+  /** Configures the bindings for the robot's subsystems and commands. */
   private void configureBindings() {
     // Run field-centric swerve drive
     drivetrain.setDefaultCommand(new RunSwerveFC(drivetrain));

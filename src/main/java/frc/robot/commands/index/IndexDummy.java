@@ -9,7 +9,6 @@ import static frc.robot.Constants.ShooterConstants.IS_AMP;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Index;
 
-
 public class IndexDummy extends Command {
   public Index mIndex;
 

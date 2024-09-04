@@ -30,7 +30,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ShooterConstants;
 
 // Shooter motors, used for shooting notes
-// Applies spin by using different voltages for the motors, and reduces wear by switching which motor has higher voltage
+// Applies spin by using different voltages for the motors, and reduces wear by switching which
+// motor has higher voltage
 public class Shooter extends SubsystemBase {
   private NetworkTable tuningTable =
       NetworkTableInstance.getDefault().getTable("Shooter PID Tuning");
